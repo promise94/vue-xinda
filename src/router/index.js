@@ -19,40 +19,5 @@ export default new Router({
     //   name: 'Hello',
     //   component: Hello
     // },
-    {
-      path: '/home',
-      name: 'Home',
-      component: Home,
-      children: [
-        {
-          path: 'first',
-          component: first
-        },
-        {
-          path: 'second',
-          component: second
-        }
-      ]
-    },
-    {
-      path: '/info',
-      name: 'Info',
-      component: info,
-      children: [
-        {
-          path: 'register',
-          component: register
-        },
-        {
-          path: 'login',
-          component: login
-        }
-      ]
-    },
-    {
-      path: '/list',
-      name: 'List',
-      component: List
-    }
   ]
 })
