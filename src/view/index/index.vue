@@ -119,7 +119,23 @@
             <div class="arrows"></div>
         </div>
         <div class="zhishi">
-
+            <div>
+                <div>
+                    <img src="./../../common/images/u82.png" alt="">
+                </div>
+                <div>
+                    <div>
+                        <img src="./../../common/images/u84.png" alt="">
+                        <img src="./../../common/images/u86.png" alt="">
+                    </div>
+                    <div>
+                        <img src="./../../common/images/u88.png" alt="">
+                    </div>
+                </div>
+            </div>
+            <div>
+                <img src="./../../common/images/u100.png" alt="">
+            </div>
         </div>
         <div class="biaoti">
             <p>推荐服务商</p>
@@ -135,48 +151,125 @@
                 <p>提供的服务</p>
                 <div>
                     <div>
-                        <p>
+                        <a href="">
                             你踩踩踩踩asdasdasdasd
-                        </p>
+                        </a>
                     </div>
                     <div>
-
+                        <a href="">
+                            你踩踩踩踩asdasdasdasd
+                        </a>
                     </div>
                     <div>
-
+                        <a href="">
+                            你踩踩踩踩asdasdasdasd
+                        </a>
                     </div>
                     <div>
-
+                        <a href="">
+                            你踩踩踩踩asdasdasdasd
+                        </a>
                     </div>
                 </div>
             </div>
             <div>
+                <div>
 
+                </div>
+                <p>北京广大知识代理</p>
+                <p>服务指数：8.9分</p>
+                <p>提供的服务</p>
+                <div>
+                    <div>
+                        <a href="">
+                            你踩踩踩踩asdasdasdasd
+                        </a>
+                    </div>
+                    <div>
+                        <a href="">
+                            你踩踩踩踩asdasdasdasd
+                        </a>
+                    </div>
+                    <div>
+                        <a href="">
+                            你踩踩踩踩asdasdasdasd
+                        </a>
+                    </div>
+                    <div>
+                        <a href="">
+                            你踩踩踩踩asdasdasdasd
+                        </a>
+                    </div>
+                </div>
             </div>
             <div>
+                <div>
 
+                </div>
+                <p>北京广大知识代理</p>
+                <p>服务指数：8.9分</p>
+                <p>提供的服务</p>
+                <div>
+                    <div>
+                        <a href="">
+                            你踩踩踩踩asdasdasdasd
+                        </a>
+                    </div>
+                    <div>
+                        <a href="">
+                            你踩踩踩踩asdasdasdasd
+                        </a>
+                    </div>
+                    <div>
+                        <a href="">
+                            你踩踩踩踩asdasdasdasd
+                        </a>
+                    </div>
+                    <div>
+                        <a href="">
+                            你踩踩踩踩asdasdasdasd
+                        </a>
+                    </div>
+                </div>
             </div>
             <div>
+                <div>
 
+                </div>
+                <p>北京广大知识代理</p>
+                <p>服务指数：8.9分</p>
+                <p>提供的服务</p>
+                <div>
+                    <div>
+                        <a href="">
+                            你踩踩踩踩asdasdasdasd
+                        </a>
+                    </div>
+                    <div>
+                        <a href="">
+                            你踩踩踩踩asdasdasdasd
+                        </a>
+                    </div>
+                    <div>
+                        <a href="">
+                            你踩踩踩踩asdasdasdasd
+                        </a>
+                    </div>
+                    <div>
+                        <a href="">
+                            你踩踩踩踩asdasdasdasd
+                        </a>
+                    </div>
+                </div>
             </div>
+
         </div>
         <div class="biaoti">
             <p>合作伙伴</p>
             <div class="arrows"></div>
         </div>
-        <div class="mingxing">
-            <div>
-
-            </div>
-            <div>
-
-            </div>
-            <div>
-
-            </div>
-            <div>
-
-            </div>
+        <div class="huoban">
+            <img src="./../../common/images/u246.png" alt="">
         </div>
     </div>
 </template>

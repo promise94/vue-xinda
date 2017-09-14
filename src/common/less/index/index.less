@@ -108,6 +108,7 @@
     >p{
         padding: 50px 0 0 10px;
         display: block;
+        font-size: 15px;
     }
     .arrows {
         width: 0px;
@@ -153,6 +154,8 @@
             border: 1px solid red;
         }
         >p:nth-of-type(1){
+            font-size: 17px;
+            font-weight:bold;
             text-align:center;
             color: #000000;
         }
@@ -201,8 +204,48 @@
 }
 .zhishi{
     width: 1200px;
-    height: 730px;
-    
+    height: 692px;
+    margin:39px auto;
+    >div:nth-child(1){
+        width: 1200px;
+        height: 482px;
+        display: flex;
+        >div:nth-child(1){
+            >img{
+                width: 306px;
+                height: 482px;
+            }
+        }
+        >div:nth-child(2){
+            width: 850px;
+            height: 482px;
+            margin-left: 23px;
+            div:nth-child(1){
+                display: flex;
+                justify-content:space-between;
+                img{
+                    width: 414px;
+                    height: 230px;
+                }
+            }
+            div:nth-child(2){
+                margin-top: 22px;
+                img{
+                    width: 850px;
+                    height: 230px;
+                }
+            }
+        }
+    }
+    >div:nth-child(2){
+        width: 1200px;
+        height: 167px;
+        margin-top: 43px;
+        img{
+            width: 1200px;
+            height: 154px;
+        }
+    }
 }
 
 
@@ -255,13 +298,28 @@
                 height: 29px;
                 display: inline-block;
                 background-color: #ffecb7;
-                p{
-                    width: 50px;
+                a{
+                    // width: 60px;
+                    padding-left: 10px;
                     line-height: 29px;
                     font-size: 13px;
+                    display:block;
+                    overflow: hidden;
                     text-overflow:ellipsis;
+                    white-space: nowrap;
+                    color: #000000;
                 }
             }
         }
+    }
+}
+
+.huoban{
+    width: 1200px;
+    height: 247px;
+    margin:44px auto;
+    img{
+        width: 1200px;
+        height: 147px;
     }
 }
