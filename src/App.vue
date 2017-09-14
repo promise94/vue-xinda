@@ -10,7 +10,7 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 @import url('./common/less/global/cssreset.less');
 @import url('./common/less/global/base.less');
 
