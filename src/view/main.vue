@@ -1,6 +1,7 @@
 <template>
     <div>
         <xd-header></xd-header>
+        <router-view></router-view>
     </div>
 </template>
 

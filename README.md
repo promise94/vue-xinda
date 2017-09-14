@@ -1,6 +1,14 @@
-# xinda
+# 信达
 
-> A Vue.js project
+> 商城项目
+
+## author
+>重剑无锋组
+>>孝威
+>>天慧
+>>四震
+>>伟鹏
+>>晓伟
 
 ## Build Setup
 
@@ -9,7 +17,7 @@
 npm install
 
 # serve with hot reload at localhost:8080
-npm run dev
+npm start
 
 # build for production with minification
 npm run build
