@@ -12,11 +12,17 @@ import us from '../components/us/us.vue';
 import cart from '../components/cart/cart.vue'
 
 
-
+import index from '../components/index/index'
 Vue.use(Router);
 
 export default new Router({
   routes: [
+
+    {
+      path:'/index',
+      name:'index',
+      component: index,
+      },
     // {
     //   path: '/',
     //   name: 'Main',
