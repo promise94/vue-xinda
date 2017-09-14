@@ -11,5 +11,13 @@ new Vue({
   el: '#app',
   router,
   template: '<App/>',
-  components: { App }
+  components: { App },
+  data: {
+    che: 1
+  },
+  methods: {
+    ee(){
+      this.che
+    }
+  }
 })
