@@ -23,7 +23,14 @@
 
 <script>
 export default{
+    created(){
 
+    },
+    data(){
+        return {
+            msg:''
+        }
+    }
 };
 </script>
 
