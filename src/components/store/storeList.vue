@@ -54,9 +54,57 @@
               <p>金牌服务商</p>
             </div>
           </div>
+
+          <div class="text">
+            <p>信达北京服务中心</p>
+            <p>信誉<span class="xd xd-dengji-copy"></span><span class="xd xd-dengji-copy"></span><span class="xd xd-dengji-copy"></span><span class="xd xd-dengji-copy"></span><span class="xd xd-dengji-copy"></span></p>
+            <p>北京-北京市-朝阳区</p>
+            <div>
+              <p>累计服务客户次数&nbsp;：&nbsp;<span>8272</span></p>
+              <span class="xd xd-shouye_shugang_shijiantixing">|</span>
+              <p>好评率&nbsp;：&nbsp;<span>100%</span></p>
+            </div>
+            <ul>
+              <li>税务代办</li>
+              <li>代理记账</li>
+              <li>个人社保</li>
+              <li>公司变更</li>
+            </ul>
+            <button>进入店铺</button>
+          </div>
         </div>
 
-        <div class="store"></div>
+        <div class="store">
+          <div class="imgs">
+            <div>
+              <img src="../../common/images/u3638.png" alt="">
+              <p>信达</p>
+            </div>
+            <div>
+              <img src="../../common/images/u3638.png" alt="">
+              <p>金牌服务商</p>
+            </div>
+          </div>
+
+          <div class="text">
+            <p>信达北京服务中心</p>
+            <p>信誉<span class="xd xd-dengji-copy"></span><span class="xd xd-dengji-copy"></span><span class="xd xd-dengji-copy"></span><span class="xd xd-dengji-copy"></span><span class="xd xd-dengji-copy"></span></p>
+            <p>北京-北京市-朝阳区</p>
+            <div>
+              <p>累计服务客户次数&nbsp;：&nbsp;<span>8272</span></p>
+              <span class="xd xd-shouye_shugang_shijiantixing">|</span>
+              <p>好评率&nbsp;：&nbsp;<span>100%</span></p>
+            </div>
+            <ul>
+              <li>税务代办</li>
+              <li>代理记账</li>
+              <li>个人社保</li>
+              <li>公司变更</li>
+            </ul>
+            <button>进入店铺</button>
+          </div>
+        </div>
+
       </div>
     </div>
     <router-view></router-view>
@@ -86,56 +134,58 @@ export default {
 <style lang="less" scoped>
 #storeList{
   font-size:14px;
-  width:76%;
+  width:1200px;
   margin:0 auto;
   a{
     color:#000;
     text-decoration:none;
   }
   .chance{
-    margin:20px 0 10px 0;
+    margin:25px 0 8px 0;
   }
   .area-type{
-    width:100%;
+    width:1200px;
     background:#f7f7f7;
     border:1px solid #cccccc;
     >div>div{   
       border:1px solid #cccccc;
     }
     >div:nth-child(1){
-      width:100%;
+      width:1200px;
       display:flex;
       >div:nth-child(1){
-        padding:1% 0;
         font-size:18px;
-        width:9%;
+        width:100px;
+        height:45px;
+        line-height:45px;
         text-align:center;
       }
       >div:nth-child(2){
-        padding:1.2% 0;
-        padding-left:10px;
-        width:91%;
+        padding-left:15px;
+        line-height:45px;
+        width:1100px;
       }
     }
     >div:nth-child(2){
-      width:100%;
+      width:1200px;
       display:flex;
       >div:nth-child(1){
-        padding:1% 0;
         font-size:18px;
-        width:9%;
+        width:100px;
+        height:45px;
+        line-height:45px;
         text-align:center;
       }
       >div:nth-child(2){
-        width:91%;
-        padding-left:10px;
+        padding-left:15px;
+        width:1100px;
         ul{
           display:flex;
-          height:100%;
           li{
-            width:7%;
-            padding:0.7% 0;
-            margin:5px 2px;
+            width:80px;
+            height:25px;
+            line-height:25px;
+            margin:10px 2px;
             text-align:center;
             border-radius:6px;
             cursor:pointer;
@@ -153,17 +203,18 @@ export default {
     }
   }
   .mainBox{
-    width:100%;
+    width:1200px;
     margin:25px 0;
     border:1px solid #cccccc;
     .order{
-      width:100%;
+      width:1200px;
       display:flex;
       background:#f7f7f7;
       border-bottom:1px solid #cccccc;
       >div{
-        width:10%;
-        padding:1% 0;
+        width:110px;
+        height:42px;
+        line-height:42px;
         margin-right:5px;
         position:relative;
         text-align:center;  
@@ -181,31 +232,78 @@ export default {
           transform:rotate(45deg);
           background:#2594d4;
           position:absolute;
-          left:46%;
-          bottom:-10%;
+          left:50px;
+          bottom:-5px;
         }
       } 
     }
     .main{
-      width:100%;
+      width:1200px;
       display:flex;
       justify-content:space-between;
       flex-wrap:wrap;
-      >div{
-        width:46.5%;
-        height:250px;
-        margin:15px 1.5%;
+      .store{
+        width:568px;
+        height:252px;
+        margin:15px;
         border:1px solid #cccccc;
-        background:yellow;
+        display:flex;
         .imgs{
-          width:22%;
-          padding:0 5%;
+          width:200px;
+          height:252px;
+          
           div:nth-child(1){
+            margin:75px 35px 60px 35px;
+            display:flex;
             img{
-              width:40%;
+              width:55px;
+              height:55px;
+              margin-right:10px;
+            }
+            p{
+              font-size:30px;
             }
           }
+          div:nth-child(2){
+            margin:0 35px 0 45px;
+            display:flex;
+            img{
+              width:35px;
+              height:30px;
+              margin-right:10px;
+            }  
+          }
           
+        }
+        .text{
+          height:252px;
+          padding:20px 0;
+          line-height:28px;
+          >div{
+            display:flex;
+            >span{
+              margin:0 35px 0 20px;
+            }
+          }
+          ul{
+            margin:10px 0;
+            display:flex;
+            li{  
+              padding:0 10px;
+              margin-right:5px;
+              background:#2594d4;
+              color:#fff;
+              border-radius:5px;
+            }
+          }
+          button{
+            color:#fff;
+            margin-top:25px;
+            padding:8px 24px;
+            background:#ff5b1b;
+            border:0;
+            border-radius:5px;
+          }
         }
       }
     }
