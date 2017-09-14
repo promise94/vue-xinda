@@ -1,7 +1,9 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import main from '../view/main.vue';
-import user from '../view/user.vue';
+// import main from '../view/main.vue';
+// import user from '../view/user.vue';
+import storeList from '../components/store/storeList.vue'
+import storeIndex from '../components/store/storeIndex.vue'
 
 import services from '../components/list/services.vue'
 import sifco from '../components/list/sifco.vue'
@@ -32,6 +34,12 @@ export default new Router({
       component: sifco
     },
     {
+
+      path: '/storeList',
+      name: 'storeList',
+      component: storeList
+    },
+    {
       path: '/',
       name: 'Main',
       component: main,
@@ -55,5 +63,10 @@ export default new Router({
       name: 'User',
       component: user
     },
+    {
+      path: '/storeIndex',
+      name: 'storeIndex',
+      component: storeIndex
+    }
   ]
 })
