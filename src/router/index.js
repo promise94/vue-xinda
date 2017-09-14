@@ -29,5 +29,10 @@ export default new Router({
       component: cart
     },
     // }
+    {
+      path: '/user',
+      name: 'User',
+      component: user
+    },
   ]
 })
