@@ -11,11 +11,10 @@ Vue.config.productionTip = false;
 axios.defaults.baseURL = 'http://115.182.107.203:8088/xinda/xinda-api';
 axios.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
 axios.interceptors.request.use((config) => {
-  config.method = 'post';
-  config.data = Qs.stringify(config.data);
+  config.method == 'post' ? config.data = Qs.stringify(config.data) : '';
   return config;
 });
-axios.interceptors.response.use((result)=>{
+var resInterceptors = axios.interceptors.response.use((result)=>{
   return result.data;
 });
 Vue.prototype.$http = axios;
