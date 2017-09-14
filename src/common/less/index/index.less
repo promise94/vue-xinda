@@ -1,15 +1,23 @@
+*{
+    padding: 0;
+    margin: 0;
+}
 #lunbo{
     width: 1200px;
     height: 400px;
     margin: 0 auto;
+    display: flex;
     border: 1px solid #666666;
+    overflow: hidden;
     >.daohang{
         width: 199px;
         height: 400px;
+        overflow: hidden;
         >div{
             width: 199px;
             background-color: #182a40;
             display: flex;
+            // position:relative; 
             >i{
                 color: #ffffff;
                 font-size: 26px;
@@ -20,27 +28,240 @@
             }
             >.nicai{
                 width: 150px;
-                height: 80px;
+                // height: 80px;
                 margin: 17px 0 0 9px;
-                >a:nth-child(1){
-                    
+                
+                >a{
+                    color: #ffffff;
+                    text-decoration:none; 
+                    font-size: 14px;
+                    height: 10px;
                 }
+                >a:nth-child(1){
+                    font-size: 16px;
+                }
+                
+                
             }
             &:hover{
+                
                 background-color: #2693d4;
             }
         }
         >div:nth-child(1){
             height: 116px;
+            
         }
         >div:nth-child(2){
             height: 84px;
+            
         }
         >div:nth-child(3){
             height: 116px;
+            
         }
         >div:nth-child(4){
             height: 84px;
+            
+        }
+    }
+    >#yincang{
+        position:relative;
+        >div{
+            width: 1000px;
+            background-color: red;
+            
+        }
+        >div:nth-child(1){
+            height: 116px;
+            position:absolute;
+            top: 0;
+            // display: none;
+
+        }
+        >div:nth-child(2){
+            height: 84px;
+            position:absolute;
+            top: 116px;
+            // display: none;
+        }
+        >div:nth-child(3){
+            height: 116px;
+            position:absolute;
+            top: 200px;
+            // display: none;
+        }
+        >div:nth-child(4){
+            height: 84px;
+            position:absolute;
+            top: 316px;
+            // display: none;
+        }
+    }
+}
+.biaoti{
+    width: 1200px;
+    height: 76px;
+    margin: 0 auto;
+    position:relative;
+    border-bottom: 2px solid #2693d4;
+    >p{
+        padding: 50px 0 0 10px;
+        display: block;
+    }
+    .arrows {
+        width: 0px;
+        height: 0px;
+        border-left: 2px solid transparent;
+        border-right: 2px solid transparent;
+        border-bottom: 6px solid #2693d4;
+        font-size: 0px;
+        line-height: 0px;
+        position: absolute;
+        left: 45px;
+        top: 70px;
+    }
+}
+.mingxing{
+    width: 1200px;
+    height: 456px;
+    margin:0 auto;
+    display: flex;
+    justify-content:space-between;
+    >div{
+        width: 270px;
+        height: 398px;
+        margin-top: 50px;
+        border: 1px solid #e8e8e8;
+    }
+}
+.chuchuang{
+    width: 1200px;
+    height: 520px;
+    margin:0 auto;
+    display: flex;
+    justify-content:space-between;
+    >div{
+        width: 270px;
+        height: 462px;
+        margin-top: 50px;
+        border: 1px solid #e8e8e8;
+        >div{
+            width: 270px;
+            height: 200px;
+            margin: 0px auto; 
+            border: 1px solid red;
+        }
+        >p:nth-of-type(1){
+            text-align:center;
+            color: #000000;
+        }
+        >p:nth-of-type(2){
+            padding: 16px 0 0 16px;
+            display:inline-block; 
+            width: 243px;
+            font-size: 13px;
+            // text-align:center;
+            color: #000000;
+        }
+        >p:nth-of-type(3){
+            font-size: 15px;
+            padding: 30px 0 0 66px;
+            >span{
+                font-size: 22px;
+                color: #2693d4;
+            }
+
+        }
+        >a{
+            display: block;
+            width: 161px;
+            height: 48px;
+            margin: 35px 0 0 50px ;
+            border: 2px solid #2693d4;
+            background-color: #ffffff;
+            border-radius:5px;
+            text-align: center;
+            line-height:48px;
+            color: #2693d4;
+        }
+    }
+    >div:nth-child(1){
+        
+    }
+    >div:nth-child(2){
+
+    }
+    >div:nth-child(3){
+
+    }
+    >div:nth-child(4){
+
+    }
+}
+.zhishi{
+    width: 1200px;
+    height: 730px;
+    
+}
+
+
+.fuwu{
+    width: 1200px;
+    height: 456px;
+    margin:0 auto;
+    display: flex;
+    justify-content:space-between;
+    >div{
+        width: 216px;
+        height: 396px;
+        margin-top: 50px;
+        border: 1px solid #e8e8e8;
+        >div:nth-of-type(1){
+            width: 216px;
+            height: 194px;
+            border: 1px solid red;
+            
+        }
+        
+        >p:nth-of-type(1){
+            text-align:center;
+            color: #000000;
+            font-weight:bold;
+        }
+        >p:nth-of-type(2){
+            padding: 15px 0 0 53px;
+            width: 243px;
+            font-size: 15px;
+            // text-align:center;
+            color: #000000;
+        }
+        >p:nth-of-type(3){
+            text-align:center;
+            font-size: 15px;
+            padding: 10px 0 0 0px;
+        }
+        >div:nth-of-type(2){
+            width: 160px;
+            display: inline-block;
+            padding: 23px 0 0 28px;
+            justify-content:space-between;
+            display: flex;
+            flex-wrap: wrap;
+            div{
+                justify-content:space-between;
+                margin-bottom:13px;
+                width: 74px;
+                height: 29px;
+                display: inline-block;
+                background-color: #ffecb7;
+                p{
+                    width: 50px;
+                    line-height: 29px;
+                    font-size: 13px;
+                    text-overflow:ellipsis;
+                }
+            }
         }
     }
 }
