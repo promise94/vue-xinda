@@ -2,8 +2,13 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import main from '../view/main.vue';
 import user from '../view/user.vue';
+
 import services from '../components/list/services.vue'
 import sifco from '../components/list/sifco.vue'
+
+import us from '../components/us/us.vue';
+import cart from '../components/cart/cart.vue'
+
 
 
 Vue.use(Router);
@@ -16,6 +21,7 @@ export default new Router({
     //   omponent: main
     // },
     {
+
       path: '/services',
       name: 'services',
       component: services
@@ -24,6 +30,30 @@ export default new Router({
       path: '/sifco',
       name: 'sifco',
       component: sifco
+    },
+    {
+      path: '/',
+      name: 'Main',
+      component: main,
+    },
+    // 加盟我们{
+    {
+      path: '/us',
+      name: 'us',
+      component: us
+    },
+    // }
+    // 购物车{
+    {
+      path: '/cart',
+      name: 'cart',
+      component: cart
+    },
+    // }
+    {
+      path: '/user',
+      name: 'User',
+      component: user
     },
   ]
 })
