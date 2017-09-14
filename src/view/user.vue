@@ -1,17 +1,23 @@
 <template>
     <div>
-        <h4>user</h4>
+
+        <xd-header></xd-header>
     </div>
 </template>
 
 <script>
+
+import xdHeader from '../components/global/header/header';
 export default {
+    name: 'main',
+    components: {
+        xdHeader
+    }
 
 };
 </script>
 
 <style>
-    h4{
-        color:red;
-    }
+
+
 </style>
