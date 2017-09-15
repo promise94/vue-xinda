@@ -1,68 +1,62 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import main from '../view/main.vue';
-import user from '../view/user.vue';
-import storeList from '../components/store/storeList.vue'
-import storeIndex from '../components/store/storeIndex.vue'
 
-import services from '../components/list/services.vue'
-import sifco from '../components/list/sifco.vue'
-
-import us from '../components/us/us.vue';
-import cart from '../components/cart/cart.vue'
+import main from '../view/main.vue'; // 商品展示、会员中心展示页
+import user from '../view/user.vue'; // 登录、注册、忘记密码展示页
+import storeList from '../view/store/storeList.vue'
+import storeIndex from '../view/store/storeIndex.vue'
 
 
+import services from '../view/list/services.vue'
+import sifco from '../view/list/sifco.vue'
+
+import us from '../view/us/us.vue';
+import cart from '../view/cart/cart.vue'
+
+import index from '../view/index/index'
 
 Vue.use(Router);
 
 export default new Router({
-  routes: [
-    
-    {
-
-      path: '/services',
-      name: 'services',
-      component: services
-    },
-    {
-      path: '/sifco',
-      name: 'sifco',
-      component: sifco
-    },
-    {
-
-      path: '/storeList',
-      name: 'storeList',
-      component: storeList
-    },
-    {
+  routes: [{
       path: '/',
       name: 'Main',
       component: main,
+      children: [{
+          path: '/index',
+          name: 'index',
+          alias: '/',
+          component: index,
+        },
+        {
+
+          path: '/services',
+          name: 'services',
+          component: services
+        },
+        {
+          path: '/sifco',
+          name: 'sifco',
+          component: sifco
+        },
+        {
+
+          path: '/storeList',
+          name: 'storeList',
+          component: storeList
+        },
+        // 加盟我们{
+        {
+          path: '/us',
+          name: 'us',
+          component: us
+        }
+      ]
     },
-    // 加盟我们{
-    {
-      path: '/us',
-      name: 'us',
-      component: us
-    },
-    // }
-    // 购物车{
-    {
-      path: '/cart',
-      name: 'cart',
-      component: cart
-    },
-    // }
     {
       path: '/user',
       name: 'User',
       component: user
-    },
-    {
-      path: '/storeIndex',
-      name: 'storeIndex',
-      component: storeIndex
     }
   ]
 })
