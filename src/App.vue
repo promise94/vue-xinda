@@ -7,7 +7,6 @@
 
 <script>
 // import backtop from './components/global';
-console.log(backtop);
 export default {
   name: 'app'
 }
