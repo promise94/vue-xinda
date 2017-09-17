@@ -49,6 +49,12 @@ export default new Router({
           name: 'storeList',
           component: storeList
         },
+        {
+
+          path: '/storeIndex',
+          name: 'storeIndex',
+          component: storeIndex
+        },
         // 加盟我们{
         {
           path: '/us',
