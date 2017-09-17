@@ -12,7 +12,7 @@
 export default {
     data() {
         return {
-            link: {'/':'全部产品', 'services':'财税服务', 'services':'公司工商', 'us':'加盟我们', 'storeList':'店铺'},
+            link: {'/':'全部产品', 'services':'财税服务', 'sifco':'公司工商', 'us':'加盟我们', 'storeList':'店铺'},
             index: '',
         }
     },
