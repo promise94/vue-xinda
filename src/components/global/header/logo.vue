@@ -1,7 +1,7 @@
 <template>
     <div class="container hd-content">
         <div class="logo">
-            <a href="javascript:;">
+            <a @click="goto('/')" href="javascript:;">
                 <img src="../../../common/images/logo.png" alt="">信达
             </a>
             <div>
@@ -36,7 +36,12 @@
 
 <script>
 export default {
-    name: 'logo'
+    name: 'logo',
+    methods: {
+        goto(url){
+            this.$router.push(url);
+        }
+    }
 };
 </script>
 

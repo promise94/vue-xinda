@@ -3,20 +3,20 @@
         <div class="container content">
             <div>
                 <div class="user" v-show="state === 1">
-                    <span>13800138000</span>
+                    <span>{{userName}}</span>
                 </div>
                 <span>欢迎来到信达！</span>
                 <div v-show="state === 0">
-                    <a href="javascript:;">登录</a>
-                    <a href="javascript:;">快速注册</a>
+                    <a @click="goto('/user/login')" href="javascript:;">登录</a>
+                    <a @click="goto('/user/register')" href="javascript:;">快速注册</a>
                 </div>
-                <a class="user" href="javascript:;">【退出】</a>
+                <a v-show="state === 1" @click="logout" class="user" href="javascript:;">【退出】</a>
             </div>
             <div class="shop">
                 <p>
                     <i class="xd xd-cart"></i>购物车
                     <span>0</span>件</p>
-                <div class="order">
+                <div class="order" v-show="state === 1">
                     <span class="xd xd-wodedingdan"></span>
                     <span>我的订单</span>
                 </div>
@@ -33,8 +33,35 @@ export default {
     name: 'top',
     data() {
         return {
-            state: 1
+            state: 0,
+            userName: '',
+            user: ''
         }
+    },
+    created() {
+        this.getUser();
+    },
+    methods: {
+        logout() {
+            sessionStorage.removeItem('users');
+            this.getUser();
+        },
+        getUser() {
+            this.user = JSON.parse(sessionStorage.getItem('users'));
+            if (this.user) {
+                this.state = 1;
+                this.userName = this.user.call;
+            } else {
+                this.state = 0;
+                this.userName = '';
+            }
+        },
+        goto(url){
+            this.$router.push(url);
+        }
+    },
+    watch: {
+
     }
 };
 </script>
