@@ -46,11 +46,11 @@
         <div class="store">
           <div class="imgs">
             <div>
-              <img src="../../common/images/u3638.png" alt="">
+              <img src="../../common/images/logo.png" alt="">
               <p>信达</p>
             </div>
             <div>
-              <img src="../../common/images/u3638.png" alt="">
+              <img src="../../common/images/logo.png" alt="">
               <p>金牌服务商</p>
             </div>
           </div>
@@ -61,7 +61,7 @@
             <p>北京-北京市-朝阳区</p>
             <div>
               <p>累计服务客户次数&nbsp;：&nbsp;<span>8272</span></p>
-              <span class="xd xd-shouye_shugang_shijiantixing">|</span>
+              <span class="xd xd-shouye_shugang_shijiantixing"></span>
               <p>好评率&nbsp;：&nbsp;<span>100%</span></p>
             </div>
             <ul>
@@ -70,18 +70,18 @@
               <li>个人社保</li>
               <li>公司变更</li>
             </ul>
-            <button>进入店铺</button>
+            <a href="#/storeIndex" >进入店铺</a>
           </div>
         </div>
 
         <div class="store">
           <div class="imgs">
             <div>
-              <img src="../../common/images/u3638.png" alt="">
+              <img src="../../common/images/logo.png" alt="">
               <p>信达</p>
             </div>
             <div>
-              <img src="../../common/images/u3638.png" alt="">
+              <img src="../../common/images/logo.png" alt="">
               <p>金牌服务商</p>
             </div>
           </div>
@@ -92,7 +92,7 @@
             <p>北京-北京市-朝阳区</p>
             <div>
               <p>累计服务客户次数&nbsp;：&nbsp;<span>8272</span></p>
-              <span class="xd xd-shouye_shugang_shijiantixing">|</span>
+              <span class="xd xd-shouye_shugang_shijiantixing"></span>
               <p>好评率&nbsp;：&nbsp;<span>100%</span></p>
             </div>
             <ul>
@@ -101,19 +101,24 @@
               <li>个人社保</li>
               <li>公司变更</li>
             </ul>
-            <button>进入店铺</button>
+            <a href="#/storeIndex">进入店铺</a>
           </div>
         </div>
-
       </div>
     </div>
-    <router-view></router-view>
+    
+    <div class="page-changes">
+      <pagingQuery></pagingQuery> 
+    </div>
+  
   </div>
 </template>
 
 <script>
+import pagingQuery from './pagingQuery';
 export default {
   name: 'storeList',
+  
   data(){
     return {
       checked: 1,
@@ -127,186 +132,60 @@ export default {
     blue(m){
       this.change = m;
     }
-  }
-}
+  },
+  components: {     
+      pagingQuery
+  },
+
+  getstorelist(){
+              this.$http({
+                  method: 'post',
+                  url: '/provider/grid',
+                  data: {
+                    start:0,
+                    limit:6,
+                    productTypeCode:10,
+                    regionId: 110102,
+                    sort:	1
+                  }
+              }).then((result)=>{
+                console.log("data===" data);
+                  let data = result.data.hq;
+                  // data.forEach(function(item) {
+                  //     item.marketPrice = item.marketPrice + '.00';
+                  // }, this);
+                  // this.recommend = data;
+                  
+              })
+          },
+          // showDetails(id){
+          //     console.log(id);
+          // }
+
+};
+
+
+
+// import axios from 'axios';
+
+// import qs from 'qs';
+
+// axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+
+// var canshu = qs.stringify({
+//     id: '0cb85ec6b63b41fc8aa07133b6144ea3',
+//     num: 1,
+// });
+// axios.post('http://115.182.107.203:8088/xinda/xinda-api/cart/add', canshu, {})
+//     .then(function(data) {
+//         console.log('axios data', data);
+//     })
+//     .catch(function(error) {
+//         console.log('axios error', error);
+//     });
 </script>
 
 <style lang="less" scoped>
-#storeList{
-  font-size:14px;
-  width:1200px;
-  margin:0 auto;
-  a{
-    color:#000;
-    text-decoration:none;
-  }
-  .chance{
-    margin:25px 0 8px 0;
-  }
-  .area-type{
-    width:1200px;
-    background:#f7f7f7;
-    border:1px solid #cccccc;
-    >div>div{   
-      border:1px solid #cccccc;
-    }
-    >div:nth-child(1){
-      width:1200px;
-      display:flex;
-      >div:nth-child(1){
-        font-size:18px;
-        width:100px;
-        height:45px;
-        line-height:45px;
-        text-align:center;
-      }
-      >div:nth-child(2){
-        padding-left:15px;
-        line-height:45px;
-        width:1100px;
-      }
-    }
-    >div:nth-child(2){
-      width:1200px;
-      display:flex;
-      >div:nth-child(1){
-        font-size:18px;
-        width:100px;
-        height:45px;
-        line-height:45px;
-        text-align:center;
-      }
-      >div:nth-child(2){
-        padding-left:15px;
-        width:1100px;
-        ul{
-          display:flex;
-          li{
-            width:80px;
-            height:25px;
-            line-height:25px;
-            margin:10px 2px;
-            text-align:center;
-            border-radius:6px;
-            cursor:pointer;
-            &:hover{
-              background:#2594d4;
-              color:#fff;
-            }
-          }
-          .all{
-            color:#fff;
-            background:#2594d4;
-          }
-        }
-      }
-    }
-  }
-  .mainBox{
-    width:1200px;
-    margin:25px 0;
-    border:1px solid #cccccc;
-    .order{
-      width:1200px;
-      display:flex;
-      background:#f7f7f7;
-      border-bottom:1px solid #cccccc;
-      >div{
-        width:110px;
-        height:42px;
-        line-height:42px;
-        margin-right:5px;
-        position:relative;
-        text-align:center;  
-        &:hover{
-          background:#2594d4;
-          color:#fff;
-        } 
-      }
-      .blue{
-        color:#fff;
-        background:#2594d4;
-        >div{
-          width:10px;
-          height:10px;
-          transform:rotate(45deg);
-          background:#2594d4;
-          position:absolute;
-          left:50px;
-          bottom:-5px;
-        }
-      } 
-    }
-    .main{
-      width:1200px;
-      display:flex;
-      justify-content:space-between;
-      flex-wrap:wrap;
-      .store{
-        width:568px;
-        height:252px;
-        margin:15px;
-        border:1px solid #cccccc;
-        display:flex;
-        .imgs{
-          width:200px;
-          height:252px;
-          
-          div:nth-child(1){
-            margin:75px 35px 60px 35px;
-            display:flex;
-            img{
-              width:55px;
-              height:55px;
-              margin-right:10px;
-            }
-            p{
-              font-size:30px;
-            }
-          }
-          div:nth-child(2){
-            margin:0 35px 0 45px;
-            display:flex;
-            img{
-              width:35px;
-              height:30px;
-              margin-right:10px;
-            }  
-          }
-          
-        }
-        .text{
-          height:252px;
-          padding:20px 0;
-          line-height:28px;
-          >div{
-            display:flex;
-            >span{
-              margin:0 35px 0 20px;
-            }
-          }
-          ul{
-            margin:10px 0;
-            display:flex;
-            li{  
-              padding:0 10px;
-              margin-right:5px;
-              background:#2594d4;
-              color:#fff;
-              border-radius:5px;
-            }
-          }
-          button{
-            color:#fff;
-            margin-top:25px;
-            padding:8px 24px;
-            background:#ff5b1b;
-            border:0;
-            border-radius:5px;
-          }
-        }
-      }
-    }
-  }
-}
+@import '../../common/less/store/storeList.less';
+
 </style>
