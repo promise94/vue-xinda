@@ -1,10 +1,10 @@
 <template>
   <div id="storeIndex" class="container">
     <div class="logosay">
-      <img src="../../common/images/logo.png" alt="">
+      <img v-bind:src="date.providerImg">
       <div>
-        <h1>信达北京服务中心</h1>
-        <p>北京-北京市-朝阳区</p>
+        <h1>{{date.name}}</h1>
+        <p>{{date.regionName}}</p>
       </div>
     </div>
 
@@ -12,7 +12,7 @@
       <div class="introduce">
         <div class="text">
           <p>公司介绍</p>
-          <span>为给客户提供更加标准化的体验，信达北京服务中心采用自营模式，打造一站式企业服务平台，帮助企业快速解决发展遇到的问题，提供工商注册，财税服务，知识产权，人事外包，证件办理等全方位企业解决方案，为你的企业发展保驾护航。</span>
+          <span>{{date.providerInfo}}</span>
         </div>
         <div class="assure">
           <div>
@@ -43,69 +43,15 @@
           <div v-show="check === 1">
             <h1>服务内容</h1>
             <div class="message">
-              <div class="mess">
-                <p>商标快速注册通道（5个小时之后即可成功）</p>
+              <div class="mess" v-for="item of mess">
+                <p>{{item.serviceInfo}}</p>
                 <div><span></span><span></span></div>
-                <p>为给客户提供更加标准化</p>
-                <p>销量：<span></span></p>
-                <div>￥<span>1400.00</span></div>
+                <p>{{item.serviceName}}</p>
+                <p>销量：<span>{{item.buyNum}}</span></p>
+                <div>￥<span>{{fmtPrice(item.price)}}</span></div>
                 <div>
-                  <div>原价：￥<span>2000.00</span>&nbsp;&nbsp;</div>
-                  <a href="#/storeList">查看详情>>></a>
-                </div>
-              </div>
-              <div class="mess">
-                <p>商标快速注册通道（5个小时之后即可成功）</p>
-                <div><span></span><span></span></div>
-                <p>为给客户提供更加标准化</p>
-                <p>销量：<span></span></p>
-                <div>￥<span>1400.00</span></div>
-                <div>
-                  <div>原价：￥<span>2000.00</span>&nbsp;&nbsp;</div>
-                  <a href="#/storeList">查看详情>>></a>
-                </div>
-              </div>
-              <div class="mess">
-                <p>商标快速注册通道（5个小时之后即可成功）</p>
-                <div><span></span><span></span></div>
-                <p>为给客户提供更加标准化</p>
-                <p>销量：<span></span></p>
-                <div>￥<span>1400.00</span></div>
-                <div>
-                  <div>原价：￥<span>2000.00</span>&nbsp;&nbsp;</div>
-                  <a href="#/storeList">查看详情>>></a>
-                </div>
-              </div>
-              <div class="mess">
-                <p>商标快速注册通道（5个小时之后即可成功）</p>
-                <div><span></span><span></span></div>
-                <p>为给客户提供更加标准化</p>
-                <p>销量：<span></span></p>
-                <div>￥<span>1400.00</span></div>
-                <div>
-                  <div>原价：￥<span>2000.00</span>&nbsp;&nbsp;</div>
-                  <a href="#/storeList">查看详情>>></a>
-                </div>
-              </div>
-              <div class="mess">
-                <p>商标快速注册通道（5个小时之后即可成功）</p>
-                <div><span></span><span></span></div>
-                <p>为给客户提供更加标准化</p>
-                <p>销量：<span></span></p>
-                <div>￥<span>1400.00</span></div>
-                <div>
-                  <div>原价：￥<span>2000.00</span>&nbsp;&nbsp;</div>
-                  <a href="#/storeList">查看详情>>></a>
-                </div>
-              </div>
-              <div class="mess">
-                <p>商标快速注册通道（5个小时之后即可成功）</p>
-                <div><span></span><span></span></div>
-                <p>为给客户提供更加标准化</p>
-                <p>销量：<span></span></p>
-                <div>￥<span>1400.00</span></div>
-                <div>
-                  <div>原价：￥<span>2000.00</span>&nbsp;&nbsp;</div>
+                  <div>原价：￥<span>{{fmtPrice(item.marketPrice)}}</span>&nbsp;&nbsp;</div>
+                  <!--  -->
                   <a href="#/storeList">查看详情>>></a>
                 </div>
               </div>
@@ -113,17 +59,15 @@
           </div>
           
           <div v-show="check === 2">
-            <h1>工作时间：</h1>
-            <!-- {{item.workTime}} -->
+            <h1>工作时间：{{date.workTime}}</h1>
             <div>
-              <h1>QQ咨询：</h1>
-              <img src="../../common/images/logo.png" alt="">
+              <h1>QQ咨询：{{date.qq}}</h1></br>
+              
             </div>
           </div>
 
           <div v-show="check === 3">
-            <img src="">
-            <!-- <img v-bind:src="item.businessCertPath"> -->
+            <img v-bind:src="date.businessCertPath">
           </div>
 
         </div>
@@ -145,7 +89,7 @@ export default {
     return {
       check: 1,
       mess: '',
-      id:'',
+      date: '',
 
     }
   },
@@ -154,46 +98,55 @@ export default {
 
     this.$http({
                   method: 'post',
-                  url: '/provider/grid',
+                  url: '/provider/detail',
                   data: {
-                    id:this.$route.query.storeCode,
+                    id: this.$route.query.storeCode,
                   }
               }).then((res)=>{
-                let data = res;
-                console.log(data.data);
-                console.log(this.$route.query.storeCode);
-                // for(var i=0;i<data.length;i++){
-                //   
-                //   data[i].businessCertPath.substring(0,3)=='http'?data[i].businessCertPath=data[i].businessCertPath:data[i].businessCertPath="http://115.182.107.203:8088/xinda/pic"+data[i].businessCertPath;
-
+                 this.date = res.data;
+                 
+                 // 服务商头像图片数据处理，加上前缀
+                 this.date.providerImg.substring(0,3)=='http'?this.date.providerImg=this.date.providerImg:this.date.providerImg="http://115.182.107.203:8088/xinda/pic"+this.date.providerImg;
+                 //营业执照图片数据处理，加上前缀
+                 this.date.businessCertPath.substring(0,3)=='http'?this.date.businessCertPath=this.date.businessCertPath:this.date.businessCertPath="http://115.182.107.203:8088/xinda/pic"+this.date.businessCertPath;
                 
+                //  console.log(this.date);
 
-                //   console.log(this.types);                
-                // };
-
-                this.mess = data;
-                
-                
-
-
-
-                //  address[0] = data[0].regionName;
-                //  data.foreach(function(item) {
-                //       item.address[0] = item.regionName;
-                //   }, this);
-                  // let data = result.data.hq;
-                  // data.foreach(function(item) {
-                  //     item.marketprice = item.marketprice + '.00';
-                  // }, this);
-                  // this.recommend = data;
                   
+              }),
+
+
+              this.$http({
+                  method: 'post',
+                  url: '/product/package/grid',
+                  data: {
+                    start:0,
+                    limit:8,
+                    productTypeCode: "1",
+                    productId: "8a82f52b674543e298d2e5f685946e6e",
+                    sort:2,
+                  }
+              }).then((res)=>{
+                this.mess = res.data;
+                this.mess.marketPrice=this.fmtPrice(this.mess.marketPrice);//处理市场价格余两位数
+                this.mess.price=this.fmtPrice(this.mess.price);//处理销售价格余两位数
+
+                // console.log(this.mess);
+  
               })
+
+               
   },
 
   methods: {
     blues(n){
       this.check = n;
     },
+
+    //函数处理价格，余两位数
+                fmtPrice(p) {
+                  return (parseFloat(p) * 0.01).toFixed(2);
+                }
    
   },
   components: {

@@ -13,17 +13,17 @@
         <div class="type-left">产品类型</div>
         <div class="type-center">
           <ul>
-            <li @click="blueColor(1)" :class="{all: checked ===1}">所有</li>
-            <li @click="blueColor(2)" :class="{all: checked ===2}">专利申请</li>
-            <li @click="blueColor(3)" :class="{all: checked ===3}">版权保护</li>
-            <li @click="blueColor(4)" :class="{all: checked ===4}">商标注册</li>
-            <li @click="blueColor(5)" :class="{all: checked ===5}">代理记账</li>
-            <li @click="blueColor(6)" :class="{all: checked ===6}">公司注册</li>
-            <li @click="blueColor(7)" :class="{all: checked ===7}">企业社保</li>
-            <li @click="blueColor(8)" :class="{all: checked ===8}">公司变更</li>
-            <li @click="blueColor(9)" :class="{all: checked ===9}">税务代办</li>
-            <li @click="blueColor(10)" :class="{all: checked ===10}">个人社保</li>
-            <li @click="blueColor(11)" :class="{all: checked ===11}">审计报告</li>
+            <li @click="blueColor('所有')" :class="{all: checked ==='所有'}">所有</li>
+            <li @click="blueColor('专利申请')" :class="{all: checked ==='专利申请'}">专利申请</li>
+            <li @click="blueColor('版权保护')" :class="{all: checked ==='版权保护'}">版权保护</li>
+            <li @click="blueColor('商标注册')" :class="{all: checked ==='商标注册'}">商标注册</li>
+            <li @click="blueColor('代理记账')" :class="{all: checked ==='代理记账'}">代理记账</li>
+            <li @click="blueColor('公司注册')" :class="{all: checked ==='公司注册'}">公司注册</li>
+            <li @click="blueColor('企业社保')" :class="{all: checked ==='企业社保'}">企业社保</li>
+            <li @click="blueColor('公司变更')" :class="{all: checked ==='公司变更'}">公司变更</li>
+            <li @click="blueColor('税务代办')" :class="{all: checked ==='税务代办'}">税务代办</li>
+            <li @click="blueColor('个人社保')" :class="{all: checked ==='个人社保'}">个人社保</li>
+            <li @click="blueColor('审计报告')" :class="{all: checked ==='审计报告'}">审计报告</li>
           </ul>
         </div>
       </div>
@@ -107,7 +107,7 @@ export default {
 
   data() {
     return {
-      checked: 1,
+      checked: '所有',
       change: 1,
       arr: '',
 
