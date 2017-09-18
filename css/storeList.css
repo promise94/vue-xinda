@@ -113,21 +113,20 @@
 }
 #storeList .mainBox .main .store {
   width: 568px;
-  height: 252px;
+  height: 300px;
   margin: 15px;
   border: 1px solid #cccccc;
   display: flex;
 }
 #storeList .mainBox .main .store .imgs {
   width: 200px;
-  height: 252px;
 }
 #storeList .mainBox .main .store .imgs div:nth-child(1) {
-  margin: 75px 35px 60px 35px;
+  margin: 75px 0 60px 35px;
   display: flex;
 }
 #storeList .mainBox .main .store .imgs div:nth-child(1) img {
-  width: 55px;
+  width: 115px;
   height: 55px;
   margin-right: 10px;
 }
@@ -135,7 +134,7 @@
   font-size: 30px;
 }
 #storeList .mainBox .main .store .imgs div:nth-child(2) {
-  margin: 0 35px 0 45px;
+  margin-left: 45px;
   display: flex;
 }
 #storeList .mainBox .main .store .imgs div:nth-child(2) img {
@@ -144,9 +143,15 @@
   margin-right: 10px;
 }
 #storeList .mainBox .main .store .text {
-  height: 252px;
+  width: 368px;
   padding: 20px 0;
   line-height: 28px;
+}
+#storeList .mainBox .main .store .text > p span {
+  color: red;
+}
+#storeList .mainBox .main .store .text > p span:last-child {
+  color: #000;
 }
 #storeList .mainBox .main .store .text > div {
   display: flex;
@@ -155,12 +160,15 @@
   margin: 0 35px 0 20px;
 }
 #storeList .mainBox .main .store .text ul {
+  height: 66px;
   margin: 10px 0;
   display: flex;
+  flex-wrap: wrap;
 }
 #storeList .mainBox .main .store .text ul li {
-  padding: 0 10px;
-  margin-right: 5px;
+  height: 28px;
+  padding: 0 5px;
+  margin: 0 5px 5px 0;
   background: #2594d4;
   color: #fff;
   border-radius: 5px;
@@ -168,15 +176,15 @@
 #storeList .mainBox .main .store .text a {
   display: inline-block;
   color: #fff;
-  margin-top: 25px;
+  margin-top: 15px;
   padding: 8px 24px;
   background: #ff5b1b;
   border: 0;
   border-radius: 5px;
+  cursor: pointer;
 }
 #storeList .page-changes {
   width: 660px;
-  margin-top: 25px;
-  margin: 0 auto;
+  margin: 25px auto 150px;
   text-align: center;
 }

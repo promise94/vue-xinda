@@ -113,7 +113,8 @@
           </div>
           
           <div v-show="check === 2">
-            <h1>工作时间：周一到周五</h1>
+            <h1>工作时间：</h1>
+            <!-- {{item.workTime}} -->
             <div>
               <h1>QQ咨询：</h1>
               <img src="../../common/images/logo.png" alt="">
@@ -121,7 +122,8 @@
           </div>
 
           <div v-show="check === 3">
-            <img src="../../common/images/logo.png" alt="">
+            <img src="">
+            <!-- <img v-bind:src="item.businessCertPath"> -->
           </div>
 
         </div>
@@ -141,9 +143,53 @@ export default {
   name: 'storeIndex',
   data(){
     return {
-      check: 1
+      check: 1,
+      mess: '',
+      id:'',
+
     }
   },
+  //axios后台数据获取
+  created() {
+
+    this.$http({
+                  method: 'post',
+                  url: '/provider/grid',
+                  data: {
+                    id:this.$route.query.storeCode,
+                  }
+              }).then((res)=>{
+                let data = res;
+                console.log(data.data);
+                console.log(this.$route.query.storeCode);
+                // for(var i=0;i<data.length;i++){
+                //   
+                //   data[i].businessCertPath.substring(0,3)=='http'?data[i].businessCertPath=data[i].businessCertPath:data[i].businessCertPath="http://115.182.107.203:8088/xinda/pic"+data[i].businessCertPath;
+
+                
+
+                //   console.log(this.types);                
+                // };
+
+                this.mess = data;
+                
+                
+
+
+
+                //  address[0] = data[0].regionName;
+                //  data.foreach(function(item) {
+                //       item.address[0] = item.regionName;
+                //   }, this);
+                  // let data = result.data.hq;
+                  // data.foreach(function(item) {
+                  //     item.marketprice = item.marketprice + '.00';
+                  // }, this);
+                  // this.recommend = data;
+                  
+              })
+  },
+
   methods: {
     blues(n){
       this.check = n;
