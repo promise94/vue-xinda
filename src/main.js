@@ -8,7 +8,7 @@ import Qs from 'qs';
 
 Vue.config.productionTip = false;
 /* axios 全局配置 */
-axios.defaults.baseURL = 'http://115.182.107.203:8088/xinda/xinda-api';
+axios.defaults.baseURL = '/xinda-api';
 axios.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
 axios.interceptors.request.use((config) => {
   config.method == 'post' ? config.data = Qs.stringify(config.data) : '';
