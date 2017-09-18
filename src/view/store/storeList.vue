@@ -93,10 +93,7 @@
 
     <div class="page-changes">
       <pagingQuery></pagingQuery>
-<<<<<<< HEAD
       
-=======
->>>>>>> 60c498e5c7d829a0a82c6f046996b973bf0669d0
     </div>
 
   </div>
@@ -167,14 +164,9 @@ export default {
       this.$router.push({ path: '/storeIndex', query: { storeCode: id } });
     }
   },
-<<<<<<< HEAD
   components: {     
       pagingQuery,
       province
-=======
-  components: {
-    pagingQuery
->>>>>>> 60c498e5c7d829a0a82c6f046996b973bf0669d0
   },
 
 };
