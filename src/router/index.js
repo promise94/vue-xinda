@@ -10,8 +10,10 @@ import sifco from '../view/list/sifco.vue'
 
 import us from '../view/us/us.vue';
 import cart from '../view/cart/cart.vue'
-
+// 首页
 import index from '../view/index/index'
+// 商品详情页
+import goods from '../view/goods/goods'
 
 Vue.use(Router);
 
@@ -20,11 +22,20 @@ export default new Router({
       path: '/',
       name: 'Main',
       component: main,
-      children: [{
+      children: [
+        // 首页
+        {
           path: '/index',
           name: 'index',
           alias: '/',
           component: index,
+        },
+        // 商品详情页
+        {
+          path: '/goods',
+          name: 'goods',
+          
+          component: goods,
         },
         {
 
