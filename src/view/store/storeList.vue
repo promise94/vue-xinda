@@ -7,7 +7,7 @@
     <div class="area-type">
       <div class="area">
         <div class="area-left">服务区域</div>
-        <div class="area-center"><province></province> </div>
+        <div class="area-center"><province @province="getProv"></province> </div>
       </div>
       <div class="type">
         <div class="type-left">产品类型</div>
@@ -162,6 +162,9 @@ export default {
     //跳转页面
     gotoStore(id) {
       this.$router.push({ path: '/storeIndex', query: { storeCode: id } });
+    },
+    getProv(pro){
+      console.log(pro);
     }
   },
   components: {     
