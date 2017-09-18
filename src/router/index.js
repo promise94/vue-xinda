@@ -4,8 +4,8 @@ import main from '@/view/main.vue'; // 商品展示、会员中心展示页
 import user from '@/view/user.vue'; // 登录、注册、忘记密码展示页
 import index from '@/view/index/index';
 
-import services from '@/view/list/services.vue';
-import sifco from '@/view/list/sifco.vue';
+import services from '@/view/list/services.vue';//纳税服务
+import sifco from '@/view/list/sifco.vue';//公司工商
 import us from '@/view/us/us.vue';
 import storeList from '@/view/store/storeList.vue';
 import storeIndex from '@/view/store/storeIndex.vue';
@@ -33,8 +33,7 @@ export default new Router({
           component: index,
         },
         {
-
-          path: '/services',
+          path: '/',
           name: 'services',
           component: services
         },

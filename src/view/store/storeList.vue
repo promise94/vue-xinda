@@ -149,7 +149,7 @@ export default {
                     sort:	1
                   }
               }).then((result)=>{
-                console.log("data===" data);
+                console.log("data===", data);
                   let data = result.data.hq;
                   // data.forEach(function(item) {
                   //     item.marketPrice = item.marketPrice + '.00';

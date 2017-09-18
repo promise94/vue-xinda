@@ -3,15 +3,15 @@
         <div class="middle-two">
             <div class="content">
                 <div class="content-top">
-                    <p>首页/纳税服务</p>
+                    <p>首页/公司工商</p>
                 </div>
                 <div class="content-center">
                     <div class="search">
-                        <div class="">
+                        <div>
                             <h3>服务分类</h3>
                             <ul class="search-one">
-                                <li>公司注册</li>
-                                <li>注册变更</li>
+                                <li @click="clicke">公司注册</li>
+                                <li @click="clicke">注册变更</li>
                             </ul>
                         </div>
                         <div class="search-two">
@@ -19,14 +19,14 @@
                                 <h3>类型</h3>
                             </div>
                             <ul>
-                                <li>分公司注册</li>
-                                <li>公司注册地址</li>
-                                <li>合伙企业注册</li>
-                                <li>外商独资公司注册</li>
-                                <li>VIE架构</li>
-                                <li>股份公司注册</li>
-                                <li>有限责任公司注册</li><br/>
-                                <li>一般纳税注册地址</li>
+                                <li @click="unfold">分公司注册</li>
+                                <li @click="unfold">公司注册地址</li>
+                                <li @click="unfold">合伙企业注册</li>
+                                <li @click="unfold">外商独资公司注册</li>
+                                <li @click="unfold">VIE架构</li>
+                                <li @click="unfold">股份公司注册</li>
+                                <li @click="unfold">有限责任公司注册</li><br/>
+                                <li @click="unfold">一般纳税注册地址</li>
                             </ul>
                         </div>
                         <div class="">
@@ -54,30 +54,30 @@
                         </ul>
                     </div>
                     <div class="ball-two">
-                        <div class="bell" id="commodity">
+                        <ul class="bell" id="commodity">
                             <div>
                                 <img src="../../common/images/logo.png" alt="">
                             </div>
                             <ul>
                                 <li class="fang-one">注册分公司</li>
                                 <li class="fang-two">营业执照+5章（公章，财务章，人名章，发票章，合同章）</li>
-                                <div>
-                                    <p>信达北京服务中心</p>
-                                    <p>北京-北京市-朝阳区</p>
-                                </div>
-
+                                <ul class="fack">
+                                    <li>信达北京服务中心</li>
+                                    <li>北京-北京市-朝阳区</li>
+                                </ul>
                             </ul>
-                        </div>
-                        <div class="bell-two">
+                        </ul>
+                        <div class="bead-two">
                             <div>
                                 <p>￥&nbsp;800.00</p>
                             </div>
                             <ul>
                                 <a href="pay.vue">立即购买</a>
-                                <a href="">加入购物车</a>
+                                <a>加入购物车</a>
                             </ul>
                         </div>
                     </div>
+
                 </div>
             </div>
             <div class="picture">
@@ -95,10 +95,41 @@
 </template>
 
 <script>
+// var company = new Vue({
+//     el: '.ball-two',
+//     data: {
+//         start: 0,
+//         limit: 8,
+//         productTypeCode: "1",
+//         productId: "8a82f52b674543e298d2e5f685946e6e",
+//         sort: 2
+//     },
+//     created: function() {
+//         var url = "/product/package/grid";
+//         this.$http.get(url).then(function(data) {
+//             var json = data.body;
+//             this.data = eval("(" + json + ")");
+//         })
+//     }
+// });
+//  new Vue({
+//         el: '.serch-one',
+//         data: {
+//           message: ' '
+//         },
+//         methods: {
+//           say: function(msg, event) { 
+//             //获取点击对象   
+//             var el = event.currentTarget;
+//             var clicke = $(el).next().text();
+//             alert(" "+$(el).text()+"background-color:#2693d4; "+clicke);
+//           }
+//         }
+//       })
 export default {
     data() {
         return {
-            
+
         }
     }
 }
@@ -107,7 +138,6 @@ export default {
 <style lang="less">
 .middle {
     width: 1200px;
-    height: 678px;
     margin: 26px auto;
     .middle-two {
         display: flex;
@@ -115,7 +145,6 @@ export default {
     }
     .content {
         width: 948px;
-        height: 678px;
         .content-top {
             width: 948px;
             height: 0;
@@ -128,18 +157,19 @@ export default {
             margin-top: 24px;
             .search {
                 height: 162px;
+                background-color: #f7f7f7;
                 >div {
                     display: flex;
                     .search-one {
                         display: flex;
                         border-left: 0;
                         >li {
-                            margin: 12px 10px;
+                            line-height: 41px;
+                            margin: 3px 10px;
                         }
                     }
                     >h3 {
                         width: 98px;
-                        height: 40px;
                         font-size: 16px;
                         text-align: center;
                         line-height: 40px;
@@ -151,14 +181,18 @@ export default {
                         height: 40px;
                         border: 1px solid #ccc;
                         >li {
-                            color: #434343;
+                             width: 80px;
+                            height: 35px;
+                            color: white;
+                            text-align: center;
+                            border-radius: 12px;
+                            background-color: #2693d4;
                             font-size: 13px;
                         }
                     }
                 }
                 .search-two {
                     width: 946px;
-                    height: 80px;
                     border-left: 1px solid #ccc;
                     border-right: 1px solid #ccc;
                     >div {
@@ -169,12 +203,13 @@ export default {
                     }
                     >ul {
                         height: 80px;
-                        line-height: 56px;
                         border-right: 0;
                         border-top: 0;
+                        border-bottom: 0;
                         display: flex;
                         >li {
-                            margin: 12px 10px;
+                            line-height: 40px;
+                            margin: 25px 10px;
                         }
                     }
                 }
@@ -182,7 +217,6 @@ export default {
         }
         .content-bottom {
             width: 948px;
-            height: 468px;
             margin-top: 23px;
             .ball {
                 height: 41px;
@@ -190,20 +224,21 @@ export default {
                 border: 1px solid #ccc;
                 >ul {
                     display: flex;
-                    width: 116px;
+                    width: 130px;
                     justify-content: space-between;
                     >li {
-                        margin-top: 10px;
                         font-size: 15px;
+                        color: white;
+                        background-color: #2693d4;
+                        width: 72px;
+                        line-height: 34px;
+                        text-align: center;
                     }
                     >span {
                         display: flex;
-                        margin-top: 10px;
                         font-size: 15px;
-                    }
-                    >li:nth-chlid(1) {
-                        width: 61px;
-                        background-color: #2693d4;
+                        height: 42px;
+                        line-height: 41px;
                     }
                 }
             }
@@ -214,6 +249,7 @@ export default {
                     width: 870px;
                     margin: 10px auto;
                     display: flex;
+                    line-height: 50px;
                     justify-content: space-between;
                 }
             }
@@ -249,19 +285,19 @@ export default {
                             margin-top: 22px;
                             font-size: 14px;
                         }
-                        >div {
+                        .fack {
                             width: 306px;
                             display: flex;
                             margin-top: 15px;
                             font-size: 14px;
                             justify-content: space-between;
-                            >p {
+                            >li {
                                 color: #676767;
                             }
                         }
                     }
                 }
-                .bell-two {
+                .bead-two {
                     margin: 11px 28px;
                     >div>p {
                         color: red;
