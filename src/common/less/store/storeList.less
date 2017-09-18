@@ -110,19 +110,17 @@
       flex-wrap:wrap;
       .store{
         width:568px;
-        height:252px;
+        height:300px;
         margin:15px;
         border:1px solid #cccccc;
         display:flex;
         .imgs{
           width:200px;
-          height:252px;
-          
           div:nth-child(1){
-            margin:75px 35px 60px 35px;
+            margin:75px 0 60px 35px;
             display:flex;
             img{
-              width:55px;
+              width:115px;
               height:55px;
               margin-right:10px;
             }
@@ -131,7 +129,7 @@
             }
           }
           div:nth-child(2){
-            margin:0 35px 0 45px;
+            margin-left: 45px;
             display:flex;
             img{
               width:35px;
@@ -142,9 +140,15 @@
           
         }
         .text{
-          height:252px;
+          width:368px;
           padding:20px 0;
           line-height:28px;
+          >p span{
+            color:red;
+            &:last-child{
+              color:#000;
+            }
+          }
           >div{
             display:flex;
             >span{
@@ -152,11 +156,14 @@
             }
           }
           ul{
+            height:66px;
             margin:10px 0;
             display:flex;
+            flex-wrap: wrap;
             li{  
-              padding:0 10px;
-              margin-right:5px;
+              height: 28px;
+              padding:0 5px;
+              margin:0 5px 5px 0;
               background:#2594d4;
               color:#fff;
               border-radius:5px;
@@ -165,11 +172,12 @@
           a{
             display: inline-block;
             color:#fff;
-            margin-top:25px;
+            margin-top:15px;
             padding:8px 24px;
             background:#ff5b1b;
             border:0;
             border-radius:5px;
+            cursor: pointer;
           }
         }
       }
@@ -177,8 +185,8 @@
   }
   .page-changes{
     width:660px;
-    margin-top:25px;
-    margin:0 auto;
+    margin:25px auto 150px;
     text-align:center;
   }
 }
+

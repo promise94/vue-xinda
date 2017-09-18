@@ -43,65 +43,32 @@
 
       <div class="main">
         
-        <div class="store">
+        <div class="store" v-for="item of arr">
           <div class="imgs">
             <div>
-              <img src="../../common/images/logo.png" alt="">
-              <p>信达</p>
+              <img v-bind:src="item.providerImg">
             </div>
             <div>
-              <img src="../../common/images/logo.png" alt="">
+              <img src="../../common/images/logo.png" alt="" >
               <p>金牌服务商</p>
             </div>
           </div>
 
           <div class="text">
-            <p>信达北京服务中心</p>
-            <p>信誉<span class="xd xd-dengji-copy"></span><span class="xd xd-dengji-copy"></span><span class="xd xd-dengji-copy"></span><span class="xd xd-dengji-copy"></span><span class="xd xd-dengji-copy"></span></p>
-            <p>北京-北京市-朝阳区</p>
+            <p>{{item.providerName}}</p>
+            <p>信誉:&nbsp;<span class="xd xd-dengji-copy-copy-copy"></span><span class="xd xd-dengji-copy-copy-copy"></span><span class="xd xd-dengji-copy-copy-copy"></span><span class="xd xd-dengji-copy-copy-copy"></span><span class="xd xd-dengji-copy-copy-copy"></span></p>
+            <p>{{item.regionName}}</p>
             <div>
-              <p>累计服务客户次数&nbsp;：&nbsp;<span>8272</span></p>
+              <p>累计服务客户次数&nbsp;：&nbsp;<span>{{item.orderNum}}</span></p>
               <span class="xd xd-shouye_shugang_shijiantixing"></span>
-              <p>好评率&nbsp;：&nbsp;<span>100%</span></p>
+              <p>好评率&nbsp;：&nbsp;<span>{{(item.goodJudge/item.totalJudge)*100+"%"}}</span></p>
             </div>
             <ul>
-              <li>税务代办</li>
-              <li>代理记账</li>
-              <li>个人社保</li>
-              <li>公司变更</li>
+              <li v-for="item of item.productTypes.split(',')">{{item}}</li>
+              <!--<li v-for="item of item.productTypes">{{item}}</li>  -->
+              
             </ul>
-            <a href="#/storeIndex" >进入店铺</a>
-          </div>
-        </div>
-
-        <div class="store">
-          <div class="imgs">
-            <div>
-              <img src="../../common/images/logo.png" alt="">
-              <p>信达</p>
-            </div>
-            <div>
-              <img src="../../common/images/logo.png" alt="">
-              <p>金牌服务商</p>
-            </div>
-          </div>
-
-          <div class="text">
-            <p>信达北京服务中心</p>
-            <p>信誉<span class="xd xd-dengji-copy"></span><span class="xd xd-dengji-copy"></span><span class="xd xd-dengji-copy"></span><span class="xd xd-dengji-copy"></span><span class="xd xd-dengji-copy"></span></p>
-            <p>北京-北京市-朝阳区</p>
-            <div>
-              <p>累计服务客户次数&nbsp;：&nbsp;<span>8272</span></p>
-              <span class="xd xd-shouye_shugang_shijiantixing"></span>
-              <p>好评率&nbsp;：&nbsp;<span>100%</span></p>
-            </div>
-            <ul>
-              <li>税务代办</li>
-              <li>代理记账</li>
-              <li>个人社保</li>
-              <li>公司变更</li>
-            </ul>
-            <a href="#/storeIndex">进入店铺</a>
+            <a @click="gotoStore(item.id)">进入店铺</a>
           </div>
         </div>
       </div>
@@ -122,8 +89,54 @@ export default {
   data(){
     return {
       checked: 1,
-      change: 1
+      change: 1,
+      arr: '',
+
+
     }
+  },
+  //axios后台数据获取
+  created() {
+
+    this.$http({
+                  method: 'post',
+                  url: '/provider/grid',
+                  data: {
+                    start:0,
+                    limit:6,
+                    producttypecode:10,
+                    regionid: 110102,
+                    sort:	1
+                  }
+              }).then((result)=>{
+                let data = result.data;
+                for(var i=0;i<data.length;i++){
+                  data[i].totalJudge==0?data[i].totalJudge=1:"";
+                  data[i].providerImg.substring(0,3)=='http'?data[i].providerImg=data[i].providerImg:data[i].providerImg="http://115.182.107.203:8088/xinda/pic"+data[i].providerImg;
+
+                  //作双层循环//
+                  // data[i].productTypes = data[i].productTypes.split(",");
+
+                  console.log(data);                
+                };
+
+                this.arr = data;
+                
+                
+
+
+
+                //  address[0] = data[0].regionName;
+                //  data.foreach(function(item) {
+                //       item.address[0] = item.regionName;
+                //   }, this);
+                  // let data = result.data.hq;
+                  // data.foreach(function(item) {
+                  //     item.marketprice = item.marketprice + '.00';
+                  // }, this);
+                  // this.recommend = data;
+                  
+              })
   },
   methods: {
     blueColor(n){
@@ -131,36 +144,16 @@ export default {
     },
     blue(m){
       this.change = m;
+    },
+    //跳转页面
+    gotoStore(id){
+      this.$router.push({path: '/storeIndex',query: {storeCode: id}});
     }
   },
   components: {     
       pagingQuery
   },
 
-  getstorelist(){
-              this.$http({
-                  method: 'post',
-                  url: '/provider/grid',
-                  data: {
-                    start:0,
-                    limit:6,
-                    productTypeCode:10,
-                    regionId: 110102,
-                    sort:	1
-                  }
-              }).then((result)=>{
-                console.log("data===" data);
-                  let data = result.data.hq;
-                  // data.forEach(function(item) {
-                  //     item.marketPrice = item.marketPrice + '.00';
-                  // }, this);
-                  // this.recommend = data;
-                  
-              })
-          },
-          // showDetails(id){
-          //     console.log(id);
-          // }
 
 };
 
