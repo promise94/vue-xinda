@@ -4,7 +4,7 @@
     <div class="area-type">
       <div class="area">
         <div class="area-left">服务区域</div>
-        <div class="area-center">省市区</div>
+        <div class="area-center"><province></province> </div>
       </div>
       <div class="type">
         <div class="type-left">产品类型</div>
@@ -75,7 +75,8 @@
     </div>
     
     <div class="page-changes">
-      <pagingQuery></pagingQuery> 
+      <pagingQuery></pagingQuery>
+      
     </div>
   
   </div>
@@ -83,6 +84,7 @@
 
 <script>
 import pagingQuery from './pagingQuery';
+import province from '../../components/global/province';
 export default {
   name: 'storeList',
   
@@ -105,7 +107,7 @@ export default {
                     start:0,
                     limit:6,
                     producttypecode:10,
-                    regionid: 110102,
+                    regionid: 110000,
                     sort:	1
                   }
               }).then((result)=>{
@@ -151,9 +153,9 @@ export default {
     }
   },
   components: {     
-      pagingQuery
+      pagingQuery,
+      province
   },
-
 
 };
 

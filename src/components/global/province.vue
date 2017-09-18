@@ -10952,6 +10952,7 @@ export default {
             prov: '北京市',
             city: '',
             area: '',
+            code: '',
         }
     },
     created() {
@@ -11000,6 +11001,7 @@ export default {
         prov() {
             this.upCity();
             this.upArea();
+            console.log('code',this.code);
         },
         city() {
             this.upArea();
