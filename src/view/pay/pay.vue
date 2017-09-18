@@ -29,7 +29,7 @@
                 </div>
                 <!-- 订单明细 -->
                 <div class="mingxi" v-if="willShow">
-                    <div class="container" >
+                    <div class="" >
                         <span>服务名称：
                             <a>注册分公司</a>
                         </span>
@@ -147,7 +147,7 @@
 let qs = require('qs');
 export default {
     created(){
-        this.getBusiness()
+        // this.getBusiness()
     },
     data() {
         return {
