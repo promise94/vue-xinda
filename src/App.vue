@@ -6,12 +6,11 @@
 
 <script>
 export default {
-  name: 'app'
+  name: 'app',
 }
 </script>
 
 <style lang = "less">
 @import url('./common/less/global/cssreset.less');
 @import url('./common/less/global/base.less');
-
 </style>

@@ -12,7 +12,7 @@
 export default {
     data() {
         return {
-            link: {'/':'全部产品', 'services':'财税服务', 'services':'公司工商', 'us':'加盟我们', 'storeList':'店铺'},
+            link: {'/':'全部产品', '/services':'财税服务', '/sifco':'公司工商', '/us':'加盟我们', '/storeList':'店铺'},
             index: '',
         }
     },
@@ -37,12 +37,14 @@ export default {
         margin-top: 15px;
         li {
             display: inline-block;
-            width: 200px; // padding: 5px 0;
+            width: 200px;
             font-size: 18px;
             text-align: center;
             >span {
                 display: inline-block;
+                height: 40px;
                 padding-bottom: 5px;
+                box-sizing: border-box;
                 cursor: pointer;
                 &:hover {
                     color: @color;
