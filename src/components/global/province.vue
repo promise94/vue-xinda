@@ -79,7 +79,6 @@ export default {
 
 <style lang="less" scoped>
 .prov {
-    padding: 5px;
     select {
         width: 150px;
         height: 25px;
