@@ -1,6 +1,9 @@
 <template>
   <div id="storeList">
-    <div class="chance"><a href="#/storeList">首页</a>&nbsp;/&nbsp;<a href="#/storeIndex">店铺列表</a></div>
+    <div class="chance">
+      <a href="#/storeList">首页</a>&nbsp;/&nbsp;
+      <a href="#/storeIndex">店铺列表</a>
+    </div>
     <div class="area-type">
       <div class="area">
         <div class="area-left">服务区域</div>
@@ -32,53 +35,70 @@
           <div></div>
         </div>
         <div @click="blue(2)" :class="{blue: change ===2}">
-          <p>价格<span class="xd xd-paixu"></span></p>
+          <p>价格
+            <span class="xd xd-paixu"></span>
+          </p>
           <div></div>
         </div>
         <div @click="blue(3)" :class="{blue: change ===3}">
-          <p>接单数<span class="xd xd-paixu"></span></p>
+          <p>接单数
+            <span class="xd xd-paixu"></span>
+          </p>
           <div></div>
         </div>
       </div>
 
       <div class="main">
-        
+
         <div class="store" v-for="item of arr">
           <div class="imgs">
             <div>
               <img v-bind:src="item.providerImg">
             </div>
             <div>
-              <img src="../../common/images/logo.png" alt="" >
+              <img src="../../common/images/logo.png" alt="">
               <p>金牌服务商</p>
             </div>
           </div>
 
           <div class="text">
             <p>{{item.providerName}}</p>
-            <p>信誉:&nbsp;<span class="xd xd-dengji-copy-copy-copy"></span><span class="xd xd-dengji-copy-copy-copy"></span><span class="xd xd-dengji-copy-copy-copy"></span><span class="xd xd-dengji-copy-copy-copy"></span><span class="xd xd-dengji-copy-copy-copy"></span></p>
+            <p>信誉:&nbsp;
+              <span class="xd xd-dengji-copy-copy-copy"></span>
+              <span class="xd xd-dengji-copy-copy-copy"></span>
+              <span class="xd xd-dengji-copy-copy-copy"></span>
+              <span class="xd xd-dengji-copy-copy-copy"></span>
+              <span class="xd xd-dengji-copy-copy-copy"></span>
+            </p>
             <p>{{item.regionName}}</p>
             <div>
-              <p>累计服务客户次数&nbsp;：&nbsp;<span>{{item.orderNum}}</span></p>
+              <p>累计服务客户次数&nbsp;：&nbsp;
+                <span>{{item.orderNum}}</span>
+              </p>
               <span class="xd xd-shouye_shugang_shijiantixing"></span>
-              <p>好评率&nbsp;：&nbsp;<span>{{(item.goodJudge/item.totalJudge)*100+"%"}}</span></p>
+              <p>好评率&nbsp;：&nbsp;
+                <span>{{(item.goodJudge/item.totalJudge)*100+"%"}}</span>
+              </p>
             </div>
             <ul>
               <li v-for="item of item.productTypes.split(',')">{{item}}</li>
               <!--<li v-for="item of item.productTypes">{{item}}</li>  -->
-              
+
             </ul>
             <a @click="gotoStore(item.id)">进入店铺</a>
           </div>
         </div>
       </div>
     </div>
-    
+
     <div class="page-changes">
       <pagingQuery></pagingQuery>
+<<<<<<< HEAD
       
+=======
+>>>>>>> 60c498e5c7d829a0a82c6f046996b973bf0669d0
     </div>
-  
+
   </div>
 </template>
 
@@ -87,8 +107,8 @@ import pagingQuery from './pagingQuery';
 import province from '../../components/global/province';
 export default {
   name: 'storeList',
-  
-  data(){
+
+  data() {
     return {
       checked: 1,
       change: 1,
@@ -101,60 +121,60 @@ export default {
   created() {
 
     this.$http({
-                  method: 'post',
-                  url: '/provider/grid',
-                  data: {
-                    start:0,
-                    limit:6,
-                    producttypecode:10,
-                    regionid: 110000,
-                    sort:	1
-                  }
-              }).then((result)=>{
-                let data = result.data;
-                for(var i=0;i<data.length;i++){
-                  data[i].totalJudge==0?data[i].totalJudge=1:"";
-                  data[i].providerImg.substring(0,3)=='http'?data[i].providerImg=data[i].providerImg:data[i].providerImg="http://115.182.107.203:8088/xinda/pic"+data[i].providerImg;
+      method: 'post',
+      url: '/provider/grid',
+      data: {
+        start: 0,
+        limit: 6,
+        producttypecode: 10,
+        regionid: 110102,
+        sort: 1
+      }
+    }).then((result) => {
+      let data = result.data;
+      for (var i = 0; i < data.length; i++) {
+        data[i].totalJudge == 0 ? data[i].totalJudge = 1 : "";
+        data[i].providerImg.substring(0, 3) == 'http' ? data[i].providerImg = data[i].providerImg : data[i].providerImg = "http://115.182.107.203:8088/xinda/pic" + data[i].providerImg;
 
-                  //作双层循环//
-                  // data[i].productTypes = data[i].productTypes.split(",");
+        //作双层循环//
+        // data[i].productTypes = data[i].productTypes.split(",");
 
-                  console.log(data);                
-                };
+        console.log(data);
+      };
 
-                this.arr = data;
-                
-                
+      this.arr = data;
 
-
-
-                //  address[0] = data[0].regionName;
-                //  data.foreach(function(item) {
-                //       item.address[0] = item.regionName;
-                //   }, this);
-                  // let data = result.data.hq;
-                  // data.foreach(function(item) {
-                  //     item.marketprice = item.marketprice + '.00';
-                  // }, this);
-                  // this.recommend = data;
-                  
-              })
+      //  address[0] = data[0].regionName;
+      //  data.foreach(function(item) {
+      //       item.address[0] = item.regionName;
+      //   }, this);
+      // let data = result.data.hq;
+      // data.foreach(function(item) {
+      //     item.marketprice = item.marketprice + '.00';
+      // }, this);
+      // this.recommend = data;
+    })
   },
   methods: {
-    blueColor(n){
+    blueColor(n) {
       this.checked = n;
     },
-    blue(m){
+    blue(m) {
       this.change = m;
     },
     //跳转页面
-    gotoStore(id){
-      this.$router.push({path: '/storeIndex',query: {storeCode: id}});
+    gotoStore(id) {
+      this.$router.push({ path: '/storeIndex', query: { storeCode: id } });
     }
   },
+<<<<<<< HEAD
   components: {     
       pagingQuery,
       province
+=======
+  components: {
+    pagingQuery
+>>>>>>> 60c498e5c7d829a0a82c6f046996b973bf0669d0
   },
 
 };
@@ -182,5 +202,4 @@ export default {
 
 <style lang="less" scoped>
 @import '../../common/less/store/storeList.less';
-
 </style>
