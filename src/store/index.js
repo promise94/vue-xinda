@@ -6,16 +6,17 @@ export default new Vuex.Store({
     // 状态集合
     state: {
         user: { name: '', status: false },
+        cartnum: 0,
     },
     mutations: { // 突变集合
-        // LOGINMUTA: (state, name) => state.username = name
         SETUSER: (state, user) => state.user = user,
+        SETCART: (state, num) => state.cartnum = num,
     },
     actions: { // 方法集合
-        // loginAction: ({ commit }, name) => commit('LOGINMUTA', name)
         loginAction: ({commit}, user) => commit('SETUSER', user),
     },
     getters: { // 显示集合
-        getUser: state => state.user
+        getUser: state => state.user,
+        getCartNum: state => state.cartnum,
     }
 });
