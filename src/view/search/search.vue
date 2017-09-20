@@ -134,6 +134,7 @@ export default {
         border-bottom: 1px solid #cccccc;
         p {
             font-size: 14px;
+            cursor: pointer;
         }
         >div {
             width: 110px;

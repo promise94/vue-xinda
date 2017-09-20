@@ -10887,10 +10887,511 @@ export default [{
 }, {
   "code": "710000",
   "region": "台湾省",
+  "regionEntitys": [{
+    "code": "",
+    "region": "台北市",
+    "regionEntitys": [{
+        "code": "",
+        "region": "内湖区"
+      },
+      {
+        "code": "",
+        "region": "南港区"
+      }, {
+        "code": "",
+        "region": "中正区"
+      }, {
+        "code": "",
+        "region": "万华区"
+      }, {
+        "code": "",
+        "region": "大同区"
+      }, {
+        "code": "",
+        "region": "中山区"
+      }, {
+        "code": "",
+        "region": "松山区"
+      }, {
+        "code": "",
+        "region": "大安区"
+      }, {
+        "code": "",
+        "region": "信义区"
+      }, {
+        "code": "",
+        "region": "文山区"
+      }, {
+        "code": "",
+        "region": "士林区"
+      }, {
+        "code": "",
+        "region": "北投区"
+      },
+    ]
+  }, {
+    "code": "",
+    "region": "新北市",
+    "regionEntitys": [{
+      "code": "",
+      "region": "板桥区"
+    }, {
+      "code": "",
+      "region": "汐止区"
+    }, {
+      "code": "",
+      "region": "新店区"
+    }, {
+      "code": "",
+      "region": "永和区"
+    }, {
+      "code": "",
+      "region": "中和区"
+    }, {
+      "code": "",
+      "region": "土城区"
+    }, {
+      "code": "",
+      "region": "树林区"
+    }, {
+      "code": "",
+      "region": "三重区"
+    }, {
+      "code": "",
+      "region": "新庄区"
+    }, {
+      "code": "",
+      "region": "芦洲区"
+    }, {
+      "code": "",
+      "region": "瑞芳区"
+    }, {
+      "code": "",
+      "region": "三峡区"
+    }, {
+      "code": "",
+      "region": "莺歌区"
+    }, {
+      "code": "",
+      "region": "淡水区"
+    }, {
+      "code": "",
+      "region": "万里区"
+    }, {
+      "code": "",
+      "region": "金山区"
+    }, {
+      "code": "",
+      "region": "深坑区"
+    }, {
+      "code": "",
+      "region": "石碇区"
+    }, {
+      "code": "",
+      "region": "平溪区"
+    }, {
+      "code": "",
+      "region": "双溪区"
+    }, {
+      "code": "",
+      "region": "贡寮区"
+    }, {
+      "code": "",
+      "region": "坪林区"
+    }, {
+      "code": "",
+      "region": "乌来区"
+    }, {
+      "code": "",
+      "region": "泰山区"
+    }, {
+      "code": "",
+      "region": "林口区"
+    }, {
+      "code": "",
+      "region": "五股区"
+    }, {
+      "code": "",
+      "region": "八里区"
+    }, {
+      "code": "",
+      "region": "三芝区"
+    }, {
+      "code": "",
+      "region": "石门区"
+    }]
+  }, {
+    "code": "",
+    "region": "桃园市",
+    "regionEntitys": [{
+      "code": "",
+      "region": "桃园区"
+    }, {
+      "code": "",
+      "region": "中坜区"
+    }, {
+      "code": "",
+      "region": "平镇区"
+    }, {
+      "code": "",
+      "region": "八德区"
+    }, {
+      "code": "",
+      "region": "杨梅区"
+    }, {
+      "code": "",
+      "region": "芦竹区"
+    }, {
+      "code": "",
+      "region": "大溪区"
+    }, {
+      "code": "",
+      "region": "龙潭区"
+    }, {
+      "code": "",
+      "region": "龟山区"
+    }, {
+      "code": "",
+      "region": "大园区"
+    }, {
+      "code": "",
+      "region": "观音区"
+    }, {
+      "code": "",
+      "region": "新屋区"
+    }, {
+      "code": "",
+      "region": "复兴区"
+    }]
+  }, {
+    "code": "",
+    "region": "台中市",
+    "regionEntitys": [{
+      "code": "",
+      "region": "中区"
+    }, {
+      "code": "",
+      "region": "东区"
+    }, {
+      "code": "",
+      "region": "南区"
+    }, {
+      "code": "",
+      "region": "西区"
+    }, {
+      "code": "",
+      "region": "北区"
+    }, {
+      "code": "",
+      "region": "北屯区"
+    }, {
+      "code": "",
+      "region": "西屯区"
+    }, {
+      "code": "",
+      "region": "南屯区"
+    }, {
+      "code": "",
+      "region": "太平区"
+    }, {
+      "code": "",
+      "region": "大里区"
+    }, {
+      "code": "",
+      "region": "雾峰区"
+    }, {
+      "code": "",
+      "region": "乌日区"
+    }, {
+      "code": "",
+      "region": "丰原区"
+    }, {
+      "code": "",
+      "region": "后里区"
+    }, {
+      "code": "",
+      "region": "潭子区"
+    }, {
+      "code": "",
+      "region": "大雅区"
+    }, {
+      "code": "",
+      "region": "神冈区"
+    }, {
+      "code": "",
+      "region": "石冈区"
+    }, {
+      "code": "",
+      "region": "东势区"
+    }, {
+      "code": "",
+      "region": "新社区"
+    }, {
+      "code": "",
+      "region": "和平区"
+    }, {
+      "code": "",
+      "region": "大肚区"
+    }, {
+      "code": "",
+      "region": "沙鹿区"
+    }, {
+      "code": "",
+      "region": "龙井区"
+    }, {
+      "code": "",
+      "region": "梧栖区"
+    }, {
+      "code": "",
+      "region": "清水区"
+    }, {
+      "code": "",
+      "region": "大甲区"
+    }, {
+      "code": "",
+      "region": "外埔区"
+    }, {
+      "code": "",
+      "region": "大安区"
+    }, ]
+  }, {
+    "code": "",
+    "region": "台南市",
+    "regionEntitys": [{
+      "code": "",
+      "region": "中西区"
+    }, {
+      "code": "",
+      "region": "东区"
+    },{
+      "code": "",
+      "region": "南区"
+    },{
+      "code": "",
+      "region": "北区"
+    },{
+      "code": "",
+      "region": "安平区"
+    },{
+      "code": "",
+      "region": "安南区"
+    },{
+      "code": "",
+      "region": "永康区"
+    },{
+      "code": "",
+      "region": "归仁区"
+    },{
+      "code": "",
+      "region": "新化区"
+    },{
+      "code": "",
+      "region": "左镇区"
+    },{
+      "code": "",
+      "region": "玉井区"
+    },{
+      "code": "",
+      "region": "楠西区"
+    },{
+      "code": "",
+      "region": "南化区"
+    },{
+      "code": "",
+      "region": "仁德区"
+    },{
+      "code": "",
+      "region": "关庙区"
+    },{
+      "code": "",
+      "region": "龙崎区"
+    },{
+      "code": "",
+      "region": "官田区"
+    },{
+      "code": "",
+      "region": "麻豆区"
+    },{
+      "code": "",
+      "region": "佳里区"
+    },{
+      "code": "",
+      "region": "西港区"
+    },{
+      "code": "",
+      "region": "七股区"
+    },{
+      "code": "",
+      "region": "将军区"
+    },{
+      "code": "",
+      "region": "学甲区"
+    },{
+      "code": "",
+      "region": "北门区"
+    },{
+      "code": "",
+      "region": "新营区"
+    },{
+      "code": "",
+      "region": "后壁区"
+    },{
+      "code": "",
+      "region": "白河区"
+    },{
+      "code": "",
+      "region": "东山区"
+    },{
+      "code": "",
+      "region": "六甲区"
+    },{
+      "code": "",
+      "region": "下营区"
+    },{
+      "code": "",
+      "region": "柳营区"
+    },{
+      "code": "",
+      "region": "盐水区"
+    },{
+      "code": "",
+      "region": "善化区"
+    },{
+      "code": "",
+      "region": "大内区"
+    },{
+      "code": "",
+      "region": "山上区"
+    },{
+      "code": "",
+      "region": "新市区"
+    },{
+      "code": "",
+      "region": "安定区"
+    },]
+  }, {
+    "code": "",
+    "region": "高雄市",
+    "regionEntitys": [{
+      "code": "",
+      "region": ""
+    }, {
+      "code": "",
+      "region": "基隆市",
+      "regionEntitys": [{
+        "code": "",
+        "region": ""
+      } ]
+    }, {
+      "code": "",
+      "region": "新竹市",
+      "regionEntitys": [{
+        "code": "",
+        "region": ""
+      } ]
+    }, {
+      "code": "",
+      "region": "嘉义市",
+      "regionEntitys": [{
+        "code": "",
+        "region": ""
+      }, ]
+    }]
+  }]
 }, {
   "code": "810000",
   "region": "香港特别行政区",
+  "regionEntitys": [{
+    "code": "",
+    "region": "市辖区",
+    "regionEntitys": [{
+      "code": "",
+      "region": "中西区"
+    }, {
+      "code": "",
+      "region": "湾仔区"
+    },{
+      "code": "",
+      "region": "东区"
+    },{
+      "code": "",
+      "region": "南区"
+    },{
+      "code": "",
+      "region": "油尖旺区"
+    },{
+      "code": "",
+      "region": "深水埗区"
+    },{
+      "code": "",
+      "region": "九龙城区"
+    },{
+      "code": "",
+      "region": "黄大仙区"
+    },{
+      "code": "",
+      "region": "官塘区"
+    },{
+      "code": "",
+      "region": "北区"
+    },{
+      "code": "",
+      "region": "大埔区"
+    },{
+      "code": "",
+      "region": "沙田区"
+    },{
+      "code": "",
+      "region": "西贡区"
+    },{
+      "code": "",
+      "region": "荃湾区"
+    },{
+      "code": "",
+      "region": "屯门区"
+    },{
+      "code": "",
+      "region": "元朗区"
+    },{
+      "code": "",
+      "region": "葵青区"
+    },{
+      "code": "",
+      "region": "离岛区"
+    },]
+  }]
 }, {
   "code": "820000",
   "region": "澳门特别行政区",
+  "regionEntitys": [{
+    "code": "",
+    "region": "市辖区",
+    "regionEntitys": [
+      {
+        "code": "",
+        "region": "花地玛堂区"
+      },{
+        "code": "",
+        "region": "圣安多尼堂区"
+      },{
+        "code": "",
+        "region": "大堂区"
+      },{
+        "code": "",
+        "region": "望德堂区"
+      },{
+        "code": "",
+        "region": "风顺堂区"
+      },{
+        "code": "",
+        "region": "嘉模堂区"
+      },{
+        "code": "",
+        "region": "圣方济各堂区"
+      },{
+        "code": "",
+        "region": "路氹城"
+      },
+    ]
+  }]
 }]

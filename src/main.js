@@ -4,18 +4,22 @@ import Vue from 'vue';
 import axios from 'axios';
 import App from './App';
 import router from './router';
+import store from './store';
 import Qs from 'qs';
 import store from './store'
+// import store from './store' // 测试
+
 
 Vue.config.productionTip = false;
 /* axios 全局配置 */
-axios.defaults.baseURL = 'http://115.182.107.203:8088/xinda/xinda-api';
-axios.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+axios.defaults.baseURL = '/xinda-api';
+axios.defaults.headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
 axios.interceptors.request.use((config) => {
+  // console.log(config);
   config.method == 'post' ? config.data = Qs.stringify(config.data) : '';
   return config;
 });
-var resInterceptors = axios.interceptors.response.use((result)=>{
+var resInterceptors = axios.interceptors.response.use((result) => {
   return result.data;
 });
 Vue.prototype.$http = axios;
@@ -23,6 +27,7 @@ Vue.prototype.$http = axios;
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: {
     App

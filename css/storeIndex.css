@@ -10,12 +10,13 @@
   border: 1px solid #e9e9e9;
 }
 #storeIndex .logosay img {
-  width: 80px;
+  width: 120px;
   height: 86px;
-  margin-right: 30px;
+  margin-right: 50px;
 }
 #storeIndex .logosay > div h1 {
-  font-size: 38px;
+  font-size: 28px;
+  line-height: 50px;
 }
 #storeIndex .company {
   display: flex;
@@ -93,13 +94,12 @@
   padding: 5px 0;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
 }
 #storeIndex .company .service .box > div:nth-child(1) .message > div {
   width: 230px;
   height: 175px;
   padding: 20px 18px;
-  margin: 15px 0;
+  margin: 15px 12px;
   border: 1px solid #b6b6b6;
 }
 #storeIndex .company .service .box > div:nth-child(1) .message > div > p:nth-of-type(1) {
@@ -128,6 +128,9 @@
 }
 #storeIndex .company .service .box > div:nth-child(1) .message > div p:nth-of-type(2) {
   margin-bottom: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 #storeIndex .company .service .box > div:nth-child(1) .message > div > div:nth-of-type(2) {
   font-size: 40px;

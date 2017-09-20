@@ -3,11 +3,12 @@
     margin: 0;
 }
 #lunbo{
+    // background-color: #000000;
     width: 1200px;
     height: 400px;
     margin: 0 auto;
     display: flex;
-    border: 1px solid #666666;
+    // border: 1px solid #666666;
     overflow: hidden;
     >.daohang{
         width: 199px;
@@ -130,10 +131,48 @@
     display: flex;
     justify-content:space-between;
     >div{
+        &:hover{
+            box-shadow:0px 0px 2px 3px #666666;
+        }
         width: 270px;
         height: 398px;
         margin-top: 50px;
         border: 1px solid #e8e8e8;
+        div{
+            width: 254px;
+            height: 380px;
+            background-color: #fafafa;
+            margin: 8px 0 0 8px;
+            img{
+                display: block;
+                width: 208px;
+                height: 195px;
+            }
+            >p:nth-of-type(1){
+                font-size: 16px;
+                font-weight: bold;
+                text-align: center;
+                color: #000000;
+            }
+            >p:nth-of-type(2){
+                font-size: 14px;
+                // font-weight: bold;
+                text-align: center;
+                color: #3d3d3d;
+                margin-top: 20px;
+            }
+            >p:nth-of-type(3){
+                font-size: 14px;
+                // font-weight: bold;
+                text-align: center;
+                color: #3d3d3d;
+                margin-top: 20px;
+                >span:nth-child(1){
+                    color: #2693d4;
+                    font-size: 23px;
+                }
+            }
+        }
     }
 }
 .chuchuang{
@@ -142,16 +181,25 @@
     margin:0 auto;
     display: flex;
     justify-content:space-between;
+    
     >div{
         width: 270px;
         height: 462px;
         margin-top: 50px;
         border: 1px solid #e8e8e8;
+        &:hover{
+            box-shadow:0px 0px 2px 3px #666666;
+        }
         >div{
             width: 270px;
             height: 200px;
             margin: 0px auto; 
-            border: 1px solid red;
+            border: 1px solid #ffffff;
+            
+            img{
+                margin: 80px auto 0;
+                display: block;
+            }
         }
         >p:nth-of-type(1){
             font-size: 17px;
@@ -160,16 +208,19 @@
             color: #000000;
         }
         >p:nth-of-type(2){
-            padding: 16px 0 0 16px;
-            display:inline-block; 
+            margin: 16px 0 0 16px;
+            display:block; 
             width: 243px;
+            height: 26px;
             font-size: 13px;
             // text-align:center;
             color: #000000;
+            
         }
         >p:nth-of-type(3){
             font-size: 15px;
-            padding: 30px 0 0 66px;
+            padding-top: 30px;
+            text-align:center   ;
             >span{
                 font-size: 22px;
                 color: #2693d4;
@@ -189,18 +240,7 @@
             color: #2693d4;
         }
     }
-    >div:nth-child(1){
-        
-    }
-    >div:nth-child(2){
-
-    }
-    >div:nth-child(3){
-
-    }
-    >div:nth-child(4){
-
-    }
+    
 }
 .zhishi{
     width: 1200px;
@@ -210,6 +250,7 @@
         width: 1200px;
         height: 482px;
         display: flex;
+        
         >div:nth-child(1){
             >img{
                 width: 306px;
@@ -247,23 +288,32 @@
         }
     }
 }
-
+.yanse{
+    display: none;
+}
 
 .fuwu{
     width: 1200px;
     height: 456px;
     margin:0 auto;
     display: flex;
-    justify-content:space-between;
+    // justify-content:space-between;
     >div{
         width: 216px;
         height: 396px;
         margin-top: 50px;
         border: 1px solid #e8e8e8;
+        &:hover{
+            box-shadow:0px 0px 2px 3px #666666;
+        }
         >div:nth-of-type(1){
             width: 216px;
-            height: 194px;
-            border: 1px solid red;
+            height: 114px;
+            // border: 1px solid red;
+            img{
+                margin: 80px auto 0;
+                display: block;
+            }
             
         }
         
@@ -311,6 +361,9 @@
                 }
             }
         }
+    }
+    >div:nth-child(2){   
+        margin-left: 20px;
     }
 }
 

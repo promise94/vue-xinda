@@ -7,23 +7,23 @@
     <div class="area-type">
       <div class="area">
         <div class="area-left">服务区域</div>
-        <div class="area-center"><province></province> </div>
+        <div class="area-center"><province @province="getProv"></province> </div>
       </div>
       <div class="type">
         <div class="type-left">产品类型</div>
         <div class="type-center">
           <ul>
-            <li @click="blueColor(1)" :class="{all: checked ===1}">所有</li>
-            <li @click="blueColor(2)" :class="{all: checked ===2}">专利申请</li>
-            <li @click="blueColor(3)" :class="{all: checked ===3}">版权保护</li>
-            <li @click="blueColor(4)" :class="{all: checked ===4}">商标注册</li>
-            <li @click="blueColor(5)" :class="{all: checked ===5}">代理记账</li>
-            <li @click="blueColor(6)" :class="{all: checked ===6}">公司注册</li>
-            <li @click="blueColor(7)" :class="{all: checked ===7}">企业社保</li>
-            <li @click="blueColor(8)" :class="{all: checked ===8}">公司变更</li>
-            <li @click="blueColor(9)" :class="{all: checked ===9}">税务代办</li>
-            <li @click="blueColor(10)" :class="{all: checked ===10}">个人社保</li>
-            <li @click="blueColor(11)" :class="{all: checked ===11}">审计报告</li>
+            <li @click="blueColor('')" :class="{all: checked === ''}">所有</li>
+            <li @click="blueColor(10)" :class="{all: checked ===10}">专利申请</li>
+            <li @click="blueColor(9)" :class="{all: checked ===9}">版权保护</li>
+            <li @click="blueColor(8)" :class="{all: checked ===8}">商标注册</li>
+            <li @click="blueColor(1)" :class="{all: checked ===1}">代理记账</li>
+            <li @click="blueColor(4)" :class="{all: checked ===4}">公司注册</li>
+            <li @click="blueColor(6)" :class="{all: checked ===6}">企业社保</li>
+            <li @click="blueColor(5)" :class="{all: checked ===5}">公司变更</li>
+            <li @click="blueColor(2)" :class="{all: checked ===2}">税务代办</li>
+            <li @click="blueColor(7)" :class="{all: checked ===7}">个人社保</li>
+            <li @click="blueColor(3)" :class="{all: checked ===3}">审计报告</li>
           </ul>
         </div>
       </div>
@@ -42,7 +42,7 @@
         </div>
         <div @click="blue(3)" :class="{blue: change ===3}">
           <p>接单数
-            <span class="xd xd-paixu"></span>
+          <span class="xd xd-paixu"></span>
           </p>
           <div></div>
         </div>
@@ -63,26 +63,26 @@
           <div class="text">
             <p>{{item.providerName}}</p>
             <p>信誉:&nbsp;
-              <span class="xd xd-dengji-copy-copy-copy"></span>
-              <span class="xd xd-dengji-copy-copy-copy"></span>
-              <span class="xd xd-dengji-copy-copy-copy"></span>
-              <span class="xd xd-dengji-copy-copy-copy"></span>
-              <span class="xd xd-dengji-copy-copy-copy"></span>
+              <span class="xd xd-dengji"></span>
+              <span class="xd xd-dengji"></span>
+              <span class="xd xd-dengji"></span>
+              <span class="xd xd-dengji"></span>
+              <span class="xd xd-dengji"></span>
             </p>
             <p>{{item.regionName}}</p>
             <div>
               <p>累计服务客户次数&nbsp;：&nbsp;
                 <span>{{item.orderNum}}</span>
               </p>
-              <span class="xd xd-shouye_shugang_shijiantixing"></span>
+              <span class="xd xd-shugang"></span>
               <p>好评率&nbsp;：&nbsp;
                 <span>{{(item.goodJudge/item.totalJudge)*100+"%"}}</span>
               </p>
             </div>
             <ul>
-              <li v-for="item of item.productTypes.split(',')">{{item}}</li>
+              <li v-for="item of item.productTypes.split(',')" >{{item}}</li>
               <!--<li v-for="item of item.productTypes">{{item}}</li>  -->
-
+<!-- v-show="chance===1" -->
             </ul>
             <a @click="gotoStore(item.id)">进入店铺</a>
           </div>
@@ -99,6 +99,7 @@
 </template>
 
 <script>
+
 import pagingQuery from './pagingQuery';
 import province from '../../components/global/province';
 export default {
@@ -106,61 +107,65 @@ export default {
 
   data() {
     return {
-      checked: 1,
+      checked: '',
       change: 1,
       arr: '',
+      conf:{
+        start: 0,
+        limit: 4,
+        productTypeCode: '',
+        regionId: '',
+        sort: 1,
+      },
+      i: 0,
 
 
     }
   },
-  //axios后台数据获取
+  //初始axios后台数据获取
   created() {
-
-    this.$http({
+      this.getStoreList();
+  },
+  methods: {
+    //封装的axios插件:getStoreList()
+    getStoreList(){
+      this.$http({
       method: 'post',
       url: '/provider/grid',
-      data: {
-        start: 0,
-        limit: 6,
-        producttypecode: 10,
-        regionid: 110102,
-        sort: 1
-      }
+      data: this.conf,
     }).then((result) => {
       let data = result.data;
       for (var i = 0; i < data.length; i++) {
         data[i].totalJudge == 0 ? data[i].totalJudge = 1 : "";
         data[i].providerImg.substring(0, 3) == 'http' ? data[i].providerImg = data[i].providerImg : data[i].providerImg = "http://115.182.107.203:8088/xinda/pic" + data[i].providerImg;
-
         //作双层循环//
-        // data[i].productTypes = data[i].productTypes.split(",");
-
-        console.log(data);
+        // data[i].producttypes = data[i].producttypes.split(",");
       };
-
       this.arr = data;
+      })
+    },
 
-      //  address[0] = data[0].regionName;
-      //  data.foreach(function(item) {
-      //       item.address[0] = item.regionName;
-      //   }, this);
-      // let data = result.data.hq;
-      // data.foreach(function(item) {
-      //     item.marketprice = item.marketprice + '.00';
-      // }, this);
-      // this.recommend = data;
-    })
-  },
-  methods: {
-    blueColor(n) {
+    blueColor(n){
       this.checked = n;
+      this.conf.productTypeCode = n;
+      this.getStoreList();
     },
     blue(m) {
       this.change = m;
+      this.conf.sort = m;
+      this.getStoreList();
     },
     //跳转页面
     gotoStore(id) {
       this.$router.push({ path: '/storeIndex', query: { storeCode: id } });
+    },
+    getProv(pro){
+      if(this.i){
+        this.conf.regionId = pro[2].code;
+        this.getStoreList();
+      }
+      this.i++;
+      console.log(this.i)
     }
   },
   components: {     
@@ -195,25 +200,6 @@ export default {
 
 };
 
-
-
-// import axios from 'axios';
-
-// import qs from 'qs';
-
-// axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded';
-
-// var canshu = qs.stringify({
-//     id: '0cb85ec6b63b41fc8aa07133b6144ea3',
-//     num: 1,
-// });
-// axios.post('http://115.182.107.203:8088/xinda/xinda-api/cart/add', canshu, {})
-//     .then(function(data) {
-//         console.log('axios data', data);
-//     })
-//     .catch(function(error) {
-//         console.log('axios error', error);
-//     });
 </script>
 
 <style lang="less" scoped>
