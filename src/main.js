@@ -4,9 +4,9 @@ import Vue from 'vue';
 import axios from 'axios';
 import App from './App';
 import router from './router';
+import store from './store';
 import Qs from 'qs';
-// Vuex引用
-import store from './store/index'
+
 
 Vue.config.productionTip = false;
 /* axios 全局配置 */
@@ -25,9 +25,7 @@ Vue.prototype.$http = axios;
 new Vue({
   el: '#app',
   router,
-  // 引用vuex
   store,
-  
   template: '<App/>',
   components: {
     App

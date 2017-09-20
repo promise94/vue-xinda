@@ -12,10 +12,19 @@ import search from '@/view/search/search.vue'; // 搜索结果页
 import services from '@/view/list/services.vue';
 import sifco from '@/view/list/sifco.vue';
 import us from '@/view/us/us.vue'; // 加盟我们
-import storeList from '@/view/store/storeList.vue';
-import storeIndex from '@/view/store/storeIndex.vue';
+import storeList from '@/view/store/storeList.vue';//店铺列表
+import storeIndex from '@/view/store/storeIndex.vue';//店铺首页
+
+
+import member from '@/view/vip/member.vue';//会员中心
+import order from '@/view/vip/order.vue';
+import setting from '@/view/vip/setting.vue';
+import evaluntion from '@/view/vip/evaluntion.vue';
+
+
 import cart from '@/view/cart/cart.vue'; // 购物车
 import pay from '@/view/pay/pay.vue';// 支付首页
+
 
 /**
  * 登录、注册、忘记密码
@@ -27,6 +36,13 @@ import forget from '@/view/user/forget.vue';
 Vue.use(Router);
 
 export default new Router({
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { x: 0, y: 0 }
+    }
+  },
   routes: [{
     path: '/',
     name: 'Main',
@@ -56,7 +72,6 @@ export default new Router({
         component: sifco
       },
       {
-
         path: '/storeList',
         name: 'storeList',
         component: storeList
@@ -75,15 +90,39 @@ export default new Router({
         path: '/search/:keyword',
         name: 'search',
         component: search
-      }, {
+      }, 
+      {
         path: '/cart',
         name: 'Cart',
         component: cart,
-      }, {
+      }, 
+      {
         path: '/pay',
         name: 'Pay',
         component: pay
-      }]
+      },
+      {
+        path: '/member',
+        name: 'member',
+        component: member,
+        children: [{
+            path: '/order',
+            name: 'order',
+            component: order
+          },
+          {
+            path: '/evaluntion',
+            name: 'evaluntion',
+            component: evaluntion
+          },
+          {
+            path: '/setting',
+            name: 'setting',
+            component: setting
+          }
+        ]
+      }
+    ]
   },
   {
     path: '/user',
@@ -106,6 +145,5 @@ export default new Router({
         component: forget
       }
     ]
-  }
-  ]
+  }]
 })

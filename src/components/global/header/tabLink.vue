@@ -1,11 +1,6 @@
 <template>
     <div class="zong">
         <div class="linkBox">
-            <!-- <ul class="tabLink container">
-                                                                                <li v-for="(item, n) of link" @click="goPage(n)" :key="n" :class="{active: index === n}">
-                                                                                    <span>{{item}}</span>
-                                                                                </li>
-                                                                            </ul> -->
             <ul class="tabLink container">
                 <li class="daohang">
                     <a href="/">全部产品</a>
@@ -102,6 +97,12 @@ export default {
                 border-bottom: 4px solid @color;
             }
         }
+    }
+    .active {
+      >span {
+        color: @color;
+        border-bottom: 4px solid @color;
+      }
     }
 }
 
