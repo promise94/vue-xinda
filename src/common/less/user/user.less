@@ -1,0 +1,90 @@
+#content {
+    padding: 40px;
+    background-color: #f5f5f5;
+    .content {
+      box-sizing: border-box;
+      display: flex;
+      justify-content: space-between;
+      padding: 50px 145px 20px;
+      background-color: #fff;
+      .form {
+        background-color: #fff;
+        li {
+          margin-bottom: 15px;
+          input[type=button] {
+            width: 280px;
+            height: 36px;
+            box-sizing: border-box;
+            border: 1px solid #2693d4;
+            border-radius: 5px;
+            color: #2693d4;
+            font-size: 16px;
+            background-color: #fff;
+            outline: none;
+            cursor: pointer;
+          }
+          select {
+            width: 80px;
+            height: 36px;
+            border: 1px solid #cbcbcb;
+            border-radius: 5px;
+            outline: none;
+            &:focus {
+              box-shadow: 0 0 5px #2693d4;
+            }
+            &:not(:last-of-type) {
+              margin-right: 15px;
+            }
+          }
+          &.xieyi {
+            text-align: center;
+            a {
+              color: #2693d4;
+            }
+          }
+          &.message{
+            input[type=text] {
+              width: 172px;
+            }
+            input[type=button] {
+              margin-left: 4px;
+              width: 100px;
+            }
+            input[type=button]:disabled {
+              background-color: rgb(133, 180, 221);
+              cursor: not-allowed;
+              color: #fff;
+              border: 0;
+            }
+          }
+          &.forget{
+            text-align: right;
+            a {
+              color: #2693d4;
+            }
+          }
+        }
+      }
+      .title {
+        width: 50%;
+        box-sizing: border-box;
+        text-align: center;
+        p {
+          font-size: 18px;
+          padding: 25px 0;
+        }
+        >div {
+          border-left: 1px solid #ccc;
+          a {
+            display: block;
+            font-size: 20px;
+            letter-spacing: 2px;
+            color: #2693d4
+          }
+          img {
+            margin: 15px 0 0 40px;
+          }
+        }
+      }
+    }
+  }

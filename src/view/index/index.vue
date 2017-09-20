@@ -73,45 +73,15 @@
             <div class="arrows"></div>
         </div>
         <div class="chuchuang">
-            <div>
+            <div v-for="(item,k) of recommend" :key="k">
                 <div>
-
+                    <img :src="item.providerImg" alt="">
                 </div>
-                <p>商标快速注册通道</p>
-                <p>工作日内5个小时提交申报，次日拿到申请号， 商标注册进度系统实时</p>
+                <p> {{item.providerName}}</p>
+                <p> {{item.serviceInfo}} </p>
                 <p>
-                    <span>￥1400.00</span> 元</p>
-                <a href="#">查看详情</a>
-            </div>
-            <div>
-                <div>
-
-                </div>
-                <p>商标快速注册通道</p>
-                <p>工作日内5个小时提交申报，次日拿到申请号， 商标注册进度系统实时</p>
-                <p>
-                    <span>￥1400.00</span> 元</p>
-                <a href="#">查看详情</a>
-            </div>
-            <div>
-                <div>
-
-                </div>
-                <p>商标快速注册通道</p>
-                <p>工作日内5个小时提交申报，次日拿到申请号， 商标注册进度系统实时</p>
-                <p>
-                    <span>￥1400.00</span> 元</p>
-                <a href="#">查看详情</a>
-            </div>
-            <div>
-                <div>
-
-                </div>
-                <p>商标快速注册通道</p>
-                <p>工作日内5个小时提交申报，次日拿到申请号， 商标注册进度系统实时</p>
-                <p>
-                    <span>￥1400.00</span> 元</p>
-                <a href="#">查看详情</a>
+                    <span> {{fmtPrice(item.price)}}</span> 元</p>
+                <a href="#/goods" @click="showDetails(item.id)">查看详情</a>
             </div>
         </div>
         <div class="biaoti">
@@ -172,96 +142,6 @@
                     </div>
                 </div>
             </div>
-            <div>
-                <div>
-
-                </div>
-                <p>北京广大知识代理</p>
-                <p>服务指数：8.9分</p>
-                <p>提供的服务</p>
-                <div>
-                    <div>
-                        <a href="">
-                            你踩踩踩踩asdasdasdasd
-                        </a>
-                    </div>
-                    <div>
-                        <a href="">
-                            你踩踩踩踩asdasdasdasd
-                        </a>
-                    </div>
-                    <div>
-                        <a href="">
-                            你踩踩踩踩asdasdasdasd
-                        </a>
-                    </div>
-                    <div>
-                        <a href="">
-                            你踩踩踩踩asdasdasdasd
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div>
-
-                </div>
-                <p>北京广大知识代理</p>
-                <p>服务指数：8.9分</p>
-                <p>提供的服务</p>
-                <div>
-                    <div>
-                        <a href="">
-                            你踩踩踩踩asdasdasdasd
-                        </a>
-                    </div>
-                    <div>
-                        <a href="">
-                            你踩踩踩踩asdasdasdasd
-                        </a>
-                    </div>
-                    <div>
-                        <a href="">
-                            你踩踩踩踩asdasdasdasd
-                        </a>
-                    </div>
-                    <div>
-                        <a href="">
-                            你踩踩踩踩asdasdasdasd
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div>
-
-                </div>
-                <p>北京广大知识代理</p>
-                <p>服务指数：8.9分</p>
-                <p>提供的服务</p>
-                <div>
-                    <div>
-                        <a href="">
-                            你踩踩踩踩asdasdasdasd
-                        </a>
-                    </div>
-                    <div>
-                        <a href="">
-                            你踩踩踩踩asdasdasdasd
-                        </a>
-                    </div>
-                    <div>
-                        <a href="">
-                            你踩踩踩踩asdasdasdasd
-                        </a>
-                    </div>
-                    <div>
-                        <a href="">
-                            你踩踩踩踩asdasdasdasd
-                        </a>
-                    </div>
-                </div>
-            </div>
 
         </div>
         <div class="biaoti">
@@ -276,15 +156,71 @@
 
 <script>
 export default {
+
+    created() {
+        this.getnicai();
+        this.getbucai();
+    },
     data() {
         return {
             index: 0,
-
+            recommend: '',
         }
     },
     methods: {
+        fmtPrice(p) {
+            return (parseFloat(p) * 0.01).toFixed(2);
+        },
         myhover(n) {
             console.log(this.index = n);
+        },
+        getnicai() {
+            this.$http({
+                method: 'post',
+                url: '/recommend/list',
+                data: {
+
+                }
+            }).then((result) => {
+                let data = result.data.hq;
+                data.forEach(function(item) {
+
+                    item.providerImg = 'http://115.182.107.203:8088/xinda/pic/' + item.providerImg;
+                    console.log(item.providerImg);
+                    item.marketPrice = item.marketPrice + '.00'
+                }, this);
+                this.recommend = data;
+            })
+        },
+        getbucai() {
+            this.$http({
+                method: 'post',
+                url: '/provider/search-grid',
+                data: {
+                    start: 0,
+                    limit: 8,
+                    productTypeCode: 7,
+                    regionId: 110105
+                }
+            }).then((shenme) => {
+                let data = shenme;
+                console.log(data);
+                data.forEach(function(item) {
+
+                    item.providerImg = 'http://115.182.107.203:8088/xinda/pic/' + item.providerImg;
+                    // console.log(item.providerImg);
+                    item.marketPrice = item.marketPrice + '.00'
+                }, this);
+                this.recommend = data;
+            })
+        },
+        showDetails(id) {
+            this.$router.push({
+                path: '/goods',
+                query: { id }
+
+            }),
+                console.log(id);
         }
     }
 };
