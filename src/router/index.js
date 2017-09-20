@@ -13,6 +13,11 @@ import us from '@/view/us/us.vue';
 import storeList from '@/view/store/storeList.vue';
 import storeIndex from '@/view/store/storeIndex.vue';
 
+import member from '@/view/vip/member.vue';
+import order from '@/view/vip/order.vue';
+import setting from '@/view/vip/setting.vue';
+import evaluntion from '@/view/vip/evaluntion.vue';
+
 import cart from '@/view/cart/cart.vue';
 
 /**
@@ -68,6 +73,27 @@ export default new Router({
           path: '/search/:keyword',
           name: 'search',
           component: search
+        },
+        {
+          path: '/member',
+          name: 'member',
+          component: member,
+          children: [{
+              path: '/order',
+              name: 'order',
+              component: order
+            },
+            {
+              path: '/evaluntion',
+              name: 'evaluntion',
+              component: evaluntion
+            },
+            {
+              path: '/setting',
+              name: 'setting',
+              component: setting
+            }
+          ]
         }
       ]
     },

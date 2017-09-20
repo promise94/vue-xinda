@@ -6,6 +6,7 @@ import App from './App';
 import router from './router';
 import Qs from 'qs';
 
+
 Vue.config.productionTip = false;
 /* axios 全局配置 */
 axios.defaults.baseURL = '/xinda-api';
