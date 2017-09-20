@@ -2,6 +2,9 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import main from '@/view/main.vue'; // 商品展示、会员中心展示页
 import user from '@/view/user.vue'; // 登录、注册、忘记密码展示页
+
+import search from '@/view/search/search.vue'; // 搜索结果页
+
 import index from '@/view/index/index';
 
 import services from '@/view/list/services.vue';//纳税服务
@@ -33,7 +36,7 @@ export default new Router({
           component: index,
         },
         {
-          path: '/',
+          path: '/services',
           name: 'services',
           component: services
         },
@@ -59,6 +62,11 @@ export default new Router({
           path: '/us',
           name: 'us',
           component: us
+        },
+        {
+          path: '/search/:keyword',
+          name: 'search',
+          component: search
         }
       ]
     },
