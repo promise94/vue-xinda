@@ -106,17 +106,18 @@ export default new Router({
         name: 'member',
         component: member,
         children: [{
-            path: '/order',
+            path: 'order',
             name: 'order',
+            alias: '/member',
             component: order
           },
           {
-            path: '/evaluntion',
+            path: 'evaluntion',
             name: 'evaluntion',
             component: evaluntion
           },
           {
-            path: '/setting',
+            path: 'setting',
             name: 'setting',
             component: setting
           }

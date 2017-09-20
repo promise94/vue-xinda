@@ -5,7 +5,7 @@
         <div class="user" v-show="state">
           <span>{{userName}}</span>
         </div>
-        <span>欢迎来到信达！{{userName}}</span>
+        <span>欢迎来到信达&nbsp;!</span>
         <div v-show="!state">
           <a @click="goto('/user/login')" href="javascript:;">登录</a>
           <a @click="goto('/user/register')" href="javascript:;">快速注册</a>
