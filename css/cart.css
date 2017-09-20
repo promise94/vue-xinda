@@ -35,8 +35,8 @@
   margin-left: 80px;
   font-size: 14px;
   margin-top: 10px;
-  margin-bottom: 38px;
-  color: #ccc;
+  margin-bottom: 10px;
+  color: gray;
 }
 .shangpin .list div {
   width: 1200px;
@@ -49,6 +49,7 @@
 .shangpin .list div img {
   width: 42px;
   height: 42px;
+  border-radius: 2px;
   cursor: pointer;
 }
 .shangpin .list div p {
@@ -83,6 +84,7 @@
   margin-left: 10px;
 }
 .shangpin .list div > p:nth-child(5) {
+  width: 46px;
   color: #50a2da;
 }
 .totle {

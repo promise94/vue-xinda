@@ -22,10 +22,10 @@
                             <p>类&nbsp;&nbsp;&nbsp;型:</p>
                         </div>
                         <div>
-                            <button class="bucai" v-on:click="greet">&nbsp;
-                                <span>注册分公司</span>&nbsp;</button><br>
-                            <button class="nicai" v-on:click="greet">&nbsp;
-                                <span>注册分公司</span>&nbsp;</button>
+                            <div class="bucai" v-on:click="greet">&nbsp;
+                                <span>注册分公司</span>&nbsp;</div><br>
+                            <div class="nicai" v-on:click="greet">&nbsp;
+                                <span>注册分公司</span>&nbsp;</div>
                         </div>
 
                     </div>
@@ -46,6 +46,10 @@
                             </ul>
                         </li>
                     </ul>
+                    <div>
+                        <button>立即购买</button>
+                        <button>加入购物车</button>
+                    </div>
                 </div>
                 <div>
                     <div>
@@ -91,11 +95,8 @@ export default {
         show: true;
         return {
             index: 0,
-
-
         }
     },
-
     methods: {
         myhover(n) {
             this.index = n;
@@ -128,25 +129,36 @@ export default {
                 method: 'post',
                 url: '/product/package/detail',
                 data: {
-                    id: this.$route.query.id
+                    sId: this.$route.query.id
                 }
             }).then((result) => {
                 // let data = result.data.hq;
                 console.log(result);
-                data.forEach(function(item) {
-                    // item.providerImg = 'http://115.182.107.203:8088/xinda/pic/' + item.providerImg;
-                    console.log(item);
-                    // item.marketPrice = item.marketPrice + '.00'
-                }, this);
-                this.recommend = data;
+                // data.forEach(function(item) {
+                //     // item.providerImg = 'http://115.182.107.203:8088/xinda/pic/' + item.providerImg;
+                //     console.log(item);
+                //     // item.marketPrice = item.marketPrice + '.00'
+                // }, this);
+                // this.recommend = data;
             })
         },
+        
     }
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="less" >
 @import '../../common/less/global/cssreset.less';
 @import '../../common/less/global/cssreset.less';
 @import '../../common/less/goods/goods.less';
+ .daohang{
+        .yincang{
+            display: none;
+        }
+        &:hover{
+            .yincang{
+                display: block;
+            }
+        }
+    }
 </style>

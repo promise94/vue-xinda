@@ -42,6 +42,9 @@
   border-radius: 50%;
   background: #2493d3;
 }
+#setting .zhanghu > div p {
+  cursor: pointer;
+}
 #setting .zhanghu > div:nth-of-type(1) span {
   line-height: 100px;
 }
@@ -54,6 +57,7 @@
   margin: 20px 0 0 100px;
   color: #fff;
   background: #2493d3;
+  cursor: pointer;
 }
 #setting .change > div {
   display: flex;
@@ -72,4 +76,5 @@
   margin: 20px 0 0 140px;
   color: #fff;
   background: #2493d3;
+  cursor: pointer;
 }

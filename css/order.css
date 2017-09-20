@@ -30,6 +30,7 @@
   margin-right: 20px;
 }
 #order .orderTop > div:nth-child(2) div {
+  cursor: pointer;
   text-align: center;
   color: #2594d4;
   padding: 0 13px;
@@ -105,6 +106,7 @@
   position: absolute;
   top: 20%;
   left: 20%;
+  cursor: pointer;
 }
 #order .orderBottom > div > div > div:nth-child(2) p {
   width: 70px;
@@ -115,4 +117,5 @@
   position: absolute;
   bottom: 10%;
   left: 20%;
+  cursor: pointer;
 }

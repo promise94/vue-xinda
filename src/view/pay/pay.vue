@@ -58,10 +58,15 @@
                         </div>
                         <p>平台支付</p>
                         <div>
-                            <input type="radio" name="a">
-                            <img src="../../common/images/weixin.png" alt="">
-                            <input type="radio" name="a">
-                            <img src="../../common/images/zhifubao.jpg" alt="">
+                            <div>
+                                <input type="radio" name="a">
+                                <span class="xd xd-weixin"><a>微信支付</a></span>
+                            </div>
+                            <div>
+                                <input type="radio" name="a">
+                                <img src="../../common/images/zhifubao.jpg" alt="">
+                            </div>
+                            <!-- <img src="../../common/images/weixin.png" alt=""> -->
                         </div>
                         <p>自助转账</p>
                         <div>
@@ -144,7 +149,7 @@
 </template>
 
 <script>
-let qs = require('qs');
+// let qs = require('qs');
 export default {
     created(){
         // this.getBusiness()
@@ -157,28 +162,32 @@ export default {
         }
     },
     methods: {
-        // getBusiness(){
-        //     let conf = qs.stringify({businessNo: 'S1704040001075133085'});
-        //     this.$http.post('http://115.182.107.203:8088/xinda/xinda-api/pay/detail',{}).then((data)=>{
-        //         console.log('data', data);
-        //     }).catch((res)=>{
-        //         console.log('err', res);
-        //     })
-            // this.$http({
-            //     method:'post',
-            //     url:'/business-order/detail',
-            //     data:{
-            //         // businessNo:'S1704040001075133085'
-            //         // id:1212121,
-		    //         // num:11
-            //     }
-            // }).then((result)=>{
-            //     // let data = result.data;
-            //     console.log(result);
-            // }).catch(res=>{
-            //     console.log(res)
-            // });
-        // },
+        // 订单获取
+        getDingdan(){
+            this.$http({
+                methods:'post',
+                url:'/pay/detail',
+                data:{
+
+                }
+            }).then((res)=>{
+                let data = res.data;
+                data.forEach(function(item){})
+            })
+        },
+        //订单明细
+        getMingxi(){
+            this.$http({
+                methods:'post',
+                url:'/business-order/detail',
+                data:{
+
+                }
+            }).then((res)=>{
+                let data = res.data;
+                data.forEach(function(item){})
+            })
+        },
         ckpay(n) {
             this.index = n;
         },
