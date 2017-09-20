@@ -8,6 +8,7 @@
             <div>
                 <span>当前头像 :</span>
                 <div class="xd xd-user"></div>
+                <p class="xd xd-dingdan"></p>
             </div>
             <div>
                 <span>姓名 :</span>
@@ -24,7 +25,7 @@
             </div>
             <div>
                 <span>所在地区 :</span>
-                <input type="text" placeholder="请输入邮箱">
+                <input type="text" placeholder="请输入所在地区">
             </div>
             <input type="submit" value="保存">
         </div>
