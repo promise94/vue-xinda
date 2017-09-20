@@ -5,6 +5,7 @@ import axios from 'axios';
 import App from './App';
 import router from './router';
 import Qs from 'qs';
+// import store from './store' // 测试
 
 Vue.config.productionTip = false;
 /* axios 全局配置 */
@@ -23,6 +24,7 @@ Vue.prototype.$http = axios;
 new Vue({
   el: '#app',
   router,
+  // store,// 测试
   template: '<App/>',
   components: {
     App
