@@ -54,6 +54,7 @@
   border-bottom: 1px solid #ccc;
 }
 #evaluntion .evaluntionBottom > div > div button {
+  cursor: pointer;
   width: 100px;
   height: 30px;
   line-height: 100%;
@@ -64,6 +65,7 @@
   margin-top: 100px;
 }
 #evaluntion .evaluntionBottom > div > div p {
+  cursor: pointer;
   width: 100px;
   height: 30px;
   line-height: 30px;

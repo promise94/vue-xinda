@@ -2,6 +2,8 @@
     <div class="center">
         <img src="../../common/images/u3629.png" alt="">
         <router-view></router-view>
+        <!-- 测试 
+        {{getUsername}} -->
         <div class="bk">
             <div class="bk_1">
                 <div class="bk_2 " v-on:mouseenter="myhover(0)" :class="{ dd: index ===0}">
@@ -59,6 +61,9 @@
 </template>
 
 <script>
+// 测试
+// import{mapGetters} from 'vuex'
+//--
 export default {
     data() {
         return {
@@ -68,13 +73,24 @@ export default {
     methods: {
         myhover(n) {
             this.index = n;
-        }
-    }
+        },
+        // 测试
+        // ...mapActions(['loginAction'])
+        // --
+    },
+    // 测试
+    // computed:{
+    //     ...mapGetters(['getUsername'])
+    // },
+    // 登录成功
+    // this.loginAction(this.phone)
+//--
 };
 </script>
 
 <style lang="less" scoped>
 .center {
+
     // width: 1900px;
     // height: 2482px;
     // margin: 0 auto;
@@ -148,6 +164,6 @@ export default {
 }
 
 .dd {
-    color:aquamarine;
+    color:#f57f51;
 }
 </style>
