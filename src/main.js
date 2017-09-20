@@ -5,17 +5,19 @@ import axios from 'axios';
 import App from './App';
 import router from './router';
 import Qs from 'qs';
+// Vuex引用
+import store from './store/index'
 
 Vue.config.productionTip = false;
 /* axios 全局配置 */
 axios.defaults.baseURL = '/xinda-api';
-axios.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+axios.defaults.headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
 axios.interceptors.request.use((config) => {
   // console.log(config);
   config.method == 'post' ? config.data = Qs.stringify(config.data) : '';
   return config;
 });
-var resInterceptors = axios.interceptors.response.use((result)=>{
+var resInterceptors = axios.interceptors.response.use((result) => {
   return result.data;
 });
 Vue.prototype.$http = axios;
@@ -23,6 +25,9 @@ Vue.prototype.$http = axios;
 new Vue({
   el: '#app',
   router,
+  // 引用vuex
+  store,
+  
   template: '<App/>',
   components: {
     App
