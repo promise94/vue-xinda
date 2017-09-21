@@ -4,7 +4,7 @@
             <ul class="tabLink container">
                 <li class="daohang">
                     <a href="/">全部产品</a>
-                    <div class="yincang container">
+                    <div class="yincang container" style="display: none">
                         <div class="zong">
                                 <p>你猜猜看</p>
                             <div class="yin">

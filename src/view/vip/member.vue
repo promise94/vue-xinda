@@ -28,8 +28,11 @@ export default {
   name: 'member',
   data() {
     return {
-      back: this.$route.path.substr(this.$route.path.lastIndexOf('/') + 1),
+      back: '',
     }
+  },
+  created(){
+    this.back = this.$route.path.substr(this.$route.path.lastIndexOf('/') + 1);
   },
   methods: {
     goto(m) {

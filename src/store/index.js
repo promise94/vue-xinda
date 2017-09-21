@@ -1,11 +1,11 @@
 import Vue from 'vue';
-import Vuex from 'vuex'
+import Vuex from 'vuex';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
     // 状态集合
     state: {
-        user: { name: '', status: false },
+        user: { info: '', status: false },
         cartnum: 0,
     },
     mutations: { // 突变集合

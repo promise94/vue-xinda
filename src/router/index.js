@@ -9,9 +9,8 @@ import index from '../view/index/index'
 // 商品详情页
 import goods from '../view/goods/goods'
 import search from '@/view/search/search.vue'; // 搜索结果页
-
-import services from '@/view/list/services.vue';//纳税服务
-import sifco from '@/view/list/sifco.vue';//公司工商
+import services from '@/view/list/services.vue';
+import sifco from '@/view/list/sifco.vue';
 import us from '@/view/us/us.vue'; // 加盟我们
 import storeList from '@/view/store/storeList.vue';//店铺列表
 import storeIndex from '@/view/store/storeIndex.vue';//店铺首页
@@ -59,7 +58,6 @@ export default new Router({
       {
         path: '/goods',
         name: 'goods',
-
         component: goods,
       },
       {
@@ -105,11 +103,11 @@ export default new Router({
       {
         path: '/member',
         name: 'member',
+        alias: '/member/order',
         component: member,
         children: [{
             path: 'order',
             name: 'order',
-            alias: '/member',
             component: order
           },
           {
