@@ -9,14 +9,6 @@ import index from '../view/index/index'
 // 商品详情页
 import goods from '../view/goods/goods'
 import search from '@/view/search/search.vue'; // 搜索结果页
-
-import index from '@/view/index/index';
-
-import services from '@/view/list/services.vue';//纳税服务
-import sifco from '@/view/list/sifco.vue';//公司工商
-import us from '@/view/us/us.vue';
-import storeList from '@/view/store/storeList.vue';
-import storeIndex from '@/view/store/storeIndex.vue';
 import services from '@/view/list/services.vue';
 import sifco from '@/view/list/sifco.vue';
 import us from '@/view/us/us.vue'; // 加盟我们
@@ -52,28 +44,6 @@ export default new Router({
     }
   },
   routes: [{
-<<<<<<< HEAD
-      path: '/',
-      name: 'Main',
-      component: main,
-      children: [{
-          path: '/index',
-          name: 'index',
-          alias: '/',
-          component: index,
-        },
-        {
-          path: '/services',
-          name: 'services',
-          component: services
-        },
-        {
-          path: '/sifco',
-          name: 'sifco',
-          component: sifco
-        },
-        {
-=======
     path: '/',
     name: 'Main',
     component: main,
@@ -88,8 +58,6 @@ export default new Router({
       {
         path: '/goods',
         name: 'goods',
->>>>>>> 8dac4bc0abe53851d69cbff6c318fc0ea9e97b33
-
         component: goods,
       },
       {
