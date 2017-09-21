@@ -1,27 +1,4 @@
 <template>
-    <div class="top">
-        <div class="container content">
-            <div>
-                <div class="user" v-show="state === 1">
-                    <span>{{userName}}</span>
-                </div>
-                <span>欢迎来到信达!</span>
-                <div v-show="state === 0">
-                    <a @click="goto('/user/login')" href="javascript:;">登录</a>
-                    <a @click="goto('/user/register')" href="javascript:;">快速注册</a>
-                </div>
-                <a v-show="state === 1" @click="logout" class="user" href="javascript:;">【退出】</a>
-            </div>
-            <div class="shop">
-                <p>
-                    <i class="xd xd-cart"></i>购物车
-                    <span>{{cartNum}}</span>件</p>
-                <div class="order" v-show="state === 1">
-                    <span class="xd xd-wodedingdan"></span>
-                    <span>我的订单</span>
-                </div>
-                <a href="javascript:;">服务商入口</a>
-            </div>
   <div class="top">
     <div class="container content">
       <div>

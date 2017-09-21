@@ -27,11 +27,11 @@
                             </div>
                         </div>
                         <div class="search-three">
-                            <div>
+                            <div class="serve">
                                 <h3>服务区域</h3>
                             </div>
-                            <div>
-
+                            <div class="city">
+                                <province @province="getProv"></province>
                             </div>
                         </div>
                     </div>
@@ -39,7 +39,7 @@
                         <div class="ball">
                             <ul>
                                 <li @click="loverd(1)" :class="{all: oyo ===1}">综合排序</li>
-                                <li  @click="loverd(2)" :class="{all: oyo ===2}">
+                                <li @click="loverd(2)" :class="{all: oyo ===2}">
                                     <span>价格&nbsp;↑↓</span>
                                 </li>
                             </ul>
@@ -51,9 +51,9 @@
                             </ul>
                         </div>
                         <div class="ball-two" v-for="(item,k) of recommend" :key="k">
-                            <img :src="item.providerImg" alt="">
+                            <img :src="item.providerImg"  @click="shoid(item.id)" alt="">
                             <div class="ball-left">
-                                <p>{{item.serviceName}}</p>
+                                <a  @click="shoid(item.id)">{{item.serviceName}}</a>
                                 <p>{{item.serviceInfo}}</p>
                                 <span>{{item.providerName}}</span>
                                 <span>{{item.regionName}}</span>
@@ -84,20 +84,46 @@
 </template>
 
 <script>
+import province from '../../components/global/province';
 export default {
+    name: 'services',
     created() {
         this.fack()
     },
     data() {
         return {
             recommend: '',
+            // lenovo:1,
             oyoun: 1,
-            oyou:1,
-            oyo:1,
+            oyou: 1,
+            oyo: 1,
         }
     },
+    //城市三级联动
+    components: {
+        province,
+    },
     methods: {
-         //服务分类
+        //城市三级联动
+        getProv(pro) {
+            if (this.i) {
+                this.conf.regionId = pro[2].code;
+                this.getStoreList();
+            }
+            this.i++;
+            console.log(this.i)
+        },
+
+        //跳转页面
+        shoid(id) {
+            console.log(id),
+                this.$router.push({
+                    path: '/goods',
+                    query: { id }
+                })
+        },
+
+        //服务分类
         lover(n) {
             this.oyoun = n;
         },
@@ -107,7 +133,7 @@ export default {
             this.oyou = m;
         },
         //综合排序
-        loverd(c){
+        loverd(c) {
             this.oyo = c;
         },
         fmtPrice(p) {
@@ -141,20 +167,20 @@ export default {
 
 <style lang="less">
 @import './../../common/less/store/services.less';
-    div{
-        >p{
-            color:black;
+div {
+    >p {
+        color: black;
+    }
+}
+
+.daohang {
+    .yincang {
+        display: none;
+    }
+    &:hover {
+        .yincang {
+            display: block;
         }
     }
-    .daohang{
-        .yincang{
-            display: none;
-        }
-        &:hover{
-            .yincang{
-                display: block;
-            }
-        }
-        
-    }
+}
 </style>

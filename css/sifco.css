@@ -88,17 +88,22 @@
 }
 .middle .content .content-center .search .search-three {
   width: 946px;
+  display: flex;
 }
-.middle .content .content-center .search .search-three > div {
+.middle .content .content-center .search .search-three .serve {
   width: 97px;
 }
-.middle .content .content-center .search .search-three > div > h3 {
+.middle .content .content-center .search .search-three .serve > h3 {
   cursor: pointer;
   width: 97px;
   font-size: 14px;
   text-align: center;
   line-height: 40px;
   border-right: 1px solid #ccc;
+}
+.middle .content .content-center .search .search-three .city {
+  display: flex;
+  margin: 10px;
 }
 .middle .content .content-bottom {
   width: 948px;
@@ -142,6 +147,7 @@
   border-bottom: 1px solid #ccc;
 }
 .middle .content .content-bottom .ball-two > img {
+  cursor: pointer;
   width: 98px;
   height: 98px;
   border: 1px solid #ccc;
@@ -150,6 +156,11 @@
   width: 375px;
   padding-left: 12px;
   line-height: 30px;
+}
+.middle .content .content-bottom .ball-two .ball-left > a {
+  cursor: pointer;
+  color: #242424;
+  font-size: 16px;
 }
 .middle .content .content-bottom .ball-two .ball-right {
   width: 189px;
@@ -169,6 +180,7 @@
 .middle .content .content-bottom .ball-two .ball-right > div > a {
   cursor: pointer;
   padding: 5px;
+  color: white;
   background-color: #2693d4;
 }
 .middle .picture {

@@ -83,20 +83,24 @@
                 }
                 .search-three{
                     width: 946px;
-                    >div{
+                    display: flex;
+                    .serve{
                         width: 97px;
-                       
                       >h3{
-                        cursor:pointer;
-                        width: 97px;
-                        font-size: 14px;
-                        text-align: center;
-                        line-height: 40px;
-                        border-right: 1px solid #ccc;
-                    }   
+                            cursor:pointer;
+                            width: 97px;
+                            font-size: 14px;
+                            text-align: center;
+                            line-height: 40px;
+                            border-right: 1px solid #ccc;
+                        }   
+                    }
+                    .city{
+                        display: flex;
+                        margin: 10px;
+                    }
                 }
             }
-        }
         }
         .content-bottom {
             width: 948px;
@@ -140,6 +144,7 @@
                 display: -webkit-box;
                 border-bottom: 1px solid #ccc;
                 >img{
+                    cursor:pointer;
                     width: 98px;
                     height: 98px;
                     border: 1px solid #ccc;
@@ -147,7 +152,12 @@
                 .ball-left{
                     width:375px;
                     padding-left:12px;
-                    line-height: 30px; 
+                    line-height: 30px;
+                    >a{
+                        cursor:pointer;
+                        color:#242424;
+                        font-size: 16px;
+                    } 
                 }
                 .ball-right{
                     width:189px;
@@ -165,6 +175,7 @@
                       >a{
                         cursor:pointer;
                         padding: 5px;
+                        color: white;
                         background-color: #2693d4;
                       }
                   }
