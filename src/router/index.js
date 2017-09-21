@@ -104,11 +104,11 @@ export default new Router({
       {
         path: '/member',
         name: 'member',
+        alias: '/member/order',
         component: member,
         children: [{
             path: 'order',
             name: 'order',
-            alias: '/member',
             component: order
           },
           {
