@@ -14,9 +14,9 @@
       <xd-prov @province="getProv"></xd-prov>
     </li>
     <li>
-      <xd-input @getValue="getPassword" @blur="isPassword" @focus="isPassword(1)" type="password" :info="info.pwdInfo" :infoType="type.pwdType" placeholder="设置密码(8-12位数字和字母)"></xd-input>
+      <xd-input @getValue="getPassword" @blur="isPassword" @focus="isPassword(1)" type="password" :info="info.pwdInfo" :infoType="type.pwdType" placeholder="设置密码(8-16位数字、字母、特殊符号)"></xd-input>
     </li>
-    <li class="btn"><input @click="register" type="button" value="立即注册"></li>
+    <li class="btn"><input @click.13="register" type="button" value="立即注册"></li>
     <li class="xieyi">注册即同意遵守
       <a href="JavaScript:void(0);">《&nbsp;服务协议&nbsp;》</a>
     </li>
@@ -66,7 +66,8 @@ export default {
       this.msgCode = v;
     },
     getProv(pro) { // 获取省市区
-      this.prov = pro;
+      this.prov = pro ? pro[2].code : '';
+      console.log(this.prov);
     },
     isPhone(n) { // 手机号验证
       if (n === 1) {  // 获取焦点,移除错误提示

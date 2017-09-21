@@ -58,7 +58,6 @@ export default new Router({
       {
         path: '/goods',
         name: 'goods',
-
         component: goods,
       },
       {
@@ -104,19 +103,20 @@ export default new Router({
       {
         path: '/member',
         name: 'member',
+        alias: '/member/order',
         component: member,
         children: [{
-            path: '/order',
+            path: 'order',
             name: 'order',
             component: order
           },
           {
-            path: '/evaluntion',
+            path: 'evaluntion',
             name: 'evaluntion',
             component: evaluntion
           },
           {
-            path: '/setting',
+            path: 'setting',
             name: 'setting',
             component: setting
           }

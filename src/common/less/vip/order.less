@@ -1,6 +1,6 @@
 #order{
     font-size: 14px;
-    width:936px;
+    width:930px;
     .orderTop{
         margin-top: 55px;
         >div:nth-child(1){
@@ -82,7 +82,7 @@
             color:#828282;
             margin-top:10px;
             border: 1px solid #e8e8e8;
-            
+            // box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
             >div{
                 display: flex;
                 >div:nth-child(1){
@@ -106,6 +106,11 @@
                         top:20%;
                         left:20%;
                         cursor: pointer;
+                        border: 0;
+                        outline: none;
+                        &:hover{
+                            background: #0CDF0C;
+                        }
                     }
                     p{
                         width:70px;
