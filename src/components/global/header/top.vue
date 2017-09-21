@@ -50,11 +50,6 @@
 </template>
 
 <script>
-<<<<<<< HEAD
-import {mapGetters} from "vuex"
-
-=======
->>>>>>> 8dac4bc0abe53851d69cbff6c318fc0ea9e97b33
 export default {
   name: 'top',
   data() {
@@ -83,52 +78,6 @@ export default {
         }
       })
     },
-<<<<<<< HEAD
-    created() {
-        // var o1 = {height:1.75}
-        // var o = {name:'sunxiaowei',age:18};
-
-        // this.$http({
-        //     method: 'post',
-        //     url: '/sso/login-info',
-        // }).then((data) => {
-        // });
-        // this.$http.post('/product/style/list').then((res)=>{
-        //     console.log(res);
-        // })
-        this.getUser();
-        this.getCartNum();
-    },
-    methods: {
-        logout() { // 退出登录
-            this.$http.post('/sso/ logout').then((res) => {
-                console.log(res);
-                if (res.status === 1) {
-                    sessionStorage.removeItem('users');
-                    this.getUser();
-                }
-            })
-        },
-        getUser() { // 获取用户信息
-            this.user = JSON.parse(sessionStorage.getItem('users'));
-            if (this.user) {
-                this.state = 1;
-                this.userName = this.user.call;
-            } else {
-                this.state = 0;
-                this.userName = '';
-            }
-        },
-        goto(url) { // 页面跳转
-            this.$router.push(url);
-        },
-        getCartNum() { // 获取购物车数量
-            this.$http.post('/cart/cart-num').then((res) => {
-                if (res.status === 1) {
-                    this.cartNum = res.data.cartNum;
-                }
-            });
-=======
     getUser() { // 获取用户信息
       this.$http.post('/sso/login-info').then((res) => {
         if (res.status === 1) {
@@ -139,18 +88,9 @@ export default {
           this.userName = user.info.name;
           this.state = true;
           this.$store.commit('SETUSER', user);
->>>>>>> 8dac4bc0abe53851d69cbff6c318fc0ea9e97b33
         }
       })
     },
-<<<<<<< HEAD
-    watch: {
-
-    },
-    // computed:{
-    //     ...mapGetters(['getUsername'])//...代表对象扩展
-    // }
-=======
     goto(url) { // 页面跳转
       this.$router.push(url);
     },
@@ -168,7 +108,6 @@ export default {
   computed: {
 
   }
->>>>>>> 8dac4bc0abe53851d69cbff6c318fc0ea9e97b33
 };
 </script>
 
