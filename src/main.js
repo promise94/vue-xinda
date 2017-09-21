@@ -6,6 +6,7 @@ import App from './App';
 import router from './router';
 import store from './store';
 import Qs from 'qs';
+import store from './store'
 // import store from './store' // 测试
 
 
