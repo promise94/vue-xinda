@@ -9,7 +9,7 @@
                     <div class="search">
                         <div class="search-one">
                             <div>
-                                <h3>服务分类</h3>
+                                <p>服务分类</p>
                             </div>
                             <div class="search-a">
                                 <span @click="lover(1)" :class="{all: oyoun ===1}">代理记账</span>
@@ -19,7 +19,7 @@
                         </div>
                         <div class="search-two">
                             <div>
-                                <h3>类型</h3>
+                                <p>类型</p>
                             </div>
                             <div class="search-b">
                                 <span @click="love(1)" :class="{all: oyou ===1}">小规模记账</span>
@@ -28,7 +28,7 @@
                         </div>
                         <div class="search-three">
                             <div class="serve">
-                                <h3>服务区域</h3>
+                                <p>服务区域</p>
                             </div>
                             <div class="city">
                                 <province @province="getProv"></province>
@@ -56,12 +56,12 @@
                                 <a  @click="shoid(item.id)">{{item.serviceName}}</a>
                                 <p>{{item.serviceInfo}}</p>
                                 <span>{{item.providerName}}</span>
-                                <span>{{item.regionName}}</span>
+                                <span class="jianju">{{item.regionName}}</span>
                             </div>
                             <div class="ball-right">
                                 <p>￥&nbsp;{{item.price}}</p>
                                 <div>
-                                    <a>立即购买</a>
+                                    <a href="javascript:viod:(0)" @click="shod(item.id)">立即购买</a>
                                     <a>加入购物车</a>
                                 </div>
                             </div>
@@ -119,6 +119,15 @@ export default {
             console.log(id),
                 this.$router.push({
                     path: '/goods',
+                    query: { id }
+                })
+        },
+
+        //跳转到购物车
+        shod(id) {
+            console.log(id),
+                this.$router.push({
+                    path: '/cart',
                     query: { id }
                 })
         },

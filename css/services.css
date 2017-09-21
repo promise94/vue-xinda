@@ -33,9 +33,9 @@
 .middle .content .content-center .search .search-one > div {
   width: 98px;
 }
-.middle .content .content-center .search .search-one > div > h3 {
+.middle .content .content-center .search .search-one > div > p {
   cursor: pointer;
-  font-size: 14px;
+  font-size: 18px;
   line-height: 40px;
   text-align: center;
   border-right: 1px solid #ccc;
@@ -46,6 +46,7 @@
 }
 .middle .content .content-center .search .search-one .search-a > span {
   cursor: pointer;
+  color: #3c3c3c;
   border-radius: 8px;
   line-height: 30px;
   padding: 0 15px;
@@ -64,9 +65,9 @@
 .middle .content .content-center .search .search-two > div {
   width: 98px;
 }
-.middle .content .content-center .search .search-two > div > h3 {
+.middle .content .content-center .search .search-two > div > p {
   cursor: pointer;
-  font-size: 14px;
+  font-size: 18px;
   text-align: center;
   line-height: 40px;
   border-right: 1px solid #ccc;
@@ -75,6 +76,7 @@
   width: 848px;
 }
 .middle .content .content-center .search .search-two .search-b > span {
+  color: #3c3c3c;
   cursor: pointer;
   line-height: 40px;
   padding: 7px 15px;
@@ -93,10 +95,10 @@
 .middle .content .content-center .search .search-three .serve {
   width: 97px;
 }
-.middle .content .content-center .search .search-three .serve > h3 {
+.middle .content .content-center .search .search-three .serve > p {
   cursor: pointer;
   width: 97px;
-  font-size: 14px;
+  font-size: 18px;
   text-align: center;
   line-height: 40px;
   border-right: 1px solid #ccc;
@@ -104,6 +106,7 @@
 .middle .content .content-center .search .search-three .city {
   display: flex;
   margin: 10px;
+  color: #3c3c3c;
 }
 .middle .content .content-bottom {
   width: 948px;
@@ -112,9 +115,7 @@
 }
 .middle .content .content-bottom .ball {
   height: 41px;
-  border-top: 0;
-  border-right: 0;
-  border: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
   background-color: #f7f7f7;
 }
 .middle .content .content-bottom .ball > ul {
@@ -163,6 +164,9 @@
   color: #242424;
   font-size: 16px;
 }
+.middle .content .content-bottom .ball-two .ball-left .jianju {
+  margin-left: 25px;
+}
 .middle .content .content-bottom .ball-two .ball-right {
   width: 189px;
   height: 87px;
@@ -172,7 +176,7 @@
 .middle .content .content-bottom .ball-two .ball-right > p {
   cursor: pointer;
   color: red;
-  font-size: 16px;
+  font-size: 24px;
   line-height: 40px;
 }
 .middle .content .content-bottom .ball-two .ball-right > div {
@@ -181,8 +185,8 @@
 }
 .middle .content .content-bottom .ball-two .ball-right > div > a {
   cursor: pointer;
-  width: 89px;
-  height: 24px;
+  padding: 5px;
+  color: white;
   background-color: #2693d4;
 }
 .middle .picture {

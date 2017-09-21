@@ -9,7 +9,7 @@
                     <div class="search">
                         <div class="search-one">
                             <div>
-                                <h3>服务分类</h3>
+                                <p>服务分类</p>
                             </div>
                             <div class="search-a">
                                 <span @click="lover(1)" :class="{all: oyoun ===1}">公司注册</span>
@@ -18,7 +18,7 @@
                         </div>
                         <div class="search-two">
                             <div>
-                                <h3>类型</h3>
+                                <p>类型</p>
                             </div>
                             <div class="search-b">
                                 <span @click="love(1)" :class="{all: oyou ===1}">分公司注册</span>
@@ -33,7 +33,7 @@
                         </div>
                         <div class="search-three">
                             <div class="serve">
-                                <h3>服务区域</h3>
+                                <p>服务区域</p>
                             </div>
                             <div class="city">
                                 <province @province="getProv"></province>
@@ -56,18 +56,18 @@
                             </ul>
                         </div>
                         <div class="ball-two" v-for="(item,k) of recommend" :key="k">
-                            <img :src="item.providerImg"  @click="shoid(item.id)" alt="">
+                            <img :src="item.providerImg" @click="shoid(item.id)" alt="">
                             <div class="ball-left">
                                 <a @click="shoid(item.id)" href="javascript:viod:(0)">{{item.serviceName}}</a>
                                 <p>{{item.serviceInfo}}</p>
                                 <span>{{item.providerName}}</span>
-                                <span>{{item.regionName}}</span>
+                                <span class="jianju">{{item.regionName}}</span>
                             </div>
                             <div class="ball-right">
                                 <p>￥&nbsp;{{item.price}}</p>
                                 <div>
-                                    <a href="javascript:viod:(0)">立即购买</a>
-                                    <a>加入购物车</a>
+                                    <a href="javascript:viod:(0)" @click="shod(item.id)">立即购买</a>
+                                    <a @click="edward(item.id)">加入购物车</a>
                                 </div>
                             </div>
                         </div>
@@ -94,7 +94,7 @@ export default {
     name: 'sifco',
     created() {
         this.fack();
-        // this.edward();
+        this.ball();
         // console.log(this.$route.query.id )
     },
     data() {
@@ -125,6 +125,15 @@ export default {
             console.log(id),
                 this.$router.push({
                     path: '/goods',
+                    query: { id }
+                })
+        },
+
+        //跳转到购物车
+        shod(id) {
+            console.log(id),
+                this.$router.push({
+                    path: '/cart',
                     query: { id }
                 })
         },
@@ -167,23 +176,40 @@ export default {
                 this.recommend = data;
             })
         },
-        //产品列表接口
+
+        //产品列表接口 切换价格排序
+        ball() {
+            this.$http({
+                method: 'post',
+                url: '/product/package/grid',
+                pdata: {
+                    start: 0,
+                    limit: 8,
+                    productTypeCode: "1",
+                    productId: "8a82f52b674543e298d2e5f685946e6e",
+                    sort: '',
+                }
+            }).then((qwe)=>{
+                let data = qwe.data;
+                console.log(qwe)
+            })
+        },
 
         //购物车接口
-        // edward() {
-        //     this.$http({
-        //         method: 'post',
-        //         url: '/cart/add',
-        //         data: {
-        //             id: '0cb85ec6b63b41fc8aa07133b6144ea3',
-        //             num: 1,
-        //         }
-        //     }).then((ward) => {
-        //         let data = ward.data;
-        //         data.forEach(function(){
-        //         }, this);
-        //     })
-        // },
+        edward(addCarId) {
+            this.$http({
+                method: 'post',
+                url: '/cart/add',
+                data: {
+                    id: addCarId,
+                    num: 1,
+                }
+            }).then((ward) => {
+                let data = ward.data;
+                console.log('sadasd',ward)
+                // data.
+            })
+        },
 
         //购物车
         // showid(id) {
