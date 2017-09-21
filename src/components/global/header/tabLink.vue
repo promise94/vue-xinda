@@ -1,5 +1,5 @@
 <template>
-    <div class="zong">
+    <div class="zong" >
         <div class="linkBox">
             <ul class="tabLink container">
                 <li class="daohang">
