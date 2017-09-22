@@ -11,12 +11,12 @@
       <input @click="getCode" :disabled="btnEabale" type="button" :value="text">
     </li>
     <li>
-      <xd-input @getValue="getPassword" @blur="isPassword" @focus="isPassword(1)" type="password" :info="info.pwdInfo" :infoType="type.pwdType" placeholder="请输入新密码(8-12位数字和字母)"></xd-input>
+      <xd-input @getValue="getPassword" @blur="isPassword" @focus="isPassword(1)" type="password" :info="info.pwdInfo" :infoType="type.pwdType" placeholder="请输入新密码(8-16位数字、字母、特殊符号)"></xd-input>
     </li>
     <li>
-      <xd-input @getValue="getSecondPwd" @blur="isSecondPwd" @focus="isSecondPwd(1)" type="password" :info="info.SecondInfo" :infoType="type.SecondType" placeholder="请再次输入密码(8-12位数字和字母)"></xd-input>
+      <xd-input @getValue="getSecondPwd" @blur="isSecondPwd" @focus="isSecondPwd(1)" type="password" :info="info.SecondInfo" :infoType="type.SecondType" placeholder="请再次输入密码(8-16位数字、字母、特殊符号)"></xd-input>
     </li>
-    <li class="btn"><input @click="changePassword" type="button" value="确认修改"></li>
+    <li class="btn"><input @click.13="changePassword" type="button" value="确认修改"></li>
   </ul>
 </template>
 

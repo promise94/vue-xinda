@@ -4,7 +4,7 @@
       <xd-input @getValue="getPhone" @blur="isPhone" @focus="isPhone(1)" :info="info.phoneInfo" :infoType="type.phoneType" placeholder="请输入手机号"></xd-input>
     </li>
     <li>
-      <xd-input @getValue="getPassword" @blur="isPassword" @focus="isPassword(1)" type="password" :info="info.pwdInfo" :infoType="type.pwdType" placeholder="请输入新密码(8-12位数字和字母)"></xd-input>
+      <xd-input @getValue="getPassword" @blur="isPassword" @focus="isPassword(1)" type="password" :info="info.pwdInfo" :infoType="type.pwdType" placeholder="请输入新密码(8-16位数字、字母、特殊符号)"></xd-input>
     </li>
     <li class="message">
       <xd-captcha :info="info.captInfo" :upload="isload" :infoType="type.captType" @value="getValue"></xd-captcha>
@@ -12,7 +12,7 @@
     <li class="forget">
       <a href="#/user/forget">忘记密码?</a>
     </li>
-    <li><input @click="loginAction" type="button" value="立即登录"></li>
+    <li><input @click.13="loginAction" type="button" value="立即登录"></li>
   </ul>
 </template>
 
