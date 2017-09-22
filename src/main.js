@@ -29,6 +29,19 @@ new Vue({
   template: '<App/>',
   components: {
     App
+  },
+  created(){
+    this.$router.beforeEach((to, from, next)=>{
+      if(to.meta.requireAuth){
+        if (from.name && this.$store.state.user.status) {
+          next();
+        } else {
+          next('/user/login');
+        }
+      }else{
+        next();
+      }
+    });
   }
 })
 

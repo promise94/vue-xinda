@@ -14,7 +14,7 @@
       <xd-prov @province="getProv"></xd-prov>
     </li>
     <li>
-      <xd-input @getValue="getPassword" @blur="isPassword" @focus="isPassword(1)" type="password" :info="info.pwdInfo" :infoType="type.pwdType" placeholder="设置密码(8-16位数字、字母、特殊符号)"></xd-input>
+      <xd-input @getValue="getPassword" @blur="isPassword" @focus="isPassword(1)" type="password" :info="info.pwdInfo" :infoType="type.pwdType" placeholder="设置密码(8-16位数字和字母)"></xd-input>
     </li>
     <li class="btn"><input @click.13="register" type="button" value="立即注册"></li>
     <li class="xieyi">注册即同意遵守

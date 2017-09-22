@@ -16,9 +16,14 @@
 </template>
 
 <script>
-import data from '../../common/js/prov';
+import data from '@/common/js/prov';
 export default {
 	name: 'Prov',
+	props: {
+		regionId: {
+			default: '',
+		}
+	},
 	data() {
 		return {
 			provArr: data, // 一级数据
@@ -31,13 +36,40 @@ export default {
 	},
 	created() {
 		// this.upCity();
+		this.defaultProv();
 	},
 	methods: {
-		upCity() {
+		defaultProv() {
+			// console.log(data);
+			if (this.regionId) {
+				let p = this.regionId.toString().substr(0, 2);
+				let c = this.regionId.toString().substr(2, 2);
+				let a = this.regionId.toString().substr(4, 2)
+				data.forEach((item) => {
+					if (item.code.toString().substr(0, 2) == p) {
+						if (item.regionEntitys) {
+							item.regionEntitys.forEach((s) => {
+								if (s.code.toString().substr(2, 2) == c) {
+									if (s.regionEntitys) {
+										s.regionEntitys.forEach((k) => {
+											if (k.code.toString().substr(4, 2) == a) {
+												this.area = k;
+												console.log('run in for', item,);
+											}
+										})
+									}
+								}
+							});
+						}
+					}
+				})
+			}
+		},
+		upCity(p,c) { // 更新市
 			let temp = this.prov;
 			if (this.prov.regionEntitys) {
-				this.cityArr = this.prov.regionEntitys;
-				this.city = this.prov.regionEntitys[0];
+				this.cityArr = p ? p : this.prov.regionEntitys;
+				this.city = c ? c : this.prov.regionEntitys[0];
 				this.upArea();
 			} else {
 				this.cityArr = '';
@@ -46,13 +78,14 @@ export default {
 				this.area = '';
 			}
 		},
-		upArea() {
+		upArea(c, a) { // 更新区
 			if (this.city) {
-				this.areaArr = this.city.regionEntitys;
-				this.area = this.city.regionEntitys[0];
+				console.log('run in up', this.area);
+				this.areaArr = c ? c : this.city.regionEntitys;
+				this.area = a ? a : this.city.regionEntitys[0];
 			}
 		},
-		returnMsg() {
+		returnMsg() { // 返回数据
 			if (!this.prov) {
 				this.$emit('province', '');
 			} else if (!this.prov.regionEntitys) {
@@ -74,6 +107,7 @@ export default {
 		},
 		area() {
 			this.returnMsg();
+			console.log('wath', this.area);
 		}
 	}
 }

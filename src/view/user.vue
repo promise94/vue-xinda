@@ -3,7 +3,9 @@
     <xd-header :head="head"></xd-header>
     <div id="content">
       <div class="container content">
-        <router-view id="content"></router-view>
+        <transition name="slide">
+          <router-view id="content"></router-view>
+        </transition>
         <div class="title">
           <p>{{title}}&nbsp;?</p>
           <div>
@@ -33,9 +35,9 @@ export default {
   data() {
     return {
       info: {
-        register: { head: '欢迎注册', link:'login', linkname: '立即登录', title: '已有账号' },
-        login: { head: '欢迎登录', link:'register', linkname: '立即注册', title: '还没有账号' },
-        forget: { head: '忘记密码', link:'login', linkname: '返回登录', title: '想起密码来了' },
+        register: { head: '欢迎注册', link: 'login', linkname: '立即登录', title: '已有账号' },
+        login: { head: '欢迎登录', link: 'register', linkname: '立即注册', title: '还没有账号' },
+        forget: { head: '忘记密码', link: 'login', linkname: '返回登录', title: '想起密码来了' },
       },
       head: '',
       link: '',
@@ -52,7 +54,7 @@ export default {
     }
   },
   methods: {
-    setShow(){
+    setShow() {
       let path = this.$route.path;
       let name = path.substr(path.lastIndexOf('/') + 1);
       this.head = this.info[name].head;
@@ -60,7 +62,7 @@ export default {
       this.title = this.info[name].title;
       this.link = this.info[name].link;
     },
-    goPage(){
+    goPage() {
       this.$router.push(this.link);
     }
   }
