@@ -27,7 +27,8 @@
                 <span>所在地区 :</span>
                 <input type="text" placeholder="请输入所在地区">
             </div>
-            <input type="submit" value="保存">
+            <button>保存</button>
+            
         </div>
 
         <div class="change" v-show="says === 2">
@@ -43,7 +44,8 @@
                 <span>再次输入新密码 :</span>
                 <input type="text" placeholder="请再次输入新密码">
             </div>
-            <input type="submit" value="保存">
+            <button>保存</button>
+            
         </div>
     </div>
 </template>

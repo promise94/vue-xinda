@@ -135,7 +135,7 @@ export default {
             position: absolute;
             top: 0;
             left: 200px;
-            display: none; // background-color: red;
+            display: none; 
         }
     }
     >div:nth-child(1) {

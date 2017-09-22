@@ -7,7 +7,7 @@
         <h2>12345678901</h2>
       </div>
       <div>
-        <div @click="goto('order')" :class="{e9: back == 'order'}">
+        <div @click="goto('member')" :class="{e9: back == 'member'}">
           <a class="xd xd-dingdan" href="javascript:;"> 我的订单</a>
         </div>
         <div @click="goto('evaluntion')" :class="{e9: back == 'evaluntion'}">
