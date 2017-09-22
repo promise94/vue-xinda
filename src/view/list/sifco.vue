@@ -9,7 +9,7 @@
                     <div class="search">
                         <div class="search-one">
                             <div>
-                                <h3>服务分类</h3>
+                                <p>服务分类</p>
                             </div>
                             <div class="search-a">
                                 <span @click="lover(1)" :class="{all: oyoun ===1}">公司注册</span>
@@ -18,7 +18,7 @@
                         </div>
                         <div class="search-two">
                             <div>
-                                <h3>类型</h3>
+                                <p>类型</p>
                             </div>
                             <div class="search-b">
                                 <span @click="love(1)" :class="{all: oyou ===1}">分公司注册</span>
@@ -32,18 +32,18 @@
                             </div>
                         </div>
                         <div class="search-three">
-                            <div>
-                                <h3>服务区域</h3>
+                            <div class="serve">
+                                <p>服务区域</p>
                             </div>
-                            <div>
-
+                            <div class="city">
+                                <province @province="getProv"></province>
                             </div>
                         </div>
                     </div>
                     <div class="content-bottom">
                         <div class="ball">
                             <ul>
-                                <li  @click="lov(1)" :class="{all: oyo ===1}">综合排序</li>
+                                <li @click="lov(1)" :class="{all: oyo ===1}">综合排序</li>
                                 <li @click="lov(2)" :class="{all: oyo ===2}">
                                     <span>价格&nbsp;↑↓</span>
                                 </li>
@@ -56,18 +56,18 @@
                             </ul>
                         </div>
                         <div class="ball-two" v-for="(item,k) of recommend" :key="k">
-                            <img :src="item.providerImg" alt="">
+                            <img :src="item.providerImg" @click="shoid(item.id)" alt="">
                             <div class="ball-left">
-                                <p>{{item.serviceName}}</p>
+                                <a @click="shoid(item.id)" href="javascript:viod:(0)">{{item.serviceName}}</a>
                                 <p>{{item.serviceInfo}}</p>
                                 <span>{{item.providerName}}</span>
-                                <span>{{item.regionName}}</span>
+                                <span class="jianju">{{item.regionName}}</span>
                             </div>
                             <div class="ball-right">
                                 <p>￥&nbsp;{{item.price}}</p>
                                 <div>
-                                    <a>立即购买</a>
-                                    <a@click="showid(item.id)">加入购物车</a>
+                                    <a href="javascript:viod:(0)" @click="shod(item.id)">立即购买</a>
+                                    <a @click="edward(item.id)">加入购物车</a>
                                 </div>
                             </div>
                         </div>
@@ -89,9 +89,12 @@
 </template>
 
 <script>
+import province from '../../components/global/province';
 export default {
+    name: 'sifco',
     created() {
         this.fack();
+        this.ball();
         // console.log(this.$route.query.id )
     },
     data() {
@@ -99,10 +102,42 @@ export default {
             recommend: '',
             oyoun: 1,
             oyou: 1,
-            oyo:1,
+            oyo: 1,
         }
     },
+    //城市三级联动
+    components: {
+        province,
+    },
     methods: {
+        //城市三级联动
+        getProv(pro) {
+            if (this.i) {
+                this.conf.regionId = pro[2].code;
+                this.getStoreList();
+            }
+            this.i++;
+            console.log(this.i)
+        },
+
+        //跳转页面
+        shoid(id) {
+            console.log(id),
+                this.$router.push({
+                    path: '/goods',
+                    query: { id }
+                })
+        },
+
+        //跳转到购物车
+        shod(id) {
+            console.log(id),
+                this.$router.push({
+                    path: '/cart',
+                    query: { id }
+                })
+        },
+
         //服务分类
         lover(n) {
             this.oyoun = n;
@@ -113,9 +148,10 @@ export default {
             this.oyou = m;
         },
         //综合排序
-        lov(c){
+        lov(c) {
             this.oyo = c;
         },
+        //商品获取
         fmtPrice(p) {
             return (parseFloat(p) * 0.01).toFixed(2);
         },
@@ -140,13 +176,49 @@ export default {
                 this.recommend = data;
             })
         },
-        showid(id) {
-            console.log(id),
-                this.$router.push({
-                    path: '/sifco',
-                    query: { id }
-                })
-        }
+
+        //产品列表接口 切换价格排序
+        ball() {
+            this.$http({
+                method: 'post',
+                url: '/product/package/grid',
+                pdata: {
+                    start: 0,
+                    limit: 8,
+                    productTypeCode: "1",
+                    productId: "8a82f52b674543e298d2e5f685946e6e",
+                    sort: '',
+                }
+            }).then((qwe)=>{
+                let data = qwe.data;
+                console.log(qwe)
+            })
+        },
+
+        //购物车接口
+        edward(addCarId) {
+            this.$http({
+                method: 'post',
+                url: '/cart/add',
+                data: {
+                    id: addCarId,
+                    num: 1,
+                }
+            }).then((ward) => {
+                let data = ward.data;
+                console.log('sadasd',ward)
+                // data.
+            })
+        },
+
+        //购物车
+        // showid(id) {
+        //     console.log(id),
+        //     this.$router.push({
+        //         path: '/sifco',
+        //         query: { id }
+        //     })
+        // }
     }
 }
 </script>

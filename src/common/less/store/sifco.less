@@ -27,9 +27,9 @@
                     border-bottom: 1px solid #ccc; 
                     >div{
                         width: 98px;
-                        >h3{
+                        >p{
                             cursor:pointer;
-                            font-size: 14px;
+                            font-size: 18px;
                             line-height: 41px;
                             text-align: center;border-right: 1px solid #ccc;
                         }
@@ -39,6 +39,7 @@
                         width: 848px; 
                         >span{
                             cursor:pointer;
+                            color:#3c3c3c;
                             padding: 0 15px;
                             height: 30px;
                             line-height: 30px;
@@ -57,9 +58,9 @@
                     border-bottom: 1px solid #ccc;
                     >div{
                         width: 98px;
-                        >h3{
+                        >p{
                             cursor:pointer;
-                            font-size: 14px;
+                            font-size: 18px;
                             text-align: center;
                             line-height: 80px;
                             border-right: 1px solid #ccc;
@@ -70,10 +71,11 @@
                         >span{
                             cursor:pointer;
                             height: 30px;
+                            color:#3c3c3c;
                             padding: 7px 10px;
                             line-height: 35px;
                             border-radius: 8px;
-                            margin: 5px;
+                            margin:5px;
                         }
                     }
                     .search-b span:hover{
@@ -83,20 +85,25 @@
                 }
                 .search-three{
                     width: 946px;
-                    >div{
+                    display: flex;
+                    .serve{
                         width: 97px;
-                       
-                      >h3{
-                        cursor:pointer;
-                        width: 97px;
-                        font-size: 14px;
-                        text-align: center;
-                        line-height: 40px;
-                        border-right: 1px solid #ccc;
-                    }   
+                      >p{
+                            cursor:pointer;
+                            width: 97px;
+                            font-size: 18px;
+                            text-align: center;
+                            line-height: 40px;
+                            border-right: 1px solid #ccc;
+                        }   
+                    }
+                    .city{
+                        display: flex;
+                        margin:7px 10px;
+                        color:#3c3c3c;
+                    }
                 }
             }
-        }
         }
         .content-bottom {
             width: 948px;
@@ -104,9 +111,7 @@
             margin-top: 23px;
             .ball {
                 height: 41px;
-                border-top: 0;
-                border-right: 0;
-                border: 1px solid #ccc;
+                border-bottom: 1px solid #ccc;
                 background-color: #f7f7f7;
                 >ul {
                     cursor:pointer;
@@ -140,6 +145,7 @@
                 display: -webkit-box;
                 border-bottom: 1px solid #ccc;
                 >img{
+                    cursor:pointer;
                     width: 98px;
                     height: 98px;
                     border: 1px solid #ccc;
@@ -147,7 +153,15 @@
                 .ball-left{
                     width:375px;
                     padding-left:12px;
-                    line-height: 30px; 
+                    line-height: 30px;
+                    >a{
+                        cursor:pointer;
+                        color:#242424;
+                        font-size: 16px;
+                    }
+                    .jianju{
+                        margin-left: 25px;
+                    } 
                 }
                 .ball-right{
                     width:189px;
@@ -156,7 +170,7 @@
                   padding-left:218px;
                   >p{
                       color: red;
-                      font-size: 16px;
+                      font-size: 24px;
                       line-height: 50px;
                   } 
                   >div{
@@ -165,6 +179,7 @@
                       >a{
                         cursor:pointer;
                         padding: 5px;
+                        color: white;
                         background-color: #2693d4;
                       }
                   }

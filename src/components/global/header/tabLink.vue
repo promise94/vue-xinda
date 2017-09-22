@@ -1,5 +1,5 @@
 <template>
-    <div class="zong">
+    <div class="zong" >
         <div class="linkBox">
             <ul class="tabLink container">
                 <li class="daohang">
@@ -135,7 +135,7 @@ export default {
             position: absolute;
             top: 0;
             left: 200px;
-            display: none; // background-color: red;
+            display: none; 
         }
     }
     >div:nth-child(1) {

@@ -91,7 +91,16 @@
     </div>
 
     <div class="page-changes">
-      <pagingQuery></pagingQuery>
+      <div id="pagelist">
+        <ul>
+            <li @click="titles('first')">首页</li>
+            <li @click="titles('top')">上一页</li>
+            <li @click="titles(1)" :class="{bluestore: changestore=== 1}">1</li>
+            <li @click="titles('bottom')">下一页</li>
+            <li @click="titles('last')">尾页</li>
+        </ul>
+    </div>
+      <!-- <pagingQuery></pagingQuery> -->
       
     </div>
 
@@ -109,7 +118,9 @@ export default {
     return {
       checked: '',
       change: 1,
+      changestore: 1,
       arr: '',
+      count: '',
       conf:{
         start: 0,
         limit: 4,
@@ -118,7 +129,6 @@ export default {
         sort: 1,
       },
       i: 0,
-
 
     }
   },
@@ -134,7 +144,9 @@ export default {
       url: '/provider/grid',
       data: this.conf,
     }).then((result) => {
+      this.count=result.totalCount;
       let data = result.data;
+      // console.log(result.totalCount);
       for (var i = 0; i < data.length; i++) {
         data[i].totalJudge == 0 ? data[i].totalJudge = 1 : "";
         data[i].providerImg.substring(0, 3) == 'http' ? data[i].providerImg = data[i].providerImg : data[i].providerImg = "http://115.182.107.203:8088/xinda/pic" + data[i].providerImg;
@@ -144,12 +156,13 @@ export default {
       this.arr = data;
       })
     },
-
+    //产品类型选择筛选店铺
     blueColor(n){
       this.checked = n;
       this.conf.productTypeCode = n;
       this.getStoreList();
     },
+    //排序选择筛选店铺
     blue(m) {
       this.change = m;
       this.conf.sort = m;
@@ -157,15 +170,50 @@ export default {
     },
     //跳转页面
     gotoStore(id) {
-      this.$router.push({ path: '/storeIndex', query: { storeCode: id } });
+      this.$router.push({ path: '/storeIndex', query: { id: id } });
     },
+    //省市区选择筛选店铺
     getProv(pro){
-      if(this.i){
+      // if(this.i){//如果省市区有默认的code值
+        // this.conf.regionId = pro[2].code;
+        // this.getStoreList();
+      // }
+      // this.i++;
+      if(pro!==""){
         this.conf.regionId = pro[2].code;
         this.getStoreList();
+      }else{
+        this.conf.regionId ="";
+        this.getStoreList();
       }
-      this.i++;
-      console.log(this.i)
+    },
+    //分页条
+    titles(n){
+
+      var math=Math.floor(this.count/this.conf.limit)+1;
+      
+        if(n=='first'){
+            n=1;
+        }else if(n=='last'){
+            n=math;
+            
+        }else if(n=='top'){
+            n=this.conf.start/this.conf.limit;
+            if(n==0){
+              n=1;
+            }
+        }else if(n=='bottom'){
+            n=this.conf.start/this.conf.limit+2;
+            if(n==math+1){
+              n=math;       
+            }
+        }
+        this.conf.start=(n-1)*this.conf.limit;
+        this.changestore=n;
+        // console.log(n);
+        this.getStoreList();  
+      this.changestore=n;
+      console.log(this.changestore)
     }
   },
   components: {     
@@ -204,4 +252,33 @@ export default {
 
 <style lang="less" scoped>
 @import '../../common/less/store/storeList.less';
+#pagelist{
+    ul{
+        width:370px;
+        margin:0 auto;
+        display:flex;
+        li{
+            color:#9c9c9c;
+            background:#f4f4f4;
+            padding:10px 15px;
+            margin:4px;
+            border:1px solid #b0b0b0;
+            cursor:pointer;
+            &:hover{
+              background:#2594d4;
+              color:#fff;
+            }
+        }
+        li:first-child{
+            margin-right:12px;
+        }
+        li:last-child{
+            margin-left:12px;
+        }
+    }
+    .bluestore{
+      background:#2594d4;
+      color:#fff;
+    }   
+}
 </style>

@@ -27,7 +27,8 @@
                 <span>所在地区 :</span>
                 <province @province="getProv" :regionId="370203"></province>
             </div>
-            <input @click="saveInfo" type="button" value="保存">
+            <button @click="saveInfo">保存</button>
+            
         </div>
 
         <div class="change" v-show="says === 2">
@@ -43,7 +44,8 @@
                 <span>再次输入新密码 :</span>
                 <input type="text" placeholder="请再次输入新密码">
             </div>
-            <input type="button" value="保存">
+            <button>保存</button>
+            
         </div>
     </div>
 </template>
