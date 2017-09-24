@@ -94,8 +94,7 @@ export default {
     name: 'sifco',
     created() {
         this.fack();
-        this.ball();
-        // console.log(this.$route.query.id )
+        // console.log(this.$route.query.id)
     },
     data() {
         return {
@@ -112,12 +111,7 @@ export default {
     methods: {
         //城市三级联动
         getProv(pro) {
-            if (this.i) {
-                this.conf.regionId = pro[2].code;
-                this.getStoreList();
-            }
-            this.i++;
-            console.log(this.i)
+
         },
 
         //跳转页面
@@ -174,6 +168,7 @@ export default {
                     item.providerImg = 'http://115.182.107.203:8088/xinda/pic/' + item.providerImg;
                 }, this);
                 this.recommend = data;
+                console.log(you)
             })
         },
 
@@ -187,11 +182,10 @@ export default {
                     limit: 8,
                     productTypeCode: "1",
                     productId: "8a82f52b674543e298d2e5f685946e6e",
-                    sort: '',
+                    sort: 2,
                 }
-            }).then((qwe)=>{
-                let data = qwe.data;
-                console.log(qwe)
+            }).then((qwe) => {
+                console.log("oyoy",qwe)
             })
         },
 
@@ -206,19 +200,10 @@ export default {
                 }
             }).then((ward) => {
                 let data = ward.data;
-                console.log('sadasd',ward)
+                console.log('sadasd', ward)
                 // data.
             })
         },
-
-        //购物车
-        // showid(id) {
-        //     console.log(id),
-        //     this.$router.push({
-        //         path: '/sifco',
-        //         query: { id }
-        //     })
-        // }
     }
 }
 </script>
