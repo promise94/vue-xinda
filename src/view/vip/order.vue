@@ -106,13 +106,19 @@ export default {
     },
     methods: {
         getBusinessOrder() {
-            this.$http.post('/business-order/grid', { businessNo: 1, endTime: this.time, start: 0 })
+        },
+        getServiOrder() {
+            let data = {
+                businessNo: 1,
+                startTime: '2017-03-28',
+                 endTime: this.time,
+                  start: 0
+            }
+            this.$http.post('/business-order/grid', data)
                 .then((res) => {
                     console.log('res', res);
                 })
-        },
-        getServiOrder() {
-            this.$http.post('/service-order/grid', { businessNo: 1, endTime: this.time, start: 0 })
+            this.$http.post('/service-order/grid', data)
                 .then((res) => {
                     this.orders = res.data.map((i) => {
                         i.createTime = util.formatTime(i.createTime, 'yy-mm-dd H:M:S')
