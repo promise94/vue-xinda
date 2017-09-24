@@ -66,6 +66,7 @@ export default {
             this.typeIn = searchInfo.type;
             this.regionId = searchInfo.id;
             this.search();
+            
         }
     },
     methods: {
