@@ -24,6 +24,7 @@ import evaluntion from '@/view/vip/evaluntion.vue';
 
 import cart from '@/view/cart/cart.vue'; // 购物车
 import pay from '@/view/pay/pay.vue';// 支付首页
+import yinlian from '@/view/pay/yinlian.vue';//银联支付
 
 
 /**
@@ -33,6 +34,7 @@ import login from '@/view/user/login.vue';
 import register from '@/view/user/register.vue';
 import forget from '@/view/user/forget.vue';
 
+// import yinlian from '@/view/pay/yinlian.vue';
 Vue.use(Router);
 
 export default new Router({
@@ -100,6 +102,11 @@ export default new Router({
         path: '/pay',
         name: 'Pay',
         component: pay
+      },
+      {
+        path: '/yinlian',
+        name: 'yinlian',
+        component: yinlian
       },
       {
         path: '/member',
