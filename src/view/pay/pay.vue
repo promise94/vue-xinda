@@ -101,7 +101,7 @@
                     </div>
                 </div>
                 <!-- 立即支付 -->
-                <div class="pay-pay" v-on:click="ckpay()">
+                <div class="pay-pay" v-on:click="ckpay(1)">
                     <p>金额总计
                         <span>￥{{recommend.price}}</span>
                     </p>
@@ -258,9 +258,9 @@ export default {
             })
         },
         // --
-        // ckpay(n) {
-        //     this.index = n;
-        // },
+        ckpay(n) {
+            // this.index = n;
+        },
         wanchang(m) {
             this.itms = m;
         },
