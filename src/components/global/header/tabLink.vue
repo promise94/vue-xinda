@@ -1,44 +1,34 @@
 <template>
-    <div class="zong" >
+    <div class="zong">
         <div class="linkBox">
             <ul class="tabLink container">
                 <li class="daohang">
-                    <a href="/">全部产品</a>
-                    <div class="yincang container" style="display: none">
-                        <div class="zong">
-                                <p>你猜猜看</p>
-                            <div class="yin">
-                                <p>你猜猜看</p>
+                    <a href="#/" v-on:click="show = !show">
+                        全部产品
+                        <!-- <div class="yincang container" v-if="show">
+                            <div class="zong">
+                                <div class="erji">
+                                    <div>图</div>
+                                    <div>
+                                        <p>财税服务</p>
+                                    </div>
+                                </div>
+                                <div class="sanji"></div>
                             </div>
-                        </div>
-                        <div class="zong">
-                            <div class="yin">
-
-                            </div>
-                        </div>
-                        <div class="zong">
-                            <div class="yin">
-
-                            </div>
-                        </div>
-                        <div class="zong">
-                            <div class="yin">
-
-                            </div>
-                        </div>
-                    </div>
+                        </div> -->
+                    </a>
                 </li>
                 <li>
-                    <a href="#/services">财税服务</a>
+                    <a href="#/services" @click="bb(1)" :class="{daohang2 :cc===1}">财税服务</a>
                 </li>
                 <li>
-                    <a href="#/sifco">公司工商</a>
+                    <a href="#/sifco" @click="bb(2)" :class="{daohang2 :cc===2}">公司工商</a>
                 </li>
                 <li>
-                    <a href="#/us">加盟我们</a>
+                    <a href="#/us" @click="bb(3)" :class="{daohang2 :cc===3}">加盟我们</a>
                 </li>
                 <li>
-                    <a href="#/storeList">店铺</a>
+                    <a href="#/storeList" @click="bb(4)" :class="{daohang2 :cc===4}">店铺</a>
                 </li>
             </ul>
         </div>
@@ -50,19 +40,33 @@
 export default {
     data() {
         return {
-            link: { '/': '全部产品', '/services': '财税服务', '/sifco': '公司工商', '/us': '加盟我们', '/storeList': '店铺' },
-            index: '',
+            aaa: 0,
+            cc: '',
+            show: true,
+
         }
     },
+
+
     created() {
-        let urlLink = this.$route.path === '/' ? Object.keys(this.link)[0] : this.$route.path.substr(1);
-        this.index = urlLink;
+        this.getnicai();
     },
     methods: {
-        goPage(n) {
-            this.index = n;
-            this.$router.push(n);
-        }
+        bb(n) {
+            this.cc = n;
+
+            console.log(this.cc);
+        },
+        getnicai() {
+            this.$http({
+                method: 'post',
+                url: '/product/style/list',
+                data: {
+                }
+            }).then((result) => {
+                console.log(result.data);
+            })
+        },
     }
 }
 </script>
@@ -73,7 +77,7 @@ export default {
     border-bottom: 1px solid @color;
     .tabLink {
         margin-top: 15px;
-        li {
+        >li {
             display: inline-block;
             width: 200px;
             font-size: 18px;
@@ -85,9 +89,14 @@ export default {
                 box-sizing: border-box;
                 cursor: pointer;
                 color: #000000;
+                
                 &:hover {
-                    color: @color;
-                    border-bottom: 4px solid @color;
+                    
+                        
+                        color: @color;
+                        border-bottom: 4px solid @color;
+                        // height: 40px;
+                    
                 }
             }
         }
@@ -99,80 +108,62 @@ export default {
         }
     }
     .active {
-      >span {
-        color: @color;
-        border-bottom: 4px solid @color;
-      }
+        >span {
+            color: @color;
+            border-bottom: 4px solid @color;
+        }
     }
 }
 
-// .zong {
-//     overflow: hidden;
-// }
+
 .yincang {
+    // display: none;
     z-index: 100;
     padding: 0;
     position: absolute;
     left: 50%;
     height: 402px;
+    margin-top: 13px;
+    overflow: hidden;
     margin-left: -600px; // overflow：hidden； 
-    >div {
-        opacity: 0.5;
+    .zong {
+        width: 200px;
+        height: 116px; // background: red;
         position: relative;
-        background-color: #132336;
-        p{
-            opacity: 1;
-            color: #ffffff;
-        }
-        &:hover {
-            background-color: #2693d4;
-            .yin {
-                display: block;
+        display: flex;
+        >div:nth-child(1) {
+            width: 200px;
+            height: 116px;
+            background: cadetblue;
+            display: flex;
+            >div:nth-child(1) {
+                background: red;
+                width: 26px;
+                height: 26px;
+                margin: 17px 0 0 14px;
+            }
+            >div:nth-child(2) {
+                background: red;
+                width: 160px;
+                height: 20px;
+                margin-top: 17px;
+                p {
+                    line-height: 25px;
+                }
             }
         }
-        >div {
-            width: 1000px;
+        .sanji {
             position: absolute;
-            top: 0;
-            left: 200px;
-            display: none; // background-color: red;
-        }
-    }
-    >div:nth-child(1) {
-        width: 200px;
-        height: 116px;
-        margin-top: 1px;
-        >div {
+            right: -1000px;
             width: 1000px;
             height: 116px;
-            background-color: red;
+            display: none;
+            background: darkgreen;
         }
-    }
-    >div:nth-child(2) {
-        width: 200px;
-        height: 84px;
-        >div {
-            width: 1000px;
-            height: 84px;
-            background-color: red;
-        }
-    }
-    >div:nth-child(3) {
-        width: 200px;
-        height: 116px;
-        >div {
-            width: 1000px;
-            height: 116px;
-            background-color: red;
-        }
-    }
-    >div:nth-child(4) {
-        width: 200px;
-        height: 84px;
-        >div {
-            width: 1000px;
-            height: 84px;
-            background-color: red;
+        &:hover {
+            .sanji {
+                display: block;
+            }
         }
     }
 }

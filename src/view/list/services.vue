@@ -172,15 +172,4 @@ div {
         color: black;
     }
 }
-
-.daohang {
-    .yincang {
-        display: none;
-    }
-    &:hover {
-        .yincang {
-            display: block;
-        }
-    }
-}
 </style>

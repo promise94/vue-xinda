@@ -109,7 +109,7 @@ export default {
       method: 'post',
       url: '/provider/detail',
       data: {
-        id: this.$route.query.storeCode,
+        id: this.$route.query.id,
       }
     }).then((res) => {
       this.date = res.data;

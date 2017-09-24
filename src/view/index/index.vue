@@ -15,50 +15,19 @@
             <div class="arrows"></div>
         </div>
         <div class="mingxing">
-            <div>
+            <a href="#/services" v-for="(i,k) of hehe" :key="k">
                 <div>
-                    <img src="" alt="">
-                    <p>标准五险一金</p>
-                    <p>定制化社保代理</p>
+                    <div>
+                        <img :src=" i.providerImg " alt="">
+                    </div>
+                    <p>{{i.serviceName}}</p>
+                    <p>{{i.serviceInfo}}</p>
                     <p>
-                        <span>20</span>
-                        <span>元/人/月</span>
+                        <span>{{fmtPrice(i.price)}}</span>
+                        <span>{{i.unit}}</span>
                     </p>
                 </div>
-            </div>
-            <div>
-                <div>
-                    <img src="" alt="">
-                    <p>标准五险一金</p>
-                    <p>定制化社保代理</p>
-                    <p>
-                        <span>20</span>
-                        <span>元/人/月</span>
-                    </p>
-                </div>
-            </div>
-            <div>
-                <div>
-                    <img src="" alt="">
-                    <p>标准五险一金</p>
-                    <p>定制化社保代理</p>
-                    <p>
-                        <span>20</span>
-                        <span>元/人/月</span>
-                    </p>
-                </div>
-            </div>
-            <div>
-                <div>
-                    <img src="" alt="">
-                    <p>标准五险一金</p>
-                    <p>定制化社保代理</p>
-                    <p>
-                        <span>20</span>
-                        <span>元/人/月</span>
-                    </p>
-                </div>
-            </div>
+            </a>
         </div>
         <div class="biaoti">
             <p>初创企业必备</p>
@@ -153,7 +122,7 @@ export default {
     created() {
         this.getnicai();
         this.getbucai();
-        // this.mingxing();
+        this.mingxing();
     },
     components: {
         swiper,
@@ -164,7 +133,9 @@ export default {
             index: 0,
             recommend: '',
             haha: '',
-            // mignxing: '',
+            hehe: '',
+            // providerImg:'',
+            // marketPrice: '',
 
             imgChange: [
                 '../../../static/images/1.jpg',
@@ -197,7 +168,7 @@ export default {
             return (parseFloat(p) * 0.01).toFixed(2);
         },
         myhover(n) {
-            console.log(this.index = n);
+            this.index = n;
         },
         getnicai() {
             this.$http({
@@ -232,29 +203,23 @@ export default {
                 this.haha = data;
             })
         },
-        // mingxing() {
-        //     this.$http({
-        //         method: 'post',
-        //         url: '/product/package/grid',
-        //         data: {
-        //             tart: 0,
-        //             limit: 8,
-        //             productTypeCode: "1",
-        //             productId: "8a82f52b674543e298d2e5f685946e6e",
-        //             sort: 2,
-        //         }
-        //     }).then((shenme) => {
-        //         let data = shenme.data;
-        //         console.log(data);
-        //         data.forEach(function(item) {
-
-        //             item.providerImg = 'http://115.182.107.203:8088/xinda/pic/' + item.providerImg;
-
-        //             item.marketPrice = item.marketPrice + '.00'
-        //         }, this);
-        //         this.mingxing = data;
-        //     })
-        // },
+        mingxing() {
+            this.$http({
+                method: 'post',
+                url: '/recommend/list',
+                data: {
+                }
+            }).then((shenme) => {
+                let data = shenme.data.product;
+                // console.log(data);
+                data.forEach(function(i) {
+                    i.providerImg = 'http://115.182.107.203:8088/xinda/pic/' + i.providerImg;
+                    i.marketPrice = i.marketPrice + '.00'
+                    // console.log(providerImg);
+                }, this);
+                this.hehe = data;
+            })
+        },
         showDetails(id) {
             this.$router.afterEach((to, from, next) => {
                 window.scrollTo(0, 0);
@@ -274,7 +239,7 @@ export default {
                     query: { id }
                 }),
                 console.log(id);
-        }
+        },
     }
 }
 

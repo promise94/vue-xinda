@@ -7,8 +7,8 @@
             <div class="xiangqing">
                 <img :src="img" alt="">
                 <div>
-                    <p>{{datas.providerProduct.serviceName}}</p>
-                    <p>{{datas.providerProduct.serviceInfo}}</p>
+                    <p>{{serviceName}}</p>
+                    <p>{{serviceInfo}}</p>
                     <div>
                         <p>市场价:
                             <span>￥
@@ -41,7 +41,7 @@
                                 <li>
                                     <span id="num-jian" class="num-jian" v-on:click="cai(0)">-</span>
                                 </li>
-                                <li><input type="text" v-model="num" class="input-num" id="input-num" /></li>
+                                <li><input type="text" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" v-model="num" class="input-num" id="input-num" /></li>
                                 <li>
                                     <span id="num-jia" class="num-jia" v-on:click="cai(1)"> +</span>
                                 </li>
@@ -200,7 +200,12 @@ export default {
             datas: '',
             htmle: '',
             img: '',
-            // sId: this.$route.query.id,
+            shichang:'',
+            xianjia:'',
+            leixing:'',
+            serviceName:'',
+            serviceInfo:'',
+            
         }
     },
     methods: {
@@ -228,7 +233,7 @@ export default {
         },
 
         jiarugouwuche() {
-            if ( this.$store.state.user === 'ture'){
+            // if ( this.$store.state.user === 'ture'){
                 this.$http({
                     method: 'post',
                     url: '/cart/add',
@@ -239,9 +244,9 @@ export default {
                 }).then((res) => {
                     console.log(res);
                 })
-            } else {
-                console.log('cuowu');
-            }
+            // } else {
+                // console.log('cuowu');
+            // }
         },
         getnicai() {
             this.$http({
@@ -257,6 +262,8 @@ export default {
                 this.htmle = result.data.providerProduct.serviceContent;
                 this.shichang = result.data.product.marketPrice;
                 this.xianjia = result.data.providerProduct.price;
+                this.serviceName = result.data.providerProduct.serviceName;
+                this.serviceInfo = result.data.providerProduct.serviceInfo;
                 this.leixing = result.data.product.name;
                 console.log(this.datas);
             })
