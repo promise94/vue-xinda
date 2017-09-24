@@ -27,6 +27,7 @@
     justify-content: space-around;
     p{
         margin: 25px 0 0;
+        user-select: none;
     }
 }
 // 商品列表
@@ -65,6 +66,9 @@
                 margin-bottom: 0px;
                 cursor: pointer;
             }
+            >p:nth-child(2){
+                width: 120px;
+            }
             >p:nth-child(4){
                 background-color: #fff;
                 span{
@@ -74,6 +78,7 @@
                     text-align: center;
                     line-height: 16px;
                     background-color: #bcbebd;
+                    user-select: none;
                 }
                 >span:nth-child(2){
                     background-color: #fff;
@@ -93,6 +98,30 @@
                 color: #50a2da;
             }
         }
+    }
+}
+.kong{
+    width: 1200px;
+    margin-bottom: 100px;
+    background-color: #f8f8f8;
+    img{
+        width: 382px;
+        height: 478px;
+        margin: 50px 358px 0;
+    }
+    div{
+        width: 129px;
+        height: 40px;
+        font-size: 14px;
+        color: white;
+        text-align: center;
+        line-height: 40px;
+        border-radius: 3px;
+        cursor: pointer;
+        margin-left: 484px;
+        margin-top: -136px;
+        position: absolute;
+        background-color: #2693d4;
     }
 }
 // 金额总计
@@ -152,6 +181,7 @@
         margin: 20px 0 40px 0;
         cursor: pointer;
         border: 1px solid #ccc;
+        border-radius: 2px;
         p{
             margin-left: 10px;
         }

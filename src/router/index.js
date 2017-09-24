@@ -24,6 +24,7 @@ import evaluntion from '@/view/vip/evaluntion.vue';
 
 import cart from '@/view/cart/cart.vue'; // 购物车
 import pay from '@/view/pay/pay.vue';// 支付首页
+import yinlian from '@/view/pay/yinlian.vue';//银联支付
 
 
 /**
@@ -33,16 +34,10 @@ import login from '@/view/user/login.vue';
 import register from '@/view/user/register.vue';
 import forget from '@/view/user/forget.vue';
 
+// import yinlian from '@/view/pay/yinlian.vue';
 Vue.use(Router);
 
 export default new Router({
-  scrollBehavior(to, from, savedPosition) {
-    if (savedPosition) {
-      return savedPosition
-    } else {
-      return { x: 0, y: 0 }
-    }
-  },
   routes: [{
     path: '/',
     name: 'Main',
@@ -50,75 +45,98 @@ export default new Router({
     children: [ // 首页
       {
         path: '/index',
-        name: 'index',
+        name: 'Index',
         alias: '/',
         component: index,
       },
       // 商品详情页
       {
         path: '/goods',
-        name: 'goods',
+        name: 'Goods',
         component: goods,
       },
       {
         path: '/services',
-        name: 'services',
+        name: 'Services',
         component: services
       },
       {
         path: '/sifco',
-        name: 'sifco',
+        name: 'Sifco',
         component: sifco
       },
       {
         path: '/storeList',
-        name: 'storeList',
+        name: 'StoreList',
         component: storeList
       },
       {
         path: '/storeIndex',
-        name: 'storeIndex',
+        name: 'StoreIndex',
         component: storeIndex
       },
       {
         path: '/us',
-        name: 'us',
+        name: 'Us',
         component: us
       },
       {
         path: '/search/:keyword',
-        name: 'search',
+        name: 'Search',
         component: search
       }, 
       {
         path: '/cart',
         name: 'Cart',
         component: cart,
+        meta: {
+          requireAuth: true
+        }
       }, 
       {
         path: '/pay',
         name: 'Pay',
-        component: pay
+        component: pay,
+        meta: {
+          requireAuth: true
+        }
+      },
+      {
+        path: '/yinlian',
+        name: 'yinlian',
+        component: yinlian
       },
       {
         path: '/member',
-        name: 'member',
+        name: 'Member',
         alias: '/member/order',
         component: member,
+        meta: {
+          requireAuth: true
+        },
         children: [{
             path: 'order',
-            name: 'order',
-            component: order
+            name: 'Order',
+            component: order,
+            meta: {
+              requireAuth: true
+            }
           },
           {
             path: 'evaluntion',
-            name: 'evaluntion',
-            component: evaluntion
+            name: 'Evaluntion',
+            component: evaluntion,
+            meta: {
+              requireAuth: true
+            }
           },
           {
             path: 'setting',
-            name: 'setting',
-            component: setting
+            name: 'Setting',
+            component: setting,
+            meta: {
+              requireAuth: true
+            }
           }
         ]
       }

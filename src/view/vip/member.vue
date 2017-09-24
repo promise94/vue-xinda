@@ -4,7 +4,7 @@
       <p>首页/公司工商</p>
       <div>
         <div class="xd xd-user"></div>
-        <h2>12345678901</h2>
+        <h2>{{getUser.info.name}}</h2>
       </div>
       <div>
         <div @click="goto('order')" :class="{e9: back == 'order'}">
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-
+import {mapGetters} from 'vuex';
 export default {
   name: 'order',
   data() {
@@ -33,6 +33,9 @@ export default {
   },
   created(){
     this.back = this.$route.path.substr(this.$route.path.lastIndexOf('/') + 1);
+  },
+  computed: {
+    ...mapGetters(['getUser']),
   },
   methods: {
     goto(m) {
