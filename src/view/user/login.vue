@@ -4,7 +4,7 @@
       <xd-input @getValue="getPhone" @blur="isPhone" @focus="isPhone(1)" :info="info.phoneInfo" :infoType="type.phoneType" placeholder="请输入手机号"></xd-input>
     </li>
     <li>
-      <xd-input @getValue="getPassword" @blur="isPassword" @focus="isPassword(1)" type="password" :info="info.pwdInfo" :infoType="type.pwdType" placeholder="请输入新密码(8-12位数字和字母)"></xd-input>
+      <xd-input @getValue="getPassword" @blur="isPassword" @focus="isPassword(1)" type="password" :info="info.pwdInfo" :infoType="type.pwdType" placeholder="请输入新密码(8-16位数字和字母)"></xd-input>
     </li>
     <li class="message">
       <xd-captcha :info="info.captInfo" :upload="isload" :infoType="type.captType" @value="getValue"></xd-captcha>
@@ -12,20 +12,26 @@
     <li class="forget">
       <a href="#/user/forget">忘记密码?</a>
     </li>
-    <li><input @click="loginAction" type="button" value="立即登录"></li>
+    <li><input @click.13="loginAction" type="button" value="立即登录"></li>
   </ul>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
 import xdCaptcha from '@/components/user/captcha';
 import xdInput from '@/components/user/input';
 import reg from '@/common/js/reg';
 import md5 from 'md5';
+import { mapActions } from 'vuex';
 export default {
   components: {
     xdCaptcha,
     xdInput,
+  },
+  beforeRouteEnter(to, from, next) {
+    if (from.name) {
+      sessionStorage.setItem('toLoginPath',from.fullPath);
+    }
+    next();
   },
   data() {
     return {
@@ -39,14 +45,15 @@ export default {
     }
   },
   created() {
-    // this.loginAction('李孝威');
     let user = JSON.parse(sessionStorage.getItem('temp'));
     if (user && user.tempPhone) {
       this.phone = user.tempPhone;
     }
   },
+  computed: {
+  },
   methods: {
-    // ...mapActions(['loginAction']),
+    ...mapActions(['loginPathAction']),
     getValue(v) { // 获取用户输入图片验证码
       this.code = v;
       this.isNull(1);
@@ -116,11 +123,14 @@ export default {
         this.$http.post('/sso/login', { loginId: this.phone, password: md5(this.password), imgCode: this.code })
           .then((res) => {
             if (res.status === 1) {
-              this.$router.push('/');
+              let path = sessionStorage.getItem('toLoginPath');
+              path = path ? path : '/';
+              console.log('path',path);
+              this.$router.push(path);
             } else if (res.msg.indexOf('验证码') > -1) {
               this.info.captInfo = res.msg;
               this.type.captType = 'error';
-              this.isload = Math.random().toString().substr(2,4);
+              this.isload = Math.random().toString().substr(2, 4);
             } else {
               this.clear = true;
               this.info.phoneInfo = res.msg;

@@ -1,7 +1,9 @@
 <template>
     <div>
         <xd-header></xd-header>
-        <router-view></router-view>
+        <transition name="slide">
+            <router-view></router-view>
+        </transition>
         <xd-footer></xd-footer>
     </div>
 </template>

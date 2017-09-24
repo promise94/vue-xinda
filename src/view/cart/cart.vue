@@ -250,6 +250,7 @@ export default {
                 path: '/goods',
                 query: { id }
             })
+            console.log(id);
         }
     }
 };

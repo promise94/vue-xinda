@@ -1,10 +1,10 @@
 <template>
-    <div class="zong">
+    <div class="zong" >
         <div class="linkBox">
             <ul class="tabLink container">
                 <li class="daohang">
-                    <!-- <a href="/">全部产品</a>
-                    <div class="yincang container">
+                    <a href="#/">全部产品</a>
+                    <div class="yincang container" style="display: none">
                         <div class="zong">
                                 <p>你猜猜看</p>
                             <div class="yin">
@@ -135,7 +135,7 @@ export default {
             position: absolute;
             top: 0;
             left: 200px;
-            display: none; // background-color: red;
+            display: none; 
         }
     }
     >div:nth-child(1) {

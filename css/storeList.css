@@ -81,6 +81,7 @@
   border-bottom: 1px solid #cccccc;
 }
 #storeList .mainBox .order > div {
+  cursor: pointer;
   width: 110px;
   height: 42px;
   line-height: 42px;
@@ -90,11 +91,15 @@
 }
 #storeList .mainBox .order > div:hover {
   background: #2594d4;
+}
+#storeList .mainBox .order > div:hover > p {
   color: #fff;
 }
 #storeList .mainBox .order .blue {
-  color: #fff;
   background: #2594d4;
+}
+#storeList .mainBox .order .blue > p {
+  color: #fff;
 }
 #storeList .mainBox .order .blue > div {
   width: 10px;

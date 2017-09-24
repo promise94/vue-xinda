@@ -226,9 +226,7 @@ export default {
                 let data = shenme.data.provider;
                 // console.log(shenme);
                 data.forEach(function(item) {
-
                     item.providerImg = 'http://115.182.107.203:8088/xinda/pic/' + item.providerImg;
-
                     item.marketPrice = item.marketPrice + '.00'
                 }, this);
                 this.haha = data;
@@ -278,7 +276,8 @@ export default {
                 console.log(id);
         }
     }
-};
+}
+
 </script>
 <style lang="less" scoped>
 @import '../../common/less/index/index.less';
