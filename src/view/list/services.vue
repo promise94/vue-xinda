@@ -9,7 +9,7 @@
                     <div class="search">
                         <div class="search-one">
                             <div>
-                                <h3>服务分类</h3>
+                                <p>服务分类</p>
                             </div>
                             <div class="search-a">
                                 <span @click="lover(1)" :class="{all: oyoun ===1}">代理记账</span>
@@ -19,7 +19,7 @@
                         </div>
                         <div class="search-two">
                             <div>
-                                <h3>类型</h3>
+                                <p>类型</p>
                             </div>
                             <div class="search-b">
                                 <span @click="love(1)" :class="{all: oyou ===1}">小规模记账</span>
@@ -28,7 +28,7 @@
                         </div>
                         <div class="search-three">
                             <div class="serve">
-                                <h3>服务区域</h3>
+                                <p>服务区域</p>
                             </div>
                             <div class="city">
                                 <province @province="getProv"></province>
@@ -51,18 +51,18 @@
                             </ul>
                         </div>
                         <div class="ball-two" v-for="(item,k) of recommend" :key="k">
-                            <img :src="item.providerImg"  @click="shoid(item.id)" alt="">
+                            <img :src="item.providerImg" @click="shoid(item.id)" alt="">
                             <div class="ball-left">
-                                <a  @click="shoid(item.id)">{{item.serviceName}}</a>
+                                <a @click="shoid(item.id)" href="javascript:viod:(0)">{{item.serviceName}}</a>
                                 <p>{{item.serviceInfo}}</p>
                                 <span>{{item.providerName}}</span>
-                                <span>{{item.regionName}}</span>
+                                <span class="jianju">{{item.regionName}}</span>
                             </div>
                             <div class="ball-right">
                                 <p>￥&nbsp;{{item.price}}</p>
                                 <div>
-                                    <a>立即购买</a>
-                                    <a>加入购物车</a>
+                                    <a href="javascript:viod:(0)" @click="shod(item.id)">立即购买</a>
+                                    <a @click="edward(item.id)" href="javascript:viod:(0)">加入购物车</a>
                                 </div>
                             </div>
                         </div>
@@ -88,7 +88,7 @@ import province from '../../components/global/province';
 export default {
     name: 'services',
     created() {
-        this.fack()
+        this.fack();
     },
     data() {
         return {
@@ -106,21 +106,31 @@ export default {
     methods: {
         //城市三级联动
         getProv(pro) {
-            if (this.i) {
-                this.conf.regionId = pro[2].code;
-                this.getStoreList();
-            }
-            this.i++;
-            console.log(this.i)
+            // console.log(pro)
         },
 
-        //跳转页面
+        //跳转到商品页面
         shoid(id) {
             console.log(id),
-                this.$router.push({
-                    path: '/goods',
-                    query: { id }
-                })
+            this.$router.push({
+                path: '/goods',
+                query: { id }
+            })
+        },
+
+        //加入购物车
+        edward(addCarId) {
+            this.$http({
+                method: 'post',
+                url: '/cart/add',
+                data: {
+                    id: addCarId,
+                    num: 1,
+                }
+            }).then((ward) => {
+                let data = ward.data;
+                console.log('sadasd', ward)
+            })
         },
 
         //服务分类
@@ -136,6 +146,8 @@ export default {
         loverd(c) {
             this.oyo = c;
         },
+
+        //获取数据
         fmtPrice(p) {
             return (parseFloat(p) * 0.01).toFixed(2);
         },
@@ -158,7 +170,6 @@ export default {
                     item.providerImg = 'http://115.182.107.203:8088/xinda/pic/' + item.providerImg;
                 }, this);
                 this.recommend = data;
-                console.log(you);
             })
         }
     }

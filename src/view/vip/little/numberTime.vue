@@ -1,8 +1,8 @@
 <template>
     <div id="numberTime">
         <p>
-            <span>订单号 : s347484929274490</span>
-            <span>下单时间 : 2017-04-01 01:23:32</span>
+            <span>订单号 : {{orderID}}</span>
+            <span>下单时间 : {{time}}</span>
         </p>
     </div>
 </template>
@@ -10,7 +10,8 @@
 <script>
 
 export default {
-  name: 'numberTime'
+  name: 'numberTime',
+  props: {orderID: String, time: String}
 };
 </script>
 

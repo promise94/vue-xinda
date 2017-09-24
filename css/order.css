@@ -1,6 +1,6 @@
 #order {
   font-size: 14px;
-  width: 936px;
+  width: 930px;
 }
 #order .orderTop {
   margin-top: 55px;
@@ -96,6 +96,7 @@
   position: relative;
 }
 #order .orderBottom > div > div > div:nth-child(2) button {
+  outline: medium;
   width: 70px;
   height: 30px;
   line-height: 100%;
@@ -107,6 +108,11 @@
   top: 20%;
   left: 20%;
   cursor: pointer;
+  border: 0;
+  outline: none;
+}
+#order .orderBottom > div > div > div:nth-child(2) button:hover {
+  background: #0CDF0C;
 }
 #order .orderBottom > div > div > div:nth-child(2) p {
   width: 70px;

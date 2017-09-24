@@ -135,13 +135,14 @@
 .way-list > div:nth-child(1) div {
   align-items: center;
   display: flex;
+  border-radius: 5px;
 }
 .way-list > div:nth-child(1) div span {
   width: 150px;
   font-size: 34px;
   color: green;
   display: inline-block;
-  margin: 8px 0 0 20px;
+  margin: 9px 0 8px 20px;
 }
 .way-list > div:nth-child(1) div span a {
   font-size: 14px;

@@ -3,10 +3,12 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+    strict: true,
     // 状态集合
     state: {
         user: { info: '', status: false },
         cartnum: 0,
+        toLoginPath: '',
     },
     mutations: { // 突变集合
         SETUSER: (state, user) => state.user = user,
