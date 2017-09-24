@@ -28,7 +28,7 @@
         </div>
       </div>
     </div>
-    <div class="mainBox">
+    <div class="mainBox" v-if="arr.length != 0">
       <div class="order">
         <div @click="blue(1)" :class="{blue: change ===1}">
           <p>综合排序</p>
@@ -89,8 +89,9 @@
         </div>
       </div>
     </div>
+    <nothing title="未搜索到结果" v-if="arr.length == 0"></nothing>
 
-    <div class="page-changes">
+    <div class="page-changes" v-if="arr.length != 0">
       <div id="pagelist">
         <ul>
             <li @click="titles('first')">首页</li>
@@ -108,7 +109,7 @@
 </template>
 
 <script>
-
+import nothing from '../../components/global/nothing.vue';
 import pagingQuery from './pagingQuery';
 import province from '../../components/global/province';
 export default {
@@ -146,8 +147,9 @@ export default {
     }).then((result) => {
       this.count=result.totalCount;
       let data = result.data;
+      let len = data.length;
       // console.log(result.totalCount);
-      for (var i = 0; i < data.length; i++) {
+      for (var i = 0; i < len; i++) {
         data[i].totalJudge == 0 ? data[i].totalJudge = 1 : "";
         data[i].providerImg.substring(0, 3) == 'http' ? data[i].providerImg = data[i].providerImg : data[i].providerImg = "http://115.182.107.203:8088/xinda/pic" + data[i].providerImg;
         //作双层循环//
@@ -180,6 +182,7 @@ export default {
       // }
       // this.i++;
       if(pro!==""){
+        // console.log(pro);
         this.conf.regionId = pro[2].code;
         this.getStoreList();
       }else{
@@ -218,7 +221,8 @@ export default {
   },
   components: {     
       pagingQuery,
-      province
+      province,
+      nothing,
   },
 
   getstorelist(){

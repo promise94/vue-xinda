@@ -30,14 +30,17 @@ export default {
 		}
 	},
 	created() {
+		
 		// this.upCity();
 	},
 	methods: {
+		
 		upCity() {
 			let temp = this.prov;
 			if (this.prov.regionEntitys) {
 				this.cityArr = this.prov.regionEntitys;
 				this.city = this.prov.regionEntitys[0];
+				
 				this.upArea();
 			} else {
 				this.cityArr = '';
@@ -53,12 +56,18 @@ export default {
 			}
 		},
 		returnMsg() {
+			
+			
 			if (!this.prov) {
 				this.$emit('province', '');
 			} else if (!this.prov.regionEntitys) {
 				this.$emit('province', [{ 'code': this.prov.code, 'region': this.prov.region }, { 'code': '', 'region': '' }, { 'code': '', 'region': '' }]);
 			} else {
-				this.$emit('province', [{ 'code': this.prov.code, 'region': this.prov.region }, { 'code': this.city.code, 'region': this.city.region }, { 'code': this.area.code, 'region': this.area.region }]);
+				this.$emit('province', [
+					{ 'code': this.prov.code, 'region': this.prov.region }, 
+					{ 'code': this.city.code, 'region': this.city.region },
+					{ 'code': this.area.code, 'region': this.area.region }
+				]);
 			}
 		}
 	},

@@ -266,9 +266,9 @@ export default {
                 console.log(id);
         },
         dianpu(id) {
-            this.$router.afterEach((to, from, next) => {
-                window.scrollTo(0, 0);
-            }),
+            // this.$router.afterEach((to, from, next) => {
+            //     window.scrollTo(0, 0);
+            // }),
                 this.$router.push({
                     path: '/storeIndex',
                     query: { id }

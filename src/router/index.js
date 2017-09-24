@@ -111,12 +111,12 @@ export default new Router({
             component: order
           },
           {
-            path: '/evaluntion',
+            path: 'evaluntion',
             name: 'evaluntion',
             component: evaluntion
           },
           {
-            path: '/setting',
+            path: 'setting',
             name: 'setting',
             component: setting
           }

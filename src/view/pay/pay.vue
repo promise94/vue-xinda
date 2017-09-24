@@ -70,7 +70,7 @@
                         </div>
                         <p>自助转账</p>
                         <div>
-                            <input type="radio" name="a">&nbsp&nbsp&nbsp
+                            <input type="radio" name="a">&nbsp;&nbsp;&nbsp;
                             <img src="../../common/images/zizhu.png" alt="">
                             <div class="kaihuhang">
                                 <p>开户账号：<a>110916853310605</a><br>
