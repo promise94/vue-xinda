@@ -16,6 +16,7 @@ export default new Vuex.Store({
     },
     actions: { // 方法集合
         loginAction: ({commit}, user) => commit('SETUSER', user),
+        cartAction: ({commit}, num) => commit('SETCART', num),
     },
     getters: { // 显示集合
         getUser: state => state.user,

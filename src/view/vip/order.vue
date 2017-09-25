@@ -112,7 +112,7 @@ export default {
                 })
         },
         getServiOrder() {
-            this.$http.post('/service-order/grid', { businessNo: 1, endTime: this.time, start: 0 })
+            this.$http.post('/service-order/grid', { businessNo: 1, startTime: '2017-03-28', endTime: this.time, start: 0 })
                 .then((res) => {
                     this.orders = res.data.map((i) => {
                         i.createTime = util.formatTime(i.createTime, 'yy-mm-dd H:M:S')
@@ -127,7 +127,7 @@ export default {
                         }
                         return i;
                     })
-                    console.log(this.orders);
+                    console.log('服务订单---',res);
                 })
         },
         modalShow(id) {

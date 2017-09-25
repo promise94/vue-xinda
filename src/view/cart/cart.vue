@@ -1,5 +1,5 @@
 <template>
-    <div class="cart_conter">
+    <div class="cart_conter" id="div_cart">
         <!-- 展示项 -->
         <div class="header">
             <p>首页/购物车</p>
@@ -18,13 +18,13 @@
             <div class="list" v-for="(item1,k) of items" :key="k">
                 <p>店铺：{{item1.providerName}}</p>
                 <div class="list-xx">
-                    <p><img v-bind:src="item1.providerImg" alt="" @click="gotos(item1.id)"></p>
+                    <p><img v-bind:src="item1.providerImg" alt="" @click="gotos(item1.productId)"></p>
                     <p>{{item1.serviceName}}</p>
                     <p>￥{{item1.unitPrice}}</p>
                     <p>
-                        <span class="xd xd-jian" @click="less(item1)"></span>
+                        <span  @click="less(item1)">-</span>
                         <span><input type="text" onkeyup=" if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g, '')}else{this.value=this.value.replace(/\D/g, '')} " onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g, '')}else{this.value=this.value.replace(/\D/g, '')} " :value="item1.buyNum"></span>
-                        <span class="xd xd-tianjia" @click="add(item1)"></span>
+                        <span  @click="add(item1)">+</span>
                     </p>
                     <p>￥{{item1.totalPrice}}</p>
                     <p @click="del(item1)">删除</p>
@@ -65,11 +65,24 @@
                 <p>查看更多>></p>
             </div>
         </div>
+        <!-- 提示框 -->
+        <modal ref="name1">
+            <div slot="body">
+                <h1>{{modal_info}}</h1>
+            </div>
+        </modal>
     </div>
 </template>
 
 <script>
+//引入modal
+import modal from '@/components/global/modal'; //弹出框引入
+import { mapActions } from 'vuex' //vuex的引入
 export default {
+    name: 'div_cart',
+    components: {
+        modal,
+    },
     created() {
         // console.log(this.$route.query.id)
         this.getTuijian();
@@ -77,7 +90,7 @@ export default {
     },
     data() {
         return {
-            counter: 1,      //个数
+            counter: 0,      //个数
             msg: 0,          //全部商品
             recommend: '',  //热门商品的总数据
             items: [],       //商品数组
@@ -85,9 +98,11 @@ export default {
             totlePrice: 0,   //单件商品总额
             unitPrice: 0,  //单价
             willshow: 0,
+            modal_info: '',
         }
     },
     methods: {
+        ...mapActions(['cartAction']),
         //价格转化
         fmtPrice(p) {
             return (parseFloat(p) * 0.01).toFixed(2);
@@ -102,17 +117,20 @@ export default {
             }).then((res) => {
                 if (res.data.length > 0) {
                     this.willshow = 1;
-                    this.msg = res.data.length;//总数
+                    this.msg = res.data.length;//全部商品
                     let data = res.data;
                     this.monytotal = 0;
+                    this.counter = 0;   //设置购物车件数
                     data.forEach(function(item) {
                         item.providerImg = 'http://115.182.107.203:8088/xinda/pic/' + item.providerImg;
-                        let counter = item.buyNum;
+                        this.counter += item.buyNum;    //总件数
                         let price = item.marketPrice;
-                        item.marketPrice = this.fmtPrice(price);
+                        item.marketPrice = this.fmtPrice(price);    //价格处理
                         this.monytotal += item.totalPrice //总钱数
                     }, this)
                     this.items = res.data;
+                    console.log(this.counter)
+                    this.cartAction(this.counter);
                 } else {
                     this.willshow = 0;
                 }
@@ -122,9 +140,27 @@ export default {
         // 加
         add(item1) {
             item1.buyNum += 1;
-            // this.toto();
-            this.$http.post(
-                '/cart/set',
+            this.getxiugai(item1);
+        },
+        // 减
+        less(item1) {
+            if (item1.buyNum > 1) {
+                item1.buyNum -= 1;
+                this.getxiugai(item1);
+            } else {
+                this.counter = 1;
+                // alert("数量不能为零！")
+                this.modal_info = '数量不能为零！';
+                this.$refs.name1.confirm().then(() => {
+                    //确定的回掉函数
+                    this.$refs.name1.show = false //自己手动关闭
+                }).catch(() => {
+                    //点击取消的回掉函数
+                })
+            }
+        },
+        getxiugai(item1) {
+            this.$http.post('/cart/set',
                 {
                     id: item1.serviceId,
                     num: item1.buyNum
@@ -136,52 +172,31 @@ export default {
                 } else {
                     alert("data.msg")
                 }
-            }).catch((err) => {
-                console.log(err)
             })
-        },
-        // 减
-        less(item1) {
-            if (item1.buyNum > 1) {
-                item1.buyNum -= 1;
-                this.$http.post('/cart/set',
-                    {
-                        id: item1.serviceId,
-                        num: item1.buyNum
-                    }
-                ).then((res) => {
-                    let status = res.status;
-                    if (status == 1) {
-                        this.getCartlsit();
-                    } else {
-                        alert("data.msg")
-                    }
-                })
-            } else {
-                this.counter = 1;
-                alert("数量不能为零！")
-            }
         },
         // 删除事件
         del(item1) {
-            var r = confirm("是否确认删除此商品？");
-            if (r == true) {
-                this.$http.post(
-                    'cart/del',
-                    {
-                        id: item1.serviceId
-                    }
-                ).then((res) => {
-                    if (res.status == 1) {
-                        alert("删除成功！")
+            this.modal_info = '是否删除订单 ？';
+            this.$refs.name1.confirm().then(() => {
+                // 点击确定按钮的回调处理
+                this.$refs.name1.show = false;//自己手动关闭
+                this.$http.post('/cart/del', { id: item1.serviceId }).then((res) => {
+                    this.modal_info = res.msg;
+                    this.$refs.name1.confirm().then(() => {
+                        this.$refs.name1.show = false; //手动关闭
                         this.getCartlsit();
-                    } else {
-                        alert("删除失败！")
-                    }
+                        // 删除列表的最后一件
+                        var i = this.items.indexOf(item1);
+                        this.items.splice(i, 1);
+                        this.msg--;
+                        this.cartAction(this.items.length)
+                    })
+                    console.log(res);
+                    // this.
                 });
-            } else {
-                alert("已取消删除！");
-            }
+            }).catch(() => {
+                // 点击取消按钮的回调处理
+            });
         },
         reduces(arry) {
             arry.reduce((x, y) => { return x + y; })
@@ -233,9 +248,10 @@ export default {
             })
         },
         // 购物车商品传id
-        gotos() {
+        gotos(id) {
+            // console.log(id)
             this.$router.push({
-                path: '/goodys',
+                path: '/goods',
                 query: { id }
             })
         },

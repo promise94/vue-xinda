@@ -227,8 +227,10 @@ export default {
             // console.log(n);
             if (n === 0) {
                 this.num === 1 ? '' : this.num -= 1;
+                console.log(this.num);
             } else if (n === 1) {
                 this.num += 1;
+                console.log(this.num);
             }
         },
 
@@ -239,7 +241,7 @@ export default {
                     url: '/cart/add',
                     data: {
                         id: this.$route.query.id,
-                        num: '',
+                        num:this.num,
                     }
                 }).then((res) => {
                     console.log(res);
