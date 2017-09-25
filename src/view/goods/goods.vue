@@ -41,7 +41,7 @@
                                 <li>
                                     <span id="num-jian" class="num-jian" v-on:click="cai(0)">-</span>
                                 </li>
-                                <li><input type="text" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" v-model="num" class="input-num" id="input-num" /></li>
+                                <li><input type="text" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')/1}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" v-model="num" class="input-num" id="input-num" /></li>
                                 <li>
                                     <span id="num-jia" class="num-jia" v-on:click="cai(1)"> +</span>
                                 </li>
@@ -223,14 +223,12 @@ export default {
             return (parseFloat(p) * 0.01).toFixed(2);
         },
         cai(n) {
-
             // console.log(n);
             if (n === 0) {
                 this.num === 1 ? '' : this.num -= 1;
                 console.log(this.num);
             } else if (n === 1) {
-                this.num += 1;
-                console.log(this.num);
+                this.num = this.num/1+ 1;
             }
         },
 
@@ -241,7 +239,7 @@ export default {
                     url: '/cart/add',
                     data: {
                         id: this.$route.query.id,
-                        num:this.num,
+                        num: this.num,
                     }
                 }).then((res) => {
                     console.log(res);
@@ -256,7 +254,7 @@ export default {
                 url: '/product/package/detail',
                 data: {
                     sId: this.$route.query.id,
-                    // sId:'0cb85ec6b63b41fc8aa07133b6144ea3',
+                    //sId: '0cb85ec6b63b41fc8aa07133b6144ea3',
                 }
             }).then((result) => {
                 this.datas = result.data;
