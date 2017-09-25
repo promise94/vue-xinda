@@ -1,7 +1,7 @@
 <template>
   <div class="inp">
     <span @click="clearVal" v-show="val" class="iconClear xd xd-close"></span>
-    <input v-if="type=='text'" v-model="val" @focus="getFocus" @blur="noBlur" :class="classes" type="text" :placeholder="placeholder">
+    <input v-if="type=='text'" v-model="val" :value=" value ? value : '' " @focus="getFocus" @blur="noBlur" :class="classes" type="text" :placeholder="placeholder">
     <input v-if="type == 'password'" v-model="val" @focus="getFocus" @blur="noBlur" :class="classes" type="password" :placeholder="placeholder">
     <span v-show="info" class="info" :class="infoType">
       <i class="xd" :class="iconClass"></i>{{info}}</span>
@@ -19,6 +19,7 @@ export default {
     placeholder: String,
     info: String,
     infoType: String,
+    value: [String, Number, Boolean, Array],
     type: {
       type: String,
       default: 'text'

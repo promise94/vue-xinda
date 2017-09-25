@@ -226,6 +226,7 @@ export default {
             // console.log(n);
             if (n === 0) {
                 this.num === 1 ? '' : this.num -= 1;
+                console.log(this.num);
             } else if (n === 1) {
                 this.num = this.num/1+ 1;
             }

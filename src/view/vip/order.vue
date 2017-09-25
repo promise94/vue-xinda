@@ -26,29 +26,29 @@
             </ul>
         </div>
         <div class="orderBottom">
-            <div v-for="(item, k) of orders" :key="k">
+            <div v-for="(item, k) of list" :key="k">
                 <numberTime :orderID="item.businessNo" :time="item.createTime"></numberTime>
-                <div>
-                    <div id="company">
-                        <img src="" alt="">
-                        <p>
-                            <span>{{item.providerName}}</span>
-                            <span>{{item.serviceName}}</span>
-                        </p>
-                        <p>￥{{item.unitPrice}}</p>
-                        <p>{{item.buyNum}}</p>
-                        <div>￥{{item.totalPrice}}</div>
-                        <div>{{item.statusText}}</div>
+                <div class="orderInfo">
+                    <div>
+                        <div v-for="(item, k) of item.data" :key="k">
+                            <div id="company">
+                                <img src="" alt="">
+                                <p>
+                                    <span>{{item.providerName}}</span>
+                                    <span>{{item.serviceName}}</span>
+                                </p>
+                                <p>￥{{item.unitPrice}}</p>
+                                <p>{{item.buyNum}}</p>
+                                <div>￥{{item.totalPrice}}</div>
+                                <div>{{item.statusText}}</div>
+                            </div>
+                        </div>
                     </div>
-                    <div v-if="item.status === 1">
-                        <button>付款</button>
-                        <p @click="modalShow(item.serviceId)">删除订单</p>
-                    </div>
-                    <div v-if="item.status === 2">
-                        <p>交易完成</p>
-                    </div>
-                    <div v-if="item.status === 3">
-                        <p>交易关闭</p>
+                    <div>
+                        <button @click="goto(item.businessNo)" v-if="item.status === 1">付款</button>
+                        <p @click="delOrder(item)" v-if="item.status === 1">删除订单</p>
+                        <p v-if="item.status === 2">交易完成</p>
+                        <p v-if="item.status === 3">交易关闭</p>
                     </div>
                 </div>
             </div>
@@ -63,6 +63,7 @@
                 <calendar :zero="calendar.zero" :lunar="calendar.lunar" :value="calendar.value" :begin="calendar.begin" :end="calendar.end" @select="calendar.select"></calendar>
             </div>
         </transition>
+        <v-alert :type="alert_options.type" :info="alert_options.info" ref="alert"></v-alert>
     </div>
 </template>
 
@@ -70,6 +71,7 @@
 import numberTime from './little/numberTime';
 import modal from '@/components/global/modal';
 import calendar from '@/components/global/calendar';
+import vAlert from '@/components/global/alert';
 // 时间戳处理函数
 import util from '@/common/js/utils';
 export default {
@@ -78,12 +80,16 @@ export default {
         numberTime,
         modal,
         calendar,
+        vAlert,
     },
     data() {
         return {
             time: (new Date()).toJSON().substr(0, (new Date()).toJSON().indexOf('T')), // 当前时间
             orders: '',
             modal_info: '',
+            serverOrder: '', // 服务订单数据
+            business: '', // 业务订单数据
+            alert_options: { type: 'success', info: '' }, // 提示框设置
             calendar: {
                 display: (new Date()).toJSON().substr(0, (new Date()).toJSON().indexOf('T')),
                 show: false,
@@ -99,29 +105,43 @@ export default {
         }
     },
     computed: {
+        list() {
+            if (this.business && this.serverOrder) {
+                this.business.map((val) => {
+                    val.data = [];
+                    this.serverOrder.forEach((k) => {
+                        if (val.businessNo == k.businessNo) {
+                            val.data.push(k);
+                        }
+                        return val;
+                    })
+                })
+            }
+            return this.business;
+        }
     },
     created() {
-        this.getServiOrder();
-        this.getBusinessOrder();
+        this.getOrder();
     },
     methods: {
-        getBusinessOrder() {
-        },
-        getServiOrder() {
+        getOrder() {
             let data = {
-                businessNo: 1,
+                // businessNo: 1,
                 startTime: '2017-03-28',
-                 endTime: this.time,
-                  start: 0
+                endTime: this.time,
+                start: 0,
             }
             this.$http.post('/business-order/grid', data)
                 .then((res) => {
-                    console.log('res', res);
+                    res.data.map((val) => {
+                        val.createTime = util.formatTime(val.createTime, 'yy-mm-dd H:M:S');
+                        return val;
+                    })
+                    this.business = res.data;
                 })
             this.$http.post('/service-order/grid', data)
                 .then((res) => {
-                    this.orders = res.data.map((i) => {
-                        i.createTime = util.formatTime(i.createTime, 'yy-mm-dd H:M:S')
+                    this.serverOrder = res.data.map((i) => {
                         i.totalPrice = i.totalPrice / 100;
                         i.unitPrice = i.unitPrice / 100;
                         if (i.status === 1) {
@@ -133,24 +153,25 @@ export default {
                         }
                         return i;
                     })
-                    console.log(this.orders);
                 })
         },
-        modalShow(id) {
+        delOrder(item) {
             this.modal_info = '是否删除订单 ？';
             this.$refs.dialog.confirm().then(() => {
                 // 点击确定按钮的回调处理
                 this.$refs.dialog.show = false;
-                this.$http.post('/business-order/del', { id: id }).then((res) => {
-                    this.modal_info = res.msg;
-                    this.$refs.dialog.confirm().then(() => {
-                        this.$refs.dialog.show = false;
-                    })
-                    console.log(res);
-                    // this.
+                this.$http.post('/business-order/del', { id: item.id }).then((res) => {
+                    if (res.status === 1) {
+                        this.alert_options.type = 'success';
+                        this.list.splice(this.list.indexOf(item), 1);
+                    } else {
+                        this.alert_options.type = 'error';
+                    }
+                    this.alert_options.info = res.msg;
+                    this.$refs.alert.confirm();
                 });
-            }).catch(() => {
-                // 点击取消按钮的回调处理
+            }, () => {
+                // 点击取消按钮回调处理
             });
         },
         openByDrop(e) {
@@ -166,6 +187,9 @@ export default {
                 }, false);
             }, 1000)
         },
+        goto(orderID) {
+            this.$router.push({ path: '/pay', query: { val: orderID } })
+        }
     }
 };
 </script>
@@ -173,8 +197,9 @@ export default {
 <style lang="less" scoped>
 @import '../../common/less/vip/order.less';
 #company {
-    border-top: 1px solid #e8e8e8;
     display: flex;
+    align-items: center;
+    border-top: 1px solid #e8e8e8;
     img {
         width: 50px;
         height: 50px;
@@ -191,16 +216,13 @@ export default {
     }
     p:nth-of-type(2) {
         width: 125px;
-        line-height: 70px;
     }
     p:nth-of-type(3) {
         width: 100px;
-        line-height: 70px;
     }
     div {
         width: 143px;
         color: #2594d4;
-        line-height: 70px;
     }
 }
 
