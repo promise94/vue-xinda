@@ -4,7 +4,7 @@
       <p>首页/公司工商</p>
       <div>
         <div class="xd xd-user"></div>
-        <h2>{{getUser.info.name}}</h2>
+        <h2>{{userInfo.name}}</h2>
       </div>
       <div>
         <div @click="goto('order')" :class="{e9: back == 'order'}">
@@ -18,20 +18,22 @@
         </div>
       </div>
     </div>
-    <router-view></router-view>
+    <router-view @getInfo="upInfo"></router-view>
   </div>
 </template>
 
 <script>
-import {mapGetters} from 'vuex';
+import { mapGetters } from 'vuex';
 export default {
   name: 'order',
   data() {
     return {
       back: '',
+      userInfo: '', // 用户信息
     }
   },
-  created(){
+  created() {
+    this.getUserInfo();
     this.back = this.$route.path.substr(this.$route.path.lastIndexOf('/') + 1);
   },
   computed: {
@@ -41,6 +43,18 @@ export default {
     goto(m) {
       this.back = m;
       this.$router.push(m);
+    },
+    upInfo(val){
+      console.log(val);
+      this.userInfo = val;
+    },
+    getUserInfo() { // 获取个人信息
+      this.$http.post('/member/info').then((res) => {
+        if (res.status === 1) {
+          this.userInfo = res.data;
+          this.$store.commit('SETINFO', res.data);
+        }
+      })
     },
   },
 };

@@ -13,16 +13,20 @@
 .con-header > span:nth-child(2) {
   color: #ccc;
 }
-.pp {
+.qiehuan .div_xiangqing {
+  width: 1200px;
+}
+.qiehuan .div_xiangqing .pp {
   font-size: 18px;
   color: #51b6bc;
   margin-top: 10px;
 }
-.qiehuan .xiangqing .pay-list {
+.qiehuan .div_xiangqing .pay-list {
   width: 1200px;
+  margin-left: 0px;
   border-top: 1px solid #ccc;
 }
-.qiehuan .xiangqing .pay-list div {
+.qiehuan .div_xiangqing .pay-list div {
   width: 1200px;
   height: 54px;
   display: flex;
@@ -32,23 +36,23 @@
   margin-top: 48px;
   border: 1px solid #ccc;
 }
-.qiehuan .xiangqing .pay-list div span {
+.qiehuan .div_xiangqing .pay-list div span {
   display: block;
 }
-.qiehuan .xiangqing .pay-list div span a {
+.qiehuan .div_xiangqing .pay-list div span a {
   color: #51b6bc;
 }
-.qiehuan .xiangqing .pay-list div > span:nth-child(2) a {
+.qiehuan .div_xiangqing .pay-list div > span:nth-child(2) a {
   color: black;
 }
-.qiehuan .xiangqing .pay-list div > span:nth-child(3) {
+.qiehuan .div_xiangqing .pay-list div > span:nth-child(3) {
   text-align: center;
 }
-.qiehuan .xiangqing .pay-list div > span:nth-child(3) > p:nth-child(2) {
+.qiehuan .div_xiangqing .pay-list div > span:nth-child(3) > p:nth-child(2) {
   cursor: pointer;
   color: red;
 }
-.qiehuan .xiangqing .pay-list div > span:nth-child(3) > p:nth-child(2) a {
+.qiehuan .div_xiangqing .pay-list div > span:nth-child(3) > p:nth-child(2) a {
   color: black;
 }
 .qiehuan .div_succeed {
@@ -115,8 +119,6 @@
 }
 .pay-way {
   font-size: 18px;
-  width: 1200px;
-  height: 18px;
   color: #51b6bc;
   margin-top: 20px;
   margin-bottom: 10px;

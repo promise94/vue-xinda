@@ -71,9 +71,10 @@
   display: inline-block;
   width: 16px;
   height: 18px;
+  font-size: 18px;
   text-align: center;
   line-height: 16px;
-  background-color: #bcbebd;
+  background-color: #ccd;
   user-select: none;
 }
 .shangpin .list div > p:nth-child(4) > span:nth-child(2) {
@@ -82,6 +83,7 @@
 .shangpin .list div > p:nth-child(4) > span:nth-child(2) input {
   width: 30px;
   height: 14px;
+  font-size: 15px;
   text-align: center;
   margin-left: -4px;
 }

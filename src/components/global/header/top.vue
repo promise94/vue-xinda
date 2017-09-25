@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
   name: 'top',
   data() {
@@ -34,14 +35,19 @@ export default {
       state: false,
       userName: '',
       user: '',
-      cartNum: 0,
     }
   },
   created() {
     this.getUser();
     this.getCartNum();
   },
+  computed: {
+    cartNum() {
+      return this.getCartNum();
+    }
+  },
   methods: {
+    ...mapGetters(['getCartNum']),
     logout() { // 退出登录
       this.$http.post('/sso/ logout').then((res) => {
         if (res.status === 1) {
@@ -72,19 +78,7 @@ export default {
     goto(url) { // 页面跳转
       this.$router.push(url);
     },
-    getCartNum() { // 获取购物车数量
-      this.$http.post('/cart/cart-num').then((res) => {
-        if (res.status === 1) {
-          this.cartNum = res.data.cartNum;
-        }
-      });
-    }
   },
-  watch: {
-  },
-  computed: {
-
-  }
 };
 </script>
 
