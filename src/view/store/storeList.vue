@@ -7,7 +7,9 @@
     <div class="area-type">
       <div class="area">
         <div class="area-left">服务区域</div>
-        <div class="area-center"><province @province="getProv"></province> </div>
+        <div class="area-center">
+          <province @province="getProv"></province>
+        </div>
       </div>
       <div class="type">
         <div class="type-left">产品类型</div>
@@ -42,7 +44,7 @@
         </div>
         <div @click="blue(3)" :class="{blue: change ===3}">
           <p>接单数
-          <span class="xd xd-paixu"></span>
+            <span class="xd xd-paixu"></span>
           </p>
           <div></div>
         </div>
@@ -80,9 +82,9 @@
               </p>
             </div>
             <ul>
-              <li v-for="item of item.productTypes.split(',')" >{{item}}</li>
+              <li v-for="item of item.productTypes.split(',')">{{item}}</li>
               <!--<li v-for="item of item.productTypes">{{item}}</li>  -->
-<!-- v-show="chance===1" -->
+              <!-- v-show="chance===1" -->
             </ul>
             <a @click="gotoStore(item.id)">进入店铺</a>
           </div>
@@ -94,15 +96,15 @@
     <div class="page-changes" v-if="arr.length != 0">
       <div id="pagelist">
         <ul>
-            <li @click="titles('first')">首页</li>
-            <li @click="titles('top')">上一页</li>
-            <li @click="titles(1)" :class="{bluestore: changestore=== 1}">1</li>
-            <li @click="titles('bottom')">下一页</li>
-            <li @click="titles('last')">尾页</li>
+          <li @click="titles('first')">首页</li>
+          <li @click="titles('top')">上一页</li>
+          <li @click="titles(1)" :class="{bluestore: changestore=== 1}">1</li>
+          <li @click="titles('bottom')">下一页</li>
+          <li @click="titles('last')">尾页</li>
         </ul>
-    </div>
+      </div>
       <!-- <pagingQuery></pagingQuery> -->
-      
+
     </div>
 
   </div>
@@ -122,7 +124,7 @@ export default {
       changestore: 1,
       arr: '',
       count: '',
-      conf:{
+      conf: {
         start: 0,
         limit: 4,
         productTypeCode: '',
@@ -135,31 +137,31 @@ export default {
   },
   //初始axios后台数据获取
   created() {
-      this.getStoreList();
+    this.getStoreList();
   },
   methods: {
     //封装的axios插件:getStoreList()
-    getStoreList(){
+    getStoreList() {
       this.$http({
-      method: 'post',
-      url: '/provider/grid',
-      data: this.conf,
-    }).then((result) => {
-      this.count=result.totalCount;
-      let data = result.data;
-      let len = data.length;
-      // console.log(result.totalCount);
-      for (var i = 0; i < len; i++) {
-        data[i].totalJudge == 0 ? data[i].totalJudge = 1 : "";
-        data[i].providerImg.substring(0, 3) == 'http' ? data[i].providerImg = data[i].providerImg : data[i].providerImg = "http://115.182.107.203:8088/xinda/pic" + data[i].providerImg;
-        //作双层循环//
-        // data[i].producttypes = data[i].producttypes.split(",");
-      };
-      this.arr = data;
+        method: 'post',
+        url: '/provider/grid',
+        data: this.conf,
+      }).then((result) => {
+        this.count = result.totalCount;
+        let data = result.data;
+        let len = data.length;
+        // console.log(result.totalCount);
+        for (var i = 0; i < len; i++) {
+          data[i].totalJudge == 0 ? data[i].totalJudge = 1 : "";
+          data[i].providerImg.substring(0, 3) == 'http' ? data[i].providerImg = data[i].providerImg : data[i].providerImg = "http://115.182.107.203:8088/xinda/pic" + data[i].providerImg;
+          //作双层循环//
+          // data[i].producttypes = data[i].producttypes.split(",");
+        };
+        this.arr = data;
       })
     },
     //产品类型选择筛选店铺
-    blueColor(n){
+    blueColor(n) {
       this.checked = n;
       this.conf.productTypeCode = n;
       this.getStoreList();
@@ -175,80 +177,80 @@ export default {
       this.$router.push({ path: '/storeIndex', query: { id: id } });
     },
     //省市区选择筛选店铺
-    getProv(pro){
+    getProv(pro) {
       // if(this.i){//如果省市区有默认的code值
-        // this.conf.regionId = pro[2].code;
-        // this.getStoreList();
+      // this.conf.regionId = pro[2].code;
+      // this.getStoreList();
       // }
       // this.i++;
-      if(pro!==""){
+      if (pro !== "") {
         // console.log(pro);
         this.conf.regionId = pro[2].code;
         this.getStoreList();
-      }else{
-        this.conf.regionId ="";
+      } else {
+        this.conf.regionId = "";
         this.getStoreList();
       }
     },
     //分页条
-    titles(n){
+    titles(n) {
 
-      var math=Math.floor(this.count/this.conf.limit)+1;
-      
-        if(n=='first'){
-            n=1;
-        }else if(n=='last'){
-            n=math;
-            
-        }else if(n=='top'){
-            n=this.conf.start/this.conf.limit;
-            if(n==0){
-              n=1;
-            }
-        }else if(n=='bottom'){
-            n=this.conf.start/this.conf.limit+2;
-            if(n==math+1){
-              n=math;       
-            }
+      var math = Math.floor(this.count / this.conf.limit) + 1;
+
+      if (n == 'first') {
+        n = 1;
+      } else if (n == 'last') {
+        n = math;
+
+      } else if (n == 'top') {
+        n = this.conf.start / this.conf.limit;
+        if (n == 0) {
+          n = 1;
         }
-        this.conf.start=(n-1)*this.conf.limit;
-        this.changestore=n;
-        // console.log(n);
-        this.getStoreList();  
-      this.changestore=n;
+      } else if (n == 'bottom') {
+        n = this.conf.start / this.conf.limit + 2;
+        if (n == math + 1) {
+          n = math;
+        }
+      }
+      this.conf.start = (n - 1) * this.conf.limit;
+      this.changestore = n;
+      // console.log(n);
+      this.getStoreList();
+      this.changestore = n;
       console.log(this.changestore)
     }
   },
-  components: {     
-      pagingQuery,
-      province,
-      nothing,
+  components: {
+    pagingQuery,
+    province,
+    nothing,
   },
 
-  getstorelist(){
-              this.$http({
-                  method: 'post',
-                  url: '/provider/grid',
-                  data: {
-                    start:0,
-                    limit:6,
-                    productTypeCode:10,
-                    regionId: 110102,
-                    sort:	1
-                  }
-              }).then((result)=>{
-                console.log("data===", data);
-                  let data = result.data.hq;
-                  // data.forEach(function(item) {
-                  //     item.marketPrice = item.marketPrice + '.00';
-                  // }, this);
-                  // this.recommend = data;
-                  
-              })
-          },
-          // showDetails(id){
-          //     console.log(id);
-          // }
+  getstorelist() {
+    this.$http({
+      method: 'post',
+      url: '/provider/grid',
+      data: {
+        start: 0,
+        limit: 6,
+        productTypeCode: 10,
+        regionId: 110102,
+        sort: 1
+      }
+    }).then((result) => {
+      console.log("data===", data);
+      let data = result.data.hq;
+      // data.forEach(function(item) {
+      //     item.marketPrice = item.marketPrice + '.00';
+      // }, this);
+      // this.recommend = data;
+
+    })
+  },
+  // showDetails(id){
+  //     console.log(id);
+  // }
 
 };
 
@@ -256,33 +258,33 @@ export default {
 
 <style lang="less" scoped>
 @import '../../common/less/store/storeList.less';
-#pagelist{
-    ul{
-        width:370px;
-        margin:0 auto;
-        display:flex;
-        li{
-            color:#9c9c9c;
-            background:#f4f4f4;
-            padding:10px 15px;
-            margin:4px;
-            border:1px solid #b0b0b0;
-            cursor:pointer;
-            &:hover{
-              background:#2594d4;
-              color:#fff;
-            }
-        }
-        li:first-child{
-            margin-right:12px;
-        }
-        li:last-child{
-            margin-left:12px;
-        }
+#pagelist {
+  ul {
+    width: 370px;
+    margin: 0 auto;
+    display: flex;
+    li {
+      color: #9c9c9c;
+      background: #f4f4f4;
+      padding: 10px 15px;
+      margin: 4px;
+      border: 1px solid #b0b0b0;
+      cursor: pointer;
+      &:hover {
+        background: #2594d4;
+        color: #fff;
+      }
     }
-    .bluestore{
-      background:#2594d4;
-      color:#fff;
-    }   
+    li:first-child {
+      margin-right: 12px;
+    }
+    li:last-child {
+      margin-left: 12px;
+    }
+  }
+  .bluestore {
+    background: #2594d4;
+    color: #fff;
+  }
 }
 </style>

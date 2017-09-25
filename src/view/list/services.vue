@@ -111,7 +111,7 @@ export default {
 
         //跳转到商品页面
         shoid(id) {
-            console.log(id),
+            // console.log(id),
             this.$router.push({
                 path: '/goods',
                 query: { id }

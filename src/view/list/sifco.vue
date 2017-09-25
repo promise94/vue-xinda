@@ -116,16 +116,16 @@ export default {
 
         //跳转页面
         shoid(id) {
-            console.log(id),
-                this.$router.push({
-                    path: '/goods',
-                    query: { id }
-                })
+            // console.log(id),
+            this.$router.push({
+                path: '/goods',
+                query: { id }
+            })
         },
 
         //跳转到购物车
         shod(id) {
-            console.log(id),
+            // console.log(id),
                 this.$router.push({
                     path: '/cart',
                     query: { id }
@@ -170,23 +170,8 @@ export default {
                 this.recommend = data;
                 console.log(you)
             })
-        },
 
-        //产品列表接口 切换价格排序
-        ball() {
-            this.$http({
-                method: 'post',
-                url: '/product/package/grid',
-                pdata: {
-                    start: 0,
-                    limit: 8,
-                    productTypeCode: "1",
-                    productId: "8a82f52b674543e298d2e5f685946e6e",
-                    sort: 2,
-                }
-            }).then((qwe) => {
-                console.log("oyoy",qwe)
-            })
+
         },
 
         //购物车接口
@@ -200,7 +185,7 @@ export default {
                 }
             }).then((ward) => {
                 let data = ward.data;
-                console.log('sadasd', ward)
+                // console.log('sadasd', ward)
                 // data.
             })
         },
