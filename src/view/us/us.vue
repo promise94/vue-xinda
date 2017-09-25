@@ -89,16 +89,6 @@ export default {
 </script>
 
 <style lang="less" >
-.quanbuchanpin  {
-    .yincang {
-        display: none;
-    }
-    &:hover {
-        .yincang {
-            display: block;
-        }
-    }
-}
 .center {
 
     // width: 1900px;

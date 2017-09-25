@@ -3,81 +3,125 @@
         <div class="linkBox">
             <ul class="tabLink container">
                 <li class="daohang">
-                    <a href="/" class="quanbuchanpin " >
+                    <a href="#/" @mouseenter="showMenu(1)" @mouseleave="noneMenu(1)" @click="bb(0)" v-bind:class="{daohang2 :cc===0}">
                         <span>全部产品</span>
-                        <div class="yincang container" >
-                            <div class="zong" v-for="item of dataArr" :key="item.id">
-                                <div class="erji">
-                                    <div>.
-                                        <span class="xd xd-shui"></span>
-                                    </div>
-                                    <div>
-                                        <p>{{item.name}}</p>
-                                        <span class="text" v-for="shenme in item.itemList" :key="shenme.id">{{shenme.name}}</span>
-                                    </div>
-                                </div>
-                                <div class="sanji">
-                                    <div>
-                                        <div v-for="shenme in item.itemList" :key="shenme.id">
-                                            <p>{{shenme.name}}</p>
-                                            <a href="#/services" v-for="e in shenme.itemList" :key="e.id">&nbsp;
-                                                <span>{{e.name}}</span>&nbsp;</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </a>
                 </li>
                 <li>
-                    <a href="#/services" @click="bb(1)" v-bind:class="{daohang2 :cc===1}"><span>财税服务</span></a>
+                    <a href="#/services" @click="bb(1)" v-bind:class="{daohang2 :cc===1}">
+                        <span>财税服务</span>
+                    </a>
                 </li>
                 <li>
-                    <a href="#/sifco" @click="bb(2)" v-bind:class="{daohang2 :cc===2}"><span>公司工商</span></a>
+                    <a href="#/sifco" @click="bb(2)" v-bind:class="{daohang2 :cc===2}">
+                        <span>公司工商</span>
+                    </a>
                 </li>
                 <li>
-                    <a href="#/us" @click="bb(3)" v-bind:class="{daohang2 :cc===3}"><span>加盟我们</span></a>
+                    <a href="#/us" @click="bb(3)" v-bind:class="{daohang2 :cc===3}">
+                        <span>加盟我们</span>
+                    </a>
                 </li>
                 <li>
-                    <a href="#/storeList" @click="bb(4)" v-bind:class="{daohang2 :cc===4}"><span>店铺</span></a>
+                    <a href="#/storeList" @click="bb(4)" v-bind:class="{daohang2 :cc===4}">
+                        <span>店铺</span>
+                    </a>
                 </li>
             </ul>
         </div>
-        <!-- <modal ref='name'>
-            <div slot='bady'>
-
+        <div class="yincang " @mouseenter="showMenu(2)" @mouseleave="noneMenu(2)" v-show="show">
+            <div class="zong" v-for="item of dataArr" :key="item.id">
+                <div class="erji">
+                    <div>.
+                        <span class="xd xd-shui"></span>
+                    </div>
+                    <div>
+                        <p>{{item.name}}</p>
+                        <span class="text" v-for="shenme in item.itemList" :key="shenme.id">{{shenme.name}}</span>
+                    </div>
+                </div>
+                <div class="sanji">
+                    <div>
+                        <div v-for="shenme in item.itemList" :key="shenme.id">
+                            <p>{{shenme.name}}</p>
+                            <a href="#/services" v-for="e in shenme.itemList" :key="e.id">&nbsp;
+                                <span>{{e.name}}</span>&nbsp;</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </modal> -->
+        </div>
     </div>
 </template>
 
 <script>
-// import modal from '@/components/global/modal';
 export default {
     data() {
         return {
             aaa: 0,
             cc: 0,
-            show: true,
+            show: false,
+            flag: false,
             hehe: '',
             dataArr: [],
             namearr: [],
             modal_info: '',
+            promise: '',
         }
     },
     created() {
         this.getbucai();
+        if (window.location.hash == '#/') {
+            this.show = true;
+            this.flag = false;
+
+        } else {
+            this.show = false;
+            this.flag = true;
+        }
+    },
+    watch: {
+        '$route': function() {
+            if (this.$route.path == '/') {
+                this.show = true;
+                this.flag = false;
+                if (this.flag == false) {
+
+                }
+
+            } else {
+                this.show = false;
+                this.flag = true;
+
+            }
+        }
     },
     methods: {
-        zixun() {
-
-        },
-
         bb(n) {
             this.cc = n;
-            // console.log(this.cc);
-        },
 
+        },
+        showMenu(n) {
+            if (this.flag) {
+                if (n === 1) {
+                    this.show = true;
+                } else {
+                    clearTimeout(this.promise);
+                }
+            }
+
+        },
+        noneMenu(n) {
+            if (this.flag === true){
+                if (n === 1) {
+                    this.promise = setTimeout(() => {
+                        this.show = true;
+                    }, 300);
+                } else {
+                    this.show = false;
+                }
+            }
+        },
         // 导航获取
         getbucai() {
             this.$http({
@@ -87,18 +131,14 @@ export default {
                 }
             }).then((shenme) => {
                 let data = shenme.data;
-                // console.log(data);
                 for (let i in data) {
                     let datar = data.itemList;
                     this.dataArr.push(data[i]);        //转化成数组
-                    // console.log('arr', data[i]);
-
                 };
                 this.dataArr
                 this.dataArr.sort(function(a, b) {            //排序
                     return a.code - b.code;
                 });
-                // console.log('01', this.dataArr);
             })
         },
     },
@@ -133,32 +173,31 @@ export default {
             }
         }
     }
-
 }
 
 .daohang2 {
-    >span{
+    >span {
         color: @color;
     }
     border-bottom: 4px solid @color;
 }
 
 .yincang {
+    // width: 1200px;
     z-index: 100;
     padding: 0;
     position: absolute;
     left: 50%;
     height: 402px;
-    margin-top: 13px;
-    overflow: hidden;
+    margin-top: 0px; // overflow: hidden;
     margin-left: -600px;
     .zong {
-        width: 200px; 
+        width: 200px;
         position: relative;
         display: flex;
         color: #fff;
         .erji {
-            width: 200px; 
+            width: 200px;
             background: #222;
             &:hover {
                 background: #2693d4;
@@ -175,7 +214,7 @@ export default {
                 }
             }
             >div:nth-child(2) {
-                width: 160px; 
+                width: 160px;
                 margin-top: 13px;
                 margin-bottom: 19px;
                 >p {
@@ -199,9 +238,8 @@ export default {
     position: absolute;
     right: -1000px;
     height: 100%;
-    width: 1000px; 
-    display: none;
-    background: #fff;
+    width: 1000px;
+    display: none; // background: #fff;
     background-color: rgba(0, 0, 0, 0.2);
     align-items: center;
     >div {
@@ -209,7 +247,6 @@ export default {
         >div {
             display: flex;
             text-align: center;
-
             >p {
                 color: #fff;
                 display: block;
