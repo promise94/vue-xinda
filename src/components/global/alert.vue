@@ -35,20 +35,26 @@ export default {
     methods: {
         confirm() {
             this.show = true;
-            setTimeout(() => {
-                this.show = false;
-            }, this.time * 1000);
+            this.promise = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    this.show = false;
+                    resolve();
+                }, this.time * 1000);
+            });
+            return this.promise;
         }
     }
 }
 </script>
 
 <style lang="less" scoped>
-.alert-enter-active, .alert-leave-active {
+.alert-enter-active,
+.alert-leave-active {
     transition: .35s opacity;
 }
 
-.alert-leave-to, .alert-enter{
+.alert-leave-to,
+.alert-enter {
     opacity: 0;
 }
 
