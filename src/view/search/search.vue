@@ -9,7 +9,7 @@
                     </div>
                     <div @click="blue(2)" :class="{blue: change ===2}">
                         <p>价格
-                            <span class="xd xd-paixu"></span>
+                            <span class="xd xd-paixu" :class="{yellow: colors ===1}"></span>
                         </p>
                     </div>
                 </div>
@@ -29,6 +29,13 @@
                                     <span>{{item.regionName}}</span>
                                 </li>
                             </ul>
+                            <div class="ball-right">
+                                <p>￥&nbsp;{{item.price}}</p>
+                                <div>
+                                    <a href="#/cart" @click="cars(item.id)">立即购买</a>
+                                    <a @click="cars(item.id)">加入购物车</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -46,10 +53,13 @@ export default {
         return {
             checked: 1,
             change: 1,
+            colors: 0,
             searchOut: '',
             searchName: '', // 搜索内容
             typeIn: 1, // 搜索类型 1:产品，2:商品
             regionId: '', // 城市编码
+            sort: '',//排序方式（默认为空）
+            i: 0
         }
     },
     created() {
@@ -58,6 +68,7 @@ export default {
         this.typeIn = searchInfo.type;
         this.regionId = searchInfo.id;
         this.search();
+        
     },
     watch: {
         '$route'() {
@@ -75,6 +86,20 @@ export default {
         },
         blue(m) {
             this.change = m;
+            if(m==2){           
+                this.i++;
+                if(this.i%2==1){
+                    this.sort=3;
+                    this.colors=0; 
+                }else{
+                    this.sort=2;
+                    this.colors=1;
+                }
+            }else{
+                this.sort= '';
+                this.colors=0; 
+            }
+            this.search();
         },
         search() {
             if (this.typeIn == 1) {
@@ -85,13 +110,15 @@ export default {
                         start: 0,
                         limit: 8,
                         searchName: this.searchName,
-                        sort: 2,
+                        sort: this.sort,
                     }
                 }).then((res) => {
                     res.data.forEach((item) => {
                         item.providerImg = item.providerImg.indexOf('http') > -1 ? item.providerImg : 'http://115.182.107.203:8088/xinda/pic' + item.providerImg;
                     })
                     this.searchOut = res.data;
+                    console.log(res.data);
+                    
                 });
             } else {
                 this.$http({
@@ -101,18 +128,32 @@ export default {
                         start: 0,
                         limit: 8,
                         searchName: this.searchName,
-                        productTypeCode: 7,
-                        regionId: '110105',
+                        // productTypeCode: 7,
+                        // regionId: '110105',
+                        sort: 1,
                     }
                 }).then((res) => {
                     res.data.forEach((item) => {
                         item.providerImg = item.providerImg.indexOf('http') > -1 ? item.providerImg : 'http://115.182.107.203:8088/xinda/pic' + item.providerImg;
                     })
                     this.searchOut = res.data;
-                    console.log(res);
+                    // console.log(this.sort);
                 });
             }
-        }
+        },
+        cars(Id) {
+            this.$http({
+                method: 'post',
+                url: '/cart/add',
+                data: {
+                    id: Id,
+                    num: 1,
+                }
+            }).then((ward) => {
+                
+            })
+        },
+
     }
 }
 </script>
@@ -185,6 +226,7 @@ export default {
                     }
                 }
                 .info {
+                    width:830px;
                     li {
                         padding: 5px 0;
                         letter-spacing: 1px;
@@ -203,8 +245,30 @@ export default {
                         }
                     }
                 }
+                .ball-right{
+                    height: 87px;
+                    text-align: center;
+                    >p{
+                        color: red;
+                        font-size: 24px;
+                        line-height: 50px;
+                    } 
+                    >div{
+                        color: white;
+                        line-height: 30px;
+                        >a{
+                            cursor:pointer;
+                            padding: 5px;
+                            color: white;
+                            background-color: #2693d4;
+                        }
+                     }
+                }
             }
         }
+    }
+    .yellow{
+        color:yellow;
     }
 }
 </style>
