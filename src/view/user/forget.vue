@@ -17,18 +17,21 @@
       <xd-input @getValue="getSecondPwd" @blur="isSecondPwd" @focus="isSecondPwd(1)" type="password" :info="info.SecondInfo" :infoType="type.SecondType" placeholder="请再次输入密码(8-16位数字和字母)"></xd-input>
     </li>
     <li class="btn"><input @click.13="changePassword" type="button" value="确认修改"></li>
+    <v-alert :type="alert_options.type" :info="alert_options.info" ref="alert"></v-alert>
   </ul>
 </template>
 
 <script>
 import xdCaptcha from '@/components/user/captcha';
 import xdInput from '@/components/user/input';
+import vAlert from '@/components/global/alert';
 import reg from '@/common/js/reg';
 import md5 from 'md5';
 export default {
   components: {
     xdCaptcha,
     xdInput,
+    vAlert,
   },
   data() {
     return {
@@ -43,6 +46,7 @@ export default {
       btnEabale: false,
       text: '点击获取',
       isload: '', // 是否重新加载图片验证码
+      alert_options: { type: 'success', info: '' }, // 提示框设置
     }
   },
   created() {
@@ -162,6 +166,9 @@ export default {
               this.info.captInfo = res.msg;
               this.type.captType = 'success';
               this.btnEabale = true; // 禁用按钮
+              this.alert_options.type = 'success';
+              this.alert_options.info = res.msg;
+              this.$refs.alert.confirm();
               // 启动读秒进度
               this.text = this.time + 's';
               let t = setInterval(() => {
@@ -176,7 +183,7 @@ export default {
             } else {
               this.info.captInfo = res.msg;
               this.type.captType = 'error';
-              this.isload = Math.random().toString().substr(2,4);
+              this.isload = Math.random().toString().substr(2, 4);
             }
           });
       }
@@ -185,8 +192,17 @@ export default {
       if (this.isPhone() && this.isNull() && this.isCodeNull() && this.isPassword() && this.isSecondPwd()) {
         this.$http.post('/register/findpas', { cellphone: this.phone, smsType: 2, validCode: this.msgCode, password: md5(this.password) })
           .then((res) => {
-            sessionStorage.setItem('temp', JSON.stringify({ tempPhone: this.phone }));
-            this.$router.push('login');
+            this.alert_options.info = res.msg;
+            if (res.status === 1) {
+              this.alert_options.type = 'success';
+              this.$refs.alert.confirm().then(() => {
+                localStorage.setItem('temp', JSON.stringify({ tempPhone: this.phone }));
+                this.$router.push('login');
+              });
+            } else {
+              this.alert_options.type = 'error';
+              this.$refs.alert.confirm();
+            }
           })
       }
     },
