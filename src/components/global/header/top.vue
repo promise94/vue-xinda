@@ -15,7 +15,7 @@
       <div class="shop">
         <p @click="goto('/cart')">
           <i class="xd xd-cart"></i>购物车
-          <span>{{cartNum}}</span>件</p>
+          <span>{{getCartNum}}</span>件</p>
         <div @click="goto('/member/order')" class="order" v-if="status">
           <span class="xd xd-wodedingdan"></span>
           <span>我的订单</span>

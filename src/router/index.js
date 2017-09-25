@@ -24,7 +24,7 @@ import evaluntion from '@/view/vip/evaluntion.vue';
 
 import cart from '@/view/cart/cart.vue'; // 购物车
 import pay from '@/view/pay/pay.vue';// 支付首页
-import yinlian from '@/view/pay/yinlian.vue';//银联支付
+import yinlian from '@/view/pay/yinlian.vue';// 银联支付
 
 
 /**
