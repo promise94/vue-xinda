@@ -125,6 +125,7 @@ export default {
         limit: '6',
         productTypeCode:'',
         sort: 2,//价格升序排列
+        // sId:this.$route.query.id,
       },
 
     }
