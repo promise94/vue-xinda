@@ -168,7 +168,7 @@ export default {
               this.btnEabale = true; // 禁用按钮
               this.alert_options.type = 'success';
               this.alert_options.info = res.msg;
-              this.$refs.alert.confirm();
+              this.$refs.alert.alert();
               // 启动读秒进度
               this.text = this.time + 's';
               let t = setInterval(() => {
@@ -195,13 +195,13 @@ export default {
             this.alert_options.info = res.msg;
             if (res.status === 1) {
               this.alert_options.type = 'success';
-              this.$refs.alert.confirm().then(() => {
+              this.$refs.alert.alert().then(() => {
                 localStorage.setItem('temp', JSON.stringify({ tempPhone: this.phone }));
                 this.$router.push('login');
               });
             } else {
               this.alert_options.type = 'error';
-              this.$refs.alert.confirm();
+              this.$refs.alert.alert();
             }
           })
       }

@@ -74,7 +74,6 @@ export default {
         if (window.location.hash == '#/') {
             this.show = true;
             this.flag = false;
-
         } else {
             this.show = false;
             this.flag = true;

@@ -9,10 +9,10 @@
                 <span>当前头像 :</span>
                 <div>
                     <div class="xd xd-user" v-if="!userInfo.info.headImg">
-                        <input @change="getFile" type="file">
+                        <input @change="getFile($event)" type="file">
                     </div>
                     <div v-if="userInfo.info.headImg">
-                        <input @change="getFile" type="file">
+                        <input @change="getFile($event)" type="file">
                     </div>
                 </div>
             </div>
@@ -82,6 +82,7 @@ export default {
     data() {
         return {
             says: 1,
+            headImg: '', // 用户头像
             name: '', // 用户名
             prov: '', // 省市区
             email: '', // 邮箱
@@ -197,7 +198,7 @@ export default {
                 gender: this.sex ? this.sex : '',
                 email: this.email ? this.email : '',
                 regionId: this.prov ? this.prov[2].code : this.userInfo.regionId,
-                headImg: '/2016/10/28/152843b6d9a04abe83a396d2ba03675f'
+                headImg: this.headImg,
             }
             let info = this.userInfo.info;
             this.$http.post('/member/update-info', data).then((res) => {
@@ -209,12 +210,12 @@ export default {
                 } else {
                     this.alert_options.type = 'error';
                 }
-                this.$refs.alert.confirm();
+                this.$refs.alert.alert();
                 console.log('saveInfo---', res);
             })
         },
-        getFile() { // 更改头像
-            console.log('run in img');
+        getFile(ev) { // 更改头像
+            console.log('run in img',ev);
         },
         savePassword() { // 保存密码
             if (this.isPassword({}) && this.isSecondPwd() && this.isPassword({ sign: 'old' })) {
@@ -226,7 +227,7 @@ export default {
                             this.alert_options.type = 'error';
                         }
                         this.alert_options.info = res.msg;
-                        this.$refs.alert.confirm();
+                        this.$refs.alert.alert();
                     });
             }
         }
