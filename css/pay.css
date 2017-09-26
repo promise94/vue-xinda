@@ -114,6 +114,9 @@
 .mingxi div span a {
   color: #51b6bc;
 }
+.mingxi div > span:nth-child(1) {
+  width: 314px;
+}
 .mingxi div > span:nth-child(1) a {
   color: black;
 }

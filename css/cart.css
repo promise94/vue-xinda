@@ -65,30 +65,31 @@
   width: 120px;
 }
 .shangpin .list div > p:nth-child(4) {
+  font-size: 0;
   background-color: #fff;
 }
 .shangpin .list div > p:nth-child(4) span {
   display: inline-block;
-  width: 16px;
-  height: 18px;
+  width: 22px;
+  height: 22px;
   font-size: 18px;
   text-align: center;
-  line-height: 16px;
+  line-height: 21px;
   background-color: #ccd;
   user-select: none;
 }
-.shangpin .list div > p:nth-child(4) > span:nth-child(2) {
-  background-color: #fff;
-}
-.shangpin .list div > p:nth-child(4) > span:nth-child(2) input {
+.shangpin .list div > p:nth-child(4) input {
   width: 30px;
-  height: 14px;
+  height: 18px;
   font-size: 15px;
   text-align: center;
-  margin-left: -4px;
 }
-.shangpin .list div > p:nth-child(4) > span:nth-child(3) {
-  margin-left: 10px;
+.shangpin .list div > p:nth-child(4) > span:nth-of-type(3) {
+  width: 78px;
+  position: absolute;
+  margin-left: -78px;
+  opacity: .1;
+  background-color: white;
 }
 .shangpin .list div > p:nth-child(5) {
   width: 46px;

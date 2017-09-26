@@ -18,13 +18,14 @@
             <div class="list" v-for="(item1,k) of items" :key="k">
                 <p>店铺：{{item1.providerName}}</p>
                 <div class="list-xx">
-                    <p><img v-bind:src="item1.providerImg" alt="" @click="gotos(item1.productId)"></p>
+                    <p><img v-bind:src="item1.providerImg" alt="" @click="gotos(item1.serviceId)"></p>
                     <p>{{item1.serviceName}}</p>
                     <p>￥{{item1.unitPrice}}</p>
                     <p>
-                        <span  @click="less(item1)">-</span>
-                        <span><input type="text" onkeyup=" if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g, '')}else{this.value=this.value.replace(/\D/g, '')} " onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g, '')}else{this.value=this.value.replace(/\D/g, '')} " :value="item1.buyNum"></span>
-                        <span  @click="add(item1)">+</span>
+                        <span @click="less(item1)" >-</span>
+                        <input type="text" @blur="onblur($event ,item1)" :value="item1.buyNum">
+                        <span @click="add(item1)">+</span>
+                        <span v-show="show === 0"></span>
                     </p>
                     <p>￥{{item1.totalPrice}}</p>
                     <p @click="del(item1)">删除</p>
@@ -84,12 +85,12 @@ export default {
         modal,
     },
     created() {
-        // console.log(this.$route.query.id)
         this.getTuijian();
         this.getCartlsit();
     },
     data() {
         return {
+            buyNum: 0,
             counter: 0,      //个数
             msg: 0,          //全部商品
             recommend: '',  //热门商品的总数据
@@ -99,10 +100,20 @@ export default {
             unitPrice: 0,  //单价
             willshow: 0,
             modal_info: '',
+            jieguo: 0,
+            caozuo: '', //成功、失败
+            show:1, //遮罩层
         }
     },
     methods: {
         ...mapActions(['cartAction']),
+        // 失焦事件
+        onblur(ev,item1) {
+            this.getZhezhao(0); //遮罩层打开
+            let vall = ev.target.value;
+            item1.buyNum = vall;
+            this.getxiugai(item1)
+        },
         //价格转化
         fmtPrice(p) {
             return (parseFloat(p) * 0.01).toFixed(2);
@@ -121,6 +132,7 @@ export default {
                     let data = res.data;
                     this.monytotal = 0;
                     this.counter = 0;   //设置购物车件数
+                    this.getZhezhao(1); //遮罩层关闭
                     data.forEach(function(item) {
                         item.providerImg = 'http://115.182.107.203:8088/xinda/pic/' + item.providerImg;
                         this.counter += item.buyNum;    //总件数
@@ -129,7 +141,7 @@ export default {
                         this.monytotal += item.totalPrice //总钱数
                     }, this)
                     this.items = res.data;
-                    console.log(this.counter)
+                    // console.log(this.counter)
                     this.cartAction(this.counter);
                 } else {
                     this.willshow = 0;
@@ -139,13 +151,15 @@ export default {
         //数量操作
         // 加
         add(item1) {
-            item1.buyNum += 1;
+            item1.buyNum++;
+            this.getZhezhao(0); //遮罩层打开
             this.getxiugai(item1);
         },
         // 减
         less(item1) {
             if (item1.buyNum > 1) {
-                item1.buyNum -= 1;
+                this.getZhezhao(0); //遮罩层打开
+                item1.buyNum--;
                 this.getxiugai(item1);
             } else {
                 this.counter = 1;
@@ -159,6 +173,7 @@ export default {
                 })
             }
         },
+        // 修改事件
         getxiugai(item1) {
             this.$http.post('/cart/set',
                 {
@@ -170,7 +185,7 @@ export default {
                 if (status == 1) {
                     this.getCartlsit();
                 } else {
-                    alert("data.msg")
+                    // alert("data.msg")
                 }
             })
         },
@@ -181,17 +196,23 @@ export default {
                 // 点击确定按钮的回调处理
                 this.$refs.name1.show = false;//自己手动关闭
                 this.$http.post('/cart/del', { id: item1.serviceId }).then((res) => {
-                    this.modal_info = res.msg;
-                    this.$refs.name1.confirm().then(() => {
-                        this.$refs.name1.show = false; //手动关闭
+                    if (res.status == 1) {  //删除成功的操作                   
                         this.getCartlsit();
                         // 删除列表的最后一件
                         var i = this.items.indexOf(item1);
                         this.items.splice(i, 1);
                         this.msg--;
-                        this.cartAction(this.items.length)
-                    })
-                    console.log(res);
+                        this.cartAction(this.items.length);
+                        setTimeout(this.getJeiguo1, 500)
+                    } else {
+                        this.modal_info = res.msg;
+                        this.$refs.name1.confirm().then(() => {
+                            this.$refs.name1.show = false; //手动关闭
+                            // this.getCartlsit();   
+                            this.getJeiguo(1, "X操作失败")
+                        })
+                        console.log(res);
+                    }
                     // this.
                 });
             }).catch(() => {
@@ -224,9 +245,13 @@ export default {
                         query: { val: dingdan }
                     })
                 } else {
-                    alert(res.msg + "!")
+                    // this.modal_info = ""
                 }
             })
+        },
+        //触发遮罩层
+        getZhezhao(n){
+            this.show = n;
         },
         //热门服务获取
         getTuijian() {
