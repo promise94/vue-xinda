@@ -176,13 +176,13 @@ export default {
                   this.alert_options.info = res.msg;
                   if (res.status === 1) {
                     this.alert_options.type = 'success';
-                    this.$refs.alert.confirm().then(() => {
+                    this.$refs.alert.alert().then(() => {
                       localStorage.setItem('temp', JSON.stringify({ tempPhone: this.phone }));
                       this.$router.push('login');
                     });
                   } else {
                     this.alert_options.type = 'error';
-                    this.$refs.alert.confirm();
+                    this.$refs.alert.alert();
                   }
                 })
             } else {
@@ -190,7 +190,7 @@ export default {
               this.type.phoneType = 'error';
               this.alert_options.info = res.msg;
               this.alert_options.type = 'error';
-              this.$refs.alert.confirm();
+              this.$refs.alert.alert();
             }
           })
       }

@@ -30,15 +30,18 @@ new Vue({
   components: {
     App
   },
-  created(){
-    this.$router.beforeEach((to, from, next)=>{
-      if(to.meta.requireAuth){
+  data: {
+    eventHub: new Vue(),
+  },
+  created() {
+    this.$router.beforeEach((to, from, next) => {
+      if (to.meta.requireAuth) {
         if (from.name && this.$store.state.user.status) {
           next();
         } else {
           next('/user/login');
         }
-      }else{
+      } else {
         next();
       }
     });

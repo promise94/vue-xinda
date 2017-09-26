@@ -132,7 +132,7 @@ export default {
               path = path ? path : '/';
               this.alert_options.type = 'success';
               this.alert_options.info = res.msg;
-              this.$refs.alert.confirm().then(() => {
+              this.$refs.alert.alert().then(() => {
                 localStorage.setItem('temp', JSON.stringify({ tempPhone: this.phone }));
                 this.$router.push(path);
               });

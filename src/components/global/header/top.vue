@@ -13,7 +13,7 @@
         <a v-if="status" @click="logout" class="user" href="javascript:;">【退出】</a>
       </div>
       <div class="shop">
-        <p @click="goto('/cart')">
+        <p @click="goto('/cart')" ref="cart">
           <i class="xd xd-cart"></i>购物车
           <span>{{getCartNum}}</span>件</p>
         <div @click="goto('/member/order')" class="order" v-if="status">
@@ -24,6 +24,7 @@
       </div>
     </div>
     <v-alert :type="options.type" :info="options.info" ref="alert"></v-alert>
+    <span class="ball" v-for="(v, k) of balls" v-if="v.show"></span>
   </div>
 </template>
 
@@ -38,16 +39,24 @@ export default {
   },
   data() {
     return {
+      evehub: this.$root.eventHub,
       status: false,
       user: '',
       options: { type: 'success', info: '' }, // 提示框设置
+      balls: [{ show: false }, { show: false }, { show: false }, { show: false }, { show: false }, { show: false }],
     }
   },
   created() {
     this.postUser();
+    this.evehub.$on('add', (ev) => {
+      this.drop(ev);
+    });
   },
   computed: {
     ...mapGetters(['getUser', 'getCartNum']),
+  },
+  destroyed() {
+    // this.evehub.$off('add');
   },
   methods: {
     ...mapActions(['loginAction']),
@@ -56,7 +65,7 @@ export default {
         if (res.status === 1) {
           this.options.info = res.msg;
           this.options.type = 'success';
-          this.$refs.alert.confirm().then(() => {
+          this.$refs.alert.alert().then(() => {
             this.status = false;
             let user = {
               status: false,
@@ -68,7 +77,7 @@ export default {
         }
       })
     },
-    gotoServer(){
+    gotoServer() {
       console.log(this.getUser, '----', this.getCartNum);
     },
     postUser() { // 获取用户信息
@@ -88,6 +97,15 @@ export default {
     goto(url) { // 页面跳转
       this.$router.push(url);
     },
+    drop(ev) {
+      this.balls.forEach((item)=>{
+        if (!item.show) {
+          item.show = true;
+          return;
+        }
+      });
+      console.log('drop--', ev, '---', this.$refs.cart, '--', this.balls);
+    }
   },
 };
 </script>
@@ -146,5 +164,11 @@ export default {
       }
     }
   }
+}
+.ball{
+  position: absolute;
+  padding: 8px;
+  border-radius: 50%;
+  background-color: rgba(191, 220, 18, 0.29);
 }
 </style>

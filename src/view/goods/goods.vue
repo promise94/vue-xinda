@@ -50,7 +50,7 @@
                     </ul>
                     <div>
                         <a href="#/cart" @click="jiarugouwuche()">立即购买</a>
-                        <button @click="jiarugouwuche()">加入购物车</button>
+                        <button @click="jiarugouwuche($event)">加入购物车</button>
                     </div>
                 </div>
                 <div>
@@ -180,11 +180,11 @@
                 </div>
             </div>
         </div>
-        <modal ref = 'name'>
+        <!-- <modal ref = 'name'>
             <div>
                 <h1>{{modal_info}}</h1>
             </div>
-        </modal>
+        </modal> -->
     </div>
 </template>
 
@@ -237,7 +237,7 @@ export default {
             }
         },
 
-        jiarugouwuche() {
+        jiarugouwuche(ev) {
             // if ( this.$store.state.user === 'ture'){
                 // this.$router.push({
                 //     path: '/storeIndex',
@@ -256,6 +256,7 @@ export default {
             // } else {
                 // console.log('cuowu');
             // }
+            this.$root.eventHub.$emit('add',ev);
         },
         getnicai() {
             this.$http({
