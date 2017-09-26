@@ -67,23 +67,23 @@
           </div>
 
           <div v-show="check === 2">
-            <h1>工作时间：{{date.workTime}}</h1>
+            <h1>工作时间：{{date.workTime}}</h1>         
             <div>
-              <h1>QQ咨询：{{date.qq}}</h1>
-              </br>
-
+              <h1>QQ咨询： </h1>
+              <a :href="'tencent://message/?uin='+date.qq"><img src="../../common/images/QQ.jpg" alt=""></a>
             </div>
           </div>
 
           <div v-show="check === 3">
-            <img v-bind:src="date.businessCertPath">
+            <p class='xd xd-nothing'></p>
+            <span>图片不存在</span>
           </div>
 
         </div>
       </div>
     </div>
 
-    <div class="page-changes">
+    <div class="page-changes" v-if='check === 1'>
       <div id="page">
         <ul>
             <li @click="titles('first')">首页</li>
@@ -95,14 +95,10 @@
             <li @click="titles(5)" :class="{bluestore: changestore === 5}">5</li>
             <li @click="titles(6)" :class="{bluestore: changestore === 6}">6</li>
             <li @click="titles(7)" :class="{bluestore: changestore === 7}">7</li>
-            <li @click="titles(8)" :class="{bluestore: changestore === 8}">8</li>
-            <li @click="titles(9)" :class="{bluestore: changestore === 9}">9</li>
-            <li @click="titles(10)" :class="{bluestore: changestore === 10}">10</li>
-            <li @click="titles(11)" :class="{bluestore: changestore === 11}">11</li>
             <li @click="titles('bottom')">下一页</li>
             <li @click="titles('last')">尾页</li>
         </ul>
-    </div>
+      </div>
       <!-- <pagingQuery></pagingQuery> -->
     </div>
 
@@ -120,13 +116,14 @@ export default {
       date: '',
       count: '',
       changestore: 1,
+      // books:{},
       conf:{
         start: 0 ,
         limit: '6',
         productTypeCode:'',
-        sort: 2,//价格升序排列
+        sort: 2,//价格升序排列,
+        providerId :this.$route.query.id,
       },
-
     }
   },
   //axios后台数据获取
@@ -146,7 +143,7 @@ export default {
       //营业执照图片数据处理，加上前缀
       this.date.businessCertPath.substring(0, 3) == 'http' ? this.date.businessCertPath = this.date.businessCertPath : this.date.businessCertPath = "http://115.182.107.203:8088/xinda/pic" + this.date.businessCertPath;
 
-      //  console.log(this.date);
+      //  console.log('qq',this.date.qq);
 
     }),
     this.getStore();
@@ -163,6 +160,14 @@ export default {
       data: this.conf,
       }).then((res) => {
         this.count=res.totalCount;
+        // let len=Math.floor(this.count/this.conf.limit)+1;
+        // let books={};
+        // this.books=books;
+        // // Object.keys(this.books).length=len;
+        // for(var i=1;i<len;i++){        
+        //   Object.values(books)[i]=i;
+        // }
+        // console.log('book',Object.values(books));
         this.mess = res.data;
         this.mess.marketPrice = this.fmtPrice(this.mess.marketPrice);//处理市场价格余两位数
         this.mess.price = this.fmtPrice(this.mess.price);//处理销售价格余两位数
@@ -225,31 +230,33 @@ export default {
 <style lang="less" scoped>
 @import '../../common/less/store/storeIndex.less';
 #page{
-    ul{
-        margin:0 auto;
-        display:flex;
-        li{
-            color:#9c9c9c;
-            background:#f4f4f4;
-            padding:10px 15px;
-            margin:4px;
-            border:1px solid #b0b0b0;
-            cursor:pointer;
-            &:hover{
-              background:#2594d4;
-              color:#fff;
-            }
-        }
-        li:first-child{
-            margin-right:12px;
-        }
-        li:last-child{
-            margin-left:12px;
-        }
+  ul{
+    width:876px;    
+    // display:flex;    
+    display:table-cell;
+    li{
+      display:inline-block;
+      color:#9c9c9c;
+      background:#f4f4f4;
+      padding:10px 15px;
+      margin:4px;
+      border:1px solid #b0b0b0;
+      cursor:pointer;
+      &:hover{
+        background:#2594d4;
+        color:#fff;
+      }
     }
-    .bluestore{
-      background:#2594d4;
-      color:#fff;
-    }   
+    li:first-child{
+      margin-right:12px;
+    }
+    li:last-child{
+      margin-left:12px;
+    }
+  }
+  .bluestore{
+    background:#2594d4;
+    color:#fff;
+  }   
 }
 </style>

@@ -87,6 +87,7 @@ export default {
         // console.log(this.$route.query.id)
         this.getTuijian();
         this.getCartlsit();
+        
     },
     data() {
         return {
@@ -114,7 +115,7 @@ export default {
                 url: '/cart/list',
                 data: {
                 }
-            }).then((res) => {
+            }).then((res) => {console.log('=', res.data)
                 if (res.data.length > 0) {
                     this.willshow = 1;
                     this.msg = res.data.length;//全部商品
@@ -129,7 +130,8 @@ export default {
                         this.monytotal += item.totalPrice //总钱数
                     }, this)
                     this.items = res.data;
-                    console.log(this.counter)
+                    
+                    console.log('===',this.counter)
                     this.cartAction(this.counter);
                 } else {
                     this.willshow = 0;
@@ -190,7 +192,7 @@ export default {
                         var i = this.items.indexOf(item1);
                         this.items.splice(i, 1);
                         this.msg--;
-                        this.cartAction(this.items.length)
+                        this.cartAction(this.items.length);
                     })
                     console.log(res);
                     // this.

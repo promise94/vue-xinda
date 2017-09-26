@@ -11,7 +11,7 @@
 }
 #storeIndex .logosay img {
   width: 120px;
-  height: 86px;
+  height: 100%;
   margin-right: 50px;
 }
 #storeIndex .logosay > div h1 {
@@ -36,7 +36,7 @@
 }
 #storeIndex .company .introduce .text span {
   display: block;
-  margin: 0 25px;
+  margin: 0 27px;
 }
 #storeIndex .company .introduce .assure {
   display: flex;
@@ -165,19 +165,29 @@
 #storeIndex .company .service .box > div:nth-child(2) div {
   display: flex;
 }
+#storeIndex .company .service .box > div:nth-child(2) div a {
+  color: red;
+}
 #storeIndex .company .service .box > div:nth-child(2) img {
+  width: 80px;
+  height: 80%;
   margin-left: 10px;
-  cursor: pointer;
 }
 #storeIndex .company .service .box > div:nth-child(3) {
   height: 602px;
+  display: flex;
 }
-#storeIndex .company .service .box > div:nth-child(3) img {
-  width: 100px;
+#storeIndex .company .service .box > div:nth-child(3) p {
+  font-size: 100px;
+  color: #2594d4;
   margin: 10px 0 0 190px;
-  cursor: pointer;
+}
+#storeIndex .company .service .box > div:nth-child(3) span {
+  font-size: 30px;
+  color: #2594d4;
+  margin: 90px 0 0 10px;
 }
 #storeIndex .page-changes {
-  margin: 25px 0 150px 330px;
+  margin: 25px 0 150px 320px;
   text-align: center;
 }
