@@ -98,13 +98,13 @@ export default {
       this.$router.push(url);
     },
     drop(ev) {
-      this.balls.forEach((item)=>{
-        if (!item.show) {
-          item.show = true;
-          return;
+      for (let i = 0; i < this.balls.length; i++) {
+        if (!this.balls[i].show) {
+          this.balls[i].show = true;
+          break;
         }
-      });
-      console.log('drop--', ev, '---', this.$refs.cart, '--', this.balls);
+      }
+      console.log('drop--', ev, '---', this.$refs.cart.getBoundingClientRect(), '--', this.balls);
     }
   },
 };
