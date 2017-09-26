@@ -3,7 +3,7 @@
         <div class="linkBox">
             <ul class="tabLink container">
                 <li class="daohang">
-                    <a @mouseenter="showMenu(1)" @mouseleave="noneMenu(1)" href="#/" class="quanbuchanpin ">
+                    <a href="#/" @mouseenter="showMenu(1)" @mouseleave="noneMenu(1)" @click="bb(0)" v-bind:class="{daohang2 :cc===0}">
                         <span>全部产品</span>
                     </a>
                 </li>
@@ -29,7 +29,7 @@
                 </li>
             </ul>
         </div>
-        <div @mouseenter="showMenu(2)" @mouseleave="noneMenu(2)" v-show="show" class="yincang container">
+        <div class="yincang " @mouseenter="showMenu(2)" @mouseleave="noneMenu(2)" v-show="show">
             <div class="zong" v-for="item of dataArr" :key="item.id">
                 <div class="erji">
                     <div>.
@@ -84,19 +84,21 @@ export default {
             if (this.$route.path == '/') {
                 this.show = true;
                 this.flag = false;
+                if (this.flag == false) {
+
+                }
+
             } else {
                 this.show = false;
                 this.flag = true;
+
             }
         }
     },
     methods: {
-        zixun() {
-
-        },
         bb(n) {
             this.cc = n;
-            // console.log(this.cc);
+
         },
         showMenu(n) {
             if (this.flag) {
@@ -106,16 +108,18 @@ export default {
                     clearTimeout(this.promise);
                 }
             }
+
         },
         noneMenu(n) {
-            if (n === 1) {
-                this.promise = setTimeout(() => {
+            if (this.flag === true){
+                if (n === 1) {
+                    this.promise = setTimeout(() => {
+                        this.show = true;
+                    }, 300);
+                } else {
                     this.show = false;
-                }, 1000);
-            } else {
-                this.show = false;
+                }
             }
-
         },
         // 导航获取
         getbucai() {
@@ -126,18 +130,14 @@ export default {
                 }
             }).then((shenme) => {
                 let data = shenme.data;
-                // console.log(data);
                 for (let i in data) {
                     let datar = data.itemList;
                     this.dataArr.push(data[i]);        //转化成数组
-                    // console.log('arr', data[i]);
-
                 };
                 this.dataArr
                 this.dataArr.sort(function(a, b) {            //排序
                     return a.code - b.code;
                 });
-                // console.log('01', this.dataArr);
             })
         },
     },
@@ -182,13 +182,13 @@ export default {
 }
 
 .yincang {
+    // width: 1200px;
     z-index: 100;
     padding: 0;
     position: absolute;
     left: 50%;
     height: 402px;
-    margin-top: 13px;
-    overflow: hidden;
+    margin-top: 0px; // overflow: hidden;
     margin-left: -600px;
     .zong {
         width: 200px;
@@ -238,8 +238,7 @@ export default {
     right: -1000px;
     height: 100%;
     width: 1000px;
-    display: none;
-    background: #fff;
+    display: none; // background: #fff;
     background-color: rgba(0, 0, 0, 0.2);
     align-items: center;
     >div {
@@ -247,7 +246,6 @@ export default {
         >div {
             display: flex;
             text-align: center;
-
             >p {
                 color: #fff;
                 display: block;
