@@ -21,7 +21,6 @@
     <v-alert :type="alert_options.type" :info="alert_options.info" ref="alert"></v-alert>
   </ul>
 </template>
-
 <script>
 import xdCaptcha from '@/components/user/captcha';
 import xdInput from '@/components/user/input';
