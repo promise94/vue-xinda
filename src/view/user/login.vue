@@ -1,10 +1,10 @@
 <template>
   <ul class="form">
     <li>
-      <xd-input @getValue="getPhone" @blur="isPhone" @focus="isPhone(1)" :info="info.phoneInfo" :infoType="type.phoneType" placeholder="请输入手机号"></xd-input>
+      <xd-input @enter="loginAction" :value="phoneVal" @getValue="getPhone" @blur="isPhone" @focus="isPhone(1)" :info="info.phoneInfo" :infoType="type.phoneType" placeholder="请输入手机号"></xd-input>
     </li>
     <li>
-      <xd-input @getValue="getPassword" @blur="isPassword" @focus="isPassword(1)" type="password" :info="info.pwdInfo" :infoType="type.pwdType" placeholder="请输入新密码(8-16位数字和字母)"></xd-input>
+      <xd-input @enter="loginAction" @getValue="getPassword" @blur="isPassword" @focus="isPassword(1)" type="password" :info="info.pwdInfo" :infoType="type.pwdType" placeholder="请输入新密码(8-16位数字和字母)"></xd-input>
     </li>
     <li class="message">
       <xd-captcha :info="info.captInfo" :upload="isload" :infoType="type.captType" @value="getValue"></xd-captcha>
@@ -13,12 +13,14 @@
       <a href="#/user/forget">忘记密码?</a>
     </li>
     <li><input @click.13="loginAction" type="button" value="立即登录"></li>
+    <v-alert :type="alert_options.type" :info="alert_options.info" ref="alert"></v-alert>
   </ul>
 </template>
 
 <script>
 import xdCaptcha from '@/components/user/captcha';
 import xdInput from '@/components/user/input';
+import vAlert from '@/components/global/alert';
 import reg from '@/common/js/reg';
 import md5 from 'md5';
 import { mapActions } from 'vuex';
@@ -26,10 +28,11 @@ export default {
   components: {
     xdCaptcha,
     xdInput,
+    vAlert,
   },
   beforeRouteEnter(to, from, next) {
-    if (from.name) {
-      sessionStorage.setItem('toLoginPath',from.fullPath);
+    if (from.name && from.path.indexOf('forget') < 0 && from.path.indexOf('register') < 0) {
+      sessionStorage.setItem('toLoginPath', from.fullPath);
     }
     next();
   },
@@ -39,15 +42,17 @@ export default {
       type: { phoneType: '', captType: '', pwdType: '' }, // 提示类型
       code: '', // 图片验证码
       phone: '', // 电话号码
+      phoneVal: '', // 初始手机号默认值
       password: '', // 密码
       clear: false,
       isload: '', // 是否重新加载图片验证码
+      alert_options: { type: 'success', info: '' }, // 提示框设置
     }
   },
   created() {
-    let user = JSON.parse(sessionStorage.getItem('temp'));
+    let user = JSON.parse(localStorage.getItem('temp'));
     if (user && user.tempPhone) {
-      this.phone = user.tempPhone;
+      this.phoneVal = user.tempPhone;
     }
   },
   computed: {
@@ -125,8 +130,12 @@ export default {
             if (res.status === 1) {
               let path = sessionStorage.getItem('toLoginPath');
               path = path ? path : '/';
-              console.log('path',path);
-              this.$router.push(path);
+              this.alert_options.type = 'success';
+              this.alert_options.info = res.msg;
+              this.$refs.alert.alert().then(() => {
+                localStorage.setItem('temp', JSON.stringify({ tempPhone: this.phone }));
+                this.$router.push(path);
+              });
             } else if (res.msg.indexOf('验证码') > -1) {
               this.info.captInfo = res.msg;
               this.type.captType = 'error';

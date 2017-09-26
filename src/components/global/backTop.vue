@@ -106,7 +106,6 @@ function scrollIt(destination = 0, duration = 200, easing = "linear", callback) 
 	let element = checkElement();
 	let start = element.scrollTop; // 当前滚动距离
 	let startTime = Date.now(); // 当前时间
-
 	function scroll() { // 滚动的实现
 		let now = Date.now();
 		let time = Math.min(1, (now - startTime) / duration);
@@ -127,7 +126,7 @@ export default {
 	props: {
 		text: { // 文本提示
 			type: String,
-			default: '返回顶部'
+			default: ''
 		},
 		textColor: { // 文本颜色
 			type: String,
@@ -143,7 +142,6 @@ export default {
 		},
 		iColor: { // 图标颜色
 			type: String,
-			default: '#f00'
 		},
 		iFontsize: { // 图标大小
 			type: String,
@@ -151,7 +149,6 @@ export default {
 		},
 		pageY: { // 默认在哪个视图显示返回按钮
 			type: Number,
-			default: 400
 		},
 		transitionName: { // 过渡动画名称
 			type: String,
@@ -161,7 +158,8 @@ export default {
 	data() {
 		return {
 			showTooltips: false,
-			showReturnToTop: false
+			showReturnToTop: false,
+			showHeight: '',
 		}
 	},
 	computed: {
@@ -184,12 +182,12 @@ export default {
 			return this.showTooltips = false;
 		},
 		currentPageYOffset() {
+			this.showHeight = this.pageY ? this.pageY : (2*window.innerHeight) / 3;
 			// 判断滚动区域大于多少的时候显示返回顶部的按钮
-			window.pageYOffset > this.pageY ? this.showReturnToTop = true : this.showReturnToTop = false;
-
+			window.pageYOffset > this.showHeight ? this.showReturnToTop = true : this.showReturnToTop = false;
 		},
 		backToTop() {
-			scrollIt(0, 1500, this.transitionName, this.currentPageYOffset);
+			scrollIt(0, 1000, this.transitionName, this.currentPageYOffset);
 		}
 	},
 	created() {
@@ -202,14 +200,18 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.backtop {
+.back-to-top {
 	position: fixed;
 	right: 25px;
 	bottom: 35px;
-	span {
-		font-size: 30px;
-		color: #777;
-		cursor: pointer;
+	cursor: pointer;
+	i {
+		color: rgba(0, 0, 0, 0.41);
+	}
+	&:hover{
+		i{
+			color: rgba(0, 0, 0, 0.6);
+		}
 	}
 }
 </style>

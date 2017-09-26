@@ -1,8 +1,6 @@
 
 .cart_conter{
     width: 1200px;
-    // height: 1000px;
-    // border: 1px solid red;
     margin: 0 auto;
 }
 .header{
@@ -33,10 +31,8 @@
 // 商品列表
 .shangpin{
     width: 1200px;
-    // border: 1px solid red;
     .list{
         margin-top: 15px;
-        // border: 1px solid red;
         p{
             margin-left: 80px;
             font-size: 14px;
@@ -45,20 +41,20 @@
             color: gray;
         }
         // list-xx
-        div{
+        >div{
             width: 1200px;
             height: 76px;
             display: flex;
             align-items: center;
             justify-content: space-around;
             background-color: #f7f7f7;
-            img{
+            >img{
                 width: 42px;
                 height: 42px;
                 border-radius: 2px;
                 cursor: pointer;
             }
-            p{
+            >p{
                 font-size: 14px;
                 margin-bottom: 38px;
                 color: gray;
@@ -70,29 +66,30 @@
                 width: 120px;
             }
             >p:nth-child(4){
+                font-size: 0;
                 background-color: #fff;
-                span{
+                >span{
                     display: inline-block;
-                    width: 16px;
-                    height: 18px;
+                    width: 22px;
+                    height: 22px;
                     font-size: 18px;
                     text-align: center;
-                    line-height: 16px;
+                    line-height: 21px;
                     background-color: #ccd;
                     user-select: none;
                 }
-                >span:nth-child(2){
-                    background-color: #fff;
-                    input{
-                        width: 30px;
-                        height: 14px;
-                        font-size: 15px;
-                        text-align: center;
-                        margin-left: -4px;
-                    }
+                input{
+                    width: 30px;
+                    height: 18px;
+                    font-size: 15px;
+                    text-align: center;
                 }
-                >span:nth-child(3){
-                    margin-left: 10px;
+                >span:nth-of-type(3){
+                    width: 78px;
+                    position: absolute;
+                    margin-left: -78px;
+                    opacity: .1;
+                    background-color: white;
                 }
             }
             >p:nth-child(5){
@@ -106,12 +103,12 @@
     width: 1200px;
     margin-bottom: 100px;
     background-color: #f8f8f8;
-    img{
+    >img{
         width: 382px;
         height: 478px;
         margin: 50px 358px 0;
     }
-    div{
+    >div{
         width: 129px;
         height: 40px;
         font-size: 14px;
@@ -131,17 +128,16 @@
     width: 1200px;
     height: 116px;
     margin-top: 20px;
-    // border: 1px solid red;
     p{
         font-size: 14px;
         margin-left: 1042px;
-        span{
+        >span{
             margin-left: 5px;
             font-size: 20px;
             color: #72b2de;
         }
     }
-    div{
+    >div{
         display: inline-block;
         width: 107px;
         height: 27px;
@@ -153,7 +149,7 @@
         margin-top: 20px;
         cursor: pointer;
         border: 1px solid #72b2de;
-        a{
+        >a{
             color: #72b2de;
         }
     }
@@ -167,7 +163,7 @@
     line-height: 39px;
     color: #72b2de;
     border-bottom: 1px solid #ccc;
-    p{
+    >p{
         font-size: 14px;
         margin-left: 80px;
     }
@@ -184,7 +180,7 @@
         cursor: pointer;
         border: 1px solid #ccc;
         border-radius: 2px;
-        p{
+        >p{
             margin-left: 10px;
         }
         >p:nth-child(1){

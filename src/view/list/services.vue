@@ -177,10 +177,21 @@ export default {
 </script>
 
 <style lang="less">
+
 @import './../../common/less/store/services.less';
 div {
     >p {
         color: black;
+    }
+}
+.quanbuchanpin  {
+    .yincang {
+        display: none;
+    }
+    &:hover {
+        .yincang {
+            display: block;
+        }
     }
 }
 </style>
