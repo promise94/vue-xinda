@@ -224,32 +224,6 @@ export default {
       province,
       nothing,
   },
-
-  getstorelist(){
-              this.$http({
-                  method: 'post',
-                  url: '/provider/grid',
-                  data: {
-                    start:0,
-                    limit:6,
-                    productTypeCode:10,
-                    regionId: 110102,
-                    sort:	1
-                  }
-              }).then((result)=>{
-                console.log("data===", data);
-                  let data = result.data.hq;
-                  // data.forEach(function(item) {
-                  //     item.marketPrice = item.marketPrice + '.00';
-                  // }, this);
-                  // this.recommend = data;
-                  
-              })
-          },
-          // showDetails(id){
-          //     console.log(id);
-          // }
-
 };
 
 </script>
