@@ -20,6 +20,7 @@
     <li class="xieyi">注册即同意遵守
       <a href="JavaScript:void(0);">《&nbsp;服务协议&nbsp;》</a>
     </li>
+    <v-alert :type="alert_options.type" :info="alert_options.info" ref="alert"></v-alert>
   </ul>
 </template>
 
@@ -27,6 +28,7 @@
 import xdCaptcha from '@/components/user/captcha';
 import xdInput from '@/components/user/input';
 import xdProv from '@/components/global/province';
+import vAlert from '@/components/global/alert';
 import reg from '@/common/js/reg';
 import md5 from 'md5';
 
@@ -35,6 +37,7 @@ export default {
     xdCaptcha,
     xdInput,
     xdProv,
+    vAlert,
   },
   data() {
     return {
@@ -49,6 +52,7 @@ export default {
       text: '点击获取',
       prov: '', // 省市区
       isload: '', // 是否重新加载图片验证码
+      alert_options: { type: 'success', info: '' }, // 提示框设置
     }
   },
   methods: {
@@ -67,7 +71,6 @@ export default {
     },
     getProv(pro) { // 获取省市区
       this.prov = pro ? pro[2].code : '';
-      console.log(this.prov);
     },
     isPhone(n) { // 手机号验证
       if (n === 1) {  // 获取焦点,移除错误提示
@@ -170,14 +173,24 @@ export default {
             if (res.status === 1) {
               this.$http.post('/register/register', { cellphone: this.phone, smsType: 1, validCode: this.msgCode, password: md5(this.password), regionId: this.prov })
                 .then((res) => {
+                  this.alert_options.info = res.msg;
                   if (res.status === 1) {
-                    sessionStorage.setItem('temp', JSON.stringify({ tempPhone: this.phone }));
-                    this.$router.push('login');
+                    this.alert_options.type = 'success';
+                    this.$refs.alert.alert().then(() => {
+                      localStorage.setItem('temp', JSON.stringify({ tempPhone: this.phone }));
+                      this.$router.push('login');
+                    });
+                  } else {
+                    this.alert_options.type = 'error';
+                    this.$refs.alert.alert();
                   }
                 })
             } else {
               this.info.phoneInfo = res.msg;
               this.type.phoneType = 'error';
+              this.alert_options.info = res.msg;
+              this.alert_options.type = 'error';
+              this.$refs.alert.alert();
             }
           })
       }

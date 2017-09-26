@@ -181,6 +181,7 @@ export default {
                     num: item1.buyNum
                 }
             ).then((res) => {
+                
                 let status = res.status;
                 if (status == 1) {
                     this.getCartlsit();
@@ -234,10 +235,9 @@ export default {
                 method: 'post',
                 url: '/cart/submit',
                 data: {
-
                 }
             }).then((res) => {
-                // console.log(res)
+                // console.log(res);
                 if (res.status == 1) {
                     let dingdan = res.data;
                     this.$router.push({
@@ -286,12 +286,12 @@ export default {
             // router.afterEach((to, from, next) => {
             // window.scrollTo(0, 0);
             // });
-            // console.log(id);
+
             this.$router.push({
                 path: '/goods',
                 query: { id }
             })
-            console.log(id);
+            // console.log(id);
         }
     }
 };

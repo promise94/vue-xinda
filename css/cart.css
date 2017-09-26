@@ -39,7 +39,7 @@
   margin-bottom: 10px;
   color: gray;
 }
-.shangpin .list div {
+.shangpin .list > div {
   width: 1200px;
   height: 76px;
   display: flex;
@@ -47,13 +47,13 @@
   justify-content: space-around;
   background-color: #f7f7f7;
 }
-.shangpin .list div img {
+.shangpin .list > div > img {
   width: 42px;
   height: 42px;
   border-radius: 2px;
   cursor: pointer;
 }
-.shangpin .list div p {
+.shangpin .list > div > p {
   font-size: 14px;
   margin-bottom: 38px;
   color: gray;
@@ -61,14 +61,14 @@
   margin-bottom: 0px;
   cursor: pointer;
 }
-.shangpin .list div > p:nth-child(2) {
+.shangpin .list > div > p:nth-child(2) {
   width: 120px;
 }
-.shangpin .list div > p:nth-child(4) {
+.shangpin .list > div > p:nth-child(4) {
   font-size: 0;
   background-color: #fff;
 }
-.shangpin .list div > p:nth-child(4) span {
+.shangpin .list > div > p:nth-child(4) > span {
   display: inline-block;
   width: 22px;
   height: 22px;
@@ -78,20 +78,20 @@
   background-color: #ccd;
   user-select: none;
 }
-.shangpin .list div > p:nth-child(4) input {
+.shangpin .list > div > p:nth-child(4) input {
   width: 30px;
   height: 18px;
   font-size: 15px;
   text-align: center;
 }
-.shangpin .list div > p:nth-child(4) > span:nth-of-type(3) {
+.shangpin .list > div > p:nth-child(4) > span:nth-of-type(3) {
   width: 78px;
   position: absolute;
   margin-left: -78px;
   opacity: .1;
   background-color: white;
 }
-.shangpin .list div > p:nth-child(5) {
+.shangpin .list > div > p:nth-child(5) {
   width: 46px;
   color: #50a2da;
 }
@@ -100,12 +100,12 @@
   margin-bottom: 100px;
   background-color: #f8f8f8;
 }
-.kong img {
+.kong > img {
   width: 382px;
   height: 478px;
   margin: 50px 358px 0;
 }
-.kong div {
+.kong > div {
   width: 129px;
   height: 40px;
   font-size: 14px;
@@ -128,12 +128,12 @@
   font-size: 14px;
   margin-left: 1042px;
 }
-.totle p span {
+.totle p > span {
   margin-left: 5px;
   font-size: 20px;
   color: #72b2de;
 }
-.totle div {
+.totle > div {
   display: inline-block;
   width: 107px;
   height: 27px;
@@ -146,7 +146,7 @@
   cursor: pointer;
   border: 1px solid #72b2de;
 }
-.totle div a {
+.totle > div > a {
   color: #72b2de;
 }
 .totle > div:nth-of-type(1) {
@@ -159,7 +159,7 @@
   color: #72b2de;
   border-bottom: 1px solid #ccc;
 }
-.rr p {
+.rr > p {
   font-size: 14px;
   margin-left: 80px;
 }
@@ -177,7 +177,7 @@
   border: 1px solid #ccc;
   border-radius: 2px;
 }
-.rm-list > div p {
+.rm-list > div > p {
   margin-left: 10px;
 }
 .rm-list > div > p:nth-child(1) {

@@ -6,8 +6,8 @@
             </div>
             <div>
                 <p>订单号:</p>
-                <input type="text" placeholder="  请输入订单号搜索">
-                <div>搜索</div>
+                <input v-model="number" type="text" placeholder="  请输入订单号搜索">
+                <div @click="search">搜索</div>
             </div>
             <div>
                 <p>创建时间:</p>
@@ -25,7 +25,7 @@
                 <li>订单操作</li>
             </ul>
         </div>
-        <div class="orderBottom">
+        <div v-show="list.length" class="orderBottom">
             <div v-for="(item, k) of list" :key="k">
                 <numberTime :orderID="item.businessNo" :time="item.createTime"></numberTime>
                 <div class="orderInfo">
@@ -53,7 +53,8 @@
                 </div>
             </div>
         </div>
-        <modal ref="dialog">
+        <v-nothing v-show="!list.length" title="无结果"></v-nothing>
+        <modal ref="dialog" width="800">
             <div slot="body">
                 <h1>{{modal_info}}</h1>
             </div>
@@ -72,6 +73,7 @@ import numberTime from './little/numberTime';
 import modal from '@/components/global/modal';
 import calendar from '@/components/global/calendar';
 import vAlert from '@/components/global/alert';
+import vNothing from '@/components/global/nothing';
 // 时间戳处理函数
 import util from '@/common/js/utils';
 export default {
@@ -81,11 +83,13 @@ export default {
         modal,
         calendar,
         vAlert,
+        vNothing,
     },
     data() {
         return {
             time: (new Date()).toJSON().substr(0, (new Date()).toJSON().indexOf('T')), // 当前时间
             orders: '',
+            number: '',
             modal_info: '',
             serverOrder: '', // 服务订单数据
             business: '', // 业务订单数据
@@ -106,6 +110,7 @@ export default {
     },
     computed: {
         list() {
+            console.log('data-=-', this.business, this.serverOrder);
             if (this.business && this.serverOrder) {
                 this.business.map((val) => {
                     val.data = [];
@@ -123,11 +128,16 @@ export default {
     created() {
         this.getOrder();
     },
+    watch: {
+        number(val){
+            val ? '' : this.getOrder();
+        }
+    },
     methods: {
-        getOrder() {
+        getOrder(business) {
             let data = {
-                // businessNo: 1,
-                startTime: '2017-03-28',
+                businessNo: business ? business : '',
+                startTime: '1900-01-01',
                 endTime: this.time,
                 start: 0,
             }
@@ -168,7 +178,7 @@ export default {
                         this.alert_options.type = 'error';
                     }
                     this.alert_options.info = res.msg;
-                    this.$refs.alert.confirm();
+                    this.$refs.alert.alert();
                 });
             }, () => {
                 // 点击取消按钮回调处理
@@ -189,6 +199,18 @@ export default {
         },
         goto(orderID) {
             this.$router.push({ path: '/pay', query: { val: orderID } })
+        },
+        search(){
+            console.log('search',this.number);
+            this.business.map((item)=>{
+                console.log(item.businessNo.indexOf(this.number));
+                if(item.businessNo.indexOf(this.number) > -1){
+                    return item;
+                }else {
+                    return '';
+                }
+            })
+            console.log('list',this.list);
         }
     }
 };

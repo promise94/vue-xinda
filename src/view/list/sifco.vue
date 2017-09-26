@@ -66,7 +66,7 @@
                             <div class="ball-right">
                                 <p>￥&nbsp;{{item.price}}</p>
                                 <div>
-                                    <a href="javascript:viod:(0)" @click="shod(item.id)">立即购买</a>
+                                    <a href="#/cart" @click="edward(item.id)">立即购买</a>
                                     <a @click="edward(item.id)">加入购物车</a>
                                 </div>
                             </div>
@@ -119,15 +119,6 @@ export default {
             console.log(id),
                 this.$router.push({
                     path: '/goods',
-                    query: { id }
-                })
-        },
-
-        //跳转到购物车
-        shod(id) {
-            console.log(id),
-                this.$router.push({
-                    path: '/cart',
                     query: { id }
                 })
         },

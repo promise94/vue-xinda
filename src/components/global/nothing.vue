@@ -1,13 +1,24 @@
 <template>
 	<div class="nothing">
-		<span class="xd xd-No-data"></span>
+		<span class="xd" :class="iconfont"></span>
 		<h6>{{title}}</h6>
 	</div>
 </template>
 
 <script>
 export default {
-	props: ['title'],
+	props: {
+		title: String,
+		icon: {
+			type: String,
+			default: 'nothing'
+		}
+	},
+	computed: {
+		iconfont(){
+			return 'xd-' + this.icon;
+		}
+	}
 }
 </script>
 

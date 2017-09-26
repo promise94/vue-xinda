@@ -1,7 +1,7 @@
 <template>
     <transition name="alert" tag="div">
         <div class="alert-content" :class="type" v-show="show">
-            <span class="xd" :class="classes"></span>
+            <span class="xd" :class="classes" v-if="showIcon"></span>
             <p>{{info}}</p>
             <span></span>
         </div>
@@ -13,12 +13,22 @@ export default {
     props: {
         info: String,
         type: {
+            /**
+             * 提示框类型,默认成功(success)，共四种类型
+             * 1、success
+             * 2、warning
+             * 3、error
+             * 4、info
+             */
             type: String,
             default: 'success',
         },
-        time: {
+        time: { //显示时长(秒)
             type: [Number, String],
             default: 1,
+        },
+        showIcon:{ // 是否显示字体图标
+            default: true,
         }
     },
     data() {
@@ -33,22 +43,28 @@ export default {
         }
     },
     methods: {
-        confirm() {
+        alert() { // 调用函数
             this.show = true;
-            setTimeout(() => {
-                this.show = false;
-            }, this.time * 1000);
+            this.promise = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    this.show = false;
+                    resolve();
+                }, this.time * 1000);
+            });
+            return this.promise;
         }
     }
 }
 </script>
 
 <style lang="less" scoped>
-.alert-enter-active, .alert-leave-active {
+.alert-enter-active,
+.alert-leave-active {
     transition: .35s opacity;
 }
 
-.alert-leave-to, .alert-enter{
+.alert-leave-to,
+.alert-enter {
     opacity: 0;
 }
 
