@@ -11,6 +11,7 @@
       <input @click="getCode" :disabled="btnEabale" type="button" :value="text">
     </li>
     <li>
+
       <xd-input @getValue="getPassword" @blur="isPassword" @focus="isPassword(1)" type="password" :info="info.pwdInfo" :infoType="type.pwdType" placeholder="请输入新密码(8-16位数字和字母)"></xd-input>
     </li>
     <li>

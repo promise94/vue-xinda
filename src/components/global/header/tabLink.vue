@@ -198,7 +198,7 @@ export default {
         color: #fff;
         .erji {
             width: 200px;
-            background: #222;
+            background: rgba(127, 171, 171, 0.5);
             &:hover {
                 background: #2693d4;
             }
@@ -240,7 +240,7 @@ export default {
     height: 100%;
     width: 1000px;
     display: none; // background: #fff;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.5);
     align-items: center;
     >div {
         margin-top: 12px;

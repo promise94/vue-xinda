@@ -24,9 +24,9 @@
                             <p>类&nbsp;&nbsp;&nbsp;型：</p>
                         </div>
                         <div>
-                            <div class="bucai">
+                            <div class="bunumShuliang">
                                 <p>
-                                    <span>{{leixing}}</span>
+                                    <span> &nbsp;{{leixing}}&nbsp;</span>
                                 </p>
                             </div>
                         </div>
@@ -39,11 +39,11 @@
                         <li>
                             <ul class="count">
                                 <li>
-                                    <span id="num-jian" class="num-jian" v-on:click="cai(0)">-</span>
+                                    <span id="num-jian" class="num-jian" v-on:click="numShuliang(0)">-</span>
                                 </li>
                                 <li><input type="text" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')/1}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" v-model="numx" class="input-num" id="input-num" /></li>
                                 <li>
-                                    <span id="num-jia" class="num-jia" v-on:click="cai(1)"> +</span>
+                                    <span id="num-jia" class="num-jia" v-on:click="numShuliang(1)"> +</span>
                                 </li>
                             </ul>
                         </li>
@@ -182,16 +182,29 @@
                 </div>
             </div>
         </div>
-       
+
         <modal ref="name" class="dianhua">
             <div slot="header" class="header">
                 <h3>免费电话咨询</h3>
             </div>
-            <div slot="body">
-                <input type="text"><br>
-                <input type="text"><br>
-                <input type="text"><br>
-                <input type="text"><br>
+            <div slot="body" class="body">
+                <div>
+                    <input type="text" @focus="isPhone(1)" placeholder="请输入手机号">
+                </div>
+                <div>
+                    <div><input type="text"  placeholder="请输入图形验证码"></div>
+                    <div>图</div>
+                </div>
+                <div>
+                    <div><input type="text"  placeholder="请输入验证码"></div>
+                    <div><input type="submit" value="获取验证码"></div>
+                </div>
+                <div>
+                    <input type="submit" value="开始免费查询">
+                </div>
+            </div>
+            <div slot="button" class=" button1">
+                <p>本次电话咨询完全免费，我们将对你的号码完全保密，请放心使用。</p>
             </div>
         </modal>
 
@@ -201,13 +214,14 @@
 <script>
 import { mapActions } from 'vuex' //vuex的引入
 import modal from '@/components/global/modal'; //弹出框引入
+import vAlert from '@/components/global/alert';
 export default {
     name: 'div_goods',
     components: {
         modal,
     },
     created() {
-        this.getnicai();
+        this.getninumShuliang();
         // this.jiarugouwuche();
     },
     data() {
@@ -232,6 +246,25 @@ export default {
     },
     methods: {
         ...mapActions(['cartAction']),
+        isPhone(n) { // 手机号验证
+            if (n === 1) {  // 获取焦点,移除错误提示
+                this.info.phoneInfo = '';
+                this.type.phoneType = '';
+            } else {
+                this.type.phoneType = 'error';
+                if (this.phone && !reg.isPhone(this.phone)) {
+                    this.info.phoneInfo = '手机号格式错误';
+                    return false;
+                } else if (!this.phone) {
+                    this.info.phoneInfo = '手机号不能为空';
+                    return false;
+                } else {
+                    this.info.phoneInfo = '';
+                    this.type.phoneType = '';
+                    return true;
+                }
+            }
+        },
         myhover(n) {
             this.index = n;
         },
@@ -244,14 +277,14 @@ export default {
         fmtPrice(p) {
             return (parseFloat(p) * 0.01).toFixed(2);
         },
-        cai(n) {
+        numShuliang(n) {
             // console.log(n);
             if (n === 0) {
                 this.numx === 1 ? '' : this.numx--;
-                this.cartAction(this.numx);
+                // this.cartAction(this.numx);
             } else if (n === 1) {
                 this.numx++;
-                this.cartAction(this.numx);
+                // this.cartAction(this.numx);
             }
         },
 
@@ -276,7 +309,7 @@ export default {
             // console.log('cuowu');
             // }
         },
-        getnicai() {
+        getninumShuliang() {
             this.$http({
                 method: 'post',
                 url: '/product/package/detail',
