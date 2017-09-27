@@ -3,7 +3,7 @@
         <div class="middle-two">
             <div class="content">
                 <div class="content-top">
-                    <p>首页&nbsp;/&nbsp;纳税服务</p>
+                    <p>首页&nbsp;/&nbsp;财税服务</p>
                 </div>
                 <div class="content-center">
                     <div class="search">
@@ -12,9 +12,8 @@
                                 <p>服务分类</p>
                             </div>
                             <div class="search-a">
-                                <span @click="lover(1)" :class="{all: oyoun ===1}">代理记账</span>
-                                <span @click="lover(2)" :class="{all: oyoun ===2}">税务代办</span>
-                                <span @click="lover(3)" :class="{all: oyoun ===3}">审计报告</span>
+                                <span @click="serverMenu(item.code,item.itemList)" :class="{all: oyoun ===item.code}" v-for="item of fuwu.itemList">
+                                    {{item.name}}</span>
                             </div>
                         </div>
                         <div class="search-two">
@@ -22,8 +21,7 @@
                                 <p>类型</p>
                             </div>
                             <div class="search-b">
-                                <span @click="love(1)" :class="{all: oyou ===1}">小规模记账</span>
-                                <span @click="love(2)" :class="{all: oyou ===2}">一般纳税人记账</span>
+                                <span @click="love(n,item.id)" :class="{all:oyou==n}" v-for="(item,k,n) of itemList">{{item.name}}</span>
                             </div>
                         </div>
                         <div class="search-three">
@@ -35,12 +33,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="content-bottom">
+                    <div class="content-bottom" v-if="arr.lenght !=0">
                         <div class="ball">
                             <ul>
                                 <li @click="loverd(1)" :class="{all: oyo ===1}">综合排序</li>
                                 <li @click="loverd(2)" :class="{all: oyo ===2}">
-                                    <span>价格&nbsp;↑↓</span>
+                                    <span>价格&nbsp;
+                                        <i class="xd xd-paixu"></i>
+                                    </span>
                                 </li>
                             </ul>
                         </div>
@@ -61,19 +61,21 @@
                             <div class="ball-right">
                                 <p>￥&nbsp;{{item.price}}</p>
                                 <div>
-                                    <a href="javascript:viod:(0)" @click="shod(item.id)">立即购买</a>
+                                    <a href="#/cart" @click="edward(item.id)">立即购买</a>
                                     <a @click="edward(item.id)" href="javascript:viod:(0)">加入购物车</a>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <nothing title="未搜索到结果" v-if="arr.lenght ==0"></nothing>
+
                 </div>
             </div>
             <div class="picture">
                 <img src="../../common/images/uu.png" alt="">
             </div>
         </div>
-        <div class="middle-three">
+        <div class="middle-three" v-if="arr.lenght !=0">
             <div>
                 <p>上一页</p>
                 <p class="alone">1</p>
@@ -84,19 +86,24 @@
 </template>
 
 <script>
+import nothing from '../../components/global/nothing.vue';
 import province from '../../components/global/province';
 export default {
     name: 'services',
     created() {
-        this.fack();
+        this.fack('', 3);
+        this.mm()
     },
     data() {
         return {
             recommend: '',
-            // lenovo:1,
-            oyoun: 1,
-            oyou: 1,
+            oyoun: 3,
+            oyou: -1,
             oyo: 1,
+            arr: '',
+            fuwu: '',
+            itemList: '',
+            code: 4,
         }
     },
     //城市三级联动
@@ -104,14 +111,41 @@ export default {
         province,
     },
     methods: {
+
+        //封装的axios插件:getStoreList()
+        getStoreList() {
+            this.$http({
+                method: 'post',
+                url: '/provider/grid',
+                data: this.conf,
+            }).then((result) => {
+                this.count = result.totalCount;
+                let data = result.data;
+                let len = data.length;
+                // console.log(result.totalCount);
+                for (var i = 0; i < len; i++) {
+                    data[i].totalJudge == 0 ? data[i].totalJudge = 1 : "";
+                    data[i].providerImg.substring(0, 3) == 'http' ? data[i].providerImg = data[i].providerImg : data[i].providerImg = "http://115.182.107.203:8088/xinda/pic" + data[i].providerImg;
+                    //作双层循环//
+                    // data[i].producttypes = data[i].producttypes.split(",");
+                };
+                this.arr = data;
+            })
+        },
+
         //城市三级联动
         getProv(pro) {
-            // console.log(pro)
+            if (pro !== "") {
+                this.regionId = pro[2].code;
+                this.getStoreList();
+            } else {
+                this.regionId = "";
+                this.getStoreList();
+            }
         },
 
         //跳转到商品页面
         shoid(id) {
-            // console.log(id),
             this.$router.push({
                 path: '/goods',
                 query: { id }
@@ -129,18 +163,19 @@ export default {
                 }
             }).then((ward) => {
                 let data = ward.data;
-                console.log('sadasd', ward)
             })
         },
 
         //服务分类
-        lover(n) {
+        serverMenu(n, m) {
+            this.itemList = m;
             this.oyoun = n;
+            this.fack('', n);
         },
         //类型
-        love(m) {
-            // console.log("000",m)
-            this.oyou = m;
+        love(k, id) {
+            this.fack(id);
+            this.oyou = k;
         },
         //综合排序
         loverd(c) {
@@ -151,16 +186,16 @@ export default {
         fmtPrice(p) {
             return (parseFloat(p) * 0.01).toFixed(2);
         },
-        fack() {
+        fack(id, code) {
             this.$http({
                 method: 'post',
                 url: '/product/package/grid',
                 data: {
                     start: 0,
                     limit: 8,
-                    productTypeCode: "1",
-                    // productId: "8a82f52b674543e298d2e5f685946e6e",
-                    sort: 1,
+                    productTypeCode: code ? code : '',
+                    productId: id ? id : '',
+                    sort: 2,
                 }
             }).then((you) => {
                 let data = you.data;
@@ -171,7 +206,21 @@ export default {
                 }, this);
                 this.recommend = data;
             })
-        }
+        },
+
+        //服务分类，类型
+        mm() {
+            this.$http({
+                method: 'post',
+                url: '/product/style/list',
+                data: {
+
+                }
+            }).then((you) => {
+                this.fuwu = Object.values(you.data)[1];
+                this.itemList = Object.values(this.fuwu.itemList)[0].itemList;
+            })
+        },
     }
 }
 </script>
@@ -181,6 +230,17 @@ export default {
 div {
     >p {
         color: black;
+    }
+}
+
+.quanbuchanpin {
+    .yincang {
+        display: none;
+    }
+    &:hover {
+        .yincang {
+            display: block;
+        }
     }
 }
 </style>

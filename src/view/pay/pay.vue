@@ -1,5 +1,5 @@
 <template>
-    <div class="container contan">
+    <div class="container contan" id="div_pay">
         <!-- 首页/支付 -->
         <div class="con-header">
             <span>首页/</span>
@@ -7,7 +7,7 @@
         </div>
         <div class="qiehuan">
             <!-- 1 -->
-            <div class="xiangqing" v-show="itms ===0">
+            <div class="div_xiangqing" v-show="itms ===0">
                 <p class="pp">订单详情</p>
                 <!-- 订单列表 -->
                 <div class="pay-list">
@@ -71,7 +71,7 @@
                         </div>
                         <p>自助转账</p>
                         <div>
-                            <input type="radio" name="a">&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="a" @click="fangshi='4'">&nbsp;&nbsp;&nbsp;
                             <img src="../../common/images/zizhu.png" alt="">
                             <div class="kaihuhang">
                                 <p>开户账号：
@@ -101,13 +101,25 @@
                     </div>
                 </div>
                 <!-- 立即支付 -->
-                <div class="pay-pay" v-on:click="ckpay()">
+                <div class="pay-pay">
                     <p>金额总计
                         <span>￥{{recommend.price}}</span>
                     </p>
-                    <span @click="submit()">立即支付</span>
+                    <span @click="submit(),ckpay(1)">立即支付</span>
                 </div>
             </div>
+            <!-- 弹出框 -->
+            <modal ref="name2" >
+                <div slot="body">
+                    <h1>{{modal_info}}</h1>
+                </div>
+            </modal>
+            <!-- 反馈框 -->
+            <modal ref="name3" :options="options">
+                <div slot="body">
+                    <h1>{{modal_info}}</h1>
+                </div>
+            </modal>
             <!-- 2 -->
             <div v-show="itms === 1">
                 <p class="pp">支付成功</p>
@@ -154,7 +166,13 @@
 </template>
 
 <script>
+import modal from '@/components/global/modal';
 export default {
+    name:'div_pay',
+    components:{
+        // numberTime,
+        modal,
+    },
     created() {
         this.getDingdan();
     },
@@ -167,7 +185,9 @@ export default {
             recommend: '',
             recommend1: '',
             money: 0,
-            unionPay: ''
+            unionPay: '',
+            modal_info:'',
+            options:{confirmButtonText:'支付成功',cancelButtonText:'支付失败'}
         }
     },
     methods: {
@@ -181,7 +201,8 @@ export default {
             ).then((res) => {
                 let data = res.data;
                 data.price = this.fmtPrice(data.price);
-                // data.createTime = this.getdate(data.createTime);//时间戳转化时间
+                let d=new Date(data.createTime);
+                data.createTime = this.formatDate(d);
                 this.recommend = data;
             })
         },
@@ -217,29 +238,28 @@ export default {
         fmtPrice(p) {
             return (parseFloat(p) * 0.01).toFixed(2);
         },
-        // 时间转换 
-        // getdate(time) {
-        //     var now = new Date(time),
-        //     year = now.getYear();
-        //     month = now.getMonth() + 1;
-        //     date = now.getDate();
-        //     hour = now.getHours();
-        //     minute = now.getMinutes();
-        //     second = now.getSeconds();
-        //     return year + "-" + month + "-" + date + "   " + hour + ":" + minute + ":" + second;
-        // },
+        //时间戳转换时间
+        formatDate(now) {     
+              let   year=now.getYear();     
+              let   month=now.getMonth()+1;     
+              let   date=now.getDate();     
+              let   hour=now.getHours();     
+              let   minute=now.getMinutes();     
+              let   second=now.getSeconds();     
+              return   year+"-"+month+"-"+date+"   "+hour+":"+minute+":"+second;     
+              },
         //立即支付
         submit() {
             if (this.fangshi == 0) {
-                alert("请选择支付方式！")
+                this.getKuang();
             } else if (this.fangshi == 1) {
                 this.getYinlian();
             } else if (this.fangshi == 2) {
-                alert("请选择其他支付方式！")
+                this.getTanChuKuang();
             } else if (this.fangshi == 3) {
-                alert("请选择其他支付方式！")
+                this.getTanChuKuang();
             } else if (this.fangshi == 4) {
-                alert("请选择其他支付方式！")
+                this.getTanChuKuang();
             }
         },
         // 银联支付
@@ -247,20 +267,18 @@ export default {
             this.$http.post(
                 '/pay/china-pay',
                 {
-                    // businessNo: 'S1709220154021655043'
                     businessNo:this.recommend.businessNo
                 }
             ).then((res) => {
-                // console.log(res)
                 sessionStorage.setItem("payment", res);//暂存数据
-                // console.log('payment===', sessionStorage.getItem('payment'));
                 window.open('/#/yinlian');//跳转页面
+                this.getFanKui();
             })
         },
         // --
-        // ckpay(n) {
+        ckpay(n) {
         //     this.index = n;
-        // },
+        },
         wanchang(m) {
             this.itms = m;
         },
@@ -275,6 +293,34 @@ export default {
             } else {
                 this.willShow = true
             }
+        },
+        //弹出框
+        getTanChuKuang(){
+            this.modal_info = '请选择其他支付方式！';
+            this.$refs.name2.confirm().then(()=>{
+                this.$refs.name2.show = false;
+            }).catch(()=>{
+                //取消回掉函数
+            })
+        },
+        //反馈框
+        getFanKui(){
+            this.modal_info = '支付是否成功？';
+            this.$refs.name2.confirm().then(()=>{
+                this.$refs.name2.show = false;
+                this.fanhui(1);
+            }).catch(()=>{
+                this.fanhui(2);
+            })
+        },
+        //没有选支付的弹出框
+        getKuang(){
+            this.modal_info = '请选择支付方式！！！';
+            this.$refs.name2.confirm().then(()=>{
+                this.$refs.name2.show = false;
+            }).catch(()=>{
+                //取消回掉函数
+            })
         }
     }
 };

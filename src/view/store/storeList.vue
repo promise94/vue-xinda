@@ -51,7 +51,8 @@
       </div>
 
       <div class="main">
-        <div class="store" v-for="item of arr">
+        <div class="store"
+        >
           <div class="imgs">
             <div>
               <img v-bind:src="item.providerImg">

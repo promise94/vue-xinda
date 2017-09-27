@@ -125,6 +125,7 @@ export default {
         limit: '6',
         productTypeCode:'',
         sort: 2,//价格升序排列
+        // sId:this.$route.query.id,
       },
 
     }
@@ -181,6 +182,9 @@ export default {
 
     //跳转页面
     gotoxingqing(id){
+      this.$router.afterEach((to, from, next) => {
+                window.scrollTo(0, 0);
+            }),
       this.$router.push({ path: '/goods', query: { id: id } });
     },
 

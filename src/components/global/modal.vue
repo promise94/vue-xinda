@@ -61,7 +61,6 @@ export default {
         modal() {
             let modal = this.options;
             if (modal) {
-                console.log('run in if');
                 modal = {
                     title: modal.title || '提示',
                     showCancelButton: typeof modal.showCancelButton == 'undefined' ? true : modal.showCancelButton,
@@ -126,11 +125,11 @@ export default {
 
 <style lang="less" scoped>
 .modal-enter-active {
-    animation: modal-in .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: modal-in .35s linear;
 }
 
 .modal-leave-active {
-    animation: modal-in .5s reverse cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: modal-in .35s reverse linear;
 }
 
 @keyframes modal-in {

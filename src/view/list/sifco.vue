@@ -12,8 +12,8 @@
                                 <p>服务分类</p>
                             </div>
                             <div class="search-a">
-                                <span @click="lover(1)" :class="{all: oyoun ===1}">公司注册</span>
-                                <span @click="lover(2)" :class="{all: oyoun ===2}">注册变更</span>
+                                <span @click="serverMenu(item.code,item.itemList)" :class="{all: oyoun ===item.code}" v-for="item of fuwu.itemList">
+                                    {{item.name}}</span>
                             </div>
                         </div>
                         <div class="search-two">
@@ -21,14 +21,7 @@
                                 <p>类型</p>
                             </div>
                             <div class="search-b">
-                                <span @click="love(1)" :class="{all: oyou ===1}">分公司注册</span>
-                                <span @click="love(2)" :class="{all: oyou ===2}">公司注册地址</span>
-                                <span @click="love(3)" :class="{all: oyou ===3}">合伙企业注册</span>
-                                <span @click="love(4)" :class="{all: oyou ===4}">外商独资公司注册</span>
-                                <span @click="love(5)" :class="{all: oyou ===5}">VIE架构</span>
-                                <span @click="love(6)" :class="{all: oyou ===6}">股份公司注册</span>
-                                <span @click="love(7)" :class="{all: oyou ===7}">有限责任公司注册</span>
-                                <span @click="love(8)" :class="{all: oyou ===8}">一般纳税注册地址</span>
+                                <span @click="love(n,item.id)" :class="{all:oyou==n}" v-for="(item,k,n) of itemList">{{item.name}}</span>
                             </div>
                         </div>
                         <div class="search-three">
@@ -66,7 +59,7 @@
                             <div class="ball-right">
                                 <p>￥&nbsp;{{item.price}}</p>
                                 <div>
-                                    <a href="javascript:viod:(0)" @click="shod(item.id)">立即购买</a>
+                                    <a href="#/cart" @click="edward(item.id)">立即购买</a>
                                     <a @click="edward(item.id)">加入购物车</a>
                                 </div>
                             </div>
@@ -91,19 +84,25 @@
 <script>
 import province from '../../components/global/province';
 export default {
-    name: 'sifco',
     created() {
-        this.fack();
-        // console.log(this.$route.query.id)
+        this.fack('', 4);
+        this.mm();
     },
     data() {
         return {
             recommend: '',
-            oyoun: 1,
-            oyou: 1,
+            oyoun: 4,
+            oyou: -1,
             oyo: 1,
+            fuwu: '',
+            arr: '',
+            itemList: '',
+            code: 2,
         }
     },
+
+    name: 'sifco',
+
     //城市三级联动
     components: {
         province,
@@ -111,6 +110,14 @@ export default {
     methods: {
         //城市三级联动
         getProv(pro) {
+            if (pro !== "") {
+                // console.log(pro);
+                this.regionId = pro[2].code;
+                this.fack();
+            } else {
+                this.regionId = "";
+                this.fack();
+            }
 
         },
 
@@ -123,24 +130,18 @@ export default {
             })
         },
 
-        //跳转到购物车
-        shod(id) {
-            // console.log(id),
-                this.$router.push({
-                    path: '/cart',
-                    query: { id }
-                })
-        },
-
         //服务分类
-        lover(n) {
+        serverMenu(n, m) {
+            this.itemList = m;
             this.oyoun = n;
+            this.fack('', n);
         },
         //类型
-        love(m) {
-            // console.log("000",m)
-            this.oyou = m;
+        love(k, id) {
+            this.fack(id);
+            this.oyou = k;
         },
+
         //综合排序
         lov(c) {
             this.oyo = c;
@@ -149,15 +150,15 @@ export default {
         fmtPrice(p) {
             return (parseFloat(p) * 0.01).toFixed(2);
         },
-        fack() {
+        fack(id, code) {
             this.$http({
                 method: 'post',
                 url: '/product/package/grid',
                 data: {
                     start: 0,
                     limit: 8,
-                    productTypeCode: "1",
-                    // productId: "8a82f52b674543e298d2e5f685946e6e",
+                    productTypeCode: code ? code : '',
+                    productId: id ? id : '',
                     sort: 1,
                 }
             }).then((you) => {
@@ -166,12 +167,28 @@ export default {
                     let price = item.price;
                     item.price = this.fmtPrice(price);
                     item.providerImg = 'http://115.182.107.203:8088/xinda/pic/' + item.providerImg;
+                    this.arr = item.itemList;
+
                 }, this);
                 this.recommend = data;
-                console.log(you)
+
+
             })
 
 
+        },
+        //公司注册
+        mm() {
+            this.$http({
+                method: 'post',
+                url: '/product/style/list',
+                data: {
+
+                }
+            }).then((you) => {
+                this.fuwu = Object.values(you.data)[2];
+                this.itemList = Object.values(this.fuwu.itemList)[0].itemList;
+            })
         },
 
         //购物车接口
@@ -185,8 +202,6 @@ export default {
                 }
             }).then((ward) => {
                 let data = ward.data;
-                // console.log('sadasd', ward)
-                // data.
             })
         },
     }

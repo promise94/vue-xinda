@@ -3,71 +3,106 @@
         <div class="linkBox">
             <ul class="tabLink container">
                 <li class="daohang">
-                    <a href="#/" v-on:click="show = !show">
-                        全部产品
-                        <!-- <div class="yincang container" v-if="show">
-                            <div class="zong">
+                    <a href="/" class="quanbuchanpin " >
+                        <span>全部产品</span>
+                        <!-- <div class="yincang container" >
+                            <div class="zong" v-for="item of dataArr" :key="item.id">
                                 <div class="erji">
-                                    <div>图</div>
+                                    <div>.
+                                        <span class="xd xd-shui"></span>
+                                    </div>
                                     <div>
-                                        <p>财税服务</p>
+                                        <p>{{item.name}}</p>
+                                        <span class="text" v-for="shenme in item.itemList" :key="shenme.id">{{shenme.name}}</span>
                                     </div>
                                 </div>
-                                <div class="sanji"></div>
+                                <div class="sanji">
+                                    <div>
+                                        <div v-for="shenme in item.itemList" :key="shenme.id">
+                                            <p>{{shenme.name}}</p>
+                                            <a href="#/services" v-for="e in shenme.itemList" :key="e.id">&nbsp;
+                                                <span>{{e.name}}</span>&nbsp;</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div> -->
                     </a>
                 </li>
                 <li>
-                    <a href="#/services" @click="bb(1)" :class="{daohang2 :cc===1}">财税服务</a>
+                    <a href="#/services" @click="bb(1)" v-bind:class="{daohang2 :cc===1}"><span>财税服务</span></a>
                 </li>
                 <li>
-                    <a href="#/sifco" @click="bb(2)" :class="{daohang2 :cc===2}">公司工商</a>
+                    <a href="#/sifco" @click="bb(2)" v-bind:class="{daohang2 :cc===2}"><span>公司工商</span></a>
                 </li>
                 <li>
-                    <a href="#/us" @click="bb(3)" :class="{daohang2 :cc===3}">加盟我们</a>
+                    <a href="#/us" @click="bb(3)" v-bind:class="{daohang2 :cc===3}"><span>加盟我们</span></a>
                 </li>
                 <li>
-                    <a href="#/storeList" @click="bb(4)" :class="{daohang2 :cc===4}">店铺</a>
+                    <a href="#/storeList" @click="bb(4)" v-bind:class="{daohang2 :cc===4}"><span>店铺</span></a>
                 </li>
             </ul>
         </div>
+        <!-- <modal ref='name'>
+            <div slot='bady'>
 
+            </div>
+        </modal> -->
     </div>
 </template>
 
 <script>
+// import modal from '@/components/global/modal';
 export default {
     data() {
         return {
             aaa: 0,
-            cc: '',
+            cc: 0,
             show: true,
-
+            hehe: '',
+            dataArr: [],
+            namearr: [],
+            modal_info: '',
         }
     },
-
-
     created() {
-        this.getnicai();
+        this.getbucai();
     },
     methods: {
+        zixun() {
+
+        },
+
         bb(n) {
             this.cc = n;
-
-            console.log(this.cc);
+            // console.log(this.cc);
         },
-        getnicai() {
+
+        // 导航获取
+        getbucai() {
             this.$http({
                 method: 'post',
                 url: '/product/style/list',
                 data: {
                 }
-            }).then((result) => {
-                console.log(result.data);
+            }).then((shenme) => {
+                let data = shenme.data;
+                // console.log(data);
+                for (let i in data) {
+                    let datar = data.itemList;
+                    this.dataArr.push(data[i]);        //转化成数组
+                    // console.log('arr', data[i]);
+
+                };
+                this.dataArr
+                this.dataArr.sort(function(a, b) {            //排序
+                    return a.code - b.code;
+                });
+                // console.log('01', this.dataArr);
             })
         },
-    }
+    },
+
 }
 </script>
 
@@ -89,35 +124,26 @@ export default {
                 box-sizing: border-box;
                 cursor: pointer;
                 color: #000000;
-                
                 &:hover {
-                    
-                        
+                    >span {
                         color: @color;
-                        border-bottom: 4px solid @color;
-                        // height: 40px;
-                    
+                    }
+                    border-bottom: 4px solid @color;
                 }
             }
         }
-        .active {
-            >a {
-                color: @color;
-                border-bottom: 4px solid @color;
-            }
-        }
     }
-    .active {
-        >span {
-            color: @color;
-            border-bottom: 4px solid @color;
-        }
-    }
+
 }
 
+.daohang2 {
+    >span{
+        color: @color;
+    }
+    border-bottom: 4px solid @color;
+}
 
 .yincang {
-    // display: none;
     z-index: 100;
     padding: 0;
     position: absolute;
@@ -125,46 +151,98 @@ export default {
     height: 402px;
     margin-top: 13px;
     overflow: hidden;
-    margin-left: -600px; // overflow：hidden； 
+    margin-left: -600px;
     .zong {
-        width: 200px;
-        height: 116px; // background: red;
+        width: 200px; 
         position: relative;
         display: flex;
-        >div:nth-child(1) {
-            width: 200px;
-            height: 116px;
-            background: cadetblue;
+        color: #fff;
+        .erji {
+            width: 200px; 
+            background: #222;
+            &:hover {
+                background: #2693d4;
+            }
             display: flex;
             >div:nth-child(1) {
-                background: red;
+
                 width: 26px;
                 height: 26px;
-                margin: 17px 0 0 14px;
+                margin: 8px 0 0 14px;
+                >span {
+                    display: block;
+                    font-size: 26px;
+                }
             }
             >div:nth-child(2) {
-                background: red;
-                width: 160px;
-                height: 20px;
-                margin-top: 17px;
-                p {
+                width: 160px; 
+                margin-top: 13px;
+                margin-bottom: 19px;
+                >p {
+                    color: #fff;
                     line-height: 25px;
+                    width: 84px;
+                    height: 32px;
                 }
             }
         }
-        .sanji {
-            position: absolute;
-            right: -1000px;
-            width: 1000px;
-            height: 116px;
-            display: none;
-            background: darkgreen;
-        }
         &:hover {
+            .sanji1,
             .sanji {
                 display: block;
             }
         }
     }
+}
+
+.sanji {
+    position: absolute;
+    right: -1000px;
+    height: 100%;
+    width: 1000px; 
+    display: none;
+    background: #fff;
+    background-color: rgba(0, 0, 0, 0.2);
+    align-items: center;
+    >div {
+        margin-top: 12px;
+        >div {
+            display: flex;
+            text-align: center;
+
+            >p {
+                color: #fff;
+                display: block;
+                width: 100px;
+                height: 16px;
+                font-size: 14px;
+                margin-bottom: 7px;
+            }
+            >a {
+                color: #fff;
+                display: block;
+                border-left: 1px solid #ffffff;
+                height: 18px;
+                line-height: 16px;
+                text-align: center;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                span {
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+}
+
+
+
+.text {
+    float: left;
+    font-size: 14px;
+    width: 80px;
+    line-height: 24px;
+    p {}
 }
 </style>

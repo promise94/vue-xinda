@@ -41,7 +41,7 @@
                                 <li>
                                     <span id="num-jian" class="num-jian" v-on:click="cai(0)">-</span>
                                 </li>
-                                <li><input type="text" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" v-model="num" class="input-num" id="input-num" /></li>
+                                <li><input type="text" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')/1}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" v-model="num" class="input-num" id="input-num" /></li>
                                 <li>
                                     <span id="num-jia" class="num-jia" v-on:click="cai(1)"> +</span>
                                 </li>
@@ -49,7 +49,7 @@
                         </li>
                     </ul>
                     <div>
-                        <button>立即购买</button>
+                        <a href="#/cart" @click="jiarugouwuche()">立即购买</a>
                         <button @click="jiarugouwuche()">加入购物车</button>
                     </div>
                 </div>
@@ -57,10 +57,10 @@
                     <div>
                         <p>顶级服务商</p>
                         <p>北京信达服务中心</p>
-                        <a href="">马上咨询</a>
+                        <a href="" @click="tanchukuang()">马上咨询</a>
                     </div>
                     <div>
-                        <a href="javascript:void(0)" @click="dianpu(item.id)">查看服务商</a>
+                        <a href="javascript:void(0)" @click="dianpu(id)">查看服务商</a>
                     </div>
                 </div>
             </div>
@@ -180,11 +180,16 @@
                 </div>
             </div>
         </div>
+        <modal ref = 'name'>
+            <div>
+                <h1>{{modal_info}}</h1>
+            </div>
+        </modal>
     </div>
 </template>
 
 <script>
-
+import modal from '@/components/global/modal';
 export default {
     created() {
         this.getnicai();
@@ -193,6 +198,7 @@ export default {
     data() {
         show: true;
         return {
+            modal_info:'',
             index: 0,
             indexer: 0,
             num: 1,
@@ -205,7 +211,7 @@ export default {
             leixing:'',
             serviceName:'',
             serviceInfo:'',
-            
+            id:this.$route.query.id,
         }
     },
     methods: {
@@ -223,23 +229,26 @@ export default {
             return (parseFloat(p) * 0.01).toFixed(2);
         },
         cai(n) {
-
             // console.log(n);
             if (n === 0) {
-                this.num === 1 ? '' : this.num -= 1;
+                this.num === 1 ? '' : this.num--;
             } else if (n === 1) {
-                this.num += 1;
+                this.num++;
             }
         },
 
         jiarugouwuche() {
             // if ( this.$store.state.user === 'ture'){
+                // this.$router.push({
+                //     path: '/storeIndex',
+                //     query: { id }
+                // }),
                 this.$http({
                     method: 'post',
                     url: '/cart/add',
                     data: {
                         id: this.$route.query.id,
-                        num: '',
+                        num: this.num,
                     }
                 }).then((res) => {
                     console.log(res);
@@ -254,7 +263,7 @@ export default {
                 url: '/product/package/detail',
                 data: {
                     sId: this.$route.query.id,
-                    // sId:'0cb85ec6b63b41fc8aa07133b6144ea3',
+                    //sId: '0cb85ec6b63b41fc8aa07133b6144ea3',
                 }
             }).then((result) => {
                 this.datas = result.data;
@@ -277,16 +286,30 @@ export default {
                     query: { id }
                 }),
                 console.log(id);
+        },
+        tanchukuang(){
+            this.modal_info = '请选择其他支付方式';
+            this.$refs.name.confirm().then(()=>{
+                this.$refs.name.show = false;
+            }).catch(()=>{
+                // 取消回掉函数
+            })
         }
     }
 }
 </script>
 
 <style lang="less" >
+
 @import '../../common/less/global/cssreset.less';
 @import '../../common/less/global/cssreset.less';
 @import '../../common/less/goods/goods.less';
-.daohang {
+.dianhua{
+    width: 500px;
+    height: 500px;
+    background: red;
+}
+.quanbuchanpin  {
     .yincang {
         display: none;
     }
