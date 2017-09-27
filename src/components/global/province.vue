@@ -55,7 +55,7 @@ export default {
 										s.regionEntitys.forEach((k) => {
 											if (k.code.toString().substr(4, 2) == a) {
 												this.area = k;
-												console.log('run in for', item,);
+												// console.log('run in for', item,);
 											}
 										})
 									}
@@ -81,7 +81,7 @@ export default {
 		},
 		upArea(c, a) { // 更新区
 			if (this.city) {
-				console.log('run in up', this.area);
+				// console.log('run in up', this.area);
 				this.areaArr = c ? c : this.city.regionEntitys;
 				this.area = a ? a : this.city.regionEntitys[0];
 			}
@@ -112,7 +112,7 @@ export default {
 		},
 		area() {
 			this.returnMsg();
-			console.log('wath', this.area);
+			// console.log('wath', this.area);
 		}
 	}
 }

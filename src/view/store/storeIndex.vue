@@ -84,22 +84,15 @@
     </div>
 
     <div class="page-changes" v-if='check === 1'>
-      <!-- <div id="page">
-              <ul>
-                <li @click="titles('first')">首页</li>
-                <li @click="titles('top')">上一页</li>
-                <li @click="titles(k)" v-for="(val,k) of count" :class="{bluestore: changestore=== k}">{{k+1}}</li>
-                <li @click="titles('bottom')">下一页</li>
-                <li @click="titles('last')">尾页</li>
-              </ul>
-            </div> -->
+
       <v-page @page="titles" :amount="count" :limit="conf.limit" type="dd"></v-page>
+
     </div>
   </div>
 </template>
 
 <script>
-import vPage from '@/components/global/page';
+import vPage from '@/components/global/page';//引用分页组件
 export default {
   name: 'storeIndex',
   components: {
@@ -107,24 +100,24 @@ export default {
   },
   data() {
     return {
-      check: 1,
+      check: 1, //颜色改变，服务内容改变
       mess: '', // 服务内容展示数据
-      date: '',
-      count: 0,
+      date: '', //店铺首页总数据
+      count: 0, //服务产品内总产品数量
       changestore: 0,
-      // books:{},
       conf: {
-        start: 0,
-        limit: 6,
-        productTypeCode: '',
-        sort: 2,//价格升序排列,
-        providerId: this.$route.query.id,
+        start: 0, //分页起始数
+        limit: 6, //分页每页数量
+        productTypeCode: '', //产品分类编码
+        sort: 2, //价格升序排列,
+        providerId: this.$route.query.id,//产品id
       },
     }
   },
-  //axios后台数据获取
+
+
   created() {
-    this.$http({
+    this.$http({      //店铺首页后台数据获取
       method: 'post',
       url: '/provider/detail',
       data: {
@@ -132,21 +125,17 @@ export default {
       }
     }).then((res) => {
       this.date = res.data;
-
       // 服务商头像图片数据处理，加上前缀
       this.date.providerImg.substring(0, 3) == 'http' ? this.date.providerImg = this.date.providerImg : this.date.providerImg = "http://115.182.107.203:8088/xinda/pic" + this.date.providerImg;
       //营业执照图片数据处理，加上前缀
       this.date.businessCertPath.substring(0, 3) == 'http' ? this.date.businessCertPath = this.date.businessCertPath : this.date.businessCertPath = "http://115.182.107.203:8088/xinda/pic" + this.date.businessCertPath;
-
-      //  console.log('qq',this.date.qq);
-
     }),
 
-      this.getStore();
+      this.getStore();     //服务产品数据获取
   },
 
   methods: {
-    getStore() {
+    getStore() {         //服务产品数据获取
       this.$http({
         method: 'post',
         url: '/product/package/grid',
@@ -164,20 +153,20 @@ export default {
       this.check = n;
     },
 
-    //函数处理价格，余两位数
+    //函数处理价格，小数点后余两位数
     fmtPrice(p) {
       return (parseFloat(p) * 0.01).toFixed(2);
     },
 
-    //跳转页面
+    //跳转到产品详情页面，传id数据
     gotoxingqing(id) {
-      this.$router.afterEach((to, from, next) => {
+      this.$router.afterEach((to, from, next) => {  //返回跳转页面的顶部
         window.scrollTo(0, 0);
       }),
         this.$router.push({ path: '/goods', query: { id: id } });
     },
 
-    //分页条
+    //调取自定义分页函数
     titles(n) {
       this.conf.start = n;
       this.getStore();

@@ -243,6 +243,7 @@ export default {
                 data: {
                 }
             }).then((res) => {
+                console.log(res);
                 if (res.status == 1) {
                     let dingdan = res.data;
                     this.$router.push({

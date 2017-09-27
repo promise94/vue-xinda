@@ -51,7 +51,7 @@
       </div>
 
       <div class="main">
-        <div class="store" v-for="item of arr">
+        <div class="store"  v-for="item of arr">
           <div class="imgs">
             <div>
               <img v-bind:src="item.providerImg">
@@ -94,56 +94,46 @@
     <nothing title="未搜索到结果" v-if="arr.length == 0"></nothing>
 
     <div class="page-changes" v-if="arr.length != 0">
-      <div id="pagelist">
-              <ul>
-                  <li @click="titles('first')">首页</li>
-                  <li @click="titles('top')">上一页</li>
-                  <li @click="titles(1)" :class="{bluestore: changestore=== 1}">1</li>
-                  <li @click="titles('bottom')">下一页</li>
-                  <li @click="titles('last')">尾页</li>
-              </ul>
-        </div>
-        <!-- <v-page @page="titles" :amount="count" :limit="conf.limit" type="dd"></v-page> -->
+         <v-page @page="titles" :amount="count" :limit="conf.limit"></v-page> 
     </div>
 
   </div>
 </template>
 
 <script>
-import nothing from '@/components/global/nothing.vue';
-// import vPage from '@/components/global/page';
-import province from '@/components/global/province';
+import nothing from '@/components/global/nothing.vue';//引用无数据时的nothing组件
+import vPage from '@/components/global/page';//引用分页组件
+import province from '@/components/global/province';//引用省市区组件
 export default {
   name: 'storeList',
   components: {
-    // vPage,
+    vPage,
     province,
     nothing,
   },
   data() {
     return {
-      checked: '',
-      change: 1,
-      changestore: 1,
-      arr: '',
-      count: '',
+      checked: '', //产品类型颜色改变
+      change: 1, //排序颜色改变
+      arr: '', //总数据获取
+      count: '',//服务产品内总产品数量
       conf: {
-        start: 0,
-        limit: 4,
-        productTypeCode: '',
-        regionId: '',
-        sort: 1,
+        start: 0, //分页起始数
+        limit: 2, //每页数量
+        productTypeCode: '', //产品类型
+        regionId: '', //省市区地址区号
+        sort: 1,//价格升序排列,
       },
       i: 0,
 
     }
   },
-  //初始axios后台数据获取
+
   created() {
     this.getStoreList();
   },
   methods: {
-    //封装的axios插件:getStoreList()
+    //店铺列表后台数据获取
     getStoreList() {
       this.$http({
         method: 'post',
@@ -153,12 +143,9 @@ export default {
         this.count = result.totalCount;
         let data = result.data;
         let len = data.length;
-        // console.log(result.totalCount);
         for (var i = 0; i < len; i++) {
-          data[i].totalJudge == 0 ? data[i].totalJudge = 1 : "";
-          data[i].providerImg.substring(0, 3) == 'http' ? data[i].providerImg = data[i].providerImg : data[i].providerImg = "http://115.182.107.203:8088/xinda/pic" + data[i].providerImg;
-          //作双层循环//
-          // data[i].producttypes = data[i].producttypes.split(",");
+          data[i].totalJudge == 0 ? data[i].totalJudge = 1 : ""; //好评率数据处理
+          data[i].providerImg.substring(0, 3) == 'http' ? data[i].providerImg = data[i].providerImg : data[i].providerImg = "http://115.182.107.203:8088/xinda/pic" + data[i].providerImg;//图片数据处理，加上前缀
         };
         this.arr = data;
       })
@@ -175,7 +162,7 @@ export default {
       this.conf.sort = m;
       this.getStoreList();
     },
-    //跳转页面
+    //跳转页面到店铺首页，传一个id
     gotoStore(id) {
       this.$router.push({ path: '/storeIndex', query: { id: id } });
     },
@@ -187,7 +174,6 @@ export default {
       // }
       // this.i++;
       if (pro !== "") {
-        // console.log(pro);
         this.conf.regionId = pro[2].code;
         this.getStoreList();
       } else {
@@ -195,93 +181,16 @@ export default {
         this.getStoreList();
       }
     },
-    //分页条
+    //调取自定义分页函数
     titles(n) {
-
-      var math = Math.floor(this.count / this.conf.limit) + 1;
-
-      if (n == 'first') {
-        n = 1;
-      } else if (n == 'last') {
-        n = math;
-
-      } else if (n == 'top') {
-        n = this.conf.start / this.conf.limit;
-        if (n == 0) {
-          n = 1;
-        }
-      } else if (n == 'bottom') {
-        n = this.conf.start / this.conf.limit + 2;
-        if (n == math + 1) {
-          n = math;
-        }
-      }
-      this.conf.start = (n - 1) * this.conf.limit;
-      this.changestore = n;
-      // console.log(n);
+      this.conf.start = n;
       this.getStoreList();
-      this.changestore = n;
-      console.log(this.changestore)
     }
   },
-  getstorelist() {
-    this.$http({
-      method: 'post',
-      url: '/provider/grid',
-      data: {
-        start: 0,
-        limit: 6,
-        productTypeCode: 10,
-        regionId: 110102,
-        sort: 1
-      }
-    }).then((result) => {
-      console.log("data===", data);
-      let data = result.data.hq;
-      // data.forEach(function(item) {
-      //     item.marketPrice = item.marketPrice + '.00';
-      // }, this);
-      // this.recommend = data;
-
-    })
-  },
-  // showDetails(id){
-  //     console.log(id);
-  // }
-
 };
 
 </script>
 
 <style lang="less" scoped>
 @import '../../common/less/store/storeList.less';
-#pagelist {
-  ul {
-    width: 370px;
-    margin: 0 auto;
-    display: flex;
-    li {
-      color: #9c9c9c;
-      background: #f4f4f4;
-      padding: 10px 15px;
-      margin: 4px;
-      border: 1px solid #b0b0b0;
-      cursor: pointer;
-      &:hover {
-        background: #2594d4;
-        color: #fff;
-      }
-    }
-    li:first-child {
-      margin-right: 12px;
-    }
-    li:last-child {
-      margin-left: 12px;
-    }
-  }
-  .bluestore {
-    background: #2594d4;
-    color: #fff;
-  }
-}
 </style>

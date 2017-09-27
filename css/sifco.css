@@ -73,12 +73,15 @@
 }
 .middle .content .content-center .search .search-two .search-b {
   width: 848px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
 }
 .middle .content .content-center .search .search-two .search-b > span {
   cursor: pointer;
-  height: 30px;
-  padding: 7px 10px;
-  line-height: 35px;
+  height: 20px;
+  padding: 5px 10px;
+  line-height: 20px;
   border-radius: 8px;
   margin: 5px;
 }
@@ -195,7 +198,7 @@
 .middle .middle-three > div {
   width: 200px;
   display: flex;
-  margin: 30px auto;
+  margin: 30px 370px;
   justify-content: space-between;
 }
 .middle .middle-three > div .alone {
