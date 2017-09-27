@@ -115,10 +115,14 @@
   color: #51b6bc;
 }
 .mingxi div > span:nth-child(1) {
-  width: 314px;
+  width: 368px;
+  margin-left: -12px;
 }
 .mingxi div > span:nth-child(1) a {
   color: black;
+}
+.mingxi div > span:nth-child(2) {
+  margin-left: -100px;
 }
 .pay-way {
   font-size: 18px;
