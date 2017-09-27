@@ -125,7 +125,7 @@ export default {
                 url: '/cart/list',
                 data: {
                 }
-            }).then((res) => {console.log('=', res.data)
+            }).then((res) => {
                 if (res.data.length > 0) {
                     this.willshow = 1;
                     this.msg = res.data.length;//全部商品
@@ -243,7 +243,7 @@ export default {
                 data: {
                 }
             }).then((res) => {
-                // console.log(res);
+                console.log(res);
                 if (res.status == 1) {
                     // this.getCartlsit();
                     let dingdan = res.data;
