@@ -125,7 +125,7 @@ export default {
                 url: '/cart/list',
                 data: {
                 }
-            }).then((res) => {console.log('=', res.data)
+            }).then((res) => {
                 if (res.data.length > 0) {
                     this.willshow = 1;
                     this.msg = res.data.length;//全部商品
@@ -140,10 +140,10 @@ export default {
                         item.unitPrice = this.fmtPrice(price);    //价格处理
                         let totalPrice = item.totalPrice;
                         item.totalPrice = this.fmtPrice(totalPrice);
-                        this.monytotal += item.totalPrice / 1 //总钱数
+                        this.monytotal += item.totalPrice*100  //总钱数
                     }, this)
                     this.items = res.data;
-                    this.cartAction(this.counter);
+                    this.cartAction(this.msg);
                 } else {
                     this.willshow = 0;
                 }
@@ -243,9 +243,7 @@ export default {
                 data: {
                 }
             }).then((res) => {
-                // console.log(res);
                 if (res.status == 1) {
-                    // this.getCartlsit();
                     let dingdan = res.data;
                     this.$router.push({
                         path: '/pay',
