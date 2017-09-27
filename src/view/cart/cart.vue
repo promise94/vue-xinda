@@ -91,6 +91,7 @@ export default {
     created() {
         this.getTuijian();
         this.getCartlsit();
+        
     },
     data() {
         return {
@@ -124,7 +125,7 @@ export default {
                 url: '/cart/list',
                 data: {
                 }
-            }).then((res) => {
+            }).then((res) => {console.log('=', res.data)
                 if (res.data.length > 0) {
                     this.willshow = 1;
                     this.msg = res.data.length;//全部商品
