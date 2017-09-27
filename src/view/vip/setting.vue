@@ -8,17 +8,17 @@
             <div>
                 <span>当前头像 :</span>
                 <div>
-                    <div class="xd xd-user" v-if="!userInfo.headImg">
-                        <input @change="getFile" type="file">
+                    <div class="xd xd-user" v-if="!userInfo.info.headImg">
+                        <input @change="getFile($event)" type="file">
                     </div>
-                    <div v-if="userInfo.headImg">
-                        <input @change="getFile" type="file">
+                    <div v-if="userInfo.info.headImg">
+                        <input @change="getFile($event)" type="file">
                     </div>
                 </div>
             </div>
             <div>
                 <span>姓名 :</span>
-                <input v-model="name" type="text" :value="userInfo.name">
+                <input v-model="name" type="text">
             </div>
             <div>
                 <span>性别 :</span>
@@ -29,7 +29,7 @@
             </div>
             <div>
                 <span>邮箱 :</span>
-                <v-input @getValue="getEmail" :value="userInfo.email ? userInfo.email : ''" @blur="isEmail()" @focus="isEmail(1)" :info="info.emailInfo" :infoType="type.emailType" placeholder="请输入邮箱">
+                <v-input @getValue="getEmail" :value="email" @blur="isEmail()" @focus="isEmail(1)" :info="info.emailInfo" :infoType="type.emailType" placeholder="请输入邮箱">
                 </v-input>
             </div>
             <div>
@@ -68,6 +68,10 @@ import vInput from '@/components/user/input';
 import vAlert from '@/components/global/alert';
 import reg from '@/common/js/reg';
 import md5 from 'md5';
+// vuex
+import { mapActions } from 'vuex';
+import { mapGetters } from 'vuex';
+
 export default {
     name: 'setting',
     components: {
@@ -78,6 +82,7 @@ export default {
     data() {
         return {
             says: 1,
+            headImg: '', // 用户头像
             name: '', // 用户名
             prov: '', // 省市区
             email: '', // 邮箱
@@ -91,21 +96,20 @@ export default {
         }
     },
     created() {
+        setTimeout(() => {
+            let info = this.userInfo.info;
+            this.name = info.name;
+            this.sex = info.gender ? info.gender : '';
+            this.email = info.email ? info.email : '';
+        }, 500);
     },
     computed: {
-        userInfo() {
-            if (this.$store.state.Info) {
-                let info = this.$store.state.Info;
-                this.sex = info.gender;
-                return info;
-            } else {
-                return '';
-            }
-        }
+        ...mapGetters({ userInfo: 'getUser' }),
     },
     watch: {
     },
     methods: {
+        ...mapActions(['infoAction']),
         getProv(val) { // 获取省市区
             this.prov = val;
         },
@@ -194,23 +198,24 @@ export default {
                 gender: this.sex ? this.sex : '',
                 email: this.email ? this.email : '',
                 regionId: this.prov ? this.prov[2].code : this.userInfo.regionId,
-                headImg: '/2016/10/28/152843b6d9a04abe83a396d2ba03675f'
+                headImg: this.headImg,
             }
+            let info = this.userInfo.info;
             this.$http.post('/member/update-info', data).then((res) => {
                 this.alert_options.info = res.msg;
                 if (res.status === 1) {
                     this.alert_options.type = 'success';
-                    this.$store.commit('SETINFO', data);
-                    this.$emit('getInfo', data);
+                    Object.assign(info,data);
+                    this.infoAction(info);
                 } else {
                     this.alert_options.type = 'error';
                 }
-                this.$refs.alert.confirm();
+                this.$refs.alert.alert();
                 console.log('saveInfo---', res);
             })
         },
-        getFile() { // 更改头像
-            console.log('run in img');
+        getFile(ev) { // 更改头像
+            console.log('run in img',ev);
         },
         savePassword() { // 保存密码
             if (this.isPassword({}) && this.isSecondPwd() && this.isPassword({ sign: 'old' })) {
@@ -222,7 +227,7 @@ export default {
                             this.alert_options.type = 'error';
                         }
                         this.alert_options.info = res.msg;
-                        this.$refs.alert.confirm();
+                        this.$refs.alert.alert();
                     });
             }
         }

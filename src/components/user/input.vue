@@ -1,8 +1,8 @@
 <template>
   <div class="inp">
     <span @click="clearVal" v-show="val" class="iconClear xd xd-close"></span>
-    <input v-if="type=='text'" v-model="val" :value=" value ? value : '' " @focus="getFocus" @blur="noBlur" :class="classes" type="text" :placeholder="placeholder">
-    <input v-if="type == 'password'" v-model="val" @focus="getFocus" @blur="noBlur" :class="classes" type="password" :placeholder="placeholder">
+    <input v-if="type=='text'" v-model="val" @keyup.13="enter" @focus="getFocus" @blur="noBlur" :class="classes" type="text" :placeholder="placeholder">
+    <input v-if="type == 'password'" v-model="val" @keyup.13="enter" @focus="getFocus" @blur="noBlur" :class="classes" type="password" :placeholder="placeholder">
     <span v-show="info" class="info" :class="infoType">
       <i class="xd" :class="iconClass"></i>{{info}}</span>
   </div>
@@ -25,16 +25,28 @@ export default {
       default: 'text'
     }
   },
+  created() {
+    this.val = this.value ? this.value : '';
+  },
+  watch: {
+    value() {
+      // console.log('---', this.value);
+      // this.val = this.value ? this.value : '';
+    }
+  },
   methods: {
-    clearVal() {
+    clearVal() { // 清空value
       this.val = '';
     },
-    getFocus() {
+    getFocus() { // 获取焦点
       this.$emit('focus');
     },
-    noBlur() {
+    noBlur() { // 失去焦点
       this.$emit('blur');
-    }
+    },
+    enter() { // enter事件
+      this.$emit('enter');
+    },
   },
   computed: {
     classes() {

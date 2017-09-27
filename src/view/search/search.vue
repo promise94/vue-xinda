@@ -29,7 +29,7 @@
                                     <span>{{item.regionName}}</span>
                                 </li>
                             </ul>
-                            <div class="ball-right">
+                            <div class="ball-right" v-if="typeIn== 1">
                                 <p>￥&nbsp;{{item.price}}</p>
                                 <div>
                                     <a href="#/cart" @click="cars(item.id)">立即购买</a>
@@ -56,7 +56,7 @@ export default {
             colors: 0,
             searchOut: '',
             searchName: '', // 搜索内容
-            typeIn: 1, // 搜索类型 1:产品，2:商品
+            typeIn: 1, // 搜索类型 1:产品，2:服务商
             regionId: '', // 城市编码
             sort: '',//排序方式（默认为空）
             i: 0
@@ -174,10 +174,6 @@ export default {
         display: flex;
         background: #f7f7f7;
         border-bottom: 1px solid #cccccc;
-        p {
-            font-size: 14px;
-            cursor: pointer;
-        }
         >div {
             width: 110px;
             height: 42px;
@@ -185,6 +181,10 @@ export default {
             margin-right: 5px;
             position: relative;
             text-align: center;
+            p {
+                font-size: 14px;
+                cursor: pointer;
+            }
             &:hover {
                 background: #2594d4;
                 color: #fff;

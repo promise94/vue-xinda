@@ -96,28 +96,31 @@
 
     <div class="page-changes" v-if="arr.length != 0">
       <div id="pagelist">
-        <ul>
-          <li @click="titles('first')">首页</li>
-          <li @click="titles('top')">上一页</li>
-          <li @click="titles(1)" :class="{bluestore: changestore=== 1}">1</li>
-          <li @click="titles('bottom')">下一页</li>
-          <li @click="titles('last')">尾页</li>
-        </ul>
-      </div>
-      <!-- <pagingQuery></pagingQuery> -->
-
+              <ul>
+                  <li @click="titles('first')">首页</li>
+                  <li @click="titles('top')">上一页</li>
+                  <li @click="titles(1)" :class="{bluestore: changestore=== 1}">1</li>
+                  <li @click="titles('bottom')">下一页</li>
+                  <li @click="titles('last')">尾页</li>
+              </ul>
+        </div>
+        <!-- <v-page @page="titles" :amount="count" :limit="conf.limit" type="dd"></v-page> -->
     </div>
 
   </div>
 </template>
 
 <script>
-import nothing from '../../components/global/nothing.vue';
-import pagingQuery from './pagingQuery';
-import province from '../../components/global/province';
+import nothing from '@/components/global/nothing.vue';
+// import vPage from '@/components/global/page';
+import province from '@/components/global/province';
 export default {
   name: 'storeList',
-
+  components: {
+    // vPage,
+    province,
+    nothing,
+  },
   data() {
     return {
       checked: '',
@@ -222,12 +225,6 @@ export default {
       console.log(this.changestore)
     }
   },
-  components: {
-    pagingQuery,
-    province,
-    nothing,
-  },
-
   getstorelist() {
     this.$http({
       method: 'post',

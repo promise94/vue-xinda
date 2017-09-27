@@ -72,6 +72,10 @@
                 //    height: 27px;
                 line-height: 27px;
                 margin-bottom: 5px;
+                >p{
+                    color: #2693d4;
+                    cursor: pointer;
+                }
                }
               
             }
@@ -139,7 +143,7 @@
                 line-height: 25px;
                 text-align: center;
             }
-            button:nth-of-type(1){
+            >button:nth-of-type(1){
                 margin:20px 0 0  14px;
                 width: 93px;
                 height: 25px;
@@ -390,5 +394,96 @@
                 line-height: 30px;
             }
         }
+    }
+}
+.body{
+    width: 720px;
+    height: 426px;
+    >div:nth-child(1){
+        width: 375px;
+        height: 40px;
+        margin: 0 auto;
+        >input{
+            width: 375px;
+            height: 40px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            // cursor: pointer;
+            outline:none;
+        }
+    }
+    >div:nth-child(2){
+        display: flex;
+        width: 375px;
+        height: 40px;
+        margin: 25px auto;
+        justify-content:space-between;
+        >div:nth-child(1){
+            >input{
+                width: 230px;
+                height: 40px;
+                border-radius: 5px;
+                border: 1px solid #ccc;
+                // cursor: pointer;
+                outline:none;
+            }
+        }
+        >div:nth-child(2){
+            width: 125px;
+            height: 40px;
+            border-radius: 5px;
+        }
+    }
+    >div:nth-child(3){
+        width: 375px;
+        height: 40px;
+        margin: 25px auto;
+        display: flex;
+        justify-content:space-between;
+        >div:nth-child(1){
+            >input{
+                width: 230px;
+                height: 40px;
+                border-radius: 5px;
+                border: 1px solid #ccc;
+                // cursor: pointer;
+                outline:none;
+            }
+        }
+        >div:nth-child(2){
+            width: 125px;
+            height: 40px;
+            border-radius: 5px;
+            >input{
+                width: 125px;
+                height: 40px;
+                border-radius: 5px;
+                cursor: pointer;
+                background: #f5f4f4;
+                outline:none;
+                border: 1px solid #ccc;
+            }
+        }
+    }
+    >div:nth-child(4){
+        width: 375px;
+        height: 40px;
+        margin: 25px auto;
+        >input{
+            width: 377px;
+            height: 40px;
+            border-radius: 5px;
+            background: #4eb5ba;
+            border: 1px solid #4eb5ba;
+            cursor: pointer;
+            outline:none;
+            color: #ffffff;
+        }
+    }
+}
+.button1{
+    p{
+        text-align: center;
+        color: #666666;
     }
 }

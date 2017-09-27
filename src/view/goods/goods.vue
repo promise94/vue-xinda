@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="div_goods">
         <div class="container">
             <div class="biaoti">
                 <p>首页/公司注册</p>
@@ -24,9 +24,9 @@
                             <p>类&nbsp;&nbsp;&nbsp;型：</p>
                         </div>
                         <div>
-                            <div class="bucai">
+                            <div class="bunumShuliang">
                                 <p>
-                                    <span>{{leixing}}</span>
+                                    <span> &nbsp;{{leixing}}&nbsp;</span>
                                 </p>
                             </div>
                         </div>
@@ -39,25 +39,25 @@
                         <li>
                             <ul class="count">
                                 <li>
-                                    <span id="num-jian" class="num-jian" v-on:click="cai(0)">-</span>
+                                    <span id="num-jian" class="num-jian" v-on:click="numShuliang(0)">-</span>
                                 </li>
-                                <li><input type="text" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')/1}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" v-model="num" class="input-num" id="input-num" /></li>
+                                <li><input type="text" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')/1}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" v-model="numx" class="input-num" id="input-num" /></li>
                                 <li>
-                                    <span id="num-jia" class="num-jia" v-on:click="cai(1)"> +</span>
+                                    <span id="num-jia" class="num-jia" v-on:click="numShuliang(1)"> +</span>
                                 </li>
                             </ul>
                         </li>
                     </ul>
                     <div>
                         <a href="#/cart" @click="jiarugouwuche()">立即购买</a>
-                        <button @click="jiarugouwuche()">加入购物车</button>
+                        <button @click="jiarugouwuche($event)">加入购物车</button>
                     </div>
                 </div>
                 <div>
                     <div>
                         <p>顶级服务商</p>
                         <p>北京信达服务中心</p>
-                        <a href="" @click="tanchukuang()">马上咨询</a>
+                        <a href="javascript:void(0)" @click="tanchukuang()">马上咨询</a>
                     </div>
                     <div>
                         <a href="javascript:void(0)" @click="dianpu(id)">查看服务商</a>
@@ -77,9 +77,11 @@
                     </div>
                 </div>
             </div>
+            <!-- 服务内容显示 -->
             <div id="xianshi1" v-show="index === 0" v-html="htmle">
                 {{htmle}}
             </div>
+            <!-- 评论显示 -->
             <div id="xianshi2" v-show="index === 1">
                 <div>
                     <div>
@@ -180,42 +182,89 @@
                 </div>
             </div>
         </div>
-        <modal ref = 'name'>
-            <div>
-                <h1>{{modal_info}}</h1>
+
+        <modal ref="name" class="dianhua">
+            <div slot="header" class="header">
+                <h3>免费电话咨询</h3>
+            </div>
+            <div slot="body" class="body">
+                <div>
+                    <input type="text" @focus="isPhone(1)" placeholder="请输入手机号">
+                </div>
+                <div>
+                    <div><input type="text"  placeholder="请输入图形验证码"></div>
+                    <div>图</div>
+                </div>
+                <div>
+                    <div><input type="text"  placeholder="请输入验证码"></div>
+                    <div><input type="submit" value="获取验证码"></div>
+                </div>
+                <div>
+                    <input type="submit" value="开始免费查询">
+                </div>
+            </div>
+            <div slot="button" class=" button1">
+                <p>本次电话咨询完全免费，我们将对你的号码完全保密，请放心使用。</p>
             </div>
         </modal>
+
     </div>
 </template>
 
 <script>
-import modal from '@/components/global/modal';
+import { mapActions } from 'vuex' //vuex的引入
+import modal from '@/components/global/modal'; //弹出框引入
+import vAlert from '@/components/global/alert';
 export default {
+    name: 'div_goods',
+    components: {
+        modal,
+    },
     created() {
-        this.getnicai();
+        this.getninumShuliang();
         // this.jiarugouwuche();
     },
     data() {
         show: true;
         return {
-            modal_info:'',
+            modal_info: '',
             index: 0,
             indexer: 0,
-            num: 1,
+            numx: 1,
             recommend: '',
             datas: '',
             htmle: '',
             img: '',
-            shichang:'',
-            xianjia:'',
-            leixing:'',
-            serviceName:'',
-            serviceInfo:'',
-            id:this.$route.query.id,
+            shichang: '',
+            xianjia: '',
+            leixing: '',
+            serviceName: '',
+            serviceInfo: '',
+
+            id: this.$route.query.id,
         }
     },
     methods: {
-
+        ...mapActions(['cartAction']),
+        isPhone(n) { // 手机号验证
+            if (n === 1) {  // 获取焦点,移除错误提示
+                this.info.phoneInfo = '';
+                this.type.phoneType = '';
+            } else {
+                this.type.phoneType = 'error';
+                if (this.phone && !reg.isPhone(this.phone)) {
+                    this.info.phoneInfo = '手机号格式错误';
+                    return false;
+                } else if (!this.phone) {
+                    this.info.phoneInfo = '手机号不能为空';
+                    return false;
+                } else {
+                    this.info.phoneInfo = '';
+                    this.type.phoneType = '';
+                    return true;
+                }
+            }
+        },
         myhover(n) {
             this.index = n;
         },
@@ -228,36 +277,40 @@ export default {
         fmtPrice(p) {
             return (parseFloat(p) * 0.01).toFixed(2);
         },
-        cai(n) {
+        numShuliang(n) {
             // console.log(n);
             if (n === 0) {
-                this.num === 1 ? '' : this.num--;
+                this.numx === 1 ? '' : this.numx--;
+                // this.cartAction(this.numx);
             } else if (n === 1) {
-                this.num++;
+                this.numx++;
+                // this.cartAction(this.numx);
             }
         },
 
-        jiarugouwuche() {
+        jiarugouwuche(ev) {
             // if ( this.$store.state.user === 'ture'){
-                // this.$router.push({
-                //     path: '/storeIndex',
-                //     query: { id }
-                // }),
-                this.$http({
-                    method: 'post',
-                    url: '/cart/add',
-                    data: {
-                        id: this.$route.query.id,
-                        num: this.num,
-                    }
-                }).then((res) => {
-                    console.log(res);
-                })
+            // this.$router.push({
+            //     path: '/storeIndex',
+            //     query: { id }
+            // }),
+            this.$http({
+                method: 'post',
+                url: '/cart/add',
+                data: {
+                    id: this.$route.query.id,
+                    num: this.num,
+                }
+            }).then((res) => {
+                // console.log(res);
+                this.cartAction(this.num);
+            })
             // } else {
-                // console.log('cuowu');
+            // console.log('cuowu');
             // }
+            this.$root.eventHub.$emit('add',ev);
         },
-        getnicai() {
+        getninumShuliang() {
             this.$http({
                 method: 'post',
                 url: '/product/package/detail',
@@ -287,11 +340,11 @@ export default {
                 }),
                 console.log(id);
         },
-        tanchukuang(){
+        tanchukuang() {
             this.modal_info = '请选择其他支付方式';
-            this.$refs.name.confirm().then(()=>{
+            this.$refs.name.confirm().then(() => {
                 this.$refs.name.show = false;
-            }).catch(()=>{
+            }).catch(() => {
                 // 取消回掉函数
             })
         }
@@ -300,16 +353,12 @@ export default {
 </script>
 
 <style lang="less" >
-
 @import '../../common/less/global/cssreset.less';
 @import '../../common/less/global/cssreset.less';
 @import '../../common/less/goods/goods.less';
-.dianhua{
-    width: 500px;
-    height: 500px;
-    background: red;
-}
-.quanbuchanpin  {
+
+
+.quanbuchanpin {
     .yincang {
         display: none;
     }
