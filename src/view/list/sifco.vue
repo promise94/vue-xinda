@@ -111,7 +111,6 @@ export default {
         //城市三级联动
         getProv(pro) {
             if (pro !== "") {
-                // console.log(pro);
                 this.regionId = pro[2].code;
                 this.fack();
             } else {

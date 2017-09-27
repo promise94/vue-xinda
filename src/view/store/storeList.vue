@@ -154,10 +154,11 @@ export default {
         this.count = result.totalCount;
         let data = result.data;
         let len = data.length;
-        // console.log(result.totalCount);
+        console.log(data);
         for (var i = 0; i < len; i++) {
+          
           data[i].totalJudge == 0 ? data[i].totalJudge = 1 : "";
-          data[i].providerImg.substring(0, 3) == 'http' ? data[i].providerImg = data[i].providerImg : data[i].providerImg = "http://115.182.107.203:8088/xinda/pic" + data[i].providerImg;
+          // data[i].providerImg.substring(0, 3) == 'http' ? data[i].providerImg = data[i].providerImg : data[i].providerImg = "http://115.182.107.203:8088/xinda/pic" + data[i].providerImg;
           //作双层循环//
           // data[i].producttypes = data[i].producttypes.split(",");
         };
