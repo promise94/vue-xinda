@@ -126,7 +126,7 @@ export default {
                 url: '/cart/list',
                 data: {
                 }
-            }).then((res) => {console.log('=', res.data)
+            }).then((res) => {
                 if (res.data.length > 0) {
                     this.willshow = 1;
                     this.msg = res.data.length;//全部商品
@@ -205,13 +205,11 @@ export default {
                         this.items.splice(i, 1);
                         this.msg--;
                         this.cartAction(this.items.length);
-                        setTimeout(this.getJeiguo1, 500)
                     } else {
                         this.modal_info = res.msg;
                         this.$refs.name1.confirm().then(() => {
                             this.$refs.name1.show = false; //手动关闭
-                            // this.getCartlsit();   
-                            this.getJeiguo(1, "X操作失败")
+                            
                         })
                         console.log(res);
                     }
@@ -238,7 +236,7 @@ export default {
                 data: {
                 }
             }).then((res) => {
-                // console.log(res);
+                console.log(res);
                 if (res.status == 1) {
                     let dingdan = res.data;
                     this.$router.push({
