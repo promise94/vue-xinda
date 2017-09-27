@@ -28,12 +28,6 @@ export default {
   created() {
     this.val = this.value ? this.value : '';
   },
-  watch: {
-    value() {
-      // console.log('---', this.value);
-      // this.val = this.value ? this.value : '';
-    }
-  },
   methods: {
     clearVal() { // 清空value
       this.val = '';
@@ -112,8 +106,8 @@ export default {
     box-shadow: 0 0 5px rgb(247, 36, 36);
   }
   .input-success {
-    border-color: rgb(247, 36, 36);
-    box-shadow: 0 0 5px rgb(247, 36, 36);
+    border-color: rgb(51, 204, 102);
+    box-shadow: 0 0 5px rgb(51, 204, 102);
   }
 }
 </style>
