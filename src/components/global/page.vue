@@ -33,7 +33,7 @@ export default {
     },
     computed: {
         pageNum() {
-            return Math.ceil(this.amount / this.limit);
+            return Math.ceil(this.amount / this.limit);//循环页数
         }
     },
     methods: {
@@ -65,13 +65,13 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
 #page {
     ul {
         display: flex;
         justify-content: center;
         align-items: center;
         li {
-            display: inline-block;
             margin-right: 5px;
             box-sizing: border-box;
             width: 50px;
