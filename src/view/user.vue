@@ -83,7 +83,7 @@ export default {
       position: absolute;
       left: 160px;
       top: 80px;
-      transition: all .35s cubic-bezier(.55, 0, .1, 1);
+      transition: all .25s cubic-bezier(.55, 0, .1, 1);
     }
   }
 }

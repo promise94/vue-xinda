@@ -34,7 +34,7 @@ export default {
 
 <style scoped>
 .child-view {
-    transition: all .35s cubic-bezier(.55, 0, .1, 1);
+    transition: all .25s cubic-bezier(.55, 0, .1, 1);
 }
 
 .slide-left-enter,
