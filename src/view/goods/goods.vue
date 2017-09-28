@@ -441,7 +441,7 @@ export default {
                 this.alert_options.type = 'success';
                 this.$refs.alert.alert();
 
-                this.$stor.dispatch('cartAction');
+                this.$store.dispatch('cartAction');
             })
 
             // this.$root.eventHub.$emit('add', ev);
