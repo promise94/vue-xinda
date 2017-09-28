@@ -40,7 +40,7 @@
         <!-- 金额总计 -->
         <div class="totle" v-if="willshow">
             <p>金额总计
-                <span>￥{{monytotal}}</span>
+                <span>￥{{monytotal/100}}</span>
             </p>
             <div @click="goShop()">
                 <a>继续购物</a>

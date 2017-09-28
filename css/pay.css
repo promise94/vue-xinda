@@ -194,54 +194,6 @@
 .way-list > div:nth-child(1) .kaihuhang p a {
   color: black;
 }
-.way-list > div:nth-child(2) {
-  width: 332px;
-  height: 336px;
-  text-align: center;
-  margin-top: 10px;
-  border-right: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
-}
-.way-list > div:nth-child(2) div {
-  width: 332px;
-  height: 40px;
-  display: flex;
-  line-height: 40px;
-  padding: 0 26px;
-  box-sizing: border-box;
-  justify-content: space-between;
-  background-color: #d9d9d9;
-}
-.way-list > div:nth-child(2) div > p:nth-child(2) {
-  cursor: pointer;
-}
-.way-list > div:nth-child(2) img {
-  width: 186px;
-  height: 186px;
-  margin-top: 20px;
-}
-.way-list > div:nth-child(2) span {
-  display: inline-block;
-  width: 113px;
-  height: 28px;
-  text-align: center;
-  line-height: 28px;
-  border-radius: 4px;
-  margin-top: 5px;
-  cursor: pointer;
-  border: 1px solid #51b6bc;
-}
-.way-list > div:nth-child(2) span a {
-  color: #51b6bc;
-}
-.way-list > div:nth-child(2) .a {
-  display: block;
-  font-size: 12px;
-  color: #51b6bc;
-  margin-left: 190px;
-  margin-top: 10px;
-  cursor: pointer;
-}
 .p {
   color: red;
 }
