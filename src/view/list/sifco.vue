@@ -50,7 +50,7 @@
                                 <li>价格</li>
                             </ul>
                         </div>
-                        <div class="ball-two" v-for="(item,k) of recommend" :key="k">
+                        <div class="ball-two" v-for="(item,k) of list" :key="k">
                             <img :src="item.providerImg" @click="shoid(item.id)" alt="">
                             <div class="ball-left">
                                 <a @click="shoid(item.id)" href="javascript:viod:(0)">{{item.serviceName}}</a>
@@ -62,7 +62,7 @@
                                 <p>￥&nbsp;{{item.price}}</p>
                                 <div>
                                     <a href="#/cart" @click="edward(item.id)">立即购买</a>
-                                    <a @click="edward(item.id)">加入购物车</a>
+                                    <a @click="edward(item.id) ">加入购物车</a>
                                 </div>
                             </div>
                         </div>
@@ -76,12 +76,15 @@
             <div class="picture">
                 <img src="../../common/images/uu.png" alt="">
             </div>
+            <v-alert :type="alert_options.type" :info="alert_options.info" ref="alert"></v-alert>
         </div>
-
+        
     </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex';//vuex的引入
+import vAlert from '@/components/global/alert';
 import nothing from '../../components/global/nothing.vue'//引用没有数据时显示的nothing
 import province from '../../components/global/province';//引用省市区组件
 import vPage from '@/components/global/page';//引用分页组件
@@ -109,7 +112,9 @@ export default {
             start: 0,
             sort: 1,
             n: 2,
-
+            info: { phoneInfo: '', captInfo: '', msgInfo: '', pwdInfo: '', SecondInfo: '' }, // 提示信息
+            type: { phoneType: '', captType: '', msgType: '', pwdType: '', SecondType: '' }, // 提示类型
+            alert_options: { type: 'success', info: '' }, // 提示框设置
         }
     },
 
@@ -118,10 +123,12 @@ export default {
         province,
         nothing,
         vPage,
+        vAlert,
     },
 
     //省市区选择商品
     computed: {
+        ...mapActions(['cartAction']),
         list() {
             let list = [];
             if (this.recommend) {
@@ -150,7 +157,6 @@ export default {
 
         //跳转页面
         shoid(id) {
-            // console.log(id),
             this.$router.push({
                 path: '/goods',
                 query: { id }
@@ -172,18 +178,16 @@ export default {
         //综合排序
         lov(c) {
             this.oyo = c;
-            // this.sort = c;
-            // this.fack('', 4);
         },
         paixu(n) {
             if (n == 2) {
                 this.n = 3;
                 this.sort = 2;
                 this.fack('', 4);
-            }else{
+            } else {
                 this.n = 2;
                 this.sort = 3;
-                this.fack('',4);
+                this.fack('', 4);
             }
         },
 
@@ -203,8 +207,8 @@ export default {
                     sort: this.sort,
                 }
             }).then((you) => {
-                this.count = you.totalCount;
                 let data = you.data;
+                this.count = you.totalCount;
                 data.forEach(function(item) {
                     let price = item.price;
                     item.price = this.fmtPrice(price);
@@ -240,7 +244,15 @@ export default {
                     num: 1,
                 }
             }).then((ward) => {
-                let data = ward.data;
+                // let data = ward.data;
+                // this.$refs.alert.alert;
+                // 操作成功弹出框
+                this.alert_options.info = ward.msg;
+                this.alert_options.type = 'success';
+                this.$refs.alert.alert();
+                this.$store.dispatch('cartAction');
+
+                console.log('a')
             })
         },
         //调取自定义分页函数

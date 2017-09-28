@@ -52,7 +52,7 @@
                     </ul>
                     <div>
                         <a href="#/cart" @click="jiarugouwuche()">立即购买</a>
-                        <button @click="jiarugouwuche($event)">加入购物车</button>
+                        <button @click="jiarugouwuche()">加入购物车</button>
                     </div>
                 </div>
                 <div>
@@ -184,8 +184,8 @@
                 </div>
             </div>
         </div>
-
         <v-alert :type="alert_options.type" :info="alert_options.info" ref="alert"></v-alert>
+
         <modal ref="name" class="dianhua">
             <div slot="header" class="header">
                 <h3>免费电话咨询</h3>
