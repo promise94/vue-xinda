@@ -46,7 +46,7 @@ export default new Vuex.Store({
                     this.a.commit('SETCART', n);
                 });
             }
-            state.cartnum
+            return state.cartnum;
         },
         getBall: state => state.balls,
     }
