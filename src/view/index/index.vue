@@ -118,7 +118,6 @@
 <script>
 import { swiper, swiperSlide } from 'vue-awesome-swiper';
 export default {
-    // props: ['listImg'],
     created() {
         this.getnicai();
         this.getbucai();
