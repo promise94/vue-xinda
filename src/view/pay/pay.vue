@@ -83,29 +83,13 @@
                         </div>
                         <p class="p">注：转账时请将订单编号备注在付款信息里；转账完成后，请通知客服</p>
                     </div>
-                    <!-- 二维码 -->
-                    <div v-show="index === 1">
-                        <div>
-                            <p>微信支付</p>
-                            <p class="xd xd-guanbi" v-on:click="fanhui(0)"></p>
-                        </div>
-                        <img src="" alt="">
-                        <p>请使用微信扫一扫 进行扫码支付</p>
-                        <span v-on:click="wanchang(1)">
-                            <a>已完成支付</a>
-                        </span>
-                        <span v-on:click="wanchang(2)">
-                            <a>支付遇到问题</a>
-                        </span><br>
-                        <a class="a" v-on:click="fanhui(0)">返回重新选择支付方法</a>
-                    </div>
                 </div>
                 <!-- 立即支付 -->
                 <div class="pay-pay">
                     <p>金额总计
                         <span>￥{{recommend.price}}</span>
                     </p>
-                    <span @click="submit(),ckpay(1)">立即支付</span>
+                    <span @click="submit()">立即支付</span>
                 </div>
             </div>
             <!-- 弹出框 -->
@@ -274,10 +258,6 @@ export default {
                 window.open('/#/yinlian');//跳转页面
                 this.getFanKui();
             })
-        },
-        // --
-        ckpay(n) {
-        //     this.index = n;
         },
         wanchang(m) {
             this.itms = m;
