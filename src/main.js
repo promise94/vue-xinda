@@ -34,9 +34,11 @@ new Vue({
     eventHub: new Vue(),
   },
   created() {
+    window.addEventListener('mousemove',()=>{
+      console.log('run in mousemove');
+    });
     let hash = window.location.hash;
     this.$router.beforeEach((to, from, next) => {
-      // window.scrollY = 0;
       if (to.meta.requireAuth) {
         if (this.$store.state.user.status) {
           next();
