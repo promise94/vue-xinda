@@ -1,5 +1,5 @@
 <template>
-    <div class="middle">
+    <div class="middle" id="sifco">
         <div class="middle-two">
             <div class="content">
                 <div class="content-top">
@@ -33,12 +33,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="content-bottom">
+                    <div class="content-bottom" v-if="list.length !=0">
                         <div class="ball">
                             <ul>
-                                <li @click="lov(1)" :class="{all: oyo ===1}">综合排序</li>
-                                <li @click="lov(2)" :class="{all: oyo ===2}">
-                                    <span>价格&nbsp;↑↓</span>
+                                <li @click="lov('')" :class="{all: oyo ===''}">综合排序</li>
+                                <li @click="lov(2),paixu(n)" :class="{all: oyo ===2}">
+                                    <span>价格&nbsp;
+                                        <i class="xd xd-paixu"></i>
+                                    </span>
                                 </li>
                             </ul>
                         </div>
@@ -65,25 +67,28 @@
                             </div>
                         </div>
                     </div>
+                    <div class="middle-three" v-if="list.length !=0">
+                        <v-page @page="titles" :amount="count" :limit="limit"></v-page>
+                    </div>
+                    <nothing title="未能搜索到该区域的商品" v-if="list.length ==0"></nothing>
                 </div>
             </div>
             <div class="picture">
                 <img src="../../common/images/uu.png" alt="">
             </div>
         </div>
-        <div class="middle-three">
-            <div>
-                <p>上一页</p>
-                <p class="alone">1</p>
-                <p>下一页</p>
-            </div>
-        </div>
+
     </div>
 </template>
 
 <script>
-import province from '../../components/global/province';
+import nothing from '../../components/global/nothing.vue'//引用没有数据时显示的nothing
+import province from '../../components/global/province';//引用省市区组件
+import vPage from '@/components/global/page';//引用分页组件
 export default {
+
+    name: 'sifco',
+
     created() {
         this.fack('', 4);
         this.mm();
@@ -93,29 +98,52 @@ export default {
             recommend: '',
             oyoun: 4,
             oyou: -1,
-            oyo: 1,
+            oyo: '',
             fuwu: '',
             arr: '',
             itemList: '',
             code: 2,
+            regionId: '', //省市区地址区号
+            count: '',
+            limit: 8,
+            start: 0,
+            sort: 1,
+            n: 2,
+
         }
     },
-
-    name: 'sifco',
 
     //城市三级联动
     components: {
         province,
+        nothing,
+        vPage,
+    },
+
+    //省市区选择商品
+    computed: {
+        list() {
+            let list = [];
+            if (this.recommend) {
+                if (!this.regionId) {
+                    return this.recommend;
+                }
+                this.recommend.forEach((item) => {
+                    if (item.regionId == this.regionId) {
+                        list.push(item);
+                    }
+                });
+            }
+            return list;
+        }
     },
     methods: {
         //城市三级联动
         getProv(pro) {
             if (pro !== "") {
                 this.regionId = pro[2].code;
-                this.fack();
             } else {
                 this.regionId = "";
-                this.fack();
             }
 
         },
@@ -144,7 +172,21 @@ export default {
         //综合排序
         lov(c) {
             this.oyo = c;
+            // this.sort = c;
+            // this.fack('', 4);
         },
+        paixu(n) {
+            if (n == 2) {
+                this.n = 3;
+                this.sort = 2;
+                this.fack('', 4);
+            }else{
+                this.n = 2;
+                this.sort = 3;
+                this.fack('',4);
+            }
+        },
+
         //商品获取
         fmtPrice(p) {
             return (parseFloat(p) * 0.01).toFixed(2);
@@ -154,24 +196,22 @@ export default {
                 method: 'post',
                 url: '/product/package/grid',
                 data: {
-                    start: 0,
-                    limit: 8,
+                    start: this.start,
+                    limit: this.limit,
                     productTypeCode: code ? code : '',
                     productId: id ? id : '',
-                    sort: 1,
+                    sort: this.sort,
                 }
             }).then((you) => {
+                this.count = you.totalCount;
                 let data = you.data;
                 data.forEach(function(item) {
                     let price = item.price;
                     item.price = this.fmtPrice(price);
                     item.providerImg = 'http://115.182.107.203:8088/xinda/pic/' + item.providerImg;
                     this.arr = item.itemList;
-
                 }, this);
                 this.recommend = data;
-
-
             })
 
 
@@ -203,6 +243,11 @@ export default {
                 let data = ward.data;
             })
         },
+        //调取自定义分页函数
+        titles(n) {
+            this.start = n;
+            this.fack('', 4);
+        }
     }
 }
 </script>
