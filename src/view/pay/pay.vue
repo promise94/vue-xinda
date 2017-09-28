@@ -132,7 +132,7 @@
                             <p>支付成功！</p>
                             <p>感谢您的购买！</p>
                             <p>我们将尽快确认您的（订单号为：
-                                <a>GDGD4345643545464</a>）付款信息。</p>
+                                <a>{{recommend.businessNo}}</a>）付款信息。</p>
                             <p>如有问题，请联系客服：
                                 <span>010-83421842</span>
                             </p>
@@ -306,8 +306,8 @@ export default {
         //反馈框
         getFanKui(){
             this.modal_info = '支付是否成功？';
-            this.$refs.name2.confirm().then(()=>{
-                this.$refs.name2.show = false;
+            this.$refs.name3.confirm().then(()=>{
+                this.$refs.name3.show = false;
                 this.fanhui(1);
             }).catch(()=>{
                 this.fanhui(2);

@@ -1,0 +1,198 @@
+#storeIndex {
+  width: 1200px;
+  font-size: 14px;
+  margin: 0 auto;
+}
+#storeIndex .logosay {
+  display: flex;
+  padding: 45px 0 55px 60px;
+  margin: 10px 0 25px 0;
+  border: 1px solid #e9e9e9;
+}
+#storeIndex .logosay img {
+  width: 120px;
+  height: 100%;
+  margin-right: 50px;
+}
+#storeIndex .logosay > div h1 {
+  font-size: 28px;
+  line-height: 50px;
+}
+#storeIndex .company {
+  display: flex;
+  justify-content: space-between;
+}
+#storeIndex .company .introduce {
+  width: 300px;
+  border: 1px solid #e9e9e9;
+}
+#storeIndex .company .introduce .text {
+  height: 335px;
+  border-bottom: 1px solid #e9e9e9;
+}
+#storeIndex .company .introduce .text p {
+  font-size: 23px;
+  margin: 14px 0 40px 7px;
+}
+#storeIndex .company .introduce .text span {
+  display: block;
+  margin: 0 27px;
+}
+#storeIndex .company .introduce .assure {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+#storeIndex .company .introduce .assure > div {
+  width: 150px;
+  text-align: center;
+  margin: 20px 0;
+}
+#storeIndex .company .introduce .assure > div div {
+  font-size: 53px;
+  color: #2594d4;
+}
+#storeIndex .company .service {
+  width: 878px;
+}
+#storeIndex .company .service .namechange {
+  height: 40px;
+  border: 1px solid #e9e9e9;
+  display: flex;
+}
+#storeIndex .company .service .namechange p {
+  font-size: 16px;
+  width: 112px;
+  height: 30px;
+  margin: 10px 8px 0 8px;
+  text-align: center;
+  line-height: 30px;
+  cursor: pointer;
+}
+#storeIndex .company .service .namechange p:hover {
+  color: #2594d4;
+}
+#storeIndex .company .service .namechange .blues {
+  color: #2594d4;
+  border-bottom: 2px solid #2594d4;
+}
+#storeIndex .company .service .box {
+  border: 1px solid #e9e9e9;
+}
+#storeIndex .company .service .box > div:nth-child(1) {
+  height: 602px;
+}
+#storeIndex .company .service .box > div:nth-child(1) h1 {
+  height: 95px;
+  line-height: 95px;
+  text-align: center;
+  font-size: 35px;
+  color: #2594d4;
+  border-bottom: 1px solid #e9e9e9;
+}
+#storeIndex .company .service .box > div:nth-child(1) .message {
+  padding: 5px 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+#storeIndex .company .service .box > div:nth-child(1) .message > div {
+  width: 230px;
+  height: 175px;
+  padding: 20px 18px;
+  margin: 15px 12px;
+  border: 1px solid #b6b6b6;
+  transition: all .5s linear;
+}
+#storeIndex .company .service .box > div:nth-child(1) .message > div > p:nth-of-type(1) {
+  font-size: 17px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#storeIndex .company .service .box > div:nth-child(1) .message > div > div:nth-of-type(1) {
+  margin: 10px 0;
+  display: flex;
+}
+#storeIndex .company .service .box > div:nth-child(1) .message > div > div:nth-of-type(1) span:nth-child(1) {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #2594d4;
+}
+#storeIndex .company .service .box > div:nth-child(1) .message > div > div:nth-of-type(1) span:nth-child(2) {
+  display: block;
+  width: 159px;
+  height: 2px;
+  margin-top: 3px;
+  background: linear-gradient(to right, #2594d4, rgba(37, 148, 212, 0));
+}
+#storeIndex .company .service .box > div:nth-child(1) .message > div p:nth-of-type(2) {
+  margin-bottom: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#storeIndex .company .service .box > div:nth-child(1) .message > div > div:nth-of-type(2) {
+  font-size: 40px;
+  font-weight: bold;
+  color: #2594d4;
+  line-height: 55px;
+}
+#storeIndex .company .service .box > div:nth-child(1) .message > div > div:nth-of-type(2) span {
+  margin-left: 5px;
+}
+#storeIndex .company .service .box > div:nth-child(1) .message > div > div:nth-of-type(3) {
+  display: flex;
+  justify-content: space-between;
+}
+#storeIndex .company .service .box > div:nth-child(1) .message > div > div:nth-of-type(3) div {
+  width: 130px;
+  line-height: 25px;
+  text-decoration: line-through;
+}
+#storeIndex .company .service .box > div:nth-child(1) .message > div > div:nth-of-type(3) a {
+  cursor: pointer;
+  font-size: 16px;
+  color: #2594d4;
+  line-height: 25px;
+}
+#storeIndex .company .service .box > div:nth-child(1) .message > div:hover {
+  margin-top: 2px;
+  box-shadow: 0px 0px 5px 5px #b4d9f9;
+}
+#storeIndex .company .service .box > div:nth-child(2) {
+  padding: 30px 20px;
+  height: 602px;
+  font-size: 30px;
+  line-height: 60px;
+}
+#storeIndex .company .service .box > div:nth-child(2) div {
+  display: flex;
+}
+#storeIndex .company .service .box > div:nth-child(2) div a {
+  color: red;
+}
+#storeIndex .company .service .box > div:nth-child(2) img {
+  width: 80px;
+  height: 80%;
+  margin-left: 10px;
+}
+#storeIndex .company .service .box > div:nth-child(3) {
+  height: 602px;
+  display: flex;
+}
+#storeIndex .company .service .box > div:nth-child(3) p {
+  font-size: 100px;
+  color: #2594d4;
+  margin: 10px 0 0 190px;
+}
+#storeIndex .company .service .box > div:nth-child(3) span {
+  font-size: 30px;
+  color: #2594d4;
+  margin: 90px 0 0 10px;
+}
+#storeIndex .page-changes {
+  margin: 25px 0 150px 320px;
+  text-align: center;
+}

@@ -220,7 +220,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex' //vuex的引入
+import { mapActions } from 'vuex' ;//vuex的引入
 import modal from '@/components/global/modal'; //弹出框引入
 import vAlert from '@/components/global/alert';
 

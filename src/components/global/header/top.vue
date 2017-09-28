@@ -24,7 +24,9 @@
       </div>
     </div>
     <v-alert :type="options.type" :info="options.info" ref="alert"></v-alert>
-    <span class="ball" v-for="(v, k) of balls" v-if="v.show"></span>
+    <transition-group @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter" @leave="leave">
+      <span class="ball" v-for="(v, k) of balls" :key="k" v-show="v.show"></span>
+    </transition-group>
   </div>
 </template>
 
@@ -44,10 +46,12 @@ export default {
       user: '',
       options: { type: 'success', info: '' }, // 提示框设置
       balls: [{ show: false }, { show: false }, { show: false }, { show: false }, { show: false }, { show: false }],
+      overBalls: [],
     }
   },
   created() {
     this.postUser();
+    this.getCart();
     this.evehub.$on('add', (ev) => {
       this.drop(ev);
     });
@@ -59,7 +63,7 @@ export default {
     // this.evehub.$off('add');
   },
   methods: {
-    ...mapActions(['loginAction']),
+    ...mapActions(['loginAction', 'cartAction']),
     logout() { // 退出登录
       this.$http.post('/sso/ logout').then((res) => {
         if (res.status === 1) {
@@ -94,18 +98,48 @@ export default {
         }
       })
     },
+    getCart() {
+      // if (this.getUser.status) {
+      //   this.$http.post('/cart/cart-num').then((res) => {
+      //     let n = res.data.cartNum;
+      //     console.log('getCart',n);
+      //     this.cartAction(n);
+      //   });
+      // }
+    },
     goto(url) { // 页面跳转
       this.$router.push(url);
     },
     drop(ev) {
-      this.balls.forEach((item)=>{
-        if (!item.show) {
-          item.show = true;
-          return;
+      for (let i = 0; i < this.balls.length; i++) {
+        if (!this.balls[i].show) {
+          this.balls[i].show = true;
+          this.balls[i].el = ev.target;
+          this.overBalls.push(this.balls[i]);
+          break;
         }
-      });
-      console.log('drop--', ev, '---', this.$refs.cart, '--', this.balls);
-    }
+      }
+      console.log('drop--', ev, '--', this.balls);
+    },
+    /**过渡动画 */
+    beforeEnter(el) {
+      let count = this.overBalls.length;
+      while (count--) {
+        console.log('before-', el);
+      }
+    },
+    enter(el, done) {
+      console.log('enter-', el);
+      done();
+    },
+    afterEnter(el) {
+      console.log('after-', el);
+    },
+    leave(el, done) {
+      el.style.display = 'none';
+      console.log('leave-', el);
+      done();
+    },
   },
 };
 </script>
@@ -165,7 +199,8 @@ export default {
     }
   }
 }
-.ball{
+
+.ball {
   position: absolute;
   padding: 8px;
   border-radius: 50%;

@@ -1,15 +1,15 @@
 <template>
 	<div class="prov">
 		<select v-model="prov">
-			<option value="">--省--</option>
+			<option value="">省</option>
 			<option v-for="(item, k) of provArr" :key="k" :value="item">{{item.region}}</option>
 		</select>
 		<select v-model="city">
-			<option value="" v-show="!prov">--市--</option>
+			<option value="" v-show="!prov">市</option>
 			<option v-for="(item, k) of cityArr" :key="k" :value="item">{{item.region}}</option>
 		</select>
 		<select v-model="area">
-			<option value="" v-show="!prov">--区--</option>
+			<option value="" v-show="!prov">区</option>
 			<option v-for="(item, k) of areaArr" :key="k" :value="item">{{item.region}}</option>
 		</select>
 	</div>
@@ -35,42 +35,46 @@ export default {
 		}
 	},
 	created() {
-		
+
 		// this.upCity();
-		this.defaultProv();
+		// this.defaultProv();
 	},
 	methods: {
-		defaultProv() {
-			// console.log(data);
-			if (this.regionId) {
-				let p = this.regionId.toString().substr(0, 2);
-				let c = this.regionId.toString().substr(2, 2);
-				let a = this.regionId.toString().substr(4, 2)
-				data.forEach((item) => {
-					if (item.code.toString().substr(0, 2) == p) {
-						if (item.regionEntitys) {
-							item.regionEntitys.forEach((s) => {
-								if (s.code.toString().substr(2, 2) == c) {
-									if (s.regionEntitys) {
-										s.regionEntitys.forEach((k) => {
-											if (k.code.toString().substr(4, 2) == a) {
-												this.area = k;
-												console.log('run in for', item,);
-											}
-										})
-									}
-								}
-							});
-						}
-					}
-				})
-			}
-		},
-		upCity(p,c) { // 更新市
+		// defaultProv() {
+		// 	// console.log(data);
+		// 	if (this.regionId) {
+		// 		let p = this.regionId.toString().substr(0, 2);
+		// 		let c = this.regionId.toString().substr(2, 2);
+		// 		let a = this.regionId.toString().substr(4, 2)
+		// 		data.forEach((item) => {
+		// 			if (item.code.toString().substr(0, 2) == p) {
+		// 				if (item.regionEntitys) {
+		// 					item.regionEntitys.forEach((s) => {
+		// 						if (s.code.toString().substr(2, 2) == c) {
+		// 							if (s.regionEntitys) {
+		// 								s.regionEntitys.forEach((k) => {
+		// 									if (k.code.toString().substr(4, 2) == a) {
+		// 										this.prov = item;
+		// 										if (this.flag1) {
+		// 											console.log('run in default');
+		// 											this.city = s;
+		// 										}
+		// 										this.area = k;
+		// 									}
+		// 								})
+		// 							}
+		// 						}
+		// 					});
+		// 				}
+		// 			}
+		// 		})
+		// 	}
+		// },
+		upCity(p, c) { // 更新市
 			let temp = this.prov;
-			if (this.prov.regionEntitys) {
-				this.cityArr = p ? p : this.prov.regionEntitys;
-				this.city = c ? c : this.prov.regionEntitys[0];
+			if (temp.regionEntitys) {
+				this.cityArr = p ? p : temp.regionEntitys;
+				this.city = c ? c : temp.regionEntitys[0];
 				this.upArea();
 			} else {
 				this.cityArr = '';
@@ -81,7 +85,6 @@ export default {
 		},
 		upArea(c, a) { // 更新区
 			if (this.city) {
-				console.log('run in up', this.area);
 				this.areaArr = c ? c : this.city.regionEntitys;
 				this.area = a ? a : this.city.regionEntitys[0];
 			}
@@ -93,7 +96,7 @@ export default {
 				this.$emit('province', [{ 'code': this.prov.code, 'region': this.prov.region }, { 'code': '', 'region': '' }, { 'code': '', 'region': '' }]);
 			} else {
 				this.$emit('province', [
-					{ 'code': this.prov.code, 'region': this.prov.region }, 
+					{ 'code': this.prov.code, 'region': this.prov.region },
 					{ 'code': this.city.code, 'region': this.city.region },
 					{ 'code': this.area.code, 'region': this.area.region }
 				]);
@@ -112,7 +115,6 @@ export default {
 		},
 		area() {
 			this.returnMsg();
-			console.log('wath', this.area);
 		}
 	}
 }

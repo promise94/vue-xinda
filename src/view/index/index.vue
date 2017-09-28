@@ -174,7 +174,6 @@ export default {
                 method: 'post',
                 url: '/recommend/list',
                 data: {
-
                 }
             }).then((result) => {
                 let data = result.data.hq;
