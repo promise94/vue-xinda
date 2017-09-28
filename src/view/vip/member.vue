@@ -18,7 +18,9 @@
         </div>
       </div>
     </div>
-    <router-view></router-view>
+    <transition name="fade" mode="out-in">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
@@ -39,6 +41,9 @@ export default {
   computed: {
     ...mapGetters(['getUser']),
   },
+  watch: {
+
+  },
   methods: {
     ...mapActions(['infoAction']),
     goto(m) {
@@ -47,8 +52,8 @@ export default {
     },
     getUserInfo() { // 获取个人信息
       this.$http.post('/member/info').then((res) => {
-        if (res.status === 1) {
-          delete res.data.password;
+        if (res.status === 1 && res.data) {
+          res.data.password ? (delete res.data.password) : '';
           let info = this.getUser.info;
           Object.assign(info, res.data);
           this.infoAction(info);
@@ -61,4 +66,18 @@ export default {
 
 <style lang="less" scoped>
 @import '../../common/less/vip/member.less';
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: .35s linear;
+}
+
+.fade-enter-to {
+  transform: translateY(0);
+}
+
+.fade-leave-to {
+  transform: translateY(100%);
+  opacity: 0;
+}
 </style>

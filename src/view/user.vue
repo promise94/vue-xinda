@@ -3,8 +3,8 @@
     <xd-header :head="head"></xd-header>
     <div id="content">
       <div class="container content">
-        <transition name="slide">
-          <router-view id="content"></router-view>
+        <transition :name="transitionName">
+          <router-view class="child-view"></router-view>
         </transition>
         <div class="title">
           <p>{{title}}&nbsp;?</p>
@@ -43,14 +43,18 @@ export default {
       link: '',
       title: '',
       linkname: '',
+      transitionName: '', // 过渡效果名称
     }
   },
   created() {
     this.setShow();
   },
   watch: {
-    '$route'() {
+    '$route'(to, from) {
       this.setShow();
+      const toDepth = to.path.length;
+      const fromDepth = from.path.length;
+      this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left';
     }
   },
   methods: {
@@ -71,4 +75,29 @@ export default {
 
 <style lang="less">
 @import '../common/less/user/user.less';
+#content {
+  >.content {
+    position: relative;
+    min-height: 550px;
+    .child-view {
+      position: absolute;
+      left: 160px;
+      top: 80px;
+      transition: all .35s cubic-bezier(.55, 0, .1, 1);
+    }
+  }
+}
+
+
+.slide-left-enter,
+.slide-right-leave-active {
+  opacity: 0;
+  transform: translate(60px, 0);
+}
+
+.slide-left-leave-active,
+.slide-right-enter {
+  opacity: 0;
+  transform: translate(-60px, 0);
+}
 </style>

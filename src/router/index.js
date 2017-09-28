@@ -4,22 +4,23 @@ import Router from 'vue-router';
 import main from '@/view/main.vue'; // 商品展示、会员中心展示页
 import user from '@/view/user.vue'; // 登录、注册、忘记密码展示页
 
-// 首页
-import index from '../view/index/index'
-// 商品详情页
-import goods from '../view/goods/goods'
+
+import index from '../view/index/index'; // 首页
+
+import goods from '../view/goods/goods'; // 商品详情页
 import search from '@/view/search/search.vue'; // 搜索结果页
-import services from '@/view/list/services.vue';
-import sifco from '@/view/list/sifco.vue';
+import services from '@/view/list/services.vue'; // 服务
+import sifco from '@/view/list/sifco.vue'; // 公司工商
 import us from '@/view/us/us.vue'; // 加盟我们
-import storeList from '@/view/store/storeList.vue';//店铺列表
-import storeIndex from '@/view/store/storeIndex.vue';//店铺首页
+import storeList from '@/view/store/storeList.vue'; // 店铺列表
+import storeIndex from '@/view/store/storeIndex.vue'; // 店铺首页
 
 
-import member from '@/view/vip/member.vue';//会员中心
-import order from '@/view/vip/order.vue';
-import setting from '@/view/vip/setting.vue';
-import evaluntion from '@/view/vip/evaluntion.vue';
+import member from '@/view/vip/member.vue';// 会员中心
+import order from '@/view/vip/order.vue'; // 我的订单
+import setting from '@/view/vip/setting.vue'; // 用户设置
+import evaluntion from '@/view/vip/evaluntion.vue'; // 用户评价
+import grade from '../view/vip/orderGrade.vue'; // 评价订单
 
 
 import cart from '@/view/cart/cart.vue'; // 购物车
@@ -58,53 +59,53 @@ export default new Router({
       {
         path: '/services',
         name: 'Services',
-        component: services
+        component: services,
       },
       {
         path: '/sifco',
         name: 'Sifco',
-        component: sifco
+        component: sifco,
       },
       {
         path: '/storeList',
         name: 'StoreList',
-        component: storeList
+        component: storeList,
       },
       {
         path: '/storeIndex',
         name: 'StoreIndex',
-        component: storeIndex
+        component: storeIndex,
       },
       {
         path: '/us',
         name: 'Us',
-        component: us
+        component: us,
       },
       {
         path: '/search/:keyword',
         name: 'Search',
-        component: search
-      }, 
+        component: search,
+      },
       {
         path: '/cart',
         name: 'Cart',
         component: cart,
         meta: {
-          requireAuth: true
+          requireAuth: true,
         }
-      }, 
+      },
       {
         path: '/pay',
         name: 'Pay',
         component: pay,
         meta: {
-          requireAuth: true
+          requireAuth: true,
         }
       },
       {
         path: '/yinlian',
         name: 'yinlian',
-        component: yinlian
+        component: yinlian,
       },
       {
         path: '/member',
@@ -112,33 +113,40 @@ export default new Router({
         alias: '/member/order',
         component: member,
         meta: {
-          requireAuth: true
+          requireAuth: true,
         },
         children: [{
-            path: 'order',
-            name: 'Order',
-            component: order,
-            meta: {
-              requireAuth: true
-            }
-          },
-          {
-            path: 'evaluntion',
-            name: 'Evaluntion',
-            component: evaluntion,
-            meta: {
-              requireAuth: true
-            }
-          },
-          {
-            path: 'setting',
-            name: 'Setting',
-            component: setting,
-            meta: {
-              requireAuth: true
-            }
+          path: 'order',
+          name: 'Order',
+          component: order,
+          meta: {
+            requireAuth: true,
           }
-        ]
+        },
+        {
+          path: 'evaluntion',
+          name: 'Evaluntion',
+          component: evaluntion,
+          meta: {
+            requireAuth: true,
+          }
+        },
+        {
+          path: 'setting',
+          name: 'Setting',
+          component: setting,
+          meta: {
+            requireAuth: true,
+          }
+        },
+        {
+          path: 'grade',
+          name: 'Grade',
+          component: grade,
+          meta: {
+            requireAuth: true,
+          }
+        }]
       }
     ]
   },
@@ -150,17 +158,17 @@ export default new Router({
       {
         path: 'login',
         name: 'Login',
-        component: login
+        component: login,
       },
       {
         path: 'register',
         name: 'Register',
-        component: register
+        component: register,
       },
       {
         path: 'forget',
         name: 'Forget',
-        component: forget
+        component: forget,
       }
     ]
   }]

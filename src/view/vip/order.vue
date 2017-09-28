@@ -36,7 +36,7 @@
                     <div>
                         <div v-for="(item, k) of item.data" :key="k">
                             <div id="company">
-                                <img src="" alt="">
+                                <!-- <img src="" alt=""> -->
                                 <p>
                                     <span>{{item.providerName}}</span>
                                     <span>{{item.serviceName}}</span>
@@ -275,6 +275,8 @@ export default {
 #company {
     display: flex;
     align-items: center;
+    box-sizing: border-box;
+    padding: 0 35px;
     border-top: 1px solid #e8e8e8;
     img {
         width: 50px;

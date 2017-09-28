@@ -26,15 +26,28 @@ export default new Vuex.Store({
     },
     getters: { // 显示集合
         getUser: state => {
+            axios.post('/sso/login-info').then((res) => {
+                if (res.status === 1) {
+                    let user = {
+                        status: true,
+                        info: res.data,
+                    }
+                    let data = state.user;
+                    Object.assign(data, user);
+                    this.a.commit('SETUSER', data);
+                }
+            });
+            return state.user;
+        },
+        getCartNum: state => {
             if (state.user.status) {
                 axios.post('/cart/cart-num').then((res) => {
                     let n = res.data.cartNum;
                     this.a.commit('SETCART', n);
                 });
             }
-            return state.user;
+            state.cartnum
         },
-        getCartNum: state => state.cartnum,
         getBall: state => state.balls,
     }
 });

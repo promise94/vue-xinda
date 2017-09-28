@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <transition name="slide">
+    <transition name="fade">
       <router-view></router-view>
     </transition>
     <backtop transitionName="easeInQuad"></backtop>
@@ -20,4 +20,17 @@ export default {
 <style lang = "less">
 @import url('./common/less/global/cssreset.less');
 @import url('./common/less/global/base.less');
+#app {
+  min-width: 1300px;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity .35s ease;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0
+}
 </style>
