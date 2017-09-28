@@ -251,7 +251,7 @@ export default {
             shopTypeId: '',
             show: 1,
             modal_info: '',
-            index: 0,//类型第几个
+            index: '',//类型第几个
             color: 0, //类型颜色
             indexer: 0,
             num: 1,  //input 数量默认值
@@ -264,9 +264,7 @@ export default {
             leixing: '',
             serviceName: '',
             serviceInfo: '',
-
             id: '',
-
             info: { phoneInfo: '', captInfo: '', msgInfo: '', pwdInfo: '', SecondInfo: '' }, // 提示信息
             type: { phoneType: '', captType: '', msgType: '', pwdType: '', SecondType: '' }, // 提示类型
             code: '', // 图片验证码
@@ -298,7 +296,7 @@ export default {
         getPassword(v) {
             this.password = v;
         },
-         // 获取用户再次输入的密码
+        // 获取用户再次输入的密码
         getSecondPwd(v) {
             this.secondPwd = v;
         },
@@ -308,7 +306,7 @@ export default {
         },
         // 手机号验证
         isPhone(n) {
-            if (n === 1) {  
+            if (n === 1) {
                 // 获取焦点,移除错误提示
                 this.info.phoneInfo = '';
                 this.type.phoneType = '';
@@ -412,9 +410,20 @@ export default {
         numShuliang(n) {
             // console.log(n);
             if (n === 0) {
-                this.num === 1 ? '' : this.num--;
+                if (this.num > 0) {
+
+                    this.num === 1 ? '' : this.num--;
+                } else {
+
+                }
+
             } else if (n === 1) {
-                this.num++;
+                if (this.num > 0) {
+
+                    this.num++;
+                } else {
+
+                }
             }
         },
         // 加入购物车
@@ -423,28 +432,40 @@ export default {
                 method: 'post',
                 url: '/cart/add',
                 data: {
-                    id: this.$route.query.id,
+                    id: this.shopTypeId,
                     num: this.num,
                 }
             }).then((res) => {
+                // 弹出框提醒
                 this.alert_options.info = res.msg;
                 this.alert_options.type = 'success';
-
                 this.$refs.alert.alert();
+
+                this.$stor.dispatch('cartAction');
             })
-            this.$root.eventHub.$emit('add', ev);
+
+            // this.$root.eventHub.$emit('add', ev);
         },
-        // 视角时间
+        // 失焦事件
         onblur(eiv) {
             let infor = eiv.target.value;
-            this.num = infor;
-            console.log(this.num);
+            if (infor > 0) {
+                // console.log(2);
+                this.num = infor;
+            } else {
+                // console.log(1);
+                infor = 1;
+                this.num = infor;
+            }
+            // console.log(eiv);
+            // console.log(this.num);
         },
         // 获取id
         huoquid(id, indexe) {
             this.shopTypeId = id;
             this.getninumShuliang();
             this.color = indexe;
+            console.log(this.shopTypeId);
         },
         // 商品详情获取
         getninumShuliang() {
