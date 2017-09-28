@@ -23,7 +23,7 @@
                     <p>￥{{item1.unitPrice}}</p>
                     <p>
                         <span @click="less(item1)">-</span>
-                        <input type="text" @blur="onblur($event ,item1)"  onkeyup=" if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g, '')}else{this.value=this.value.replace(/\D/g, '')} " onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g, '')}else{this.value=this.value.replace(/\D/g, '')} " :value="item1.buyNum">
+                        <input type="text" @blur="onblur($event ,item1)" @keydown="noNumbers($event)" :value="item1.buyNum">
                         <span @click="add(item1)">+</span>
                         <span v-show="show === 0"></span>
                     </p>
@@ -91,7 +91,7 @@ export default {
     created() {
         this.getTuijian();
         this.getCartlsit();
-        
+
     },
     data() {
         return {
@@ -113,7 +113,7 @@ export default {
     },
     methods: {
         ...mapActions(['cartAction']),
-        
+
         //价格转化
         fmtPrice(p) {
             return (parseFloat(p) * 0.01).toFixed(2);
@@ -140,7 +140,7 @@ export default {
                         item.unitPrice = this.fmtPrice(price);    //价格处理
                         let totalPrice = item.totalPrice;
                         item.totalPrice = this.fmtPrice(totalPrice);
-                        this.monytotal += item.totalPrice*100  //总钱数
+                        this.monytotal += item.totalPrice * 100  //总钱数
                     }, this)
                     this.items = res.data;
                     this.cartAction(this.msg);
@@ -200,7 +200,7 @@ export default {
                         this.$refs.alert1.alert().then(() => {
                             this.getCartlsit();
                             this.msg--;
-                            if(this.msg == 0){
+                            if (this.msg == 0) {
                                 this.cartAction(0);
                             }
                         });
@@ -226,8 +226,22 @@ export default {
         onblur(ev, item1) {
             this.getZhezhao(0); //遮罩层打开
             let vall = ev.target.value;
-            item1.buyNum = vall;
-            this.getxiugai(item1)
+            if (vall > 0) {
+                item1.buyNum = vall;
+                this.getxiugai(item1)
+            } else {
+                vall = 1;
+                item1.buyNum = vall;
+                this.getxiugai(item1)
+            }
+        },
+        //键按下事件
+        noNumbers(e) {
+            let key = e.key;
+            if (isNaN(e.key / 2) && key !== 'Backspace' && key !== 'ArrowRight' && key !== 'ArrowLeft') {
+                e.preventDefault();
+            }
+
         },
         //去购物
         goShop() {
