@@ -1,9 +1,9 @@
 <template>
-    <div class="zong">
+    <div class="zong1" id="zong">
         <div class="linkBox">
             <ul class="tabLink container">
                 <li class="daohang">
-                    <a href="#/" @mouseenter="showMenu(1)" @mouseleave="noneMenu(1)" @click="bb(0)" v-bind:class="{daohang2 :cc===0}">
+                    <a href="#/" @click="bb(0)" v-bind:class="{daohang2 :cc===0}" @mouseenter="showMenu(1)" @mouseleave="noneMenu(1)">
                         <span>全部产品</span>
                     </a>
                 </li>
@@ -29,28 +29,30 @@
                 </li>
             </ul>
         </div>
-        <div class="yincang " @mouseenter="showMenu(2)" @mouseleave="noneMenu(2)" v-show="show">
-            <div class="zong" v-for="item of dataArr" :key="item.id">
-                <div class="erji">
-                    <div>.
-                        <span class="xd xd-shui"></span>
+        <transition name="show">
+            <div class="yincang " @mouseenter="showMenu(2)" @mouseleave="noneMenu(2)" v-show="show">
+                <div class="zong" v-for="item of dataArr" :key="item.id">
+                    <div class="erji">
+                        <div>
+                            <span class="xd xd-shui"></span>
+                        </div>
+                        <div>
+                            <p>{{item.name}}</p>
+                            <span class="text" v-for="shenme in item.itemList" :key="shenme.id">{{shenme.name}}</span>
+                        </div>
                     </div>
-                    <div>
-                        <p>{{item.name}}</p>
-                        <span class="text" v-for="shenme in item.itemList" :key="shenme.id">{{shenme.name}}</span>
-                    </div>
-                </div>
-                <div class="sanji">
-                    <div>
-                        <div v-for="shenme in item.itemList" :key="shenme.id">
-                            <p>{{shenme.name}}</p>
-                            <a href="#/services" v-for="e in shenme.itemList" :key="e.id">&nbsp;
-                                <span>{{e.name}}</span>&nbsp;</a>
+                    <div class="sanji">
+                        <div>
+                            <div v-for="shenme in item.itemList" :key="shenme.id">
+                                <p>{{shenme.name}}</p>
+                                <a href="#/services" v-for="e in shenme.itemList" :key="e.id">&nbsp;
+                                    <span>{{e.name}}</span>&nbsp;</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </transition>
     </div>
 </template>
 
@@ -59,7 +61,7 @@ export default {
     data() {
         return {
             aaa: 0,
-            cc: 0,
+            cc: '',
             show: false,
             flag: false,
             hehe: '',
@@ -78,13 +80,47 @@ export default {
             this.show = false;
             this.flag = true;
         }
+        // console.log(window.location.hash);
+        if (window.location.hash == '#/') {
+            this.cc = 0;
+        } else if (window.location.hash == '#/services') {
+            this.cc = 1;
+        } else if (window.location.hash == '#/sifco') {
+            this.cc = 2;
+        } else if (window.location.hash == '#/us') {
+            this.cc = 3;
+        } else if (window.location.hash == '#/storeList') {
+            this.cc = 4;
+        } else {
+            this.cc = '';
+        }
+
     },
     watch: {
         '$route': function() {
             if (this.$route.path == '/') {
+                this.cc = 0;
+            } else if (this.$route.path == '/services') {
+                this.cc = 1;
+            } else if (this.$route.path == '/sifco') {
+                this.cc = 2;
+            } else if (this.$route.path == '/us') {
+                this.cc = 3;
+            } else if (this.$route.path == '/storeList') {
+                this.cc = 4;
+            } else {
+                this.cc = '';
+            }
+
+
+            // console.log(this.$route);
+            if (this.$route.path == '/') {
                 this.show = true;
                 this.flag = false;
+                // console.log(this.$route);
                 if (this.flag == false) {
+
+
 
                 }
 
@@ -97,13 +133,13 @@ export default {
     },
     methods: {
         bb(n) {
-            this.cc = n;
-
+            // this.cc = n;
         },
         showMenu(n) {
             if (this.flag) {
                 if (n === 1) {
                     this.show = true;
+                    // console.log(this.show);
                 } else {
                     clearTimeout(this.promise);
                 }
@@ -111,16 +147,18 @@ export default {
 
         },
         noneMenu(n) {
-            if (this.flag === true){
+            if (this.flag === true) {
                 if (n === 1) {
                     this.promise = setTimeout(() => {
-                        this.show = true;
-                    }, 300);
+                        this.show = false;
+                        // console.log(this.show);
+                    }, 100);
                 } else {
                     this.show = false;
                 }
             }
         },
+
         // 导航获取
         getbucai() {
             this.$http({
@@ -146,11 +184,29 @@ export default {
 </script>
 
 <style lang="less" scoped>
+#zong {
+    width: 1200px;
+    margin: 0 auto;
+}
+
 @color: #2693d4;
+.show-enter-active,
+.show-leave-active {
+    transition: opacity .5s
+}
+
+.show-enter,
+.show-leave-to {
+    opacity: 0
+}
+
 .linkBox {
+    width: 1200px;
+    margin: 0 auto;
     border-bottom: 1px solid @color;
     .tabLink {
         margin-top: 15px;
+        padding: 0;
         >li {
             display: inline-block;
             width: 200px;
@@ -182,16 +238,16 @@ export default {
 }
 
 .yincang {
-    // width: 1200px;
+    width: 200px;
     z-index: 100;
     padding: 0;
-    position: absolute;
-    left: 50%;
+    position: absolute; // left: 50%;
     height: 402px;
     margin-top: 0px; // overflow: hidden;
-    margin-left: -600px;
+    // margin-left: -600px;
     .zong {
         width: 200px;
+        margin: 0 auto;
         position: relative;
         display: flex;
         color: #fff;
@@ -238,7 +294,8 @@ export default {
     right: -1000px;
     height: 100%;
     width: 1000px;
-    display: none; // background: #fff;
+    display: none;
+     // background: #fff;
     background-color: rgba(0, 0, 0, 0.5);
     align-items: center;
     >div {
@@ -279,6 +336,5 @@ export default {
     font-size: 14px;
     width: 80px;
     line-height: 24px;
-    p {}
 }
 </style>

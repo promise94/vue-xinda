@@ -34,12 +34,14 @@ new Vue({
     eventHub: new Vue(),
   },
   created() {
+    let hash = window.location.hash;
     this.$router.beforeEach((to, from, next) => {
+      window.scrollY = 0;
       if (to.meta.requireAuth) {
         if (from.name && this.$store.state.user.status) {
           next();
         } else {
-          next('/user/login');
+          next({ path: '/user/login', query: { redirect: to.fullPath } });
         }
       } else {
         next();

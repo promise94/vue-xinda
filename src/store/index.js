@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import axios from 'axios';
 Vue.use(Vuex);
 export default new Vuex.Store({
     // strict: true,
@@ -11,18 +12,28 @@ export default new Vuex.Store({
     },
     mutations: { // 突变集合
         SETUSER: (state, user) => state.user = user, // 设置用户信息
-        SETCART: (state, num) => state.cartnum = num, // 用户车数量
+        SETCART: (state, num) => {
+            return state.cartnum = num;
+        }, // 用户车数量
         SETINFO: (state, info) => state.user.info = info, // 个人信息
-        SETBALL: (state, num)=> state.balls = num,
+        SETBALL: (state, num) => state.balls = num,
     },
     actions: { // 方法集合
         loginAction: ({ commit }, user) => commit('SETUSER', user),
         infoAction: ({ commit }, info) => commit('SETINFO', info),
-        cartAction: ({commit}, num) => commit('SETCART', num),
-        ballAction: ({commit}, num) => commit('SETBAll', num),
+        cartAction: ({ commit }, num) => commit('SETCART', num),
+        ballAction: ({ commit }, num) => commit('SETBAll', num),
     },
     getters: { // 显示集合
-        getUser: state => state.user,
+        getUser: state => {
+            if (state.user.status) {
+                axios.post('/cart/cart-num').then((res) => {
+                    let n = res.data.cartNum;
+                    this.a.commit('SETCART', n);
+                });
+            }
+            return state.user;
+        },
         getCartNum: state => state.cartnum,
         getBall: state => state.balls,
     }
