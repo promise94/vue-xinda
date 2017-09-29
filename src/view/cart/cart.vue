@@ -28,7 +28,7 @@
                         <span v-show="show === 0"></span>
                     </p>
                     <p>￥{{item1.totalPrice}}</p>
-                    <p @click="del(item1)">删除</p>
+                    <p @click="del(item1)"><span>删除</span></p>
                 </div>
             </div>
         </div>
@@ -91,7 +91,6 @@ export default {
     created() {
         this.getTuijian();
         this.getCartlsit();
-
     },
     data() {
         return {
@@ -204,11 +203,6 @@ export default {
                                 this.cartAction(0);
                             }
                         });
-                        // // 删除列表的最后一件
-                        // var i = this.items.indexOf(item1);
-                        // this.items.splice(i, 1);
-                        // this.msg--;
-                        // this.cartAction(this.items.length);
                     } else {
                         this.modal_info = res.msg;
                         this.$refs.name1.confirm().then(() => {
