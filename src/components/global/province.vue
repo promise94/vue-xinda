@@ -38,11 +38,12 @@ export default {
 		
 		// this.upCity();
 		this.defaultProv();
+		
 	},
 	methods: {
 		defaultProv() {
-			// console.log(data);
-			if (this.regionId) {
+			
+			if (this.regionId) {console.log('===',data);
 				let p = this.regionId.toString().substr(0, 2);
 				let c = this.regionId.toString().substr(2, 2);
 				let a = this.regionId.toString().substr(4, 2)

@@ -204,17 +204,13 @@ export default {
                                 this.cartAction(0);
                             }
                         });
-                        // // 删除列表的最后一件
-                        // var i = this.items.indexOf(item1);
-                        // this.items.splice(i, 1);
-                        // this.msg--;
-                        // this.cartAction(this.items.length);
+
                     } else {
                         this.modal_info = res.msg;
                         this.$refs.name1.confirm().then(() => {
                             this.$refs.name1.show = false; //手动关闭  
                         })
-                        console.log(res);
+                        // console.log(res);
                     }
                     // this.
                 });
@@ -224,6 +220,7 @@ export default {
         },
         // 失焦事件
         onblur(ev, item1) {
+            // console.log(ev);
             this.getZhezhao(0); //遮罩层打开
             let vall = ev.target.value;
             item1.buyNum = vall;

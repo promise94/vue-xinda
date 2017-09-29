@@ -21,7 +21,7 @@
                         <span>
                             <p>订单总额:
                                 <a>￥{{recommend.price}}</a>元</p>
-                            <p @click="getMingxi(),fn()">订单明细
+                            <p @click="getMingxi()">订单明细
                                 <a class="xd xd-icon-up"></a>
                             </p>
                         </span>
@@ -225,15 +225,16 @@ export default {
                     this.recommend1 = data;
                 }
             })
+            this.willShow=!this.willShow;
         },
         // 订单详情的显示、隐藏
-        fn() {
-            if (this.willShow == false) {
-                this.willShow == true
-            } else {
-                this.willShow == false
-            }
-        },
+        // fn() {
+        //     if (this.willShow == false) {
+        //         this.willShow == true
+        //     } else {
+        //         this.willShow == false
+        //     }
+        // },
         //价格转化
         fmtPrice(p) {
             return (parseFloat(p) * 0.01).toFixed(2);
@@ -270,6 +271,7 @@ export default {
                     businessNo:this.recommend.businessNo
                 }
             ).then((res) => {
+                console.log(res);
                 sessionStorage.setItem("payment", res);//暂存数据
                 window.open('/#/yinlian');//跳转页面
                 this.getFanKui();
@@ -287,13 +289,13 @@ export default {
             this.index = 4;
         },
         //支付明细
-        fn() {
-            if (this.willShow == true) {
-                this.willShow = false;
-            } else {
-                this.willShow = true
-            }
-        },
+        // fn() {
+        //     if (this.willShow == true) {
+        //         this.willShow = false;
+        //     } else {
+        //         this.willShow = true
+        //     }
+        // },
         //弹出框
         getTanChuKuang(){
             this.modal_info = '请选择其他支付方式！';
