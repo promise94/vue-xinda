@@ -203,10 +203,6 @@ export default {
                                 this.cartAction(0);
                             }
                         });
-<<<<<<< HEAD
-=======
-
->>>>>>> af0312a4135bfd8cd71f577c58831b4ae79e12a3
                     } else {
                         this.modal_info = res.msg;
                         this.$refs.name1.confirm().then(() => {
