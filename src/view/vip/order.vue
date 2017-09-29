@@ -30,32 +30,34 @@
             </ul>
         </div>
         <div v-show="list.length" class="orderBottom">
-            <div v-for="(item, k) of ordersList" :key="k">
-                <numberTime :orderID="item.businessNo" :time="item.createTime"></numberTime>
-                <div class="orderInfo">
-                    <div>
-                        <div v-for="(item, k) of item.data" :key="k">
-                            <div id="company">
-                                <img src="" alt="">
-                                <p>
-                                    <span>{{item.providerName}}</span>
-                                    <span>{{item.serviceName}}</span>
-                                </p>
-                                <p>￥{{item.unitPrice}}</p>
-                                <p>{{item.buyNum}}</p>
-                                <div>￥{{item.totalPrice}}</div>
-                                <div>{{item.statusText}}</div>
+            <transition-group name="list" tag="div">
+                <div v-for="(item, k) of ordersList" :key="k" class="list">
+                    <numberTime :orderID="item.businessNo" :time="item.createTime"></numberTime>
+                    <div class="orderInfo">
+                        <div>
+                            <div v-for="(item, k) of item.data" :key="k">
+                                <div id="company">
+                                    <!-- <img src="" alt=""> -->
+                                    <p>
+                                        <span>{{item.providerName}}</span>
+                                        <span>{{item.serviceName}}</span>
+                                    </p>
+                                    <p>￥{{item.unitPrice}}</p>
+                                    <p>{{item.buyNum}}</p>
+                                    <div>￥{{item.totalPrice}}</div>
+                                    <div>{{item.statusText}}</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div>
-                        <button @click="goto(item.businessNo)" v-if="item.status === 1">付款</button>
-                        <p @click="delOrder(item)" v-if="item.status === 1">删除订单</p>
-                        <p v-if="item.status === 2">交易完成</p>
-                        <p v-if="item.status === 3">交易关闭</p>
+                        <div>
+                            <button @click="goto(item.businessNo)" v-if="item.status === 1">付款</button>
+                            <p @click="delOrder(item)" v-if="item.status === 1">删除订单</p>
+                            <p v-if="item.status === 2">交易完成</p>
+                            <p v-if="item.status === 3">交易关闭</p>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </transition-group>
             <v-page @page="showOrder" :amount="list.length" :limit="limit"></v-page>
         </div>
         <v-nothing v-show="!list.length" title="无结果"></v-nothing>
@@ -259,7 +261,7 @@ export default {
             }
             this.calendar.show = false;
         },
-        clear(n){
+        clear(n) {
             if (n === 1) {
                 this.startDate = '';
             } else {
@@ -272,9 +274,19 @@ export default {
 
 <style lang="less" scoped>
 @import '../../common/less/vip/order.less';
+/* 过渡动画 */
+.list-enter-active,
+.list-leave-active{
+    transition: .2s ease;
+}
+.list-enter-to{
+    opacity: 0;
+}
 #company {
     display: flex;
     align-items: center;
+    box-sizing: border-box;
+    padding: 0 35px;
     border-top: 1px solid #e8e8e8;
     img {
         width: 50px;

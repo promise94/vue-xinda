@@ -21,20 +21,44 @@ export default new Vuex.Store({
     actions: { // 方法集合
         loginAction: ({ commit }, user) => commit('SETUSER', user),
         infoAction: ({ commit }, info) => commit('SETINFO', info),
-        cartAction: ({ commit }, num) => commit('SETCART', num),
+        cartAction: ({ commit, state }, num) => {
+            if (!num && state.user.status) {
+                axios.post('/cart/cart-num').then((res) => {
+                    let n = res.data.cartNum;
+                    this.a.commit('SETCART', n);
+                    console.log('carnum', n);
+                });
+            }
+            if (num) {
+                commit('SETCART', num);
+            }
+        },
         ballAction: ({ commit }, num) => commit('SETBAll', num),
     },
     getters: { // 显示集合
         getUser: state => {
+            axios.post('/sso/login-info').then((res) => {
+                if (res.status === 1) {
+                    let user = {
+                        status: true,
+                        info: res.data,
+                    }
+                    let data = state.user;
+                    Object.assign(data, user);
+                    this.a.commit('SETUSER', data);
+                }
+            });
+            return state.user;
+        },
+        getCartNum: state => {
             if (state.user.status) {
                 axios.post('/cart/cart-num').then((res) => {
                     let n = res.data.cartNum;
                     this.a.commit('SETCART', n);
                 });
             }
-            return state.user;
+            return state.cartnum;
         },
-        getCartNum: state => state.cartnum,
         getBall: state => state.balls,
     }
 });

@@ -52,7 +52,7 @@
                     </ul>
                     <div>
                         <a href="#/cart" @click="jiarugouwuche()">立即购买</a>
-                        <button @click="jiarugouwuche($event)">加入购物车</button>
+                        <button @click="jiarugouwuche()">加入购物车</button>
                     </div>
                 </div>
                 <div>
@@ -138,7 +138,7 @@
                             <p>用户</p>
                         </div>
                     </div>
-                    <div>无评价</div>
+                    <div>无评价，第1页</div>
                 </div>
                 <div id="pingjia" v-show="indexer === 1">
                     <div>
@@ -152,7 +152,7 @@
                             <p>用户</p>
                         </div>
                     </div>
-                    <div>无评价</div>
+                    <div>无评价，第2页</div>
                 </div>
                 <div id="pingjia" v-show="indexer === 2">
                     <div>
@@ -166,7 +166,7 @@
                             <p>用户</p>
                         </div>
                     </div>
-                    <div>无评价</div>
+                    <div>无评价，第3页</div>
                 </div>
                 <div id="pingjia" v-show="indexer === 3">
                     <div>
@@ -180,12 +180,12 @@
                             <p>用户</p>
                         </div>
                     </div>
-                    <div>无评价</div>
+                    <div>无评价，第4页</div>
                 </div>
             </div>
         </div>
-
         <v-alert :type="alert_options.type" :info="alert_options.info" ref="alert"></v-alert>
+
         <modal ref="name" class="dianhua">
             <div slot="header" class="header">
                 <h3>免费电话咨询</h3>
@@ -220,13 +220,12 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex' ;//vuex的引入
+import { mapActions } from 'vuex';//vuex的引入
 import modal from '@/components/global/modal'; //弹出框引入
 import vAlert from '@/components/global/alert';
 
 import xdCaptcha from '@/components/user/captcha';
 import xdInput from '@/components/user/input';
-// import vAlert from '@/components/global/alert';
 import reg from '@/common/js/reg';
 import md5 from 'md5';
 export default {
@@ -238,33 +237,24 @@ export default {
         vAlert,
     },
     created() {
-        // this.serverIntro();
         this.shopTypeId = this.$route.query.id;
         console.log(this.shopTypeId);
         this.getninumShuliang();
-        // this.jiarugouwuche();
         let user = JSON.parse(sessionStorage.getItem('temp'));
         if (user && user.tempPhone) {
             this.phone = user.tempPhone;
         }
-        this.huoquid(id, indexe);
+        // this.huoquid(id, indexe);
     },
     data() {
-        // show: true;
         return {
             shopTypeId: '',
             show: 1,
             modal_info: '',
-            index: 0,
-
-            // indexc: [],
-
-            color: 0,
-
-
-
+            index: '',//类型第几个
+            color: 0, //类型颜色
             indexer: 0,
-            num: 1,
+            num: 1,  //input 数量默认值
             shangpinxiangqing: '',
             datas: '',
             htmle: '',
@@ -274,9 +264,7 @@ export default {
             leixing: '',
             serviceName: '',
             serviceInfo: '',
-
             id: '',
-
             info: { phoneInfo: '', captInfo: '', msgInfo: '', pwdInfo: '', SecondInfo: '' }, // 提示信息
             type: { phoneType: '', captType: '', msgType: '', pwdType: '', SecondType: '' }, // 提示类型
             code: '', // 图片验证码
@@ -289,32 +277,37 @@ export default {
             text: '点击获取',
             isload: '', // 是否重新加载图片验证码
             alert_options: { type: 'success', info: '' }, // 提示框设置
-            // alert_cart:{  type:'cussess',info:'' }
             fall: 0,
         }
     },
     methods: {
         ...mapActions(['cartAction']),
 
-
-        getValue(v) { // 获取用户输入图片验证码
+        // 获取用户输入图片验证码
+        getValue(v) {
             this.code = v;
             this.isNull(1);
         },
-        getPhone(phone) { // 获取用户输入手机号
+        // 获取用户输入手机号
+        getPhone(phone) {
             this.phone = phone;
         },
-        getPassword(v) { // 获取密码
+        // 获取密码
+        getPassword(v) {
             this.password = v;
         },
-        getSecondPwd(v) { // 获取用户再次输入的密码
+        // 获取用户再次输入的密码
+        getSecondPwd(v) {
             this.secondPwd = v;
         },
-        getCodeValue(v) { // 获取用户输入验证码
+        // 获取用户输入验证码
+        getCodeValue(v) {
             this.msgCode = v;
         },
-        isPhone(n) { // 手机号验证
-            if (n === 1) {  // 获取焦点,移除错误提示
+        // 手机号验证
+        isPhone(n) {
+            if (n === 1) {
+                // 获取焦点,移除错误提示
                 this.info.phoneInfo = '';
                 this.type.phoneType = '';
             } else {
@@ -332,7 +325,8 @@ export default {
                 }
             }
         },
-        isNull(n) { // 判断图片验证码是否为空
+        // 判断图片验证码是否为空
+        isNull(n) {
             if (n === 1) {
                 this.info.captInfo = '';
                 this.type.captType = '';
@@ -346,7 +340,8 @@ export default {
                 }
             }
         },
-        isCodeNull(n) { // 判断短信验证码是否为空
+        // 判断短信验证码是否为空
+        isCodeNull(n) {
             if (n === 1) {
                 this.info.msgInfo = '';
                 this.type.msgType = '';
@@ -360,7 +355,8 @@ export default {
                 }
             }
         },
-        getCode(v) { // 点击获取验证码
+        // 点击获取验证码
+        getCode(v) {
             if (this.isPhone() && this.isNull()) {
                 // 发送请求
                 this.$http.post('/register/sendsms', { cellphone: this.phone, smsType: 2, imgCode: this.code })
@@ -391,14 +387,13 @@ export default {
                     });
             }
         },
-        changePassword(n) { // 免费咨询
+        // 免费咨询
+        changePassword(n) {
             if (this.isPhone() && this.isNull() && this.isCodeNull()) {
-                // console.log(this.show);
                 this.show = n;
 
             }
         },
-
         // 点击切换样式
         myhover(n) {
             this.index = n;
@@ -407,10 +402,7 @@ export default {
         erjiyincang(c) {
             this.indexer = c;
         },
-        greet: function() {
-            this.style.cssText = "";
-        },
-
+        // 处理价格
         fmtPrice(p) {
             return (parseFloat(p) * 0.01).toFixed(2);
         },
@@ -418,11 +410,20 @@ export default {
         numShuliang(n) {
             // console.log(n);
             if (n === 0) {
-                this.num === 1 ? '' : this.num--;
-                // this.cartAction(this.numx);
+                if (this.num > 0) {
+
+                    this.num === 1 ? '' : this.num--;
+                } else {
+
+                }
+
             } else if (n === 1) {
-                this.num++;
-                // this.cartAction(this.numx);
+                if (this.num > 0) {
+
+                    this.num++;
+                } else {
+
+                }
             }
         },
         // 加入购物车
@@ -431,41 +432,41 @@ export default {
                 method: 'post',
                 url: '/cart/add',
                 data: {
-                    id: this.$route.query.id,
+                    id: this.shopTypeId,
                     num: this.num,
                 }
             }).then((res) => {
-                // console.log(res);
-                // this.fall +=this.num; 
-                // this.cartAction(this.fall);
+                // 弹出框提醒
                 this.alert_options.info = res.msg;
                 this.alert_options.type = 'success';
-
                 this.$refs.alert.alert();
+
+                this.$store.dispatch('cartAction');
             })
-            this.$root.eventHub.$emit('add', ev);
+
+            // this.$root.eventHub.$emit('add', ev);
         },
-        // 视角时间
+        // 失焦事件
         onblur(eiv) {
             let infor = eiv.target.value;
-            this.num = infor;
-            console.log(this.num);
-            // this.cartAction(infor);
+            if (infor > 0) {
+                // console.log(2);
+                this.num = infor;
+            } else {
+                // console.log(1);
+                infor = 1;
+                this.num = infor;
+            }
+            // console.log(eiv);
+            // console.log(this.num);
         },
-
-
-
-
-
-
+        // 获取id
         huoquid(id, indexe) {
             this.shopTypeId = id;
             this.getninumShuliang();
-            // console.log(this.shopTypeId);
             this.color = indexe;
-            // console.log(indexc);
+            console.log(this.shopTypeId);
         },
-
         // 商品详情获取
         getninumShuliang() {
             this.$http({
@@ -473,11 +474,9 @@ export default {
                 url: '/product/package/detail',
                 data: {
                     sId: this.shopTypeId,
-                    //sId: '0cb85ec6b63b41fc8aa07133b6144ea3',
                 }
             }).then((result) => {
                 let data = result.data.serviceList;
-                // console.log(result);
                 this.datas = result.data;
                 // 图片
                 this.img = 'http://115.182.107.203:8088/xinda/pic/' + result.data.product.img;
@@ -487,19 +486,8 @@ export default {
                 this.serviceName = result.data.providerProduct.serviceName;
                 this.serviceInfo = result.data.providerProduct.serviceInfo;
                 this.leixing = result.data.product.name;
-                // 查看服务商id
                 this.id = this.datas.providerProduct.providerId;
-
-                // console.log(this.datas.providerProduct);
-                console.log('1', data.code);
-                data.forEach(function(item,index) {
-                    // item.providerImg = 'http://115.182.107.203:8088/xinda/pic/' + item.providerImg;
-                    // console.log(item.providerImg);
-                    // item.marketPrice = item.marketPrice + '.00'
-                    // this.commodity = item.id;
-                    // console.log(commodity);
-                    // this.indexc = index;
-                    console.log('==>', item.code);
+                data.forEach(function(item, index) {
                 }, this);
                 this.shangpinxiangqing = data;
             })
@@ -525,18 +513,14 @@ export default {
                 }),
                 console.log(id);
         },
+        // 弹出框
         tanchukuang() {
-            this.modal_info = '请选择其他支付方式';
             this.$refs.name.confirm().then(() => {
                 this.$refs.name.show = false;
             }).catch(() => {
-                // 取消回掉函数
 
             })
         },
-        // onblur(m){
-        //     console.log(m);
-        // }
     }
 }
 </script>

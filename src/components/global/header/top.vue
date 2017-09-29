@@ -24,9 +24,6 @@
       </div>
     </div>
     <v-alert :type="options.type" :info="options.info" ref="alert"></v-alert>
-    <transition-group @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter" @leave="leave">
-      <span class="ball" v-for="(v, k) of balls" :key="k" v-show="v.show"></span>
-    </transition-group>
   </div>
 </template>
 
@@ -45,16 +42,11 @@ export default {
       status: false,
       user: '',
       options: { type: 'success', info: '' }, // 提示框设置
-      balls: [{ show: false }, { show: false }, { show: false }, { show: false }, { show: false }, { show: false }],
-      overBalls: [],
     }
   },
   created() {
     this.postUser();
     this.getCart();
-    this.evehub.$on('add', (ev) => {
-      this.drop(ev);
-    });
   },
   computed: {
     ...mapGetters(['getUser', 'getCartNum']),
@@ -81,7 +73,7 @@ export default {
         }
       })
     },
-    gotoServer() {
+    gotoServer() { // 服务商入口
       console.log(this.getUser, '----', this.getCartNum);
     },
     postUser() { // 获取用户信息
@@ -94,7 +86,7 @@ export default {
           let data = this.getUser;
           Object.assign(data, user);
           this.status = true;
-          this.loginAction(user);
+          this.loginAction(data);
         }
       })
     },
@@ -109,36 +101,6 @@ export default {
     },
     goto(url) { // 页面跳转
       this.$router.push(url);
-    },
-    drop(ev) {
-      for (let i = 0; i < this.balls.length; i++) {
-        if (!this.balls[i].show) {
-          this.balls[i].show = true;
-          this.balls[i].el = ev.target;
-          this.overBalls.push(this.balls[i]);
-          break;
-        }
-      }
-      console.log('drop--', ev, '--', this.balls);
-    },
-    /**过渡动画 */
-    beforeEnter(el) {
-      let count = this.overBalls.length;
-      while (count--) {
-        console.log('before-', el);
-      }
-    },
-    enter(el, done) {
-      console.log('enter-', el);
-      done();
-    },
-    afterEnter(el) {
-      console.log('after-', el);
-    },
-    leave(el, done) {
-      el.style.display = 'none';
-      console.log('leave-', el);
-      done();
     },
   },
 };
@@ -202,8 +164,18 @@ export default {
 
 .ball {
   position: absolute;
+  width: 100%;
+  height: 20px;
+  overflow: hidden; // border: 1px solid orange;
+  transition: .35s cubic-bezier(0.46, 0.17, 0.73, 0.51);
+}
+
+.inner {
+  position: absolute;
   padding: 8px;
   border-radius: 50%;
-  background-color: rgba(191, 220, 18, 0.29);
+  background-color: rgba(69, 174, 236, 0.5);
+  transition: .35s cubic-bezier(0.04, 0.49, 0.6, 1.07);
+  z-index: 999999;
 }
 </style>

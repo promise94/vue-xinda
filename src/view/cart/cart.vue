@@ -203,12 +203,16 @@ export default {
                                 this.cartAction(0);
                             }
                         });
+<<<<<<< HEAD
+=======
+
+>>>>>>> af0312a4135bfd8cd71f577c58831b4ae79e12a3
                     } else {
                         this.modal_info = res.msg;
                         this.$refs.name1.confirm().then(() => {
                             this.$refs.name1.show = false; //手动关闭  
                         })
-                        console.log(res);
+                        // console.log(res);
                     }
                     // this.
                 });
@@ -218,6 +222,7 @@ export default {
         },
         // 失焦事件
         onblur(ev, item1) {
+            // console.log(ev);
             this.getZhezhao(0); //遮罩层打开
             let vall = ev.target.value;
             if (vall > 0) {
