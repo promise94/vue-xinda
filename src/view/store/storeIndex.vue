@@ -117,32 +117,36 @@ export default {
 
 
   created() {
-    this.$http({      //店铺首页后台数据获取
-      method: 'post',
-      url: '/provider/detail',
-      data: {
-        id: this.$route.query.id,
-      }
-    }).then((res) => {
-      this.date = res.data;
-      // 服务商头像图片数据处理，加上前缀
-      this.date.providerImg.substring(0, 3) == 'http' ? this.date.providerImg = this.date.providerImg : this.date.providerImg = "http://115.182.107.203:8088/xinda/pic" + this.date.providerImg;
-      //营业执照图片数据处理，加上前缀
-      this.date.businessCertPath.substring(0, 3) == 'http' ? this.date.businessCertPath = this.date.businessCertPath : this.date.businessCertPath = "http://115.182.107.203:8088/xinda/pic" + this.date.businessCertPath;
-    }),
-
-      this.getStore();     //服务产品数据获取
+      this.getStore();     //数据获取    
   },
 
   watch:{
-    'route.query.id':function(){
-      this.getStore();
+    '$route.query.id'(id) {
+      this.conf.providerId=id;
+      this.getStore();  
     }
   },
 
   methods: {
-    getStore() {         //服务产品数据获取
-      this.$http({
+    
+    getStore() {  
+      this.$http({      //店铺首页后台数据获取
+        method: 'post',
+        url: '/provider/detail',
+        data: {
+          id: this.$route.query.id,
+        }
+      }).then((res) => {
+        this.date = res.data;
+        // 服务商头像图片数据处理，加上前缀
+        this.date.providerImg.substring(0, 3) == 'http' ? this.date.providerImg = this.date.providerImg : this.date.providerImg = "http://115.182.107.203:8088/xinda/pic" + this.date.providerImg;
+        //营业执照图片数据处理，加上前缀
+        this.date.businessCertPath.substring(0, 3) == 'http' ? this.date.businessCertPath = this.date.businessCertPath : this.date.businessCertPath = "http://115.182.107.203:8088/xinda/pic" + this.date.businessCertPath;
+        
+      });   
+           
+           
+      this.$http({//服务产品数据获取
         method: 'post',
         url: '/product/package/grid',
         data: this.conf,
@@ -151,7 +155,9 @@ export default {
         this.mess = res.data;
         this.mess.marketPrice = this.fmtPrice(this.mess.marketPrice);//处理市场价格余两位数
         this.mess.price = this.fmtPrice(this.mess.price);//处理销售价格余两位数
-      })
+        
+      });
+      
     },
 
     //变颜色

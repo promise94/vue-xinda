@@ -11,7 +11,7 @@
                     
                     <div @click="blue(2)" :class="{blue: change ===2}">
                         <p>价格
-                            <span class="xd xd-paixu" :class="{yellow: colors ===1}"></span>
+                            <span class="xd xd-paixu1" :class="{yellow: colors ===1}"></span>
                         </p>
                         <div></div>
                     </div>
@@ -215,6 +215,10 @@ export default {
                     background: #2594d4;
                     color: #fff;
                 }
+                >span{
+                    display:inline-block;
+                    transition:all 0.5s linear;
+                }
             }
         }
         .blue {
@@ -296,10 +300,9 @@ export default {
             }
         }
         
-    }
-    
+    } 
     .yellow{
-        color:yellow;
+        transform:rotate(180deg);
     }
 }
 .page-changes{
