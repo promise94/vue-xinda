@@ -51,8 +51,8 @@
                         </li>
                     </ul>
                     <div>
-                        <a href="#/cart" @click="jiarugouwuche()">立即购买</a>
-                        <button @click="jiarugouwuche()">加入购物车</button>
+                        <a href="#/cart" @click="jiarugouwuche(0)">立即购买</a>
+                        <button @click="jiarugouwuche(1)">加入购物车</button>
                     </div>
                 </div>
                 <div>
@@ -221,6 +221,7 @@
 
 <script>
 import { mapActions } from 'vuex';//vuex的引入
+import { mapGetters } from 'vuex';//vuex的引入
 import modal from '@/components/global/modal'; //弹出框引入
 import vAlert from '@/components/global/alert';
 
@@ -251,7 +252,7 @@ export default {
             shopTypeId: '',
             show: 1,
             modal_info: '',
-            index: '',//类型第几个
+            index: 0,//类型第几个
             color: 0, //类型颜色
             indexer: 0,
             num: 1,  //input 数量默认值
@@ -280,8 +281,19 @@ export default {
             fall: 0,
         }
     },
+    watch: {
+        '$route.query.id'() {
+            this.shopTypeId = this.$route.query.id;
+            this.getninumShuliang();
+            console.log();
+        }
+    },
+    computed: {
+        ...mapGetters(['getUser']),
+    },
     methods: {
         ...mapActions(['cartAction']),
+        // ...mapGetters(['getUser']),
 
         // 获取用户输入图片验证码
         getValue(v) {
@@ -428,23 +440,40 @@ export default {
         },
         // 加入购物车
         jiarugouwuche(ev) {
-            this.$http({
-                method: 'post',
-                url: '/cart/add',
-                data: {
-                    id: this.shopTypeId,
-                    num: this.num,
+            if (ev === 0) {
+                this.$http({
+                    method: 'post',
+                    url: '/cart/add',
+                    data: {
+                        id: this.shopTypeId,
+                        num: this.num,
+                    }
+                }).then((res) => {
+                    this.$store.dispatch('cartAction');
+                })
+            } else {
+                
+                if(!this.getUser.status){
+                    
+                    this.$router.push('/user/login');
+                    return false;
                 }
-            }).then((res) => {
-                // 弹出框提醒
-                this.alert_options.info = res.msg;
-                this.alert_options.type = 'success';
-                this.$refs.alert.alert();
+                this.$http({
+                    method: 'post',
+                    url: '/cart/add',
+                    data: {
+                        id: this.shopTypeId,
+                        num: this.num,
+                    }
+                }).then((res) => {
+                    // 弹出框提醒
+                    this.alert_options.info = res.msg;
+                    this.alert_options.type = 'success';
+                    this.$refs.alert.alert();
 
-                this.$store.dispatch('cartAction');
-            })
-
-            // this.$root.eventHub.$emit('add', ev);
+                    this.$store.dispatch('cartAction');
+                })
+            }
         },
         // 失焦事件
         onblur(eiv) {
@@ -479,7 +508,8 @@ export default {
                 let data = result.data.serviceList;
                 this.datas = result.data;
                 // 图片
-                this.img = 'http://115.182.107.203:8088/xinda/pic/' + result.data.product.img;
+                this.img = 'http://115.182.107.203:8088/xinda/pic' + result.data.product.img;
+                console.log(this.img);
                 this.htmle = result.data.providerProduct.serviceContent;
                 this.shichang = result.data.product.marketPrice;
                 this.xianjia = result.data.providerProduct.price;

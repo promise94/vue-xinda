@@ -41,7 +41,6 @@ export default {
 	},
 	methods: {
 		// defaultProv() {
-		// 	// console.log(data);
 		// 	if (this.regionId) {
 		// 		let p = this.regionId.toString().substr(0, 2);
 		// 		let c = this.regionId.toString().substr(2, 2);
@@ -56,7 +55,6 @@ export default {
 		// 									if (k.code.toString().substr(4, 2) == a) {
 		// 										this.prov = item;
 		// 										if (this.flag1) {
-		// 											console.log('run in default');
 		// 											this.city = s;
 		// 										}
 		// 										this.area = k;

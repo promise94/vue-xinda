@@ -105,7 +105,6 @@ export default {
     getHot() { // 获取热门服务
       this.$http.post('/recommend/list').then((res) => {
         this.hotData = res.data;
-        console.log(res);
       })
     },
     showServer({ id, href }) { // 查看热门服务详情
@@ -128,7 +127,6 @@ export default {
       this.getAllCity();
     },
     setCity(val) {  // 切换城市
-      console.log(val);
       this.isShowCity = false;
       this.$http.post('/common/change-region', { regionId: val.id }).then((res) => {
         if (res.status === 1) {
