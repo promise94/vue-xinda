@@ -80,7 +80,6 @@ export default {
             this.show = false;
             this.flag = true;
         }
-        // console.log(window.location.hash);
         if (window.location.hash == '#/') {
             this.cc = 0;
         } else if (window.location.hash == '#/services') {
@@ -111,23 +110,14 @@ export default {
             } else {
                 this.cc = '';
             }
-
-
-            // console.log(this.$route);
             if (this.$route.path == '/') {
                 this.show = true;
                 this.flag = false;
-                // console.log(this.$route);
                 if (this.flag == false) {
-
-
-
                 }
-
             } else {
                 this.show = false;
                 this.flag = true;
-
             }
         }
     },
@@ -139,7 +129,6 @@ export default {
             if (this.flag) {
                 if (n === 1) {
                     this.show = true;
-                    // console.log(this.show);
                 } else {
                     clearTimeout(this.promise);
                 }
@@ -151,7 +140,6 @@ export default {
                 if (n === 1) {
                     this.promise = setTimeout(() => {
                         this.show = false;
-                        // console.log(this.show);
                     }, 100);
                 } else {
                     this.show = false;

@@ -117,8 +117,6 @@ export default {
                         item.providerImg = item.providerImg.indexOf('http') > -1 ? item.providerImg : 'http://115.182.107.203:8088/xinda/pic' + item.providerImg;
                     })
                     this.searchOut = res.data;
-                    console.log(res.data);
-                    
                 });
             } else {
                 this.$http({
@@ -137,7 +135,6 @@ export default {
                         item.providerImg = item.providerImg.indexOf('http') > -1 ? item.providerImg : 'http://115.182.107.203:8088/xinda/pic' + item.providerImg;
                     })
                     this.searchOut = res.data;
-                    // console.log(this.sort);
                 });
             }
         },

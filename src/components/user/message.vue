@@ -23,7 +23,6 @@ export default {
   methods: {
     getCode() {
       this.$emit('get', this.val);
-      console.log(this.isSend);
       if (this.isSend) {
         this.btnEabale = true;
         this.text = this.time + 's';

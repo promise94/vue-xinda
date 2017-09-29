@@ -36,6 +36,12 @@ import register from '@/view/user/register.vue';
 import forget from '@/view/user/forget.vue';
 
 // import yinlian from '@/view/pay/yinlian.vue';
+
+/**
+ * M 版页面引入
+ */
+import mMain from '@/mobile/main.vue';  // 手机端展示页
+
 Vue.use(Router);
 
 export default new Router({
@@ -171,5 +177,11 @@ export default new Router({
         component: forget,
       }
     ]
-  }]
+  },
+  {
+    path: '/m',
+    name: 'Mobile',
+    component: mMain,
+  }
+  ]
 })

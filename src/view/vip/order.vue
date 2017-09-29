@@ -120,7 +120,6 @@ export default {
                 // select: (value) => {
                 // this.calendar.show = false;
                 // this.calendar.value = value;
-                // console.log('run in data');
                 // this.calendar.display = value.join("-");
                 // }
             },
@@ -167,7 +166,6 @@ export default {
     },
     methods: {
         getOrder({ business = '', start = '1900-01-01', end = this.time } = {}) { // 获取订单数据
-            console.log('arguments', business, '--', start, '--', end);
             let data = {
                 businessNo: business,
                 startTime: start,
