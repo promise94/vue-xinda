@@ -68,7 +68,7 @@
                         </div>
                     </div>
                     <div class="middle-three" v-if="list.length !=0">
-                         <v-page @page="titles" :amount="count" :limit="limit"></v-page>
+                        <v-page @page="titles" :amount="count" :limit="limit"></v-page>
                     </div>
                     <nothing title="未能搜索到该区域的商品" v-if="list.length == 0"></nothing>
 
@@ -77,11 +77,14 @@
             <div class="picture">
                 <img src="../../common/images/uu.png" alt="">
             </div>
+            <v-alert :type="alert_options.type" :info="alert_options.info" ref="alert"></v-alert>
         </div>
     </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex';//vuex的引入
+import vAlert from '@/components/global/alert';
 import nothing from '../../components/global/nothing.vue'//引用没有数据时显示的nothing
 import province from '../../components/global/province';//引用省市区组件
 import vPage from '@/components/global/page';//引用分页组件
@@ -102,11 +105,14 @@ export default {
             itemList: '',
             code: 4,
             regionId: '', //省市区地址区号
-            count:'',
+            count: '',
             limit: 8,
             start: 0,
             sort: 1,
-            n:2,
+            n: 2,
+            info: { phoneInfo: '', captInfo: '', msgInfo: '', pwdInfo: '', SecondInfo: '' }, // 提示信息
+            type: { phoneType: '', captType: '', msgType: '', pwdType: '', SecondType: '' }, // 提示类型
+            alert_options: { type: 'success', info: '' }, // 提示框设置
         }
     },
 
@@ -115,8 +121,10 @@ export default {
         province,
         nothing,
         vPage,
+        vAlert,
     },
     computed: {
+        ...mapActions(['cartAction']),
         list() {
             let list = [];
             if (this.recommend) {
@@ -162,7 +170,11 @@ export default {
                     num: 1,
                 }
             }).then((ward) => {
-                let data = ward.data;
+                // 操作成功弹出框
+                this.alert_options.info = ward.msg;
+                this.alert_options.type = 'success';
+                this.$refs.alert.alert();
+                this.$store.dispatch('cartAction');
             })
         },
 
@@ -185,15 +197,15 @@ export default {
             if (n == 2) {
                 this.n = 3;
                 this.sort = 2;
-                this.fack('', 4);
-            }else{
+                this.fack('', 3);
+            } else {
                 this.n = 2;
                 this.sort = 3;
-                this.fack('',3);
+                this.fack('', 3);
             }
         },
 
-         //调取自定义分页函数
+        //调取自定义分页函数
         titles(n) {
             this.start = n;
             this.fack('', 4);
@@ -221,7 +233,7 @@ export default {
                     let price = item.price;
                     item.price = this.fmtPrice(price);
                     item.providerImg = 'http://115.182.107.203:8088/xinda/pic/' + item.providerImg;
-                     this.arr = item.itemList;
+                    this.arr = item.itemList;
                 }, this);
                 this.recommend = data;
             })
