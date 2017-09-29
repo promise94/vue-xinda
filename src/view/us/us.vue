@@ -2,8 +2,6 @@
     <div class="center">
         <img src="../../common/images/u3629.png" alt="">
         <router-view></router-view>
-        <!-- 测试 
-        {{getUsername}} -->
         <div class="bk">
             <div class="bk_1">
                 <div class="bk_2 " v-on:mouseenter="myhover(0)" :class="{ dd: index ===0}">
@@ -61,9 +59,7 @@
 </template>
 
 <script>
-// 测试
-// import{mapGetters} from 'vuex'
-//--
+
 export default {
     data() {
         return {
@@ -74,51 +70,31 @@ export default {
         myhover(n) {
             this.index = n;
         },
-        // 测试
-        // ...mapActions(['loginAction'])
-        // --
-    },
-    // 测试
-    // computed:{
-    //     ...mapGetters(['getUsername'])
-    // },
-    // 登录成功
-    // this.loginAction(this.phone)
-//--
+    }
 };
 </script>
 
 <style lang="less" >
 .center {
-
-    // width: 1900px;
-    // height: 2482px;
-    // margin: 0 auto;
-
     img {
         width: 100%;
         height: 100%;
     }
-
     .bk {
         width: 1200px;
         height: 474px;
         margin: 0 auto;
         margin-top: 50px;
-        // border: 1px solid red;
     }
-
     .bk_1 {
         width: 1200px;
         display: flex;
         justify-content: space-between;
     }
-
     .bk_2 {
         text-align: center;
         width: 243px;
         height: 254px;
-        // border: 1px solid red;
         img {
             width: 155px;
             height: 155px;
@@ -129,11 +105,11 @@ export default {
                 cursor: pointer;
             }
             >p:nth-of-type(1) {
-                font-size: 18px; // color: black;
+                font-size: 18px;
                 font-weight: bold;
             }
             >p:nth-of-type(2) {
-                font-size: 12px; // color: gray;
+                font-size: 12px;
             }
         }
     }
@@ -162,7 +138,6 @@ export default {
         }
     }
 }
-
 .dd {
     color:#f57f51;
 }

@@ -1,6 +1,6 @@
 .biaoti{
     width: 1200px;
-    height: 57px;
+    // height: 57px;
     p{
         font-size: 14px;
         color: #2a2a2a;
@@ -9,7 +9,7 @@
 }
 .xiangqing{
     width: 1200px;
-    height: 393px;
+    // height: 393px;
     display: flex;
     >img{
         width: 525px;
@@ -18,7 +18,7 @@
     }
     >div:nth-of-type(1){
         width: 387px;
-        height: 393px;
+        // height: 393px;
         overflow: hidden;
         margin-left: 32px;
         >p:nth-of-type(1){
@@ -37,7 +37,7 @@
             >p:nth-child(1){
                 padding: 20px 0 0 5px;
                 font-size: 13px;
-                span{
+                >span{
                     text-decoration:line-through;
                 }
             }
@@ -66,15 +66,24 @@
                 }
             }
             >div:nth-of-type(2){
-               >.bucai{
-                   font-size: 13px;
+               .bunumShuliang{
+                font-size: 13px;
                 //    width: 76px;
                 //    height: 27px;
                 line-height: 27px;
                 margin-bottom: 5px;
                 >p{
-                    color: #2693d4;
+                    
                     cursor: pointer;
+                    span{
+                        display:inline-block;
+                        // width: 100%;
+                        height: 30px;
+                        border:1px solid #ccc;
+                        color: #676767;
+                        margin-bottom: 5px;
+                        
+                    }
                 }
                }
               
@@ -396,94 +405,38 @@
         }
     }
 }
-.body{
-    width: 720px;
-    height: 426px;
-    >div:nth-child(1){
-        width: 375px;
-        height: 40px;
-        margin: 0 auto;
-        >input{
-            width: 375px;
-            height: 40px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            // cursor: pointer;
-            outline:none;
-        }
-    }
-    >div:nth-child(2){
-        display: flex;
-        width: 375px;
-        height: 40px;
-        margin: 25px auto;
-        justify-content:space-between;
-        >div:nth-child(1){
-            >input{
-                width: 230px;
-                height: 40px;
-                border-radius: 5px;
-                border: 1px solid #ccc;
-                // cursor: pointer;
-                outline:none;
-            }
-        }
-        >div:nth-child(2){
-            width: 125px;
-            height: 40px;
-            border-radius: 5px;
-        }
-    }
-    >div:nth-child(3){
-        width: 375px;
-        height: 40px;
-        margin: 25px auto;
-        display: flex;
-        justify-content:space-between;
-        >div:nth-child(1){
-            >input{
-                width: 230px;
-                height: 40px;
-                border-radius: 5px;
-                border: 1px solid #ccc;
-                // cursor: pointer;
-                outline:none;
-            }
-        }
-        >div:nth-child(2){
-            width: 125px;
-            height: 40px;
-            border-radius: 5px;
-            >input{
-                width: 125px;
-                height: 40px;
-                border-radius: 5px;
-                cursor: pointer;
-                background: #f5f4f4;
-                outline:none;
-                border: 1px solid #ccc;
-            }
-        }
-    }
-    >div:nth-child(4){
-        width: 375px;
-        height: 40px;
-        margin: 25px auto;
-        >input{
-            width: 377px;
-            height: 40px;
-            border-radius: 5px;
-            background: #4eb5ba;
-            border: 1px solid #4eb5ba;
-            cursor: pointer;
-            outline:none;
-            color: #ffffff;
-        }
-    }
-}
+
 .button1{
     p{
         text-align: center;
         color: #666666;
     }
+}
+// 点击获取}
+.huoqu{
+    .dianjihuoqu{
+        width: 125px;
+        height: 40px;
+        background: #f5f4f4;
+        border: 1px solid #ccc;
+        border-radius:5px ;
+    }
+    .qingshuru{
+        margin: 10px 0 10px 189px;
+    }
+    
+}
+// 查询
+.btn{
+    width: 720px;
+    .mianfeizixun{
+        width: 372px;
+        height: 40px;
+        margin-left:189px;
+        background: #4eb5ba;
+        border: 1px solid #4eb5ba;
+        color: #ffffff;
+        border-radius:5px ;
+    }
+    
 }

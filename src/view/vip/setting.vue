@@ -8,10 +8,8 @@
             <div>
                 <span>当前头像 :</span>
                 <div>
-                    <div class="xd xd-user" v-if="!userInfo.info.headImg">
-                        <input @change="getFile($event)" type="file">
-                    </div>
-                    <div v-if="userInfo.info.headImg">
+                    <div class="userimg">
+                        <img :src="headImgSrc" alt="">
                         <input @change="getFile($event)" type="file">
                     </div>
                 </div>
@@ -29,7 +27,7 @@
             </div>
             <div>
                 <span>邮箱 :</span>
-                <v-input @getValue="getEmail" :value="email" @blur="isEmail()" @focus="isEmail(1)" :info="info.emailInfo" :infoType="type.emailType" placeholder="请输入邮箱">
+                <v-input @getValue="getEmail" :value="email.sync" @blur="isEmail()" @focus="isEmail(1)" :info="info.emailInfo" :infoType="type.emailType" placeholder="请输入邮箱">
                 </v-input>
             </div>
             <div>
@@ -83,6 +81,7 @@ export default {
         return {
             says: 1,
             headImg: '', // 用户头像
+            saveImg: '', // 用户头像提交后台数据
             name: '', // 用户名
             prov: '', // 省市区
             email: '', // 邮箱
@@ -101,10 +100,15 @@ export default {
             this.name = info.name;
             this.sex = info.gender ? info.gender : '';
             this.email = info.email ? info.email : '';
+            this.headImg = info.headImg;
         }, 500);
     },
     computed: {
         ...mapGetters({ userInfo: 'getUser' }),
+        headImgSrc() { // 头像图片
+            let src = this.headImg ? this.headImg : '../../../static/images/user.png';
+            return src;
+        }
     },
     watch: {
     },
@@ -198,24 +202,36 @@ export default {
                 gender: this.sex ? this.sex : '',
                 email: this.email ? this.email : '',
                 regionId: this.prov ? this.prov[2].code : this.userInfo.regionId,
-                headImg: this.headImg,
+                headImg: this.saveImg,
             }
             let info = this.userInfo.info;
             this.$http.post('/member/update-info', data).then((res) => {
                 this.alert_options.info = res.msg;
                 if (res.status === 1) {
                     this.alert_options.type = 'success';
-                    Object.assign(info,data);
+                    Object.assign(info, data);
                     this.infoAction(info);
                 } else {
                     this.alert_options.type = 'error';
                 }
                 this.$refs.alert.alert();
-                console.log('saveInfo---', res);
             })
         },
         getFile(ev) { // 更改头像
-            console.log('run in img',ev);
+            let formData = new FormData();
+            let reader = new FileReader();
+
+            formData.append('headImg', ev.target.files[0]);
+
+            reader.readAsDataURL(formData.get('headImg'));
+            // reader.readAsDataURL(ev.target.files[0]);
+            reader.onloadend = (res) => {
+                console.log('onloadend--', res);
+                let dataURI = res.target.result;
+                this.headImg = dataURI;
+                // this.saveImg = JSON.stringify(formData.get('headImg'));
+            };
+            console.log('formData', JSON.stringify(formData.get('headImg')));
         },
         savePassword() { // 保存密码
             if (this.isPassword({}) && this.isSecondPwd() && this.isPassword({ sign: 'old' })) {

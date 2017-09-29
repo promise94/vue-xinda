@@ -24,6 +24,7 @@ import vAlert from '@/components/global/alert';
 import reg from '@/common/js/reg';
 import md5 from 'md5';
 import { mapActions } from 'vuex';
+import { mapGetters } from 'vuex';
 export default {
   components: {
     xdCaptcha,
@@ -56,9 +57,10 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['getUser']),
   },
   methods: {
-    ...mapActions(['loginPathAction']),
+    ...mapActions(['loginAction']),
     getValue(v) { // 获取用户输入图片验证码
       this.code = v;
       this.isNull(1);
@@ -128,12 +130,21 @@ export default {
         this.$http.post('/sso/login', { loginId: this.phone, password: md5(this.password), imgCode: this.code })
           .then((res) => {
             if (res.status === 1) {
-              let path = sessionStorage.getItem('toLoginPath');
+              // 获取登录成功后的跳转路径
+              let path = this.$route.query.redirect || sessionStorage.getItem('toLoginPath');
               path = path ? path : '/';
+              // 登录成功后提示信息
               this.alert_options.type = 'success';
               this.alert_options.info = res.msg;
               this.$refs.alert.alert().then(() => {
+                // 重置登录状态
+                let user = Object.assign(this.getUser, { status: true });
+                this.loginAction(user);
+                // 保存登录手机号用于用户下次登录智能填写
                 localStorage.setItem('temp', JSON.stringify({ tempPhone: this.phone }));
+                // 保存登录时间
+                sessionStorage.setItem('token', (new Date()).getTime());
+                // 路由跳转
                 this.$router.push(path);
               });
             } else if (res.msg.indexOf('验证码') > -1) {

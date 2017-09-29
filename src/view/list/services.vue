@@ -1,5 +1,5 @@
 <template>
-    <div class="middle">
+    <div class="middle" id="services">
         <div class="middle-two">
             <div class="content">
                 <div class="content-top">
@@ -33,11 +33,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="content-bottom" v-if="arr.lenght !=0">
+                    <div class="content-bottom" v-if="list.length !=0">
                         <div class="ball">
                             <ul>
                                 <li @click="loverd(1)" :class="{all: oyo ===1}">综合排序</li>
-                                <li @click="loverd(2)" :class="{all: oyo ===2}">
+                                <li @click="loverd(2),paixu(n)" :class="{all: oyo ===2}">
                                     <span>价格&nbsp;
                                         <i class="xd xd-paixu"></i>
                                     </span>
@@ -50,7 +50,7 @@
                                 <li>价格</li>
                             </ul>
                         </div>
-                        <div class="ball-two" v-for="(item,k) of recommend" :key="k">
+                        <div class="ball-two" v-for="(item,k) of list" :key="k">
                             <img :src="item.providerImg" @click="shoid(item.id)" alt="">
                             <div class="ball-left">
                                 <a @click="shoid(item.id)" href="javascript:viod:(0)">{{item.serviceName}}</a>
@@ -67,27 +67,27 @@
                             </div>
                         </div>
                     </div>
-                    <nothing title="未搜索到结果" v-if="arr.lenght ==0"></nothing>
+                    <div class="middle-three" v-if="list.length !=0">
+                        <v-page @page="titles" :amount="count" :limit="limit"></v-page>
+                    </div>
+                    <nothing title="未能搜索到该区域的商品" v-if="list.length == 0"></nothing>
 
                 </div>
             </div>
             <div class="picture">
                 <img src="../../common/images/uu.png" alt="">
             </div>
-        </div>
-        <div class="middle-three" v-if="arr.lenght !=0">
-            <div>
-                <p>上一页</p>
-                <p class="alone">1</p>
-                <p>下一页</p>
-            </div>
+            <v-alert :type="alert_options.type" :info="alert_options.info" ref="alert"></v-alert>
         </div>
     </div>
 </template>
 
 <script>
-import nothing from '../../components/global/nothing.vue';
-import province from '../../components/global/province';
+import { mapActions } from 'vuex';//vuex的引入
+import vAlert from '@/components/global/alert';
+import nothing from '../../components/global/nothing.vue'//引用没有数据时显示的nothing
+import province from '../../components/global/province';//引用省市区组件
+import vPage from '@/components/global/page';//引用分页组件
 export default {
     name: 'services',
     created() {
@@ -104,43 +104,51 @@ export default {
             fuwu: '',
             itemList: '',
             code: 4,
+            regionId: '', //省市区地址区号
+            count: '',
+            limit: 8,
+            start: 0,
+            sort: 1,
+            n: 2,
+            info: { phoneInfo: '', captInfo: '', msgInfo: '', pwdInfo: '', SecondInfo: '' }, // 提示信息
+            type: { phoneType: '', captType: '', msgType: '', pwdType: '', SecondType: '' }, // 提示类型
+            alert_options: { type: 'success', info: '' }, // 提示框设置
         }
     },
+
     //城市三级联动
     components: {
         province,
+        nothing,
+        vPage,
+        vAlert,
+    },
+    computed: {
+        ...mapActions(['cartAction']),
+        list() {
+            let list = [];
+            if (this.recommend) {
+                if (!this.regionId) {
+                    return this.recommend;
+                }
+                this.recommend.forEach((item) => {
+                    if (item.regionId == this.regionId) {
+                        list.push(item);
+                    }
+                });
+            }
+
+            return list;
+        }
     },
     methods: {
-
-        //封装的axios插件:getStoreList()
-        getStoreList() {
-            this.$http({
-                method: 'post',
-                url: '/provider/grid',
-                data: this.conf,
-            }).then((result) => {
-                this.count = result.totalCount;
-                let data = result.data;
-                let len = data.length;
-                // console.log(result.totalCount);
-                for (var i = 0; i < len; i++) {
-                    data[i].totalJudge == 0 ? data[i].totalJudge = 1 : "";
-                    data[i].providerImg.substring(0, 3) == 'http' ? data[i].providerImg = data[i].providerImg : data[i].providerImg = "http://115.182.107.203:8088/xinda/pic" + data[i].providerImg;
-                    //作双层循环//
-                    // data[i].producttypes = data[i].producttypes.split(",");
-                };
-                this.arr = data;
-            })
-        },
 
         //城市三级联动
         getProv(pro) {
             if (pro !== "") {
                 this.regionId = pro[2].code;
-                this.getStoreList();
             } else {
                 this.regionId = "";
-                this.getStoreList();
             }
         },
 
@@ -162,7 +170,11 @@ export default {
                     num: 1,
                 }
             }).then((ward) => {
-                let data = ward.data;
+                // 操作成功弹出框
+                this.alert_options.info = ward.msg;
+                this.alert_options.type = 'success';
+                this.$refs.alert.alert();
+                this.$store.dispatch('cartAction');
             })
         },
 
@@ -181,6 +193,23 @@ export default {
         loverd(c) {
             this.oyo = c;
         },
+        paixu(n) {
+            if (n == 2) {
+                this.n = 3;
+                this.sort = 2;
+                this.fack('', 3);
+            } else {
+                this.n = 2;
+                this.sort = 3;
+                this.fack('', 3);
+            }
+        },
+
+        //调取自定义分页函数
+        titles(n) {
+            this.start = n;
+            this.fack('', 4);
+        },
 
         //获取数据
         fmtPrice(p) {
@@ -195,14 +224,16 @@ export default {
                     limit: 8,
                     productTypeCode: code ? code : '',
                     productId: id ? id : '',
-                    sort: 2,
+                    sort: this.sort,
                 }
             }).then((you) => {
                 let data = you.data;
+                this.count = you.totalCount;
                 data.forEach(function(item) {
                     let price = item.price;
                     item.price = this.fmtPrice(price);
                     item.providerImg = 'http://115.182.107.203:8088/xinda/pic/' + item.providerImg;
+                    this.arr = item.itemList;
                 }, this);
                 this.recommend = data;
             })

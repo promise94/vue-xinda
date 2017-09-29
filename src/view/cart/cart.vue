@@ -40,7 +40,7 @@
         <!-- 金额总计 -->
         <div class="totle" v-if="willshow">
             <p>金额总计
-                <span>￥{{monytotal}}</span>
+                <span>￥{{monytotal/100}}</span>
             </p>
             <div @click="goShop()">
                 <a>继续购物</a>
@@ -140,10 +140,10 @@ export default {
                         item.unitPrice = this.fmtPrice(price);    //价格处理
                         let totalPrice = item.totalPrice;
                         item.totalPrice = this.fmtPrice(totalPrice);
-                        this.monytotal += item.totalPrice / 1 //总钱数
+                        this.monytotal += item.totalPrice*100  //总钱数
                     }, this)
                     this.items = res.data;
-                    this.cartAction(this.counter);
+                    this.cartAction(this.msg);
                 } else {
                     this.willshow = 0;
                 }
@@ -242,7 +242,6 @@ export default {
             }).then((res) => {
                 console.log(res);
                 if (res.status == 1) {
-                    // this.getCartlsit();
                     let dingdan = res.data;
                     this.$router.push({
                         path: '/pay',

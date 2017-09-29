@@ -24,7 +24,6 @@
       </div>
     </div>
     <v-alert :type="options.type" :info="options.info" ref="alert"></v-alert>
-    <span class="ball" v-for="(v, k) of balls" v-if="v.show"></span>
   </div>
 </template>
 
@@ -43,14 +42,11 @@ export default {
       status: false,
       user: '',
       options: { type: 'success', info: '' }, // 提示框设置
-      balls: [{ show: false }, { show: false }, { show: false }, { show: false }, { show: false }, { show: false }],
     }
   },
   created() {
     this.postUser();
-    this.evehub.$on('add', (ev) => {
-      this.drop(ev);
-    });
+    this.getCart();
   },
   computed: {
     ...mapGetters(['getUser', 'getCartNum']),
@@ -59,7 +55,7 @@ export default {
     // this.evehub.$off('add');
   },
   methods: {
-    ...mapActions(['loginAction']),
+    ...mapActions(['loginAction', 'cartAction']),
     logout() { // 退出登录
       this.$http.post('/sso/ logout').then((res) => {
         if (res.status === 1) {
@@ -77,7 +73,7 @@ export default {
         }
       })
     },
-    gotoServer() {
+    gotoServer() { // 服务商入口
       console.log(this.getUser, '----', this.getCartNum);
     },
     postUser() { // 获取用户信息
@@ -90,22 +86,22 @@ export default {
           let data = this.getUser;
           Object.assign(data, user);
           this.status = true;
-          this.loginAction(user);
+          this.loginAction(data);
         }
       })
+    },
+    getCart() {
+      // if (this.getUser.status) {
+      //   this.$http.post('/cart/cart-num').then((res) => {
+      //     let n = res.data.cartNum;
+      //     console.log('getCart',n);
+      //     this.cartAction(n);
+      //   });
+      // }
     },
     goto(url) { // 页面跳转
       this.$router.push(url);
     },
-    drop(ev) {
-      for (let i = 0; i < this.balls.length; i++) {
-        if (!this.balls[i].show) {
-          this.balls[i].show = true;
-          break;
-        }
-      }
-      console.log('drop--', ev, '---', this.$refs.cart.getBoundingClientRect(), '--', this.balls);
-    }
   },
 };
 </script>
@@ -165,10 +161,21 @@ export default {
     }
   }
 }
-.ball{
+
+.ball {
+  position: absolute;
+  width: 100%;
+  height: 20px;
+  overflow: hidden; // border: 1px solid orange;
+  transition: .35s cubic-bezier(0.46, 0.17, 0.73, 0.51);
+}
+
+.inner {
   position: absolute;
   padding: 8px;
   border-radius: 50%;
-  background-color: rgba(191, 220, 18, 0.29);
+  background-color: rgba(69, 174, 236, 0.5);
+  transition: .35s cubic-bezier(0.04, 0.49, 0.6, 1.07);
+  z-index: 999999;
 }
 </style>

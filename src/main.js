@@ -34,12 +34,20 @@ new Vue({
     eventHub: new Vue(),
   },
   created() {
+    // window.addEventListener('mousemove', () => {
+    //   let t = sessionStorage.getItem('token');
+    //   let time = (new Date()).getTime();
+    //   if ((time - t) > 1800000) {
+    //     this.$router.go();
+    //   }
+    // });
+    let hash = window.location.hash;
     this.$router.beforeEach((to, from, next) => {
       if (to.meta.requireAuth) {
-        if (from.name && this.$store.state.user.status) {
+        if (this.$store.state.user.status) {
           next();
         } else {
-          next('/user/login');
+          next({ path: '/user/login', query: { redirect: to.fullPath } });
         }
       } else {
         next();
