@@ -134,6 +134,12 @@ export default {
       this.getStore();     //服务产品数据获取
   },
 
+  watch:{
+    'route.query.id':function(){
+      this.getStore();
+    }
+  },
+
   methods: {
     getStore() {         //服务产品数据获取
       this.$http({

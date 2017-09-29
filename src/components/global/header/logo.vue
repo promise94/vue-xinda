@@ -20,11 +20,10 @@
         <input type="text" @keyup.enter="search()" v-model="searchName" placeholder="搜索您需要的服务或服务商">
         <button @click="search()" class="xd xd-search"></button>
       </li>
-      <li>
+      <li class="hot">
         <span>热门服务&nbsp;:&nbsp;</span>
         <div>
-          <span class="">社保开户</span>
-          <span>公司注册</span>
+          <span v-for="item in hqlist" @click="showServer({id: item.id, href: item.href})">{{item.name}}</span>
         </div>
       </li>
     </ul>
@@ -47,12 +46,13 @@ export default {
   name: 'logo',
   data() {
     return {
-      typeIn: 1, // 搜索类型切换 1:产品，2:商品
+      typeIn: 1, // 搜索类型切换 1:产品，2:服务商
       searchName: '', // 搜索内容
       activeCity: '', // 所选城市
       allCity: '', // 所有城市
       regionId: '110100', // 所选城市编码
       isShowCity: false, // 选择城市面板
+      hotData: '', // 热门数据
     }
   },
   created() {
@@ -62,26 +62,63 @@ export default {
       this.typeIn = searchInfo.type;
     }
     this.getActiveCity();
+    this.getHot();
+  },
+  computed: {
+    hqlist() {
+      let data = [];
+      if (this.hotData) {
+        if (this.typeIn == 1) {
+          this.hotData.hq.forEach((item) => {
+            let temp = {
+              id: item.id,
+              name: item.serviceName,
+              href: '/goods',
+            }
+            data.push(temp);
+          });
+        } else {
+          this.hotData.provider.forEach((item) => {
+            let temp = {
+              id: item.id,
+              name: item.providerName,
+              href: '/storeIndex',
+            }
+            data.push(temp);
+          })
+        }
+      }
+      return data;
+    }
   },
   methods: {
     search() { // 搜索跳转
       this.$router.push('/search/' + Math.random().toString(16).substr(2));
       sessionStorage.setItem('searchInfo', JSON.stringify({ keyword: this.searchName, type: this.typeIn, id: this.regionId }));
     },
-    goto(url) {
+    goto(url) { // 跳转
       this.$router.push(url);
     },
     switchType(n) {
       this.typeIn = n;
     },
-    getActiveCity() {
+    getHot() { // 获取热门服务
+      this.$http.post('/recommend/list').then((res) => {
+        this.hotData = res.data;
+        console.log(res);
+      })
+    },
+    showServer({ id, href }) { // 查看热门服务详情
+      this.$router.push({ path: href, query: { id } });
+    },
+    getActiveCity() { // 获取选中城市
       this.$http.post('/common/select-region').then((res) => {
         if (res.status === 1) {
           this.activeCity = res.data.name;
         }
       });
     },
-    getAllCity() {
+    getAllCity() {  // 获取城市列表
       this.$http.post('/common/open-region').then((res) => {
         this.allCity = res.data;
       })
@@ -90,7 +127,7 @@ export default {
       this.isShowCity = !this.isShowCity;
       this.getAllCity();
     },
-    setCity(val) {
+    setCity(val) {  // 切换城市
       console.log(val);
       this.isShowCity = false;
       this.$http.post('/common/change-region', { regionId: val.id }).then((res) => {
@@ -211,15 +248,22 @@ export default {
         }
       }
       &:nth-of-type(3) {
+        display: flex;
+        align-items: center;
         span {
           font-size: 12px;
           color: #c7c7c7;
         }
         >span {
-          padding-left: 15px;
+          // padding-left: 15px;
+          width: 66px;
+          flex-shrink: 0;
         }
         >div {
-          display: inline-block;
+          height: 22px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          word-wrap: normal;
           span {
             margin-right: 15px;
             cursor: pointer;

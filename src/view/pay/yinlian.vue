@@ -18,6 +18,7 @@ export default{
         form.action = 'https://101.231.204.80:5000/gateway/api/frontTransReq.do';   //跳转银联支付网站
         form.method='post';                         //获取方法
         //提取标签<body></body>
+        
         let formstr = this.payment.substring(this.payment.lastIndexOf('<body>')+6,this.payment.lastIndexOf('</body>'));
         //提取标签<form></form>
         let innerForm = formstr.substring(formstr.indexOf('>') + 1,formstr.lastIndexOf('</form>'));
