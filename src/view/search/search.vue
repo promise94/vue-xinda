@@ -6,11 +6,14 @@
                 <div class="order">
                     <div @click="blue(1)" :class="{blue: change ===1}">
                         <p>综合排序</p>
+                        <div></div>
                     </div>
+                    
                     <div @click="blue(2)" :class="{blue: change ===2}">
                         <p>价格
                             <span class="xd xd-paixu" :class="{yellow: colors ===1}"></span>
                         </p>
+                        <div></div>
                     </div>
                 </div>
                 <div class="main">
@@ -30,7 +33,7 @@
                                 </li>
                             </ul>
                             <div class="ball-right" v-if="typeIn== 1">
-                                <p>￥&nbsp;{{item.price}}</p>
+                                <p>￥&nbsp;{{fmtPrice(item.price)}}</p>
                                 <div>
                                     <a href="#/cart" @click="cars(item.id)">立即购买</a>
                                     <a @click="cars(item.id)">加入购物车</a>
@@ -40,6 +43,11 @@
                     </div>
                 </div>
             </div>
+            <div class="page-changes" v-if="searchOut.length !== 0">
+
+                <v-page @page="titles" :amount="count" :limit="limit" type="dd"></v-page>
+
+            </div>
             <nothing title="未搜索到结果" v-if="searchOut.length == 0"></nothing>
         </div>
     </div>
@@ -47,8 +55,12 @@
 
 <script>
 import nothing from '../../components/global/nothing.vue';
+import vPage from '@/components/global/page';//引用分页组件
 export default {
-    components: {nothing},
+    components: {
+        nothing,
+        vPage,
+        },
     data() {
         return {
             checked: 1,
@@ -59,7 +71,10 @@ export default {
             typeIn: 1, // 搜索类型 1:产品，2:服务商
             regionId: '', // 城市编码
             sort: '',//排序方式（默认为空）
-            i: 0
+            i: 0,
+            start: 0, //分页起始数
+            limit: 6, //分页每页数量
+            count: 0, //服务产品内总产品数量
         }
     },
     created() {
@@ -71,7 +86,7 @@ export default {
         
     },
     watch: {
-        '$route'() {
+        '$route'() {       //获取存储在sessionStorage里的数据
             let searchInfo = JSON.parse(sessionStorage.getItem('searchInfo'));
             this.searchName = searchInfo.keyword;
             this.typeIn = searchInfo.type;
@@ -86,44 +101,47 @@ export default {
         },
         blue(m) {
             this.change = m;
-            if(m==2){           
+            if(m==2){      //判断点击次数作价格升序降序     
                 this.i++;
                 if(this.i%2==1){
-                    this.sort=3;
+                    this.sort=3; //价格降序
                     this.colors=0; 
                 }else{
-                    this.sort=2;
+                    this.sort=2; //价格升序
                     this.colors=1;
                 }
             }else{
-                this.sort= '';
+                this.sort= ''; //默认排序
                 this.colors=0; 
             }
             this.search();
         },
         search() {
-            if (this.typeIn == 1) {
+            if (this.typeIn == 1) { //商品搜索
                 this.$http({
                     method: 'post',
                     url: '/product/package/search-grid',
                     data: {
-                        start: 0,
-                        limit: 8,
-                        searchName: this.searchName,
-                        sort: this.sort,
+                        start: this.start,//分页起始数
+                        limit: this.limit,//分页每页数量
+                        searchName: this.searchName,//搜索名称
+                        sort: this.sort, //价格排列,
                     }
                 }).then((res) => {
-                    res.data.forEach((item) => {
+                    res.data.forEach((item) => {//处理图片加上前缀
                         item.providerImg = item.providerImg.indexOf('http') > -1 ? item.providerImg : 'http://115.182.107.203:8088/xinda/pic' + item.providerImg;
-                    })
+                    });
+                    this.count = res.totalCount; //产品内总产品数量
                     this.searchOut = res.data;
+                    // console.log(this.count);
+                    
                 });
-            } else {
+            } else { //服务商搜索
                 this.$http({
                     method: 'post',
                     url: '/provider/search-grid',
                     data: {
-                        start: 0,
+                        start: this.start,
                         limit: 8,
                         searchName: this.searchName,
                         // productTypeCode: 7,
@@ -131,9 +149,10 @@ export default {
                         sort: 1,
                     }
                 }).then((res) => {
-                    res.data.forEach((item) => {
+                    res.data.forEach((item) => {//处理图片加上前缀
                         item.providerImg = item.providerImg.indexOf('http') > -1 ? item.providerImg : 'http://115.182.107.203:8088/xinda/pic' + item.providerImg;
-                    })
+                    });
+                    this.count = res.totalCount; //产品内总产品数量
                     this.searchOut = res.data;
                 });
             }
@@ -150,6 +169,16 @@ export default {
                 
             })
         },
+        
+        //函数处理价格，小数点后余两位数
+        fmtPrice(p) {
+            return (parseFloat(p) * 0.01).toFixed(2);
+        },
+        //调取自定义分页函数
+        titles(n) {
+            this.start = n;
+            this.search();
+        }
 
     }
 }
@@ -181,16 +210,16 @@ export default {
             p {
                 font-size: 14px;
                 cursor: pointer;
-            }
-            &:hover {
-                background: #2594d4;
-                color: #fff;
+                &:hover {
+                    background: #2594d4;
+                    color: #fff;
+                }
             }
         }
         .blue {
             color: #fff;
             background: #2594d4;
-            &::before {
+            >div{
                 width: 10px;
                 height: 10px;
                 transform: rotate(45deg);
@@ -210,6 +239,7 @@ export default {
             justify-content: space-between;
             border-top: 1px solid #eee;
             .details {
+                
                 display: flex;
                 align-items: center;
                 justify-content: flex-start;
@@ -219,7 +249,8 @@ export default {
                     padding: 30px;
                     border: 1px solid #ddd;
                     img {
-                        width: 100%;
+                        width: 100px;
+                        height:45px;
                     }
                 }
                 .info {
@@ -263,9 +294,14 @@ export default {
                 }
             }
         }
+        
     }
+    
     .yellow{
         color:yellow;
     }
 }
+.page-changes{
+            margin:25px auto 150px;
+        }
 </style>

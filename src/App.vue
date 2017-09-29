@@ -20,9 +20,6 @@ export default {
 <style lang = "less">
 @import url('./common/less/global/cssreset.less');
 @import url('./common/less/global/base.less');
-#app {
-  min-width: 1300px;
-}
 
 .fade-enter-active,
 .fade-leave-active {

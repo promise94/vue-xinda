@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="main">
         <xd-header></xd-header>
         <transition :name="transitionName" mode="out-in">
             <router-view class="child-view"></router-view>
@@ -33,6 +33,9 @@ export default {
 </script>
 
 <style scoped>
+#main{
+  min-width: 1300px;
+}
 .child-view {
     transition: all .25s cubic-bezier(.55, 0, .1, 1);
 }

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="user">
     <xd-header :head="head"></xd-header>
     <div id="content">
       <div class="container content">
@@ -74,6 +74,10 @@ export default {
 </script>
 
 <style lang="less">
+#user {
+  min-width: 1300px;
+}
+
 @import '../common/less/user/user.less';
 #content {
   >.content {

@@ -1,6 +1,6 @@
 <template>
-  <div>
-      <h1>你的打开方式不对，请使用电脑打开</h1>
+  <div class="m_main">
+      <router-view></router-view>
   </div>
 </template>
 
@@ -11,5 +11,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
+.m_main{
+  width: 3.75rem;
+}
 </style>
