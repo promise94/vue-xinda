@@ -61,8 +61,8 @@
                             <div class="ball-right">
                                 <p>￥&nbsp;{{item.price}}</p>
                                 <div>
-                                    <a href="#/cart" @click="edward(item.id)">立即购买</a>
-                                    <a @click="edward(item.id) ">加入购物车</a>
+                                    <a href="#/cart" @click="edward(item.id,0)">立即购买</a>
+                                    <a @click="edward(item.id,1) ">加入购物车</a>
                                 </div>
                             </div>
                         </div>
@@ -78,12 +78,13 @@
             </div>
             <v-alert :type="alert_options.type" :info="alert_options.info" ref="alert"></v-alert>
         </div>
-        
+
     </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex';//vuex的引入
+import { mapGetters } from 'vuex';//vuex的引入
 import vAlert from '@/components/global/alert';
 import nothing from '../../components/global/nothing.vue'//引用没有数据时显示的nothing
 import province from '../../components/global/province';//引用省市区组件
@@ -128,7 +129,7 @@ export default {
 
     //省市区选择商品
     computed: {
-        ...mapActions(['cartAction']),
+        ...mapGetters(['getUser']),
         list() {
             let list = [];
             if (this.recommend) {
@@ -234,27 +235,45 @@ export default {
             })
         },
 
-        //购物车接口
-        edward(addCarId) {
-            this.$http({
-                method: 'post',
-                url: '/cart/add',
-                data: {
-                    id: addCarId,
-                    num: 1,
-                }
-            }).then((ward) => {
-                // let data = ward.data;
-                // this.$refs.alert.alert;
-                // 操作成功弹出框
-                this.alert_options.info = ward.msg;
-                this.alert_options.type = 'success';
-                this.$refs.alert.alert();
-                this.$store.dispatch('cartAction');
-
-                console.log('a')
-            })
+        //加入购物车
+        edward(addCarId, goumai) {
+            if (!this.getUser.status) {
+                this.$router.push('/user/login');
+                return false;
+            }
+            if (goumai === 0) {
+                this.$http({
+                    method: 'post',
+                    url: '/cart/add',
+                    data: {
+                        id: addCarId,
+                        num: 1,
+                    }
+                }).then((ward) => {
+                    // 操作成功弹出框
+                    // this.alert_options.info = ward.msg;
+                    // this.alert_options.type = 'success';
+                    // this.$refs.alert.alert();
+                    // this.$store.dispatch('cartAction');
+                })
+            } else {
+                this.$http({
+                    method: 'post',
+                    url: '/cart/add',
+                    data: {
+                        id: addCarId,
+                        num: 1,
+                    }
+                }).then((ward) => {
+                    // 操作成功弹出框
+                    this.alert_options.info = ward.msg;
+                    this.alert_options.type = 'success';
+                    this.$refs.alert.alert();
+                    this.$store.dispatch('cartAction');
+                })
+            }
         },
+
         //调取自定义分页函数
         titles(n) {
             this.start = n;

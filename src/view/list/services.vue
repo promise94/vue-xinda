@@ -17,7 +17,7 @@
                             </div>
                         </div>
                         <div class="search-two">
-                            <div>
+                            <div class="sear">
                                 <p>类型</p>
                             </div>
                             <div class="search-b">
@@ -61,8 +61,8 @@
                             <div class="ball-right">
                                 <p>￥&nbsp;{{item.price}}</p>
                                 <div>
-                                    <a href="#/cart" @click="edward(item.id)">立即购买</a>
-                                    <a @click="edward(item.id)" href="javascript:viod:(0)">加入购物车</a>
+                                    <a href="#/cart" @click="edward(item.id,0)">立即购买</a>
+                                    <a @click="edward(item.id,1)" href="javascript:viod:(0)">加入购物车</a>
                                 </div>
                             </div>
                         </div>
@@ -84,12 +84,14 @@
 
 <script>
 import { mapActions } from 'vuex';//vuex的引入
-import vAlert from '@/components/global/alert';
+import { mapGetters } from 'vuex';//vuex的引入
 import nothing from '../../components/global/nothing.vue'//引用没有数据时显示的nothing
 import province from '../../components/global/province';//引用省市区组件
 import vPage from '@/components/global/page';//引用分页组件
+import vAlert from '@/components/global/alert';
 export default {
     name: 'services',
+    
     created() {
         this.fack('', 3);
         this.mm()
@@ -124,7 +126,7 @@ export default {
         vAlert,
     },
     computed: {
-        ...mapActions(['cartAction']),
+        ...mapGetters(['getUser']),
         list() {
             let list = [];
             if (this.recommend) {
@@ -161,21 +163,37 @@ export default {
         },
 
         //加入购物车
-        edward(addCarId) {
-            this.$http({
-                method: 'post',
-                url: '/cart/add',
-                data: {
-                    id: addCarId,
-                    num: 1,
-                }
-            }).then((ward) => {
-                // 操作成功弹出框
-                this.alert_options.info = ward.msg;
-                this.alert_options.type = 'success';
-                this.$refs.alert.alert();
-                this.$store.dispatch('cartAction');
-            })
+        edward(addCarId, goumai) {
+            if(!this.getUser.status){
+                this.$router.push('/user/login');
+                return false;
+            }
+            if (goumai === 0) {
+                this.$http({
+                    method: 'post',
+                    url: '/cart/add',
+                    data: {
+                        id: addCarId,
+                        num: 1,
+                    }
+                }).then((ward) => {
+                })
+            } else {
+                this.$http({
+                    method: 'post',
+                    url: '/cart/add',
+                    data: {
+                        id: addCarId,
+                        num: 1,
+                    }
+                }).then((ward) => {
+                    // 操作成功弹出框
+                    this.alert_options.info = ward.msg;
+                    this.alert_options.type = 'success';
+                    this.$refs.alert.alert();
+                    this.$store.dispatch('cartAction');
+                });
+            }
         },
 
         //服务分类
