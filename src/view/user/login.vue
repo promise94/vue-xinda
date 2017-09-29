@@ -142,6 +142,8 @@ export default {
                 this.loginAction(user);
                 // 保存登录手机号用于用户下次登录智能填写
                 localStorage.setItem('temp', JSON.stringify({ tempPhone: this.phone }));
+                // 保存登录时间
+                sessionStorage.setItem('token', (new Date()).getTime());
                 // 路由跳转
                 this.$router.push(path);
               });
