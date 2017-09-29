@@ -34,9 +34,13 @@ new Vue({
     eventHub: new Vue(),
   },
   created() {
-    window.addEventListener('mousemove',()=>{
-      console.log('run in mousemove');
-    });
+    // window.addEventListener('mousemove', () => {
+    //   let t = sessionStorage.getItem('token');
+    //   let time = (new Date()).getTime();
+    //   if ((time - t) > 1800000) {
+    //     this.$router.go();
+    //   }
+    // });
     let hash = window.location.hash;
     this.$router.beforeEach((to, from, next) => {
       if (to.meta.requireAuth) {

@@ -184,8 +184,8 @@
                 </div>
             </div>
         </div>
-
         <v-alert :type="alert_options.type" :info="alert_options.info" ref="alert"></v-alert>
+
         <modal ref="name" class="dianhua">
             <div slot="header" class="header">
                 <h3>免费电话咨询</h3>
@@ -252,7 +252,7 @@ export default {
             shopTypeId: '',
             show: 1,
             modal_info: '',
-            index: '',//类型第几个
+            index: 0,//类型第几个
             color: 0, //类型颜色
             indexer: 0,
             num: 1,  //input 数量默认值
@@ -282,11 +282,18 @@ export default {
         }
     },
     watch: {
-        
+        '$route.query.id'() {
+            this.shopTypeId = this.$route.query.id;
+            this.getninumShuliang();
+            console.log();
+        }
     },
-        methods: {
-        ...mapActions(['cartAction']),
+    computed: {
         ...mapGetters(['getUser']),
+    },
+    methods: {
+        ...mapActions(['cartAction']),
+        // ...mapGetters(['getUser']),
 
         // 获取用户输入图片验证码
         getValue(v) {
@@ -445,25 +452,28 @@ export default {
                     this.$store.dispatch('cartAction');
                 })
             } else {
-                console.log(this.$store.dispatch('mapGetters'));
-                // this.$http({
-                //     method: 'post',
-                //     url: '/cart/add',
-                //     data: {
-                //         id: this.shopTypeId,
-                //         num: this.num,
-                //     }
-                // }).then((res) => {
-                //     // 弹出框提醒
-                //     this.alert_options.info = res.msg;
-                //     this.alert_options.type = 'success';
-                //     this.$refs.alert.alert();
+                
+                if(!this.getUser.status){
+                    
+                    this.$router.push('/user/login');
+                    return false;
+                }
+                this.$http({
+                    method: 'post',
+                    url: '/cart/add',
+                    data: {
+                        id: this.shopTypeId,
+                        num: this.num,
+                    }
+                }).then((res) => {
+                    // 弹出框提醒
+                    this.alert_options.info = res.msg;
+                    this.alert_options.type = 'success';
+                    this.$refs.alert.alert();
 
-                //     this.$store.dispatch('cartAction');
-                // })
+                    this.$store.dispatch('cartAction');
+                })
             }
-
-            // this.$root.eventHub.$emit('add', ev);
         },
         // 失焦事件
         onblur(eiv) {
