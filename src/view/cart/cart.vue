@@ -123,6 +123,7 @@ export default {
                 method: 'post',
                 url: '/cart/list',
                 data: {
+                    
                 }
             }).then((res) => {
                 if (res.data.length > 0) {

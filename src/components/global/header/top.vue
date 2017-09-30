@@ -74,7 +74,6 @@ export default {
       })
     },
     gotoServer() { // 服务商入口
-      console.log(this.getUser, '----', this.getCartNum);
     },
     postUser() { // 获取用户信息
       this.$http.post('/sso/login-info').then((res) => {
@@ -94,7 +93,6 @@ export default {
       // if (this.getUser.status) {
       //   this.$http.post('/cart/cart-num').then((res) => {
       //     let n = res.data.cartNum;
-      //     console.log('getCart',n);
       //     this.cartAction(n);
       //   });
       // }

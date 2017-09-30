@@ -1,5 +1,12 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
+if (/Mobile/i.test(navigator.userAgent)) {
+  //移动端浏览器  
+  window.location.href = '#/m/';
+} else {
+  //PC浏览器  
+  window.location.href = '#/';
+}
 import Vue from 'vue';
 import axios from 'axios';
 import App from './App';
@@ -41,7 +48,6 @@ new Vue({
     //     this.$router.go();
     //   }
     // });
-    let hash = window.location.hash;
     this.$router.beforeEach((to, from, next) => {
       if (to.meta.requireAuth) {
         if (this.$store.state.user.status) {
@@ -55,4 +61,4 @@ new Vue({
     });
   }
 })
-
+console.log('浏览器---', navigator.userAgent);

@@ -154,7 +154,6 @@ export default {
                     });
                     this.count = res.totalCount; //产品内总产品数量
                     this.searchOut = res.data;
-                    // console.log(this.sort);
                 });
             }
         },

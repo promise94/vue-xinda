@@ -221,17 +221,15 @@ export default {
             let formData = new FormData();
             let reader = new FileReader();
 
-            formData.append('headImg', ev.target.files[0]);
+            formData.append('head', ev.target.files[0]);
 
-            reader.readAsDataURL(formData.get('headImg'));
+            reader.readAsDataURL(formData.get('head'));
             // reader.readAsDataURL(ev.target.files[0]);
             reader.onloadend = (res) => {
-                console.log('onloadend--', res);
                 let dataURI = res.target.result;
                 this.headImg = dataURI;
                 // this.saveImg = JSON.stringify(formData.get('headImg'));
             };
-            console.log('formData', JSON.stringify(formData.get('headImg')));
         },
         savePassword() { // 保存密码
             if (this.isPassword({}) && this.isSecondPwd() && this.isPassword({ sign: 'old' })) {
