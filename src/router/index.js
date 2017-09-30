@@ -179,9 +179,13 @@ export default new Router({
     ]
   },
   {
+    // 移动端路由
     path: '/m',
     name: 'Mobile',
     component: mMain,
+    children: [
+      
+    ]
   }
   ]
 })

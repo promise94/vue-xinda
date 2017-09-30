@@ -2,10 +2,15 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 if (/Mobile/i.test(navigator.userAgent)) {
   //移动端浏览器  
-  window.location.href = '#/m/';
+  console.log(window.location);
+  if(!/\/m/.test(window.location.hash)){
+    window.location.href = '#/m';
+  }
 } else {
-  //PC浏览器  
-  window.location.href = '#/';
+  //PC浏览器
+  if(/\/m/.test(window.location.hash)){
+    window.location.href = '#/';
+  }
 }
 import Vue from 'vue';
 import axios from 'axios';
@@ -41,13 +46,6 @@ new Vue({
     eventHub: new Vue(),
   },
   created() {
-    // window.addEventListener('mousemove', () => {
-    //   let t = sessionStorage.getItem('token');
-    //   let time = (new Date()).getTime();
-    //   if ((time - t) > 1800000) {
-    //     this.$router.go();
-    //   }
-    // });
     this.$router.beforeEach((to, from, next) => {
       if (to.meta.requireAuth) {
         if (this.$store.state.user.status) {
@@ -61,4 +59,3 @@ new Vue({
     });
   }
 })
-console.log('浏览器---', navigator.userAgent);
