@@ -41,6 +41,7 @@ import forget from '@/view/user/forget.vue';
  * M 版页面引入
  */
 import mMain from '@/mobile/main.vue';  // 手机端展示页
+import center from '@/mobile/center.vue';  // 手机端展示页
 
 Vue.use(Router);
 
@@ -184,7 +185,11 @@ export default new Router({
     name: 'Mobile',
     component: mMain,
     children: [
-      
+      {
+        path: 'center',
+        name: 'Center',
+        component: center,
+      }
     ]
   }
   ]
