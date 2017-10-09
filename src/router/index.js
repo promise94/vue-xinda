@@ -42,6 +42,11 @@ import forget from '@/view/user/forget.vue';
  */
 import mMain from '@/mobile/main.vue'; // 手机端展示页
 import mIndex from '@/mobile/index.vue'; //手机首页
+import mCart from '@/mobile/cart.vue'; // 手机购物车
+import mRegister from '@/mobile/register.vue'; // 手机注册
+import mLogin from '@/mobile/login.vue'; //手机登录
+import mForget from '@/mobile/forget.vue'; //手机忘记密码
+
 Vue.use(Router);
 
 export default new Router({
@@ -191,7 +196,22 @@ export default new Router({
                     alias: '/m',
                     component: mIndex,
                 },
-
+                {
+                  path:'cart',
+                  component:mCart,
+                },
+                {
+                    path:'register',
+                    component:mRegister,
+                },
+                {
+                    path:'login',
+                    component:mLogin,
+                },
+                {
+                    path:'forget',
+                    component:mForget,
+                },
             ]
         }
     ]
