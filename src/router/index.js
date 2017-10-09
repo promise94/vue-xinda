@@ -40,179 +40,87 @@ import forget from '@/view/user/forget.vue';
 /**
  * M 版页面引入
  */
-import mMain from '@/mobile/main.vue'; // 手机端展示页
+import mMain from '@/mobile/main.vue';  // 手机端展示页
 import mIndex from '@/mobile/index.vue'; //手机首页
 import mCart from '@/mobile/cart.vue'; // 手机购物车
 import mRegister from '@/mobile/register.vue'; // 手机注册
 import mLogin from '@/mobile/login.vue'; //手机登录
 import mForget from '@/mobile/forget.vue'; //手机忘记密码
 
+import my from '@/mobile/my.vue'; // 我的中间页
+import center from '@/mobile/center.vue';  // 手机我的
+import morder from '@/mobile/m-order.vue'; // 我的订单
+import msetting from '../mobile/m-setting.vue'; // 账户设置
 Vue.use(Router);
 
 export default new Router({
     routes: [{
-            path: '/',
-            name: 'Main',
-            component: main,
-            children: [ // 首页
-                {
-                    path: '/index',
-                    name: 'Index',
-                    alias: '/',
-                    component: index,
+        path: '/',
+        name: 'Main',
+        component: main,
+        children: [ // 首页
+            { path: '/index', name: 'Index', alias: '/', component: index },
+            // 商品详情页
+            { path: '/goods', name: 'Goods', component: goods },
+            { path: '/services', name: 'Services', component: services },
+            { path: '/sifco', name: 'Sifco', component: sifco },
+            { path: '/storeList', name: 'StoreList', component: storeList },
+            { path: '/storeIndex', name: 'StoreIndex', component: storeIndex },
+            { path: '/us', name: 'Us', component: us },
+            { path: '/search/:keyword', name: 'Search', component: search },
+            { path: '/cart', name: 'Cart', component: cart, meta: { requireAuth: true } },
+            { path: '/pay', name: 'Pay', component: pay, meta: { requireAuth: true } },
+            { path: '/yinlian', name: 'yinlian', component: yinlian, },
+            {
+                path: '/member',
+                name: 'Member',
+                alias: '/member/order',
+                component: member,
+                meta: {
+                    requireAuth: true,
                 },
-                // 商品详情页
-                {
-                    path: '/goods',
-                    name: 'Goods',
-                    component: goods,
-                },
-                {
-                    path: '/services',
-                    name: 'Services',
-                    component: services,
-                },
-                {
-                    path: '/sifco',
-                    name: 'Sifco',
-                    component: sifco,
-                },
-                {
-                    path: '/storeList',
-                    name: 'StoreList',
-                    component: storeList,
-                },
-                {
-                    path: '/storeIndex',
-                    name: 'StoreIndex',
-                    component: storeIndex,
-                },
-                {
-                    path: '/us',
-                    name: 'Us',
-                    component: us,
-                },
-                {
-                    path: '/search/:keyword',
-                    name: 'Search',
-                    component: search,
-                },
-                {
-                    path: '/cart',
-                    name: 'Cart',
-                    component: cart,
-                    meta: {
-                        requireAuth: true,
-                    }
-                },
-                {
-                    path: '/pay',
-                    name: 'Pay',
-                    component: pay,
-                    meta: {
-                        requireAuth: true,
-                    }
-                },
-                {
-                    path: '/yinlian',
-                    name: 'yinlian',
-                    component: yinlian,
-                },
-                {
-                    path: '/member',
-                    name: 'Member',
-                    alias: '/member/order',
-                    component: member,
-                    meta: {
-                        requireAuth: true,
-                    },
-                    children: [{
-                            path: 'order',
-                            name: 'Order',
-                            component: order,
-                            meta: {
-                                requireAuth: true,
-                            }
-                        },
-                        {
-                            path: 'evaluntion',
-                            name: 'Evaluntion',
-                            component: evaluntion,
-                            meta: {
-                                requireAuth: true,
-                            }
-                        },
-                        {
-                            path: 'setting',
-                            name: 'Setting',
-                            component: setting,
-                            meta: {
-                                requireAuth: true,
-                            }
-                        },
-                        {
-                            path: 'grade',
-                            name: 'Grade',
-                            component: grade,
-                            meta: {
-                                requireAuth: true,
-                            }
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            path: '/user',
-            name: 'User',
-            component: user,
-            children: [{
-                    path: 'login',
-                    name: 'Login',
-                    component: login,
-                },
-                {
-                    path: 'register',
-                    name: 'Register',
-                    component: register,
-                },
-                {
-                    path: 'forget',
-                    name: 'Forget',
-                    component: forget,
-                }
-            ]
-        },
-        {
-            // 移动端路由
-            path: '/m',
-            name: 'Mobile',
-            component: mMain,
-            children: [
-                // 手机端首页
-                {
-                    path: 'index',
-                    // name: 'Index',
-                    alias: '/m',
-                    component: mIndex,
-                },
-                {
-                  path:'cart',
-                  component:mCart,
-                },
-                {
-                    path:'register',
-                    component:mRegister,
-                },
-                {
-                    path:'login',
-                    component:mLogin,
-                },
-                {
-                    path:'forget',
-                    component:mForget,
-                },
-            ]
-        }
+                children: [
+                    { path: 'order', name: 'Order', component: order, meta: { requireAuth: true } },
+                    { path: 'evaluntion', name: 'Evaluntion', component: evaluntion, meta: { requireAuth: true } },
+                    { path: 'setting', name: 'Setting', component: setting, meta: { requireAuth: true } },
+                    { path: 'grade', name: 'Grade', component: grade, meta: { requireAuth: true } }
+                ]
+            }
+        ]
+    },
+    {
+        path: '/user',
+        name: 'User',
+        component: user,
+        children: [
+            { path: 'login', name: 'Login', component: login },
+            { path: 'register', name: 'Register', component: register },
+            { path: 'forget', name: 'Forget', component: forget }
+        ]
+    },
+    {
+        // 移动端路由
+        path: '/m',
+        name: 'Mobile',
+        component: mMain,
+        children: [
+            // 手机端首页
+            { path: 'index', name: 'Index', alias: '/m', component: mIndex },
+            { path: 'cart', component: mCart },
+            {
+                path: 'my',
+                name: 'My',
+                component: my,
+                children: [
+                    { path: 'center', name: 'Center', alias: '/m/my', component: center },
+                    { path: 'order', name: 'Order', component: morder },
+                    { path: 'set', name: 'Set', component: msetting },
+                    { path: 'register', component: mRegister },
+                    { path: 'login', component: mLogin },
+                    { path: 'forget', component: mForget },
+                ]
+            }
+        ]
+    }
     ]
 })

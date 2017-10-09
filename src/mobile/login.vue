@@ -10,7 +10,7 @@
       <xd-captcha :info="info.captInfo" :upload="isload" :infoType="type.captType" @value="getValue"></xd-captcha>
     </li>
     <li class="forget">
-      <a href="#/">忘记密码?</a>
+      <a href="#/m/my/forget">忘记密码?</a>
     </li>
     <li><input @click.13="loginAction" type="button" value="立即登录"></li>
     <v-alert :type="alert_options.type" :info="alert_options.info" ref="alert"></v-alert>
@@ -178,6 +178,7 @@ export default {
 #form{
     width: 2.75rem;
     margin: 0 auto;
+    margin-top: .55rem;
     li{
         margin-top: .1rem;
     }

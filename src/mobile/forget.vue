@@ -214,6 +214,7 @@ export default {
 #form{
     width: 2.75rem;
     margin: 0 auto;
+    margin-top: .55rem;
     .message{
         input[type="text"]{
             width: 1.375rem;
