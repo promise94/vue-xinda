@@ -42,6 +42,8 @@ import forget from '@/view/user/forget.vue';
  */
 import mMain from '@/mobile/main.vue';  // 手机端展示页
 import mIndex from '@/mobile/index.vue'; //手机首页
+import mStorelist from '@/mobile/storelist.vue';//手机端店铺列表
+import mStoreindex from '@/mobile/storeindex.vue';//手机端店铺详情
 import mCart from '@/mobile/cart.vue'; // 手机购物车
 import mRegister from '@/mobile/register.vue'; // 手机注册
 import mLogin from '@/mobile/login.vue'; //手机登录
@@ -108,6 +110,25 @@ export default new Router({
             { path: 'index', name: 'Index', alias: '/m', component: mIndex },
             { path: 'cart', component: mCart },
             {
+                path: 'index',
+                // name: 'Index',
+                alias: '/m',
+                component: mIndex,
+            },
+            {
+                path: 'storelist',
+                name: 'storelist',
+                component: mStorelist,
+            },
+            {
+                path: 'storeindex',
+                name: 'storeindex',
+                component: mStoreindex,
+            },
+            {
+                path: 'center',
+                name: 'Center',
+                component: center,
                 path: 'my',
                 name: 'My',
                 component: my,

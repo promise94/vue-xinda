@@ -6,7 +6,7 @@
         <span slot="icon" class="icon xd xd-shouye"></span>
         首页
       </mt-tab-item>
-      <mt-tab-item id="/m/mstore">
+      <mt-tab-item id="/m/storelist">
         <span slot="icon" class="fontweight xd xd-dianpu"></span>
         店铺
       </mt-tab-item>
