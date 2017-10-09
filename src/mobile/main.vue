@@ -14,7 +14,7 @@
         <span slot="icon" class="icon xd xd-cart"></span>
         购物车
       </mt-tab-item>
-      <mt-tab-item id="/m/center">
+      <mt-tab-item id="/m/my">
         <span slot="icon" class="fontweight xd xd-user"></span>
         我的
       </mt-tab-item>
@@ -23,14 +23,8 @@
 </template>
 
 <script>
-import { Tabbar, TabItem } from 'mint-ui';
-// console.log("--", Tabbar, TabItem);
 export default {
   name: 'm_main',
-  components: {
-    [Tabbar.name]: Tabbar,
-    [TabItem.name]: TabItem,
-  },
   data() {
     return {
       fixed: true,
@@ -53,11 +47,11 @@ export default {
 #m_main {
   width: 3.75rem;
   height: 100%;
-  .tab{
+  .tab {
     height: .55rem;
     color: #999;
   }
-  .fontweight{
+  .fontweight {
     font-weight: 700;
   }
 }
