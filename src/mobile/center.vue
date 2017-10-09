@@ -10,14 +10,14 @@
             <button @click="goto('login')">登录</button>
         </div>
         <ul class="user">
-            <li @click="goto('order')">
+            <li @click="goto('my/order')">
                 <div>
                     <span class="xd xd-dingdan"></span>
                     <span>我的订单</span>
                 </div>
                 <span class="xd xd-more"></span>
             </li>
-            <li @click="goto('set')">
+            <li @click="goto('my/set')">
                 <div>
                     <span class="xd xd-shezhi"></span>
                     <span>账户设置</span>
@@ -46,11 +46,13 @@ export default {
 
 <style lang="less" scoped>
 #center {
+    position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    min-height: 100%;
+    height: 100%;
+    width: 100%;
     background-color: #f8f8f8;
     .headImg {
         // margin-top: -1rem;
@@ -65,6 +67,9 @@ export default {
         span {
             font-size: .75rem;
             color: #d5d5d5;
+        }
+        img{
+            width: 100%;
         }
     }
     .btnbox {

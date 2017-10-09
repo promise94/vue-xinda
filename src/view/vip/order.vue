@@ -35,17 +35,17 @@
                     <numberTime :orderID="item.businessNo" :time="item.createTime"></numberTime>
                     <div class="orderInfo">
                         <div>
-                            <div v-for="(item, k) of item.data" :key="k">
+                            <div v-for="(sec, k) of item.data" :key="k">
                                 <div id="company">
                                     <!-- <img src="" alt=""> -->
                                     <p>
-                                        <span>{{item.providerName}}</span>
-                                        <span>{{item.serviceName}}</span>
+                                        <span @click="goProv(sec.providerId)">{{sec.providerName}}</span>
+                                        <span @click="goServer(sec.serviceId)">{{sec.serviceName}}</span>
                                     </p>
-                                    <p>￥{{item.unitPrice}}</p>
-                                    <p>{{item.buyNum}}</p>
-                                    <div>￥{{item.totalPrice}}</div>
-                                    <div>{{item.statusText}}</div>
+                                    <p>￥{{sec.unitPrice}}</p>
+                                    <p>{{sec.buyNum}}</p>
+                                    <div>￥{{sec.totalPrice}}</div>
+                                    <div>{{sec.statusText}}</div>
                                 </div>
                             </div>
                         </div>
@@ -117,11 +117,6 @@ export default {
                 top: '',
                 value: [], //默认日期
                 lunar: true, //显示农历
-                // select: (value) => {
-                // this.calendar.show = false;
-                // this.calendar.value = value;
-                // this.calendar.display = value.join("-");
-                // }
             },
         }
     },
@@ -238,6 +233,12 @@ export default {
         goto(orderID) {
             this.$router.push({ path: '/pay', query: { val: orderID } })
         },
+        goProv(id) { // 查看服务商
+            this.$router.push({path: '/storeIndex', query: {id}})
+        },
+        goServer(id) { // 查看商品详情
+            this.$router.push({path: '/goods', query: {id}})
+        },
         search() { // 搜索订单
             let reg = new RegExp(this.number.trim());
             this.business = []; // 清空用于计算的业务订单数据
@@ -272,14 +273,18 @@ export default {
 
 <style lang="less" scoped>
 @import '../../common/less/vip/order.less';
+
 /* 过渡动画 */
+
 .list-enter-active,
-.list-leave-active{
+.list-leave-active {
     transition: .2s ease;
 }
-.list-enter-to{
+
+.list-enter-to {
     opacity: 0;
 }
+
 #company {
     display: flex;
     align-items: center;
@@ -298,6 +303,7 @@ export default {
         span {
             display: block;
             line-height: 25px;
+            cursor: pointer;
         }
     }
     p:nth-of-type(2) {

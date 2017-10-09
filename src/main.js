@@ -2,23 +2,25 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 if (/Mobile/i.test(navigator.userAgent)) {
   //移动端浏览器  
-  console.log(window.location);
-  if(!/\/m/.test(window.location.hash)){
+  if(!/\/m\//.test(window.location.hash) && !/\/m$/.test(window.location.hash)){
     window.location.href = '#/m';
   }
 } else {
   //PC浏览器
-  if(/\/m/.test(window.location.hash)){
+  if(/\/m\//.test(window.location.hash) || /\/m$/.test(window.location.hash)){
     window.location.href = '#/';
   }
 }
 import Vue from 'vue';
 import axios from 'axios';
+import Qs from 'qs';
+import MintUI from 'mint-ui';
+import 'mint-ui/lib/style.css';
 import App from './App';
 import router from './router';
 import store from './store';
-import Qs from 'qs';
 
+Vue.use(MintUI);
 
 Vue.config.productionTip = false;
 /* axios 全局配置 */
