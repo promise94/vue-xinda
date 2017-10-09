@@ -16,7 +16,7 @@ import storeList from '@/view/store/storeList.vue'; // 店铺列表
 import storeIndex from '@/view/store/storeIndex.vue'; // 店铺首页
 
 
-import member from '@/view/vip/member.vue';// 会员中心
+import member from '@/view/vip/member.vue'; // 会员中心
 import order from '@/view/vip/order.vue'; // 我的订单
 import setting from '@/view/vip/setting.vue'; // 用户设置
 import evaluntion from '@/view/vip/evaluntion.vue'; // 用户评价
@@ -24,8 +24,8 @@ import grade from '../view/vip/orderGrade.vue'; // 评价订单
 
 
 import cart from '@/view/cart/cart.vue'; // 购物车
-import pay from '@/view/pay/pay.vue';// 支付首页
-import yinlian from '@/view/pay/yinlian.vue';// 银联支付
+import pay from '@/view/pay/pay.vue'; // 支付首页
+import yinlian from '@/view/pay/yinlian.vue'; // 银联支付
 
 
 /**
@@ -41,147 +41,175 @@ import forget from '@/view/user/forget.vue';
  * M 版页面引入
  */
 import mMain from '@/mobile/main.vue';  // 手机端展示页
-
+import mIndex from '@/mobile/index.vue'; //手机首页
+import mStorelist from '@/mobile/storelist.vue';
+import mStoreindex from '@/mobile/storeindex.vue';
+import center from '@/mobile/center.vue';  // 手机我的
 Vue.use(Router);
 
 export default new Router({
-  routes: [{
-    path: '/',
-    name: 'Main',
-    component: main,
-    children: [ // 首页
-      {
-        path: '/index',
-        name: 'Index',
-        alias: '/',
-        component: index,
-      },
-      // 商品详情页
-      {
-        path: '/goods',
-        name: 'Goods',
-        component: goods,
-      },
-      {
-        path: '/services',
-        name: 'Services',
-        component: services,
-      },
-      {
-        path: '/sifco',
-        name: 'Sifco',
-        component: sifco,
-      },
-      {
-        path: '/storeList',
-        name: 'StoreList',
-        component: storeList,
-      },
-      {
-        path: '/storeIndex',
-        name: 'StoreIndex',
-        component: storeIndex,
-      },
-      {
-        path: '/us',
-        name: 'Us',
-        component: us,
-      },
-      {
-        path: '/search/:keyword',
-        name: 'Search',
-        component: search,
-      },
-      {
-        path: '/cart',
-        name: 'Cart',
-        component: cart,
-        meta: {
-          requireAuth: true,
-        }
-      },
-      {
-        path: '/pay',
-        name: 'Pay',
-        component: pay,
-        meta: {
-          requireAuth: true,
-        }
-      },
-      {
-        path: '/yinlian',
-        name: 'yinlian',
-        component: yinlian,
-      },
-      {
-        path: '/member',
-        name: 'Member',
-        alias: '/member/order',
-        component: member,
-        meta: {
-          requireAuth: true,
-        },
+    routes: [{
+        path: '/',
+        name: 'Main',
+        component: main,
+        children: [ // 首页
+            {
+                path: '/index',
+                name: 'Index',
+                alias: '/',
+                component: index,
+            },
+            // 商品详情页
+            {
+                path: '/goods',
+                name: 'Goods',
+                component: goods,
+            },
+            {
+                path: '/services',
+                name: 'Services',
+                component: services,
+            },
+            {
+                path: '/sifco',
+                name: 'Sifco',
+                component: sifco,
+            },
+            {
+                path: '/storeList',
+                name: 'StoreList',
+                component: storeList,
+            },
+            {
+                path: '/storeIndex',
+                name: 'StoreIndex',
+                component: storeIndex,
+            },
+            {
+                path: '/us',
+                name: 'Us',
+                component: us,
+            },
+            {
+                path: '/search/:keyword',
+                name: 'Search',
+                component: search,
+            },
+            {
+                path: '/cart',
+                name: 'Cart',
+                component: cart,
+                meta: {
+                    requireAuth: true,
+                }
+            },
+            {
+                path: '/pay',
+                name: 'Pay',
+                component: pay,
+                meta: {
+                    requireAuth: true,
+                }
+            },
+            {
+                path: '/yinlian',
+                name: 'yinlian',
+                component: yinlian,
+            },
+            {
+                path: '/member',
+                name: 'Member',
+                alias: '/member/order',
+                component: member,
+                meta: {
+                    requireAuth: true,
+                },
+                children: [{
+                    path: 'order',
+                    name: 'Order',
+                    component: order,
+                    meta: {
+                        requireAuth: true,
+                    }
+                },
+                {
+                    path: 'evaluntion',
+                    name: 'Evaluntion',
+                    component: evaluntion,
+                    meta: {
+                        requireAuth: true,
+                    }
+                },
+                {
+                    path: 'setting',
+                    name: 'Setting',
+                    component: setting,
+                    meta: {
+                        requireAuth: true,
+                    }
+                },
+                {
+                    path: 'grade',
+                    name: 'Grade',
+                    component: grade,
+                    meta: {
+                        requireAuth: true,
+                    }
+                }
+                ]
+            }
+        ]
+    },
+    {
+        path: '/user',
+        name: 'User',
+        component: user,
         children: [{
-          path: 'order',
-          name: 'Order',
-          component: order,
-          meta: {
-            requireAuth: true,
-          }
+            path: 'login',
+            name: 'Login',
+            component: login,
         },
         {
-          path: 'evaluntion',
-          name: 'Evaluntion',
-          component: evaluntion,
-          meta: {
-            requireAuth: true,
-          }
+            path: 'register',
+            name: 'Register',
+            component: register,
         },
         {
-          path: 'setting',
-          name: 'Setting',
-          component: setting,
-          meta: {
-            requireAuth: true,
-          }
-        },
-        {
-          path: 'grade',
-          name: 'Grade',
-          component: grade,
-          meta: {
-            requireAuth: true,
-          }
-        }]
-      }
+            path: 'forget',
+            name: 'Forget',
+            component: forget,
+        }
+        ]
+    },
+    {
+        // 移动端路由
+        path: '/m',
+        name: 'Mobile',
+        component: mMain,
+        children: [
+            // 手机端首页
+            {
+                path: 'index',
+                // name: 'Index',
+                alias: '/m',
+                component: mIndex,
+            },
+            {
+                path: 'storelist',
+                name: 'storelist',
+                component: mStorelist,
+            },
+            {
+                path: 'storeindex',
+                name: 'storeindex',
+                component: mStoreindex,
+            },
+            {
+                path: 'center',
+                name: 'Center',
+                component: center,
+            }
+        ]
+    }
     ]
-  },
-  {
-    path: '/user',
-    name: 'User',
-    component: user,
-    children: [
-      {
-        path: 'login',
-        name: 'Login',
-        component: login,
-      },
-      {
-        path: 'register',
-        name: 'Register',
-        component: register,
-      },
-      {
-        path: 'forget',
-        name: 'Forget',
-        component: forget,
-      }
-    ]
-  },
-  {
-    path: '/m',
-    name: 'Mobile',
-    component: mMain,
-  }
-  ]
 })
