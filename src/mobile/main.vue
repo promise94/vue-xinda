@@ -10,7 +10,7 @@
         <span slot="icon" class="fontweight xd xd-dianpu"></span>
         店铺
       </mt-tab-item>
-      <mt-tab-item id="/m/mcart">
+      <mt-tab-item id="/m/cart">
         <span slot="icon" class="icon xd xd-cart"></span>
         购物车
       </mt-tab-item>
@@ -28,16 +28,13 @@ export default {
   data() {
     return {
       fixed: true,
-      selected: '/m',
+      selected: this.$route.path, // 选中项
+      query: this.$route.query // 参数
     }
-  },
-  created() {
-    this.selected = this.$route.path;
   },
   watch: {
     selected(val) {
-      console.log('path', val);
-      this.$router.push({ path: val });
+      this.$router.push({ path: val ,query: this.$route.query});
     }
   }
 }
