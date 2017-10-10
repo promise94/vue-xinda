@@ -9,8 +9,9 @@
             <div class="account" v-for="(sec,k) in second" :key="k">
                 <p>{{sec.name}}</p>
                 <ul>
-                    <li v-for="third in sec.itemList">{{third.name}}<i class="xd xd-more"></i></li>
-                    
+                    <li @click="goto(sec.code, third.id)" v-for="third in sec.itemList">{{third.name}}
+                        <i class="xd xd-more"></i>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -32,13 +33,13 @@ export default {
             dataArr: [],
         }
     },
-    components: {
-
-    },
     methods: {
         dianji(c, itemList) {
             this.oyo = c;
             this.second = itemList;
+        },
+        goto(code, id) { // 页面跳转
+            this.$router.push({ path: 'list', query: { code, id } });
         },
         //三级动态获取
         mm() {
@@ -56,9 +57,9 @@ export default {
                     return a.code - b.code;
                 });
                 this.second = this.dataArr[0].itemList;
-                console.log(this.dataArr)
             })
-        }
+        },
+
     }
 }
 </script>
@@ -69,11 +70,12 @@ export default {
     position: absolute;
     width: 99.99%;
     display: flex;
+    margin-bottom: 0.53rem;
     justify-content: space-between;
     background-color: #f6f6f6;
     .margin-left {
-        width:0.85rem;
-        height:5.9rem;
+        width: 0.85rem;
+        height: 5.9rem;
         background-color: white;
         >ul>li {
             color: #282828;
@@ -95,15 +97,15 @@ export default {
                 border-bottom: 0.01rem solid #cbcbcd;
             }
             >ul {
-                margin-left:0.255rem;
+                margin-left: 0.255rem;
                 >li {
                     color: #666;
                     font-size: 0.135rem;
                     line-height: 0.46rem;
                     border-bottom: 0.01rem solid #cbcbcd;
-                    >i{
-                        float:right;
-                        margin-right:0.02rem; 
+                    >i {
+                        float: right;
+                        margin-right: 0.02rem;
                     }
                 }
             }
