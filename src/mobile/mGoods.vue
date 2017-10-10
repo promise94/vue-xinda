@@ -52,7 +52,7 @@
                 <p>累计服务客户次数：
                     <span>{{orderNum}}</span>
                 </p>
-                <div>进入店铺</div>
+                <div @click="dianpu()">进入店铺</div>
             </div>
         </div>
         <div class="headline">
@@ -60,9 +60,9 @@
             <div class="arrows"></div>
         </div>
         <!-- 没获取到 -->
-         <div v-show="show">
-             无服务内容
-         </div>
+        <div v-show="show">
+            无服务内容
+        </div>
         <div class="serve">
             <div v-html="htmle">
                 {{htmle}}
@@ -84,7 +84,7 @@ export default {
     data() {
         return {
             // 没获取到 默认不显示
-            show:false,
+            show: false,
             // 商家logo
             shopimg: '',
             // 服务次数
@@ -127,7 +127,7 @@ export default {
         this.getStoreList();
         watch: {
             // console.log(this.$route.path);
-            if(this.$route.path === '/mGoods' ){
+            if (this.$route.path === '/mGoods') {
                 // console.log(1);
             }
         }
@@ -135,6 +135,12 @@ export default {
     methods: {
         fmtPrice(p) {
             return (parseFloat(p) * 0.01).toFixed(2);
+        },
+        dianpu() {
+            this.$router.push({
+                path: '/m/storeindex',
+                query: {}
+            });
         },
         getninumShuliang() {
             this.$http({
@@ -151,7 +157,7 @@ export default {
                 // console.log(result);
                 this.htmle = result.data.providerProduct.serviceContent;
                 console.log(this.htmle);
-                if( this.htmle === ''){
+                if (this.htmle === '') {
                     this.show = true;
                     console.log(1);
                 }
