@@ -26,7 +26,6 @@ export default new Vuex.Store({
                 axios.post('/cart/cart-num').then((res) => {
                     let n = res.data.cartNum;
                     this.a.commit('SETCART', n);
-                    console.log('carnum', n);
                 });
             }
             if (num) {

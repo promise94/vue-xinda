@@ -1,18 +1,18 @@
 <template>
   <ul class="form">
     <li>
-      <xd-input @enter="loginAction" :value="phoneVal" @getValue="getPhone" @blur="isPhone" @focus="isPhone(1)" :info="info.phoneInfo" :infoType="type.phoneType" placeholder="请输入手机号"></xd-input>
+      <xd-input @enter="login" :value="phoneVal" @getValue="getPhone" @blur="isPhone" @focus="isPhone(1)" :info="info.phoneInfo" :infoType="type.phoneType" placeholder="请输入手机号"></xd-input>
     </li>
     <li>
-      <xd-input @enter="loginAction" @getValue="getPassword" @blur="isPassword" @focus="isPassword(1)" type="password" :info="info.pwdInfo" :infoType="type.pwdType" placeholder="请输入新密码(8-16位数字和字母)"></xd-input>
+      <xd-input @enter="login" @getValue="getPassword" @blur="isPassword" @focus="isPassword(1)" type="password" :info="info.pwdInfo" :infoType="type.pwdType" placeholder="请输入新密码(8-16位数字和字母)"></xd-input>
     </li>
     <li class="message">
-      <xd-captcha :info="info.captInfo" :upload="isload" :infoType="type.captType" @value="getValue"></xd-captcha>
+      <xd-captcha @enter="login" :info="info.captInfo" :upload="isload" :infoType="type.captType" @value="getValue"></xd-captcha>
     </li>
     <li class="forget">
       <a href="#/user/forget">忘记密码?</a>
     </li>
-    <li><input @click.13="loginAction" type="button" value="立即登录"></li>
+    <li><input @click.13="login" type="button" value="立即登录"></li>
     <v-alert :type="alert_options.type" :info="alert_options.info" ref="alert"></v-alert>
   </ul>
 </template>
@@ -125,7 +125,7 @@ export default {
         }
       }
     },
-    loginAction() {
+    login() {
       if (this.isPhone() && this.isNull() && this.isPassword()) {
         this.$http.post('/sso/login', { loginId: this.phone, password: md5(this.password), imgCode: this.code })
           .then((res) => {

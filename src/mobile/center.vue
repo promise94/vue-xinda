@@ -24,22 +24,36 @@
                 </div>
                 <span class="xd xd-more"></span>
             </li>
-            <li class="out" v-if="user.status">退出登录</li>
+            <li @click="logout" class="out" v-if="user.status">退出登录</li>
         </ul>
     </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
+import { mapActions } from 'vuex';
 export default {
     name: 'center',
     computed: {
         ...mapGetters({ user: 'getUser' }),
     },
     methods: {
-        goto(path) {
+        ...mapActions(['loginAction', 'cartAction']),
+        goto(path) { // 页面跳转
             this.$router.push({ path: path });
-        }
+        },
+        logout() { // 退出登录
+            this.$http.post('/sso/ logout').then((res) => {
+                if (res.status === 1) {
+                    this.status = false;
+                    let user = {
+                        status: false,
+                        info: res.data,
+                    }
+                    this.loginAction(user);
+                }
+            })
+        },
     }
 }
 </script>
@@ -55,7 +69,7 @@ export default {
     width: 100%;
     background-color: #f8f8f8;
     .headImg {
-        // margin-top: -1rem;
+        margin-top: -.5rem;
         margin-bottom: .24rem;
         display: flex;
         justify-content: center;
@@ -68,7 +82,7 @@ export default {
             font-size: .75rem;
             color: #d5d5d5;
         }
-        img{
+        img {
             width: 100%;
         }
     }

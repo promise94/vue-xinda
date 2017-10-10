@@ -20,9 +20,6 @@ export default {
 <style lang = "less">
 @import url('./common/less/global/cssreset.less');
 @import url('./common/less/global/base.less');
-#app{
-  height: 100%;
-}
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity .25s ease;

@@ -92,7 +92,7 @@ export default {
 
                 }
             ).then((res) => {
-                console.log(res)
+                // console.log(res)
                 if (res.data.length > 0) {
                     this.willshow = 1;
                     this.msg = res.data.length;//全部商品

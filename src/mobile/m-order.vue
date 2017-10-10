@@ -1,7 +1,7 @@
 <template>
     <div id="order">
         <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
-            <li v-for="(item, k) in list" :key="k" class="list">
+            <li v-for="(item, k) in orderList" :key="k" class="list">
                 <div class="head">
                     <span>订单号：{{item.businessNo}}</span>
                     <span>{{item.statusText}}</span>
@@ -31,11 +31,15 @@
                 </div>
             </li>
         </ul>
+        <div v-if="loadingShow" class="loading">
+            <mt-spinner type="fading-circle" color="#26a2ff"></mt-spinner>
+        </div>
     </div>
 </template>
 
 <script>
 import { InfiniteScroll } from 'mint-ui';
+import { Indicator } from 'mint-ui';
 import { MessageBox } from 'mint-ui';
 import { Toast } from 'mint-ui';
 // 时间戳处理函数
@@ -49,8 +53,8 @@ export default {
             orders: '',
             serverOrder: '', // 服务订单数据
             business: '', // 业务订单数据
-            tempData: '', // 存储初始业务订单数据
-            loading: false, // 无线滚动加载是否触发
+            loading: true, // 无线滚动加载是否触发
+            loadingShow: false, // 加载动画显示隐藏
         }
     },
     computed: {
@@ -66,22 +70,32 @@ export default {
                     })
                 })
             }
-            console.log('list--', this.business);
+            Indicator.close(); // 加载提示关闭
             return this.business;
+        },
+        orderList() {
+            let data = this.list.slice(0, this.n + 5);
+            this.loading = false;
+            return data;
         },
     },
     created() {
         this.getOrder();
-    },
-    watch: {
-
+        Indicator.open('加载中...'); // 页面初始加载提示
     },
     methods: {
-        loadMore() { // 我先滚动加载
+        loadMore() { // 滚动加载
             this.loading = true;
-            // setTimeout(()=>{
-            //     let last = this.list
-            // });
+            this.loadingShow = true;
+            if (this.orderList.length != this.list.length) {
+                setTimeout(() => {
+                    this.n = this.n + 5;
+                    this.loading = false;
+                    this.loadingShow = false;
+                }, 1000);
+            } else {
+                this.loadingShow = false;
+            }
         },
         getOrder({ business = '', start = '1900-01-01', end = this.time } = {}) { // 获取订单数据
             let data = {
@@ -105,7 +119,6 @@ export default {
                         return val;
                     })
                     this.business = res.data;
-                    this.tempData = res.data;
                 })
             this.$http.post('/service-order/grid', data)
                 .then((res) => {
@@ -126,7 +139,7 @@ export default {
         delOrder(item) { // 删除订单
             MessageBox.confirm('是否删除订单？').then(action => {
                 this.$http.post('/business-order/del', { id: item.id }).then((res) => {
-                    console.log('res-',res);
+                    console.log('res-', res);
                     let message = res.msg;
                     Toast({ message, duration: 1000 });
                     if (res.status === 1) {
@@ -139,8 +152,8 @@ export default {
         goto(orderID) {
             this.$router.push({ path: '/m/pay', query: { val: orderID } })
         },
-        goServer(id){ // 查看商品详情
-            this.$router.push({path: '', query: {id}});
+        goServer(id) { // 查看商品详情
+            this.$router.push({ path: '', query: { id } });
         },
     }
 };
@@ -218,7 +231,19 @@ export default {
             }
         }
     }
+    .loading{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }
+
+
+
+
+
+
+
 
 
 
