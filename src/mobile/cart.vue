@@ -208,7 +208,7 @@ export default {
                 if (res.status == 1) {
                     let dingdan = res.data;
                     this.$router.push({
-                        // path: '/pay',
+                        path: '/m/my/order',
                         query: { val: dingdan }
                     });
                     this.getCartlsit();
