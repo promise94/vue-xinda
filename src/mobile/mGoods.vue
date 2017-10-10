@@ -59,6 +59,10 @@
             <span>服务介绍</span>
             <div class="arrows"></div>
         </div>
+        <!-- 没获取到 -->
+         <div v-show="show">
+             无服务内容
+         </div>
         <div class="serve">
             <div v-html="htmle">
                 {{htmle}}
@@ -79,6 +83,8 @@
 export default {
     data() {
         return {
+            // 没获取到 默认不显示
+            show:false,
             // 商家logo
             shopimg: '',
             // 服务次数
@@ -144,6 +150,11 @@ export default {
                 this.img = 'http://115.182.107.203:8088/xinda/pic' + result.data.product.img;
                 // console.log(result);
                 this.htmle = result.data.providerProduct.serviceContent;
+                console.log(this.htmle);
+                if( this.htmle === ''){
+                    this.show = true;
+                    console.log(1);
+                }
                 // 市场价
                 this.shichang = result.data.product.marketPrice;
                 // 现价

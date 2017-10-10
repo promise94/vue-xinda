@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 export default {
   name: 'm_main',
   data() {
@@ -39,6 +40,17 @@ export default {
       }
       if (/mGoods/i.test(to.path)) {
         vm.menuShow = false;
+      }
+    });
+  },
+  created() {
+    this.$http.post('/sso/login-info').then((res) => {
+      if (res.status === 1) {
+        let user = {
+          status: true,
+          info: res.data,
+        }
+        this.loginAction(user);
       }
     });
   },
@@ -60,6 +72,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['loginAction']),
     goto(path) {
       this.$router.push({ path });
     }

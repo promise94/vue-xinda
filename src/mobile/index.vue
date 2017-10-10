@@ -161,7 +161,7 @@ export default {
         window.scrollTo(0, 0);
       }),
         this.$router.push({
-          path: '/mGoods',
+          path: '/m/goods',
           query: { id, Id }
         });
 

@@ -112,14 +112,8 @@ export default new Router({
             { path: 'index', name: 'Index', alias: '/m', component: mIndex },
             { path: 'cart', component: mCart, meta: { MobileRequireAuth: true } },
             {
-                path: 'index',
-                // name: 'Index',
-                alias: '/m',
-                component: mIndex,
-            },
-            {
-                path: '/mGoods',
-                name: 'mGoods',
+                path: 'goods',
+                name: 'goods',
                 component: mGoods,
             },
             {
