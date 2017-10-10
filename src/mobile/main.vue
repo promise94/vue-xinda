@@ -1,7 +1,7 @@
 <template>
   <div id="m_main">
     <router-view></router-view>
-    <ul class="tab">
+    <ul class="tab" v-show="menuShow">
       <li @click="goto('/m')" :class="{active:selected == '/m'}">
         <span slot="icon" class="icon xd xd-shouye"></span>
         首页
@@ -27,17 +27,32 @@ export default {
   name: 'm_main',
   data() {
     return {
-
+      menuShow: true, // 是否显示菜单
     }
   },
+  beforeRouteEnter(to,from,next){
+    next(vm=>{
+      console.log('to',to);
+      if (/mGoods/i.test(to.path)) {
+        vm.menuShow = false;
+      }
+    });
+  },
   computed: {
-    selected(){
+    selected() {
       return this.$route.path;
     }
   },
-  methods:{
-    goto(path){
-      this.$router.push({path});
+  watch: {
+    '$route'(to, from) {
+      if (/mGoods/i.test(to.path)) {
+        this.menuShow = false;
+      }
+    }
+  },
+  methods: {
+    goto(path) {
+      this.$router.push({ path });
     }
   }
 }
@@ -58,7 +73,7 @@ export default {
     height: .55rem;
     background: #f8f8f8;
     color: #999;
-    >li{
+    >li {
       flex-grow: 1;
       display: flex;
       flex-direction: column;
@@ -66,7 +81,7 @@ export default {
       align-content: center;
       align-items: center;
       height: 100%;
-      &.active{
+      &.active {
         color: #26a2ff;
       }
     }
