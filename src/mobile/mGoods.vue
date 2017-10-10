@@ -1,0 +1,353 @@
+<template>
+    <div id="asd">
+        <div class="img">
+            <div>
+                <img :src="img" alt="">
+                <div>
+                    <p>{{serviceName}}</p>
+                    <p>{{serviceInfo}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="price">
+            <div>
+                <p>区域：
+                    <span>{{datas.regionText}}</span>
+                </p>
+            </div>
+            <div>
+                <p>价格：
+                    <span>
+                        {{fmtPrice(xianjia)}}
+                    </span>
+                    <span>
+                        ￥{{fmtPrice(shichang)}}
+                    </span>
+                </p>
+            </div>
+        </div>
+        <div class="headline">
+            <span>服务商家</span>
+            <div class="arrows"></div>
+        </div>
+        <div class="shop">
+            <div>
+                <div>
+                    <img :src="shopimg" alt="">
+                </div>
+                <div>
+                    <span>金牌服务商</span>
+                </div>
+            </div>
+            <div>
+                <p>{{shopname}}</p>
+                <p>信誉
+                    <span class="xd xd-dengji"></span>
+                    <span class="xd xd-dengji"></span>
+                    <span class="xd xd-dengji"></span>
+                    <span class="xd xd-dengji"></span>
+                    <span class="xd xd-dengji"></span>
+                </p>
+                <p>{{shopsite}}</p>
+                <p>累计服务客户次数：
+                    <span>{{orderNum}}</span>
+                </p>
+                <div>进入店铺</div>
+            </div>
+        </div>
+        <div class="headline">
+            <span>服务介绍</span>
+            <div class="arrows"></div>
+        </div>
+        <!-- 没获取到 -->
+         <div v-show="show">
+             无服务内容
+         </div>
+        <div class="serve">
+            <div v-html="htmle">
+                {{htmle}}
+            </div>
+        </div>
+        <div class="headline">
+            <span>用户评价</span>
+            <div class="arrows"></div>
+        </div>
+        <div>
+            无评价
+        </div>
+    </div>
+</template>
+
+<script>
+
+export default {
+    data() {
+        return {
+            // 没获取到 默认不显示
+            show:false,
+            // 商家logo
+            shopimg: '',
+            // 服务次数
+            orderNum: 0,
+            // 商家地址
+            shopsite: '',
+            // 商家名字
+            shopname: '',
+            // 空数组
+            Arre: '',
+            datas: '',
+            // 服务内容
+            htmle: '',
+            // 市场价
+            shichang: '',
+            // 现价
+            xianjia: '',
+            // 图片
+            img: '',
+            serviceName: '',
+            serviceInfo: '',
+            sId: '',
+            shangpinxiangqing: '',
+            Id: '',
+            conf: {
+                start: 0, //分页起始数
+                limit: 2, //每页数量
+                productTypeCode: '', //产品类型
+                regionId: '', //省市区地址区号
+                sort: 1,//价格升序排列,
+                // id: this.Id,
+            },
+            arr: '',
+        }
+    },
+    created() {
+        this.sId = this.$route.query.id;
+        this.Id = this.$route.query.Id;
+        this.getninumShuliang();
+        this.getStoreList();
+        watch: {
+            // console.log(this.$route.path);
+            if(this.$route.path === '/mGoods' ){
+                // console.log(1);
+            }
+        }
+    },
+    methods: {
+        fmtPrice(p) {
+            return (parseFloat(p) * 0.01).toFixed(2);
+        },
+        getninumShuliang() {
+            this.$http({
+                method: 'post',
+                url: '/product/package/detail',
+                data: {
+                    sId: this.sId,
+                }
+            }).then((result) => {
+                let data = result.data.serviceList;
+                this.datas = result.data;
+                // 图片
+                this.img = 'http://115.182.107.203:8088/xinda/pic' + result.data.product.img;
+                // console.log(result);
+                this.htmle = result.data.providerProduct.serviceContent;
+                console.log(this.htmle);
+                if( this.htmle === ''){
+                    this.show = true;
+                    console.log(1);
+                }
+                // 市场价
+                this.shichang = result.data.product.marketPrice;
+                // 现价
+                this.xianjia = result.data.providerProduct.price;
+                // 商品名字
+                this.serviceName = result.data.providerProduct.serviceName;
+                // 商品介绍
+                this.serviceInfo = result.data.providerProduct.serviceInfo;
+                // this.leixing = result.data.product.name;
+                // this.id = this.datas.providerProduct.providerId;
+                data.forEach(function(item, index) {
+
+                }, this);
+                this.shangpinxiangqing = data;
+                // console.log(this.shangpinxiangqing);
+            })
+        },
+        //店铺列表后台数据获取
+        getStoreList() {
+            this.$http({
+                method: 'post',
+                url: '/provider/grid',
+                data: this.conf,
+            }).then((result) => {
+                let data = result.data;
+                // console.log(result.data);
+                this.arr = data;
+                data.forEach(function(item) {
+                    if (this.Id === item.id) {
+                        this.Arre = item.id;
+                        // 商家名字
+                        this.shopname = item.providerName;
+                        // 商家地址
+                        this.shopsite = item.regionName;
+                        // 服务次数
+                        this.orderNum = item.orderNum;
+                        // 商家图片
+                        this.shopimg = 'http://115.182.107.203:8088/xinda/pic' + item.providerImg;
+                        // console.log(item);
+                        return;
+                    }
+                }, this);
+
+                // this.arr = data;
+                // console.log(data);
+            })
+        },
+
+    }
+};
+</script>
+
+<style scoped lang="less">
+.img {
+    div:nth-child(1) {
+        position: relative;
+        img {
+            width: 3.75rem;
+            height: 2.385rem;
+        }
+        div:nth-child(2) {
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            background: rgba(130, 130, 130, 0.8);
+            opacity: 0.8;
+            >p:nth-child(1) {
+                font-size: 0.15rem;
+                line-height: 0.295rem;
+                font-weight: bold;
+                color: #fefefe;
+                margin-left: 0.16rem;
+            }
+            >p:nth-child(2) {
+                color: #fefefe;
+                margin-left: 0.16rem;
+                font-size: 0.11rem;
+                line-height: 0.295rem;
+            }
+        }
+    }
+    div:nth-child(2) {
+        >p:nth-child(1) {
+            font-size: 0.15rem;
+            line-height: 0.295rem;
+            font-weight: bold;
+        }
+        >p:nth-child(2) {
+            font-size: 0.11rem;
+            line-height: 0.295rem;
+        }
+    }
+}
+
+.price {
+    border-bottom: 0.025rem solid #ebebeb;
+    div:nth-child(1) {
+        margin-left: 0.215rem;
+        border-bottom: 0.005rem solid #c5c5c5;
+        p {
+            line-height: 0.32rem;
+        }
+    }
+    div:nth-child(2) {
+        margin-left: 0.215rem;
+        p {
+            font-size: 0.12rem;
+            line-height: 0.32rem;
+            span:nth-child(1) {
+                color: #fd0100;
+                font-weight: bold;
+                font-size: 0.2rem;
+            }
+            span:nth-child(2) {
+                margin-left: 0.1rem;
+                text-decoration: line-through;
+            }
+        }
+    }
+}
+
+// 标题
+.headline {
+    height: 0.35rem;
+    width: 100%;
+    position: relative;
+    border-bottom: 2px solid #2693d4;
+    span {
+        line-height: 0.35rem;
+        margin-left: 0.2rem
+    }
+}
+
+// 三角
+.arrows {
+    width: 0rem;
+    height: 0rem;
+    border-left: 0.01rem solid transparent;
+    border-right: 0.01rem solid transparent;
+    border-bottom: 0.03rem solid #2693d4;
+    font-size: 0px;
+    line-height: 0px;
+    position: absolute;
+    left: 0.45rem;
+    top: 0.32rem;
+}
+
+// 商铺
+.shop {
+    // height: 1.21rem;
+    border-bottom: 0.025rem solid #c5c5c5;
+    display: flex;
+    >div:nth-child(1) {
+        width: 1.23rem;
+        height: 1.21rem;
+        div:nth-child(1) {
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+        div:nth-child(2) {}
+    }
+    >div:nth-child(2) {
+        margin-left: 0.01rem;
+        font-size: 0.07rem;
+        >p:nth-child(1) {
+            margin-top: 0.175rem;
+        }
+        >p:nth-child(2) {
+            margin-top: 0.075rem;
+        }
+        >p:nth-child(3) {}
+        >p:nth-child(4) {
+            margin-top: 0.075rem;
+        }
+        >p:nth-child(5) {}
+        >div {
+            color: #fff;
+            font-size: 0.06rem;
+            width: 0.51rem;
+            height: 0.165rem;
+            background: #ff591b;
+            border-radius: 0.025rem;
+        }
+    }
+}
+
+// 服务介绍
+.serve {
+    border-bottom: 0.025rem solid #c5c5c5;
+    div {
+        margin: 0.1rem 0 0.1rem 0.15rem;
+    }
+}
+</style>
