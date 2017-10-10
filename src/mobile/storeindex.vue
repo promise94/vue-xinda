@@ -9,25 +9,30 @@
                 <p>{{date.regionName}}</p>
             </div>
         </div>
-        <div class="service">
-            <div class="all">所有服务<p></p></div>
-            <div class="messages" v-for="item of mess">
-                <div class="img"><img :src="item.productImg"></div>
+        <div class="service" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="5">
+            <div class="all">所有服务<p></p></div> 
+            <div class="messages" v-for="item of arr" @click="gotoxiangqing(item.id)">
+                <div class="img"><img src='../common/images/order.png' :src="item.productImg"></div>
                 <div>
                     <h4>{{item.serviceName}}</h4>
                     <p>{{item.serviceInfo}}</p>
                     <div>
-                        <p>{{item.regionName}}</p>                       
+                        <p class="xd xd-xiao31">{{item.regionName}}</p>                       
                         <span>￥{{fmtPrice(item.price)}}</span>             
                     </div>
                 </div>
             </div>           
         </div>
+        <p v-show="loadingShow">
+            <mt-spinner type="fading-circle"></mt-spinner>
+            <span>拼命加载中....</span>
+        </p>
+        <p v-show="!loadingShow" class='xd xd-jiazaiwancheng'>文件加载完成</p>
     </div>
 
 </template>
 <script>
-
+import { InfiniteScroll } from 'mint-ui';
 export default {
     name: 'storeindex',
     data() {
@@ -41,10 +46,14 @@ export default {
                 sort: 2, //价格升序排列,
                 providerId: this.$route.query.id,//产品id
             },
+            loading: true,
+            arr: '',//中间变量数组
+            i: 0,
+            loadingShow: false, // 加载动画是否显示
         }
     },
     created() {
-        this.getStore();     //数据获取    
+        this.getStore();     //数据获取
     },
     methods: {
         getStore() {  
@@ -58,9 +67,7 @@ export default {
                 this.date = res.data;
                 // 服务商头像图片数据处理，加上前缀
                 this.date.providerImg.substring(0, 3) == 'http' ? this.date.providerImg = this.date.providerImg : this.date.providerImg = "http://115.182.107.203:8088/xinda/pic" + this.date.providerImg;
-                
             });
-
             this.$http({//服务产品数据获取
                 method: 'post',
                 url: '/product/package/grid',
@@ -68,34 +75,51 @@ export default {
             }).then((res) => {
                 let date = res.data;
                 let len = date.length;
-               
                 for (var i = 0; i < len; i++) {               
                 // 服务商头像图片数据处理，加上前缀
                 date[i].productImg.substring(0, 3) == 'http' ? date[i].productImg = date[i].productImg : date[i].productImg = "http://115.182.107.203:8088/xinda/pic" + date[i].productImg;
-                               
                 };
                 this.mess = date;
-                console.log('***',date);
                 this.mess.price = this.fmtPrice(this.mess.price);//处理销售价格余两位数
+                this.arr=this.mess.slice(0,5);//初始显示的数据
+                this.loading = false;
             });
         },
-        //函数处理价格，小数点后余两位数
+        //函数处理价格，小数点后余两位数/*  */
         fmtPrice(p) {
             return (parseFloat(p) * 0.01).toFixed(2);
         },
-        
+        //加载显示
+        loadMore() {
+            this.loading = true;
+            this.loadingShow = true;
+            if (this.arr.length != this.mess.length) {
+                setTimeout(() => {
+                    this.i=this.i+5;
+                    this.arr=this.mess.slice(0,this.i);
+                    this.loading = false;
+                    this.loadingShow = false;
+                }, 2500);
+            }else{
+                this.loadingShow = false;
+            }
+        },
+        //跳转页面到商品详情页，传一个id
+        gotoxiangqing(id) {
+        this.$router.push({ path: '/m/goods', query: { id } });
+        },
     }
 }
 </script>
 
 <style lang="less" scoped>
 #storeindex{  
-    
+    margin-bottom: .65rem;
     background:#ececec;
     .company{
         margin-bottom:0.1rem;
         padding:0.1rem;
-        border-bottom:0.005rem solid #e3e3e3;
+        border-bottom:0.01rem solid #e3e3e3;
         background:#fff;
         .img{
             margin:0.08rem auto;
@@ -118,7 +142,6 @@ export default {
     }
     .service{
         padding:0.1rem;
-        margin-bottom:0.5rem;
         background:#fff;
         
         .all{
@@ -142,36 +165,32 @@ export default {
             margin:0.1rem 0;
             width:100%;
             height:0.9rem;
-            border-bottom:0.005rem solid #cfcfcf;
+            border-bottom:0.01rem solid #cfcfcf;
             img{
                 margin-right:0.1rem;
                 width:0.95rem;
-                height:0.75rem;  
-                            
+                height:0.75rem;                             
             }       
             >div{
+                font-size:0.14rem;
                 >h4{
                     overflow:hidden;
                     text-overflow:ellipsis;
-                    white-space:nowrap;
-                    font-size:15px;
+                    white-space:nowrap;                   
                 }
                 >p{
                     overflow:hidden;
                     text-overflow:ellipsis;
                     white-space:nowrap;
-                    width:2.4rem;
-                    font-size:0.14rem;
+                    width:2.4rem;                   
                     line-height:0.3rem;
                 } 
                 >div{
                     display:flex;
-                    margin-top:0.05rem;
-                    font-size:0.14rem;
+                    margin-top:0.05rem;                   
                     >p{
-                        margin-right:0.07rem;
-                        width:1.6rem;
-                        
+                        font-size:0.14rem;                     
+                        width:1.8rem;                       
                     }
                     >span{
                         font-size:0.18rem;
@@ -182,6 +201,11 @@ export default {
             }
             
         }
+    }
+    >p{
+        display:flex;
+        padding:0 0 0 36%;
+        background:#fff;
     }
 }
 
