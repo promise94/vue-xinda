@@ -8,8 +8,9 @@
   <title>信达</title>
   <link rel="stylesheet" href="//at.alicdn.com/t/font_414016_nu5zzkq0620uow29.css">
   <script>
-    // alert(window.innerWidth);
-    document.querySelector('html').style.fontSize = window.innerWidth / 3.75 / 16 * 100 + '%';
+    if (/Mobile/i.test(navigator.userAgent)) {
+      document.querySelector('html').style.fontSize = window.innerWidth / 3.75 / 16 * 100 + '%';
+    }
   </script>
 </head>
 

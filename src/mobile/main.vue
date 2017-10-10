@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 export default {
   name: 'm_main',
   data() {
@@ -30,11 +31,28 @@ export default {
       menuShow: true, // 是否显示菜单
     }
   },
-  beforeRouteEnter(to,from,next){
-    next(vm=>{
-      console.log('to',to);
-      if (/mGoods/i.test(to.path)) {
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      if (to.meta.MobileRequireAuth) {
+        if (!vm.$store.state.user.status) {
+          vm.$router.push({ path: '/m/my/login', query: { redirect: to.fullPath } });
+        }
+      }
+      if (/good/i.test(to.path)) {
         vm.menuShow = false;
+      } else if (!vm.menuShow) {
+        vm.menuShow = true;
+      }
+    });
+  },
+  created() {
+    this.$http.post('/sso/login-info').then((res) => {
+      if (res.status === 1) {
+        let user = {
+          status: true,
+          info: res.data,
+        }
+        this.loginAction(user);
       }
     });
   },
@@ -45,12 +63,20 @@ export default {
   },
   watch: {
     '$route'(to, from) {
-      if (/mGoods/i.test(to.path)) {
+      if (to.meta.MobileRequireAuth) {
+        if (!this.$store.state.user.status) {
+          this.$router.push({ path: '/m/my/login', query: { redirect: to.fullPath } });
+        }
+      }
+      if (/good/i.test(to.path)) {
         this.menuShow = false;
+      } else if (!this.menuShow) {
+        this.menuShow = true;
       }
     }
   },
   methods: {
+    ...mapActions(['loginAction']),
     goto(path) {
       this.$router.push({ path });
     }

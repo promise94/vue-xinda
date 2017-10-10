@@ -110,13 +110,7 @@ export default new Router({
         children: [
             // 手机端首页
             { path: 'index', name: 'Index', alias: '/m', component: mIndex },
-            { path: 'cart', component: mCart },
-            // {
-            //     path: 'index',
-            //     // name: 'Index',
-            //     alias: '/m',
-            //     component: mIndex,
-            // },
+            { path: 'cart', component: mCart, meta: { MobileRequireAuth: true } },
             {
                 path: 'goods',
                 name: 'goods',
@@ -147,8 +141,8 @@ export default new Router({
                 component: my,
                 children: [
                     { path: 'center', name: 'Center', alias: '/m/my', component: center },
-                    { path: 'order', name: 'Order', component: morder },
-                    { path: 'set', name: 'Set', component: msetting },
+                    { path: 'order', name: 'Order', component: morder, meta: { MobileRequireAuth: true } },
+                    { path: 'set', name: 'Set', component: msetting, meta: { MobileRequireAuth: true } },
                     { path: 'register', component: mRegister },
                     { path: 'login', component: mLogin },
                     { path: 'forget', component: mForget },
