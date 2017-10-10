@@ -32,7 +32,6 @@ export default {
   },
   beforeRouteEnter(to,from,next){
     next(vm=>{
-      console.log('to',to);
       if (/mGoods/i.test(to.path)) {
         vm.menuShow = false;
       }
