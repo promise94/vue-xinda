@@ -40,6 +40,8 @@ export default {
       }
       if (/good/i.test(to.path)) {
         vm.menuShow = false;
+      } else if (!vm.menuShow) {
+        vm.menuShow = true;
       }
     });
   },
@@ -68,6 +70,8 @@ export default {
       }
       if (/good/i.test(to.path)) {
         this.menuShow = false;
+      } else if (!this.menuShow) {
+        this.menuShow = true;
       }
     }
   },
