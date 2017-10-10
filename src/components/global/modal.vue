@@ -134,15 +134,14 @@ export default {
 
 @keyframes modal-in {
     0% {
-        transform: scale(0);
+        transform: translateY(-20px) rotateX(-35deg);
         opacity: 0;
     }
     50% {
-        transform: scale(1.5);
         opacity: 0.5;
     }
     100% {
-        transform: scale(1);
+        transform: translateY(0) rotateX(0);
         opacity: 1;
     }
 }

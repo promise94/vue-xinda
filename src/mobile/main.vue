@@ -30,8 +30,13 @@ export default {
       menuShow: true, // 是否显示菜单
     }
   },
-  beforeRouteEnter(to,from,next){
-    next(vm=>{
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      if (to.meta.MobileRequireAuth) {
+        if (!vm.$store.state.user.status) {
+          vm.$router.push({ path: '/m/my/login', query: { redirect: to.fullPath } });
+        }
+      }
       if (/mGoods/i.test(to.path)) {
         vm.menuShow = false;
       }
@@ -44,6 +49,11 @@ export default {
   },
   watch: {
     '$route'(to, from) {
+      if (to.meta.MobileRequireAuth) {
+        if (!this.$store.state.user.status) {
+          this.$router.push({ path: '/m/my/login', query: { redirect: to.fullPath } });
+        }
+      }
       if (/mGoods/i.test(to.path)) {
         this.menuShow = false;
       }

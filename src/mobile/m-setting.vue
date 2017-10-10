@@ -353,7 +353,9 @@ export default {
     .change {
         margin-top: .15rem;
         padding-top: .15rem;
+        padding-bottom: .35rem;
         border-top: .03rem solid #dfdfdf;
+        border-bottom: .03rem solid #dfdfdf;
         >div {
             box-sizing: border-box;
             padding-right: .225rem;

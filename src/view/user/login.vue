@@ -125,7 +125,7 @@ export default {
         }
       }
     },
-    loginAction() {
+    login() {
       if (this.isPhone() && this.isNull() && this.isPassword()) {
         this.$http.post('/sso/login', { loginId: this.phone, password: md5(this.password), imgCode: this.code })
           .then((res) => {
