@@ -38,7 +38,7 @@ export default {
           vm.$router.push({ path: '/m/my/login', query: { redirect: to.fullPath } });
         }
       }
-      if (/mGoods/i.test(to.path)) {
+      if (/good/i.test(to.path)) {
         vm.menuShow = false;
       }
     });
@@ -66,7 +66,7 @@ export default {
           this.$router.push({ path: '/m/my/login', query: { redirect: to.fullPath } });
         }
       }
-      if (/mGoods/i.test(to.path)) {
+      if (/good/i.test(to.path)) {
         this.menuShow = false;
       }
     }
