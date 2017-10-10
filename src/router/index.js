@@ -111,15 +111,15 @@ export default new Router({
             // 手机端首页
             { path: 'index', name: 'Index', alias: '/m', component: mIndex },
             { path: 'cart', component: mCart },
+            // {
+            //     path: 'index',
+            //     // name: 'Index',
+            //     alias: '/m',
+            //     component: mIndex,
+            // },
             {
-                path: 'index',
-                // name: 'Index',
-                alias: '/m',
-                component: mIndex,
-            },
-            {
-                path: '/mGoods',
-                name: 'mGoods',
+                path: 'goods',
+                name: 'goods',
                 component: mGoods,
             },
             {
