@@ -53,6 +53,7 @@ import my from '@/mobile/my.vue'; // 我的中间页
 import center from '@/mobile/center.vue';  // 手机我的
 import morder from '@/mobile/m-order.vue'; // 我的订单
 import msetting from '../mobile/m-setting.vue'; // 账户设置
+import mproduct from  '@/mobile/product.vue' //手机产品分类
 Vue.use(Router);
 
 export default new Router({
@@ -124,6 +125,11 @@ export default new Router({
                 path: 'storeindex',
                 name: 'storeindex',
                 component: mStoreindex,
+            },
+            { //手机产品分类
+                path: 'product',
+                name: 'product',
+                component: mproduct,
             },
             {
                 path: 'center',
