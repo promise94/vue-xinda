@@ -42,6 +42,7 @@ import forget from '@/view/user/forget.vue';
  */
 import mMain from '@/mobile/main.vue';  // 手机端展示页
 import mIndex from '@/mobile/index.vue'; //手机首页
+import mGoods from '@/mobile/mGoods.vue'; //手机商品详情
 import center from '@/mobile/center.vue';  // 手机我的
 Vue.use(Router);
 
@@ -191,6 +192,11 @@ export default new Router({
                 // name: 'Index',
                 alias: '/m',
                 component: mIndex,
+            },
+            {
+                path: '/mGoods',
+                name: 'mGoods',
+                component: mGoods,
             },
             {
                 path: 'center',

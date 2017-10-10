@@ -52,7 +52,8 @@ export default {
 <style lang="less" scoped>
 #m_main {
   width: 3.75rem;
-  height: 100%;
+  padding-bottom: 0.55rem;
+  box-sizing:border-box;
   .tab{
     height: .55rem;
     color: #999;
