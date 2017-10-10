@@ -6,15 +6,15 @@
         <span slot="icon" class="icon xd xd-shouye"></span>
         首页
       </mt-tab-item>
-      <mt-tab-item id="/m/mstore">
+      <mt-tab-item id="/m/storelist">
         <span slot="icon" class="fontweight xd xd-dianpu"></span>
         店铺
       </mt-tab-item>
-      <mt-tab-item id="/m/mcart">
+      <mt-tab-item id="/m/cart">
         <span slot="icon" class="icon xd xd-cart"></span>
         购物车
       </mt-tab-item>
-      <mt-tab-item id="/m/center">
+      <mt-tab-item id="/m/my">
         <span slot="icon" class="fontweight xd xd-user"></span>
         我的
       </mt-tab-item>
@@ -23,14 +23,8 @@
 </template>
 
 <script>
-import { Tabbar, TabItem } from 'mint-ui';
-console.log(Tabbar, TabItem);
 export default {
   name: 'm_main',
-  components: {
-    [Tabbar.name]: Tabbar,
-    [TabItem.name]: TabItem,
-  },
   data() {
     return {
       fixed: true,
@@ -42,7 +36,7 @@ export default {
   },
   watch: {
     selected(val) {
-      console.log('path', val);
+      // console.log('path', val);
       this.$router.push({ path: val });
     }
   }
@@ -58,7 +52,7 @@ export default {
     height: .55rem;
     color: #999;
   }
-  .fontweight{
+  .fontweight {
     font-weight: 700;
   }
 }

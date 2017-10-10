@@ -176,7 +176,7 @@ export default {
         let data = result.data.hq;
         data.forEach(function(item) {
           item.providerImg = 'http://115.182.107.203:8088/xinda/pic/' + item.providerImg;
-          console.log(item);
+          // console.log(item);
           item.marketPrice = item.marketPrice + '.00'
         }, this);
         this.recommend = data;

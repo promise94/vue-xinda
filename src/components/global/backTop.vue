@@ -203,7 +203,7 @@ export default {
 .back-to-top {
 	position: fixed;
 	right: 25px;
-	bottom: 35px;
+	bottom: 55px;
 	cursor: pointer;
 	i {
 		color: rgba(0, 0, 0, 0.41);

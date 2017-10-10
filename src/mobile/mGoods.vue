@@ -120,9 +120,9 @@ export default {
         this.getninumShuliang();
         this.getStoreList();
         watch: {
-            console.log(this.$route.path);
+            // console.log(this.$route.path);
             if(this.$route.path === '/mGoods' ){
-                console.log(1);
+                // console.log(1);
             }
         }
     },
@@ -182,7 +182,7 @@ export default {
                         this.orderNum = item.orderNum;
                         // 商家图片
                         this.shopimg = 'http://115.182.107.203:8088/xinda/pic' + item.providerImg;
-                        console.log(item);
+                        // console.log(item);
                         return;
                     }
                 }, this);
