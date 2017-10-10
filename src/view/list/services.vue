@@ -268,6 +268,7 @@ export default {
             }).then((you) => {
                 this.fuwu = Object.values(you.data)[1];
                 this.itemList = Object.values(this.fuwu.itemList)[0].itemList;
+               
             })
         },
     }
