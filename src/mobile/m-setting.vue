@@ -1,10 +1,7 @@
 <template>
     <div id="setting">
-        <div>
-            <p @click="changes(1)" :class="{blue: says===1}">账户设置</p>
-            <p @click="changes(2)" :class="{blue: says===2}">修改密码</p>
-        </div>
-        <div class="zhanghu" v-show="says === 1">
+        <div class="zhanghu">
+            <h4>账户设置</h4>
             <div>
                 <span>当前头像 :</span>
                 <div>
@@ -18,26 +15,24 @@
                 <span>姓名 :</span>
                 <input v-model="name" type="text">
             </div>
-            <div>
+            <div class="sex">
                 <span>性别 :</span>
-                <input id="man" v-model="sex" type="radio" name="sex" value="1">
-                <label for="man">男</label>
-                <input id="woman" v-model="sex" type="radio" name="sex" value="2">
-                <label for="woman">女</label>
+                <mt-radio v-model="sex" :options="radioOption"></mt-radio>
             </div>
-            <div>
+            <div class="email">
                 <span>邮箱 :</span>
                 <v-input @getValue="getEmail" :value="email.sync" @blur="isEmail()" @focus="isEmail(1)" :info="info.emailInfo" :infoType="type.emailType" placeholder="请输入邮箱">
                 </v-input>
             </div>
-            <div>
+            <div class="diqu">
                 <span>所在地区 :</span>
                 <province @province="getProv" :regionId="370203"></province>
             </div>
             <button @click="saveInfo">保存</button>
         </div>
         <!-- 密码修改 -->
-        <div class="change" v-show="says === 2">
+        <div class="change">
+            <h4>修改密码</h4>
             <div>
                 <span>旧密码 :</span>
                 <v-input @getValue="getOldPassword" @blur="isPassword({sign:'old'})" @focus="isPassword({sign:'old',n:1})" type="password" :info="info.oldInfo" :infoType="type.oldType" placeholder="请输入旧密码(8-16位数字和字母)">
@@ -50,7 +45,6 @@
             </div>
             <div>
                 <span>再次输入新密码 :</span>
-                <!-- <input type="text" placeholder="请再次输入新密码"> -->
                 <v-input @getValue="getSecondPwd" @blur="isSecondPwd" @focus="isSecondPwd(1)" type="password" :info="info.SecondInfo" :infoType="type.SecondType" placeholder="请再次输入新密码(8-16位数字和字母)">
                 </v-input>
             </div>
@@ -79,7 +73,6 @@ export default {
     },
     data() {
         return {
-            says: 1,
             headImg: '', // 用户头像
             saveImg: '', // 用户头像提交后台数据
             name: '', // 用户名
@@ -92,6 +85,7 @@ export default {
             type: { oldType: '', pwdType: '', SecondType: '', emailType: '' }, // 提示类型
             alert_options: { type: 'success', info: '' }, // 提示框设置
             sex: '',
+            radioOption: [{ label: '男', value: 1 }, { label: '女', value: 2 }]
         }
     },
     created() {
@@ -110,8 +104,6 @@ export default {
             return src;
         }
     },
-    watch: {
-    },
     methods: {
         ...mapActions(['infoAction']),
         getProv(val) { // 获取省市区
@@ -128,9 +120,6 @@ export default {
         },
         getSecondPwd(v) { // 获取用户再次输入的密码
             this.secondPwd = v;
-        },
-        changes(n) { // 列表切换
-            this.says = n;
         },
         isPassword({ sign, n }) { // 密码验证
             let type, info, s;
@@ -249,56 +238,75 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 #setting {
     font-size: 14px;
     color: #676767;
     margin-top: .55rem;
+    margin-bottom: .2rem;
     input[type=button] {
         outline: none;
         border: 0;
     }
-    >div:nth-child(1) {
-        font-size: 20px;
-        border-bottom: 1px solid #e9e9e9;
-        margin-bottom: 23px;
-        display: flex;
-        p {
-            width: 115px;
-            line-height: 30px;
-            text-align: center;
-            margin-left: 10px;
-            cursor: pointer;
+    input {
+        text-indent: .05rem !important;
+    }
+    h4 {
+        position: relative;
+        margin-bottom: .15rem;
+        padding-bottom: .05rem;
+        font-size: .18rem;
+        font-weight: 500;
+        text-indent: .2rem;
+        border-bottom: 1px solid #2693d4;
+        &::after {
+            content: "";
+            display: block;
+            width: 0;
+            height: 0;
+            position: absolute;
+            left: .5rem;
+            border-bottom: .05rem solid #2693d4;
+            border-right: .03rem solid transparent;
+            border-left: .03rem solid transparent;
         }
-        .blue {
-            color: #2594d4;
-            border-bottom: 2px solid #2594d4;
-        }
+    }
+    button {
+        border: 0;
+        width: .75rem;
+        height: .3rem;
+        margin: .2rem 0 0 1.25rem;
+        color: #2493d3;
+        background: #fff;
+        border: 1px solid #2693d4;
+        border-radius: 5px;
     }
     .zhanghu {
         >div {
+            box-sizing: border-box;
+            padding-right: .225rem;
+            padding-left: .225rem;
             display: flex;
-            margin-bottom: 25px;
-            span {
-                width: 100px;
+            >span {
+                width: 1rem;
                 font-size: 16px;
+                text-align: justify;
             }
-            input {
-                width: 185px;
-                height: 25px;
-            }
-            p {
-                cursor: pointer;
+            input[type="text"] {
+                width: 2rem;
+                height: .25rem;
+                border-radius: .03rem;
+                border: 1px solid #bbb;
             }
         }
         >div:nth-of-type(1) {
             span {
-                line-height: 100px;
+                line-height: .6rem;
             }
             >div {
                 position: relative;
-                width: 100px;
-                height: 100px;
+                width: .6rem;
+                height: .6rem;
                 text-align: center;
                 background-color: #fff;
                 >div {
@@ -307,10 +315,6 @@ export default {
                     color: #fff;
                     border-radius: 50%;
                     background: #2493d3;
-                    cursor: pointer;
-                    &::before {
-                        font-size: 70px;
-                    }
                 }
                 img {
                     width: 100%;
@@ -324,54 +328,50 @@ export default {
                     top: 0;
                     font-size: 14px;
                     opacity: 0;
-                    cursor: pointer;
                 }
             }
         }
-        >div:nth-of-type(3) {
-            input {
-                width: 50px;
+        .sex {
+            align-items: center;
+            >div {
+                display: flex;
             }
         }
-        >button {
-            border: 0;
-            outline: medium;
-            width: 75px;
-            height: 30px;
-            margin: 20px 0 0 100px;
-            color: #fff;
-            background: #2493d3;
-            cursor: pointer;
-            border-radius: 5px;
-            &:hover {
-                background: #6a6d71;
+        .diqu {
+            .prov {
+                select {
+                    width: .67rem;
+                }
+            }
+        }
+        .email {
+            .iconClear {
+                top: 0.03rem;
             }
         }
     }
     .change {
+        margin-top: .15rem;
+        padding-top: .15rem;
+        border-top: .03rem solid #dfdfdf;
         >div {
+            box-sizing: border-box;
+            padding-right: .225rem;
+            padding-left: .225rem;
             display: flex;
-            margin-bottom: 25px;
-            span {
-                width: 120px;
+            >span {
+                width: 1.2rem;
             }
             input {
-                width: 185px;
-                height: 25px;
+                width: 2rem;
+                height: .25rem;
+                font-size: .12rem;
+                border-radius: .03rem;
+                border: 1px solid #bbb;
             }
-        }
-        >button {
-            border: 0;
-            outline: medium;
-            width: 75px;
-            height: 30px;
-            margin: 20px 0 0 140px;
-            color: #fff;
-            background: #2493d3;
-            cursor: pointer;
-            border-radius: 5px;
-            &:hover {
-                background: #6a6d71;
+            .iconClear {
+                top: 0.03rem;
+                right: .05rem;
             }
         }
     }
