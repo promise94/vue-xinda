@@ -46,7 +46,7 @@ export default {
 <style lang="less" scoped>
 #m_main {
   width: 3.75rem;
-  height: 100%;
+  padding-bottom: .55rem;
   .tab {
     box-sizing: border-box;
     position: fixed;

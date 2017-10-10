@@ -42,6 +42,7 @@ import forget from '@/view/user/forget.vue';
  */
 import mMain from '@/mobile/main.vue';  // 手机端展示页
 import mIndex from '@/mobile/index.vue'; //手机首页
+import mGoods from '@/mobile/mGoods.vue'; //手机商品详情
 import mStorelist from '@/mobile/storelist.vue';//手机端店铺列表
 import mStoreindex from '@/mobile/storeindex.vue';//手机端店铺详情
 import mCart from '@/mobile/cart.vue'; // 手机购物车
@@ -53,6 +54,7 @@ import my from '@/mobile/my.vue'; // 我的中间页
 import center from '@/mobile/center.vue';  // 手机我的
 import morder from '@/mobile/m-order.vue'; // 我的订单
 import msetting from '../mobile/m-setting.vue'; // 账户设置
+import mproduct from '@/mobile/product.vue' //手机产品分类
 Vue.use(Router);
 
 export default new Router({
@@ -116,6 +118,12 @@ export default new Router({
                 component: mIndex,
             },
             {
+                path: '/mGoods',
+                name: 'mGoods',
+                component: mGoods,
+            },
+            {
+
                 path: 'storelist',
                 name: 'storelist',
                 component: mStorelist,
@@ -124,6 +132,11 @@ export default new Router({
                 path: 'storeindex',
                 name: 'storeindex',
                 component: mStoreindex,
+            },
+            { //手机产品分类
+                path: 'product',
+                name: 'product',
+                component: mproduct,
             },
             {
                 path: 'center',

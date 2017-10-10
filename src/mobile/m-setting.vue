@@ -243,7 +243,7 @@ export default {
     font-size: 14px;
     color: #676767;
     margin-top: .55rem;
-    margin-bottom: 1rem;
+    margin-bottom: .2rem;
     input[type=button] {
         outline: none;
         border: 0;
@@ -287,7 +287,6 @@ export default {
             padding-right: .225rem;
             padding-left: .225rem;
             display: flex;
-            margin-bottom: 25px;
             >span {
                 width: 1rem;
                 font-size: 16px;

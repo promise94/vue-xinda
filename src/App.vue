@@ -8,6 +8,7 @@
 </template>
 
 <script>
+console.log('location',window.navigator);
 import backtop from '@/components/global/backTop'; // 返回顶部
 export default {
   name: 'app',

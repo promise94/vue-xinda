@@ -27,7 +27,6 @@ Vue.config.productionTip = false;
 axios.defaults.baseURL = '/xinda-api';
 axios.defaults.headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
 axios.interceptors.request.use((config) => {
-  // console.log('config',config);
   config.method == 'post' ? config.data = Qs.stringify(config.data) : '';
   return config;
 });

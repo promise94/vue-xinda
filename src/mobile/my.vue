@@ -19,7 +19,7 @@ export default {
         }
     },
     beforeRouteEnter(to, from, next) {
-        console.log('to');
+        // console.log('to');
         next(vm => {
             if (/my$/.test(to.path)) {
                 vm.show = false;
