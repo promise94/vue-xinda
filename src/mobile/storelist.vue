@@ -12,7 +12,7 @@
                     <h3>{{item.providerName}}</h3>
                     <p>{{item.regionName}}</p>
                     <div>
-                        <p>累计服务客户数量:
+                        <p>累计客户数量:
                             <span>{{item.orderNum}}</span>
                         </p>
                         <p>好评率:

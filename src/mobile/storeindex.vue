@@ -27,7 +27,7 @@
             <mt-spinner type="fading-circle"></mt-spinner>
             <span>拼命加载中....</span>
         </p>
-        <p v-show="!loadingShow" class='xd xd-jiazaiwancheng'>文件加载完成</p>
+        <p v-show="loadShow" class='xd xd-jiazaiwancheng'>文件加载完成</p>
     </div>
 
 </template>
@@ -50,6 +50,7 @@ export default {
             arr: '',//中间变量数组
             i: 0,
             loadingShow: false, // 加载动画是否显示
+            loadShow: false,
         }
     },
     created() {
@@ -98,10 +99,11 @@ export default {
                     this.i=this.i+5;
                     this.arr=this.mess.slice(0,this.i);
                     this.loading = false;
-                    this.loadingShow = false;
+                    this.loadingShow = false;                   
                 }, 2500);
             }else{
                 this.loadingShow = false;
+                this.loadShow = true;
             }
         },
         //跳转页面到商品详情页，传一个id
@@ -114,20 +116,18 @@ export default {
 
 <style lang="less" scoped>
 #storeindex{  
-    margin-bottom: .65rem;
     background:#ececec;
     .company{
-        margin-bottom:0.1rem;
-        padding:0.1rem;
-        border-bottom:0.01rem solid #e3e3e3;
-        background:#fff;
+        margin-bottom: 0.1rem;
+        padding: 0.1rem;
+        border-bottom: 0.01rem solid #e3e3e3;
+        background: #fff;
         .img{
-            margin:0.08rem auto;
-            width:1rem;
+            margin: 0.08rem auto;
+            width: 1rem;
             img{
                 width:1rem;
             }
-
         }
         >div{
             >h3{
@@ -142,8 +142,7 @@ export default {
     }
     .service{
         padding:0.1rem;
-        background:#fff;
-        
+        background:#fff;      
         .all{
             position:relative;
             border-bottom:0.015rem solid #2594d4;
