@@ -42,6 +42,7 @@ import forget from '@/view/user/forget.vue';
  */
 import mMain from '@/mobile/main.vue';  // 手机端展示页
 import mIndex from '@/mobile/index.vue'; //手机首页
+import mList from '@/mobile/list.vue';//手机端列表
 import mGoods from '@/mobile/mGoods.vue'; //手机商品详情
 import mStorelist from '@/mobile/storelist.vue';//手机端店铺列表
 import mStoreindex from '@/mobile/storeindex.vue';//手机端店铺详情
@@ -115,6 +116,11 @@ export default new Router({
                 path: 'goods',
                 name: 'goods',
                 component: mGoods,
+            },
+            {
+                path: 'list',
+                name: 'list',
+                component: mList,
             },
             {
 

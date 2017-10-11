@@ -24,7 +24,7 @@
                             <p>购买数量：</p>
                             <div>
                                 <span @click="less(item)">-</span>
-                                <input type="text" :value="item.buyNum">
+                                <input type="number" @blur="onblur($event ,item)"  :value="item.buyNum">
                                 <span @click="add(item)">+</span>
                             </div>
                         </div>
@@ -66,8 +66,9 @@
 </template>
 
 <script>
-import { Toast } from 'mint-ui';
-import { MessageBox } from 'mint-ui';
+import { Toast } from 'mint-ui'; 
+import { MessageBox } from 'mint-ui'; 
+import { Indicator } from 'mint-ui'; //引入“加载中。。。”
 export default {
     data() {
         return {
@@ -87,12 +88,17 @@ export default {
     methods: {
         // 商品获取
         getCartlsit() {
+            Indicator.open({
+                text: '加载中...',
+                spinnerType: 'fading-circle'
+            });
             this.$http.post('/cart/list',
                 {
 
                 }
             ).then((res) => {
                 // console.log(res)
+                Indicator.close();
                 if (res.data.length > 0) {
                     this.willshow = 1;
                     this.msg = res.data.length;//全部商品
@@ -166,6 +172,22 @@ export default {
                 })
             })
         },
+         // 失焦事件
+        onblur(ev, item) {
+            let vall = ev.target.value;
+            if (vall > 0) {
+                item.buyNum = vall;
+                this.getxiugai(item)
+            } else {
+                Toast({
+                    message: '不能为空',
+                    duration: 1000
+                });
+                vall = 1;
+                item.buyNum = vall;
+                this.getxiugai(item)
+            }
+        },
         // 去首页
         goShop() {
             this.$router.push({
@@ -174,23 +196,27 @@ export default {
         },
         // 去结算
         getSubmit() {
-            console.log(33333333)
-            // this.$http({
-            //     method:'post',
-            //     url:'/cart/submit',
-            // }).then((res)=>{
-            //     console.log(res);
-            //     // if (res.status == 1) {
-            //     //     let dingdan = res.data;
-            //     //     this.$router.push({
-            //     //         path: '/pay',
-            //     //         query: { val: dingdan }
-            //     //     });
-            //     //     this.cartAction(0);
-            //     // } else {
-            //     //     // this.modal_info = ""
-            //     // }
+            // Toast({
+            //     message: '目前仅支持微信支付，请在微信浏览器中打开',
+            //     duration: 1000
             // })
+            this.$http({
+                method:'post',
+                url:'/cart/submit',
+            }).then((res)=>{
+                // console.log(res);
+                if (res.status == 1) {
+                    let dingdan = res.data;
+                    this.$router.push({
+                        path: '/m/my/order',
+                        query: { val: dingdan }
+                    });
+                    this.getCartlsit();
+                    // this.cartAction(0);
+                } else {
+                    // this.modal_info = ""
+                }
+            })
         },
         //价格转化
         fmtPrice(p) {
@@ -214,7 +240,7 @@ export default {
     // diceng
     .diceng{
         position:fixed;
-        bottom: 0.52rem;
+        bottom: 0.55rem;
         left: 0;
     }
     .c_title {
@@ -246,14 +272,17 @@ export default {
                 width: 3.5rem; // height: 0.96rem;
                 padding: 0.03rem 0 0.165rem 0;
                 display: flex;
-                border-bottom: 0.005rem solid #e3e3e3; // 获取到的图片
+                border-bottom: 0.01rem solid #e3e3e3; 
+                // 获取到的图片
                 .pth {
                     margin-right: 0.1rem;
                     img {
-                        width: 0.85rem;
-                        height: 0.85rem;
+                        width: 0.6rem;
+                        height: 0.4rem;
+                        margin-top: 0.2rem;
                     }
-                } // 获取到的信息及操作
+                } 
+                // 获取到的信息及操作
                 .operation {
                     width: 2.56rem; // height: 0.85rem;
                     .o_title {
@@ -267,7 +296,7 @@ export default {
                         }
                         >p:nth-child(2) {
                             width: 0.48rem;
-                            font-size: 0.1rem;
+                            font-size: 0.12rem;
                             color: red;
                         }
                     }
@@ -277,7 +306,7 @@ export default {
                         line-height: 0.24rem;
                         >span {
                             color: red;
-                            font-size: 0.14rem;
+                            font-size: 0.16rem;
                         }
                     }
                     >div:nth-child(3) {
@@ -285,29 +314,29 @@ export default {
                         line-height: 0.175rem;
                         display: flex;
                         >p {
-                            font-size: 0.095rem;
+                            font-size: 0.15rem;
                         }
                         >div {
-                            font-size: 0;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
                             height: 0.175rem;
                             span {
                                 text-align: center;
                                 line-height: 0.175rem;
                                 font-size: 0.15rem;
                                 width: 0.178rem;
-                                user-select: none;
-                                display: inline-block;
                                 background-color: #ededed;
                                 border: 0.005rem solid #e3e3e3;
                             }
                             input {
+                                box-sizing: border-box;
                                 text-align: center;
                                 line-height: 0.175rem;
-                                font-size: 0.08rem;
-                                width: 0.178rem;
+                                font-size: 0.15rem;
+                                width: 0.3rem;
                                 height: 0.175rem;
-                                text-align: center;
-                                border: 0.005rem solid #e3e3e3;
+                                border: 0.015rem solid #e3e3e3;
                             }
                         }
                     }
@@ -315,7 +344,7 @@ export default {
                         width: 2.56rem;
                         margin-top: 0.06rem;
                         span {
-                            font-size: 0.09rem;
+                            font-size: 0.12rem;
                             line-height: 0.12rem;
                         }
                         >span:nth-child(2) {
@@ -328,21 +357,24 @@ export default {
         .zongji {
             text-align: right;
             margin-top: 0.09rem;
+            padding-right: 0.24rem;
             span {
                 color: red;
             }
         }
     }
     .kong {
+        background-color: #f8f8f8;
         img {
             width: 3.75rem;
+            margin-bottom: 1.39rem;
         }
         div {
             width: 1.29rem;
             height: 0.45rem;
             position: absolute;
             margin-left: 1.23rem; // margin-top: 2.725rem;
-            margin-top: -1.6rem;
+            margin-top: -2.99rem;
             border-radius: 0.03rem;
             background-color: #2693d4;
             color: white;
