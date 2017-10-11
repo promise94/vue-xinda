@@ -46,6 +46,10 @@ import { Toast } from 'mint-ui';
 import util from '@/common/js/utils';
 export default {
     name: 'order',
+    beforeRouteUpdate(to,from,next){
+        console.log('order',to,from);
+        // next();
+    },
     data() {
         return {
             time: (new Date()).toJSON().substr(0, (new Date()).toJSON().indexOf('T')), // 当前时间
@@ -134,6 +138,9 @@ export default {
                         }
                         return i;
                     })
+
+                },()=>{
+                    Indicator.close(); // 加载提示关闭
                 })
         },
         delOrder(item) { // 删除订单

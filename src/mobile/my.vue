@@ -19,7 +19,7 @@ export default {
         }
     },
     beforeRouteEnter(to, from, next) {
-        // console.log('to');
+        // console.log('to',from);
         next(vm => {
             if (/my$/.test(to.path)) {
                 vm.show = false;
@@ -85,7 +85,8 @@ export default {
     },
     methods: {
         go(n){
-            history.go(n);
+            // history.go(-2);
+            this.$router.push({path:'/m/my'});
         }
     }
 }
