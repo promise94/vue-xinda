@@ -3,10 +3,7 @@
     <div class="top">
       <div>
         <select name="cars">
-          <option value="volvo">1</option>
-          <option value="saab">2</option>
-          <option value="fiat">3</option>
-          <option value="audi">4</option>
+          <option value="volvo" v-for="item of allCity" @click="setCity(item)"> {{item.name}}</option>
         </select>
       </div>
       <div>
@@ -131,10 +128,12 @@
       </div>
       <p>一站式企业交易中心</p>
     </div>
+
   </div>
 </template>
 
 <script>
+import { Indicator } from 'mint-ui';
 import {
   Swipe,
   SwipeItem
@@ -143,16 +142,24 @@ export default {
   data() {
     return {
       recommend: '',
+      allCity: '', // 所有城市
     }
   },
   created() {
     this.getnicai();
+    this.getAllCity();
+    Indicator.open('加载中...'); // 页面初始加载提示
   },
   components: {
     swipe: Swipe,
     swipeItem: SwipeItem
   },
   methods: {
+    getAllCity() {  // 获取城市列表
+      this.$http.post('/common/open-region').then((res) => {
+        this.allCity = res.data;
+      })
+    },
     fmtPrice(p) {
       return (parseFloat(p) * 0.01).toFixed(2);
     },
@@ -187,7 +194,7 @@ export default {
           path: '/m/product',
           query: {}
         });
-      }else if (a === 7) {
+      } else if (a === 7) {
         this.$router.push({
           path: '/m/product',
           query: {}
@@ -218,6 +225,9 @@ export default {
           item.marketPrice = item.marketPrice + '.00'
         }, this);
         this.recommend = data;
+        if(this.recommend){
+          Indicator.close(); // 加载提示关闭 
+        }
       })
     },
     changeSwipe(newIndex, oldIndex) {
