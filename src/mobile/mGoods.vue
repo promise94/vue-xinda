@@ -77,32 +77,68 @@
         </div>
         <!-- <v-alert :type="alert_options.type" :info="alert_options.info" ref="alert"></v-alert> -->
         <div class="caidan">
-            <div>
+            <div @click="tanchukuang()">
                 <span class="xd xd-kefu"></span>
                 <span>联系商家</span>
             </div>
             <div @click="jiarugouwuche(1)">加入购物车</div>
             <div @click="jiarugouwuche(0)">立即购买</div>
         </div>
+        <modal ref="name" class="dianhua">
+            <div slot="header" class="header">
+                <h3>免费电话咨询</h3>
+            </div>
+            <div slot="body" class="body">
+                <div  v-show="a === 1">
+                    <p>本次电话咨询完全免费，我们将对你的号码完全保密，请放心使用。</p>
+                </div>
+                <div>
+                    <ul class="form" v-show="a === 1">
+                        <li class="huoqu">
+                            <xd-input class="qingshuru" @getValue="getPhone" @blur="isPhone" @focus="isPhone(1)" :info="info.phoneInfo" :infoType="type.phoneType" placeholder="请输入手机号"></xd-input>
+                        </li>
+                        <li class="message huoqu">
+                            <xd-captcha :info="info.captInfo" :upload="isload" :infoType="type.captType" @value="getValue " class="qingshuru"></xd-captcha>
+                        </li>
+                        <div class="message huoqu">
+                            <xd-input @getValue="getCodeValue" @focus="isCodeNull(1)" @blur="isCodeNull" :info="info.msgInfo" :infoType="type.msgType" placeholder="请输入验证码" class="aaa"></xd-input>
+                            <input @click="getCode" :disabled="btnEabale" type="button" :value="text" class="bbb">
+                        </div>
+                        <li class="btn"><input @click.13="changePassword(2)" type="button" value="开始免费咨询" class="mianfeizixun"></li>
+                    </ul>
+                </div>
+            </div>
+            <div slot="body" class="body2" v-show=" a  === 2">
+                <div><img src="../../static/images/u1730.png" alt=""></div>
+            </div>
+            <div slot="button" class=" button1">
+            </div>
+        </modal>
     </div>
 </template>
 
 <script>
+import modal from '@/components/global/modal';
+import xdInput from '@/components/user/input';
+import vAlert from '@/components/global/alert';
+import reg from '@/common/js/reg';
+import xdCaptcha from '@/components/user/captcha';
 // box
 import { MessageBox } from 'mint-ui';
 // import { mapActions } from 'vuex';//vuex的引入
 import { mapGetters } from 'vuex';//vuex的引入
 import { Toast } from 'mint-ui';
-// import vAlert from '@/components/global/alert';
 export default {
     components: {
-        // modal,
-        // xdCaptcha,
-        // xdInput,
-        // vAlert,
+        modal,
+        xdCaptcha,
+        xdInput,
+        vAlert,
     },
     data() {
         return {
+            a: 1,
+            modal_info: '',
             // info: { phoneInfo: '', captInfo: '', msgInfo: '', pwdInfo: '', SecondInfo: '' }, // 提示信息
             // type: { phoneType: '', captType: '', msgType: '', pwdType: '', SecondType: '' }, // 提示类型
             num: 1,
@@ -142,6 +178,21 @@ export default {
                 // id: this.Id,
             },
             arr: '',
+
+
+            info: { phoneInfo: '', captInfo: '', msgInfo: '', pwdInfo: '', SecondInfo: '' }, // 提示信息
+            type: { phoneType: '', captType: '', msgType: '', pwdType: '', SecondType: '' }, // 提示类型
+            code: '', // 图片验证码
+            msgCode: '', // 短信验证码
+            phone: '', // 电话号码
+            password: '', // 密码
+            secondPwd: '',
+            time: 60,
+            btnEabale: false,
+            text: '点击获取',
+            isload: '', // 是否重新加载图片验证码
+            alert_options: { type: 'success', info: '' }, // 提示框设置
+            fall: 0,
         }
     },
     created() {
@@ -160,6 +211,127 @@ export default {
         ...mapGetters(['getUser']),
     },
     methods: {
+
+        // 获取用户输入图片验证码
+        getValue(v) {
+            this.code = v;
+            this.isNull(1);
+        },
+        // 获取用户输入手机号
+        getPhone(phone) {
+            this.phone = phone;
+        },
+        // 获取密码
+        getPassword(v) {
+            this.password = v;
+        },
+        // 获取用户再次输入的密码
+        getSecondPwd(v) {
+            this.secondPwd = v;
+        },
+        // 获取用户输入验证码
+        getCodeValue(v) {
+            this.msgCode = v;
+        },
+        // 手机号验证
+        isPhone(n) {
+            if (n === 1) {
+                // 获取焦点,移除错误提示
+                this.info.phoneInfo = '';
+                this.type.phoneType = '';
+            } else {
+                this.type.phoneType = 'error';
+                if (this.phone && !reg.isPhone(this.phone)) {
+                    this.info.phoneInfo = '手机号格式错误';
+                    return false;
+                } else if (!this.phone) {
+                    this.info.phoneInfo = '手机号不能为空';
+                    return false;
+                } else {
+                    this.info.phoneInfo = '';
+                    this.type.phoneType = '';
+                    return true;
+                }
+            }
+        },
+        // 判断图片验证码是否为空
+        isNull(n) {
+            if (n === 1) {
+                this.info.captInfo = '';
+                this.type.captType = '';
+            } else {
+                if (!this.code) {
+                    this.type.captType = 'error';
+                    this.info.captInfo = '请输入验证码';
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        },
+        // 判断短信验证码是否为空
+        isCodeNull(n) {
+            if (n === 1) {
+                this.info.msgInfo = '';
+                this.type.msgType = '';
+            } else {
+                if (!this.code) {
+                    this.type.msgType = 'error';
+                    this.info.msgInfo = '请输入验证码';
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        },
+        // 点击获取验证码
+        getCode(v) {
+            if (this.isPhone() && this.isNull()) {
+                // 发送请求
+                this.$http.post('/register/sendsms', { cellphone: this.phone, smsType: 2, imgCode: this.code })
+                    .then((res) => {
+                        if (res.status === 1) {
+                            this.info.captInfo = res.msg;
+                            this.type.captType = 'success';
+                            this.btnEabale = true; // 禁用按钮
+                            this.alert_options.type = 'success';
+                            this.alert_options.info = res.msg;
+                            this.$refs.alert.alert();
+                            // 启动读秒进度
+                            this.text = this.time + 's';
+                            let t = setInterval(() => {
+                                this.text = (this.time -= 1) + 's';
+                                if (this.time == 0) {
+                                    clearInterval(t);
+                                    this.time = 60;
+                                    this.text = '点击获取';
+                                    this.btnEabale = false;
+                                }
+                            }, 1000);
+                        } else {
+                            this.info.captInfo = res.msg;
+                            this.type.captType = 'error';
+                            this.isload = Math.random().toString().substr(2, 4);
+                        }
+                    });
+            }
+        },
+        // 免费咨询
+        changePassword(n) {
+            if (this.isPhone() && this.isNull() && this.isCodeNull()) {
+                this.a = n;
+            }
+        },
+
+
+
+        tanchukuang() {
+            this.$refs.name.confirm().then(() => {
+                this.$refs.name.show = false;
+            }).catch(() => {
+
+            })
+        },
         fmtPrice(p) {
             return (parseFloat(p) * 0.01).toFixed(2);
         },
@@ -284,7 +456,76 @@ export default {
 };
 </script>
 
-<style scoped lang="less">
+<style lang="less">
+.body2{
+    >div{
+       >img{
+            width: 3rem;
+        height: 3rem;
+       }
+    }
+}
+.dianhua {
+    width: 80%;
+    height: 80%;
+    >div {
+        min-width: 200px!important;
+    }
+    .button1 {
+        font-size: 0.14rem;
+    }
+    .body {
+        >div:nth-child(1) {
+            >p {
+                width: 2.8rem;
+            }
+        }
+        >div:nth-child(2) {
+            >ul {
+                >li:nth-child(1) {
+                    >input {
+                        width: 2.8rem; // margin-top: 0.1rem;
+                    }
+                }
+                >li:nth-child(2) {
+                    >div {
+                       >div{
+                            margin-top: 0.1rem;
+                            >input {
+                            width: 1.8rem;
+                        }
+                       }
+                    }
+                }
+                >div:nth-child(3) {
+                    .aaa {
+                        input {
+                            width: 1.8rem;
+                        }
+                    }
+                    .bbb {
+                        margin-left: 0.1rem;
+                        width: 0.8rem;
+                        height: 0.36rem;
+                    }
+                }
+                .btn {
+                    margin-top: 0.1rem;
+                    input {
+                        width: 100%;
+                        height: 0.36rem;
+                    }
+                }
+            }
+        }
+        div:nth-child(3) {}
+    }
+}
+
+.dada {
+    width: 2rem;
+}
+
 .caidan {
     width: 100%;
     box-sizing: border-box;
