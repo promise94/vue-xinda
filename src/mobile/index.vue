@@ -133,6 +133,7 @@
 </template>
 
 <script>
+import { Indicator } from 'mint-ui';
 import {
   Swipe,
   SwipeItem
@@ -147,6 +148,7 @@ export default {
   created() {
     this.getnicai();
     this.getAllCity();
+    Indicator.open('加载中...'); // 页面初始加载提示
   },
   components: {
     swipe: Swipe,
@@ -223,6 +225,9 @@ export default {
           item.marketPrice = item.marketPrice + '.00'
         }, this);
         this.recommend = data;
+        if(this.recommend){
+          Indicator.close(); // 加载提示关闭 
+        }
       })
     },
     changeSwipe(newIndex, oldIndex) {

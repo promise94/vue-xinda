@@ -11,7 +11,7 @@
         </div>
         <div class="service" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="5">
             <div class="all">所有服务<p></p></div> 
-            <div class="messages" v-for="item of arr" @click="gotoxiangqing(item.id)">
+            <div class="messages" v-for="item of arr" @click="gotoxiangqing(item.id, Id)">
                 <div class="img"><img src='../common/images/order.png' :src="item.productImg"></div>
                 <div>
                     <h4>{{item.serviceName}}</h4>
@@ -24,7 +24,7 @@
             </div>           
         </div>
         <p v-show="loadingShow">
-            <mt-spinner type="fading-circle"></mt-spinner>
+            <mt-spinner type="fading-circle" color="#26a2ff"></mt-spinner>
             <span>拼命加载中....</span>
         </p>
         <p v-show="loadShow" class='xd xd-jiazaiwancheng'>文件加载完成</p>
@@ -33,6 +33,7 @@
 </template>
 <script>
 import { InfiniteScroll } from 'mint-ui';
+import { Indicator } from 'mint-ui';
 export default {
     name: 'storeindex',
     data() {
@@ -46,15 +47,18 @@ export default {
                 sort: 2, //价格升序排列,
                 providerId: this.$route.query.id,//产品id
             },
+            status: 0,//状态
             loading: true,
             arr: '',//中间变量数组
             i: 0,
             loadingShow: false, // 加载动画是否显示
             loadShow: false,
+            Id: '',
         }
     },
     created() {
         this.getStore();     //数据获取
+        Indicator.open('加载中...'); // 页面初始加载提示
     },
     methods: {
         getStore() {  
@@ -64,16 +68,20 @@ export default {
                 data: {
                 id: this.$route.query.id,
                 }
-            }).then((res) => {
+            }).then((res) => {               
+                this.status=res.status;
                 this.date = res.data;
+                this.Id=this.date.id;
                 // 服务商头像图片数据处理，加上前缀
                 this.date.providerImg.substring(0, 3) == 'http' ? this.date.providerImg = this.date.providerImg : this.date.providerImg = "http://115.182.107.203:8088/xinda/pic" + this.date.providerImg;
+                
             });
             this.$http({//服务产品数据获取
                 method: 'post',
                 url: '/product/package/grid',
                 data: this.members,
             }).then((res) => {
+                console.log('222',res);
                 let date = res.data;
                 let len = date.length;
                 for (var i = 0; i < len; i++) {               
@@ -84,7 +92,13 @@ export default {
                 this.mess.price = this.fmtPrice(this.mess.price);//处理销售价格余两位数
                 this.arr=this.mess.slice(0,5);//初始显示的数据
                 this.loading = false;
+
+                if(this.arr.length && this.status){
+                    Indicator.close(); // 加载提示关闭 
+                }
+                
             });
+            
         },
         //函数处理价格，小数点后余两位数/*  */
         fmtPrice(p) {
@@ -107,8 +121,8 @@ export default {
             }
         },
         //跳转页面到商品详情页，传一个id
-        gotoxiangqing(id) {
-        this.$router.push({ path: '/m/goods', query: { id } });
+        gotoxiangqing(id,Id) {
+        this.$router.push({ path: '/m/goods', query: { id,Id } });
         },
     }
 }

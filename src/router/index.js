@@ -41,15 +41,32 @@ import forget from '@/view/user/forget.vue';
  * M 版页面引入
  */
 import mMain from '@/mobile/main.vue';  // 手机端展示页
-import mIndex from '@/mobile/index.vue'; //手机首页
+
+// import mIndex from '@/mobile/index.vue'; //手机首页
+const mIndex = r => require.ensure([], ()=>r(require('@/mobile/index.vue')), 'm_index'); //手机首页
+
+// import mGoods from '@/mobile/mGoods.vue'; //手机商品详情
+const mGoods = r => require.ensure([], ()=>r(require('@/mobile/mGoods.vue')), 'm_goods'); //手机商品详情
+
+// import mStorelist from '@/mobile/storelist.vue';//手机端店铺列表
+const mStorelist = r => require.ensure([], ()=>r(require('@/mobile/storelist.vue')), 'm_storeList');//手机端店铺列表
+
+// import mStoreindex from '@/mobile/storeindex.vue';//手机端店铺详情
+const mStoreindex = r => require.ensure([], ()=>r(require('@/mobile/storeindex.vue')), 'm_storeindex');//手机端店铺详情
+
+// import mCart from '@/mobile/cart.vue'; // 手机购物车
+const mCart = r => require.ensure([], ()=>r(require('@/mobile/cart.vue')), 'm_cart'); // 手机购物车
+
+// import mRegister from '@/mobile/register.vue'; // 手机注册
+const mRegister = r => require.ensure([], ()=>r(require('@/mobile/register.vue')), 'm_user'); // 手机注册
+
+// import mLogin from '@/mobile/login.vue'; //手机登录
+const mLogin = r => require.ensure([], ()=>r(require('@/mobile/login.vue')), 'm_user'); //手机登录
+
+// import mForget from '@/mobile/forget.vue'; //手机忘记密码
+const mForget = r => require.ensure([], ()=>r(require('@/mobile/forget.vue')), 'm_user'); //手机忘记密码
+
 import mList from '@/mobile/list.vue';//手机端列表
-import mGoods from '@/mobile/mGoods.vue'; //手机商品详情
-import mStorelist from '@/mobile/storelist.vue';//手机端店铺列表
-import mStoreindex from '@/mobile/storeindex.vue';//手机端店铺详情
-import mCart from '@/mobile/cart.vue'; // 手机购物车
-import mRegister from '@/mobile/register.vue'; // 手机注册
-import mLogin from '@/mobile/login.vue'; //手机登录
-import mForget from '@/mobile/forget.vue'; //手机忘记密码
 
 import my from '@/mobile/my.vue'; // 我的中间页
 import center from '@/mobile/center.vue';  // 手机我的
