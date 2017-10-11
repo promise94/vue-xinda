@@ -90,6 +90,7 @@
 <script>
 // box
 import { MessageBox } from 'mint-ui';
+import { Indicator } from 'mint-ui';
 // import { mapActions } from 'vuex';//vuex的引入
 import { mapGetters } from 'vuex';//vuex的引入
 import { Toast } from 'mint-ui';
@@ -149,6 +150,7 @@ export default {
         this.Id = this.$route.query.Id;
         this.getninumShuliang();
         this.getStoreList();
+        Indicator.open('加载中...'); // 页面初始加载提示
         watch: {
             // console.log(this.$route.path);
             if (this.$route.path === '/mGoods') {
@@ -178,9 +180,7 @@ export default {
                     this.$router.push({ path: '/m/cart', });
                 })
             } else {
-
                 if (!this.getUser.status) {
-
                     this.$router.push('/m/my/login');
                     return false;
                 }
@@ -228,7 +228,7 @@ export default {
                 // console.log(this.htmle);
                 if (this.htmle === '') {
                     this.show = true;
-                    console.log(1);
+                    console.log('1');
                 }
                 // this.shopTypeId = 
                 // console.log(result);
@@ -246,7 +246,6 @@ export default {
 
                 }, this);
                 this.shangpinxiangqing = data;
-                // console.log(this.shangpinxiangqing);
             })
         },
         //店铺列表后台数据获取
@@ -257,7 +256,7 @@ export default {
                 data: this.conf,
             }).then((result) => {
                 let data = result.data;
-                // console.log(result.data);
+                // console.log(data);
                 this.arr = data;
                 data.forEach(function(item) {
                     if (this.Id === item.id) {
@@ -274,9 +273,11 @@ export default {
                         return;
                     }
                 }, this);
-
                 // this.arr = data;
                 // console.log(data);
+                if(this.shangpinxiangqing && this.arr){
+                    Indicator.close(); // 加载提示关闭 
+                }
             })
         },
 

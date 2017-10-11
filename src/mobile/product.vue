@@ -19,10 +19,12 @@
 </template>
 
 <script>
+import { Indicator } from 'mint-ui';
 export default {
     name: 'parw',
     created() {
         this.mm();
+        Indicator.open('加载中...'); // 页面初始加载提示
     },
     data() {
         return {
@@ -57,6 +59,9 @@ export default {
                     return a.code - b.code;
                 });
                 this.second = this.dataArr[0].itemList;
+                if(this.second){
+                    Indicator.close(); // 加载提示关闭 
+                }
             })
         },
 

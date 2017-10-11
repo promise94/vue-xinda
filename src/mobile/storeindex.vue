@@ -11,7 +11,7 @@
         </div>
         <div class="service" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="5">
             <div class="all">所有服务<p></p></div> 
-            <div class="messages" v-for="item of arr" @click="gotoxiangqing(item.id)">
+            <div class="messages" v-for="item of arr" @click="gotoxiangqing(item.id, Id)">
                 <div class="img"><img src='../common/images/order.png' :src="item.productImg"></div>
                 <div>
                     <h4>{{item.serviceName}}</h4>
@@ -53,6 +53,7 @@ export default {
             i: 0,
             loadingShow: false, // 加载动画是否显示
             loadShow: false,
+            Id: '',
         }
     },
     created() {
@@ -70,6 +71,7 @@ export default {
             }).then((res) => {               
                 this.status=res.status;
                 this.date = res.data;
+                this.Id=this.date.id;
                 // 服务商头像图片数据处理，加上前缀
                 this.date.providerImg.substring(0, 3) == 'http' ? this.date.providerImg = this.date.providerImg : this.date.providerImg = "http://115.182.107.203:8088/xinda/pic" + this.date.providerImg;
                 
@@ -119,8 +121,8 @@ export default {
             }
         },
         //跳转页面到商品详情页，传一个id
-        gotoxiangqing(id) {
-        this.$router.push({ path: '/m/goods', query: { id } });
+        gotoxiangqing(id,Id) {
+        this.$router.push({ path: '/m/goods', query: { id,Id } });
         },
     }
 }
