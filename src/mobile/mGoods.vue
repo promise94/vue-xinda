@@ -52,7 +52,7 @@
                 <p>累计服务客户次数：
                     <span>{{orderNum}}</span>
                 </p>
-                <div>进入店铺</div>
+                <div @click="dianpu()">进入店铺</div>
             </div>
         </div>
         <div class="headline">
@@ -60,9 +60,9 @@
             <div class="arrows"></div>
         </div>
         <!-- 没获取到 -->
-         <div v-show="show">
-             无服务内容
-         </div>
+        <div v-show="show">
+            无服务内容
+        </div>
         <div class="serve">
             <div v-html="htmle">
                 {{htmle}}
@@ -75,16 +75,40 @@
         <div>
             无评价
         </div>
+        <!-- <v-alert :type="alert_options.type" :info="alert_options.info" ref="alert"></v-alert> -->
+        <div class="caidan">
+            <div>
+                <span class="xd xd-kefu"></span>
+                <span>联系商家</span>
+            </div>
+            <div @click="jiarugouwuche(1)">加入购物车</div>
+            <div @click="jiarugouwuche(0)">立即购买</div>
+        </div>
     </div>
 </template>
 
 <script>
-
+// box
+import { MessageBox } from 'mint-ui';
+// import { mapActions } from 'vuex';//vuex的引入
+import { mapGetters } from 'vuex';//vuex的引入
+import { Toast } from 'mint-ui';
+// import vAlert from '@/components/global/alert';
 export default {
+    components: {
+        // modal,
+        // xdCaptcha,
+        // xdInput,
+        // vAlert,
+    },
     data() {
         return {
+            // info: { phoneInfo: '', captInfo: '', msgInfo: '', pwdInfo: '', SecondInfo: '' }, // 提示信息
+            // type: { phoneType: '', captType: '', msgType: '', pwdType: '', SecondType: '' }, // 提示类型
+            num: 1,
+            // shopTypeId:'',
             // 没获取到 默认不显示
-            show:false,
+            show: false,
             // 商家logo
             shopimg: '',
             // 服务次数
@@ -127,14 +151,65 @@ export default {
         this.getStoreList();
         watch: {
             // console.log(this.$route.path);
-            if(this.$route.path === '/mGoods' ){
+            if (this.$route.path === '/mGoods') {
                 // console.log(1);
             }
         }
     },
+    computed: {
+        ...mapGetters(['getUser']),
+    },
     methods: {
         fmtPrice(p) {
             return (parseFloat(p) * 0.01).toFixed(2);
+        },
+        jiarugouwuche(ev) {
+            if (ev === 0) {
+
+                this.$http({
+                    method: 'post',
+                    url: '/cart/add',
+                    data: {
+                        id: this.sId,
+                        num: this.num,
+                    }
+                }).then((res) => {
+                    // this.$store.dispatch('cartAction');
+                    this.$router.push({ path: '/m/cart', });
+                })
+            } else {
+
+                if (!this.getUser.status) {
+
+                    this.$router.push('/m/my/login');
+                    return false;
+                }
+                this.$http({
+                    method: 'post',
+                    url: '/cart/add',
+                    data: {
+                        id: this.sId,
+                        num: this.num,
+                    }
+                }).then((res) => {
+                    // 弹出框提醒
+                    Toast({
+                        message: '操作成功',
+                        // position: 'bottom',
+                        duration: 1000,
+                    });
+                    // this.alert_options.info = res.msg;
+                    // this.alert_options.type = 'success';
+                    // this.$refs.alert.alert();
+                    // this.$store.dispatch('cartAction');
+                })
+            }
+        },
+        dianpu() {
+            this.$router.push({
+                path: '/m/storeindex',
+                query: {}
+            });
         },
         getninumShuliang() {
             this.$http({
@@ -150,11 +225,13 @@ export default {
                 this.img = 'http://115.182.107.203:8088/xinda/pic' + result.data.product.img;
                 // console.log(result);
                 this.htmle = result.data.providerProduct.serviceContent;
-                console.log(this.htmle);
-                if( this.htmle === ''){
+                // console.log(this.htmle);
+                if (this.htmle === '') {
                     this.show = true;
                     console.log(1);
                 }
+                // this.shopTypeId = 
+                // console.log(result);
                 // 市场价
                 this.shichang = result.data.product.marketPrice;
                 // 现价
@@ -208,6 +285,39 @@ export default {
 </script>
 
 <style scoped lang="less">
+.caidan {
+    width: 100%;
+    box-sizing: border-box;
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: .55rem;
+    background: #f8f8f8;
+    >div {
+        width: 33%;
+        height: 0.575rem;
+        font-size: 0.14rem;
+        line-height: 0.575rem;
+        text-align: center;
+    }
+    div:nth-child(1) {
+        width: 34%;
+        background: #eeeff3;
+    }
+    div:nth-child(2) {
+        width: 33%; // text-align: center;
+        color: #fff;
+        background: #2693d4;
+    }
+    div:nth-child(3) {
+        width: 33%;
+        color: #fff;
+        background: #fb4146;
+    }
+}
+
 .img {
     div:nth-child(1) {
         position: relative;

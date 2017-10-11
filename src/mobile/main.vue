@@ -1,3 +1,6 @@
+
+19:41:39
+李孝威 15315659197 2017/10/10 19:41:39
 <template>
   <div id="m_main">
     <router-view></router-view>
@@ -87,7 +90,7 @@ export default {
 <style lang="less" scoped>
 #m_main {
   width: 3.75rem;
-  padding-bottom: .55rem;
+  padding-bottom: .65rem;
   .tab {
     box-sizing: border-box;
     position: fixed;
@@ -117,3 +120,4 @@ export default {
   }
 }
 </style>
+

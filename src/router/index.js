@@ -66,6 +66,8 @@ const mLogin = r => require.ensure([], ()=>r(require('@/mobile/login.vue')), 'm_
 // import mForget from '@/mobile/forget.vue'; //手机忘记密码
 const mForget = r => require.ensure([], ()=>r(require('@/mobile/forget.vue')), 'm_user'); //手机忘记密码
 
+import mList from '@/mobile/list.vue';//手机端列表
+
 import my from '@/mobile/my.vue'; // 我的中间页
 import center from '@/mobile/center.vue';  // 手机我的
 import morder from '@/mobile/m-order.vue'; // 我的订单
@@ -131,6 +133,11 @@ export default new Router({
                 path: 'goods',
                 name: 'goods',
                 component: mGoods,
+            },
+            {
+                path: 'list',
+                name: 'list',
+                component: mList,
             },
             {
 

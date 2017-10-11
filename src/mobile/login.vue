@@ -1,20 +1,26 @@
 <template>
-  <ul class="form" id="form">
-    <li>
-      <xd-input @enter="login" :value="phoneVal" @getValue="getPhone" @blur="isPhone" @focus="isPhone(1)" :info="info.phoneInfo" :infoType="type.phoneType" placeholder="请输入手机号"></xd-input>
-    </li>
-    <li>
-      <xd-input @enter="login" @getValue="getPassword" @blur="isPassword" @focus="isPassword(1)" type="password" :info="info.pwdInfo" :infoType="type.pwdType" placeholder="请输入新密码(8-16位数字和字母)"></xd-input>
-    </li>
-    <li class="message">
-      <xd-captcha @enter="login" :info="info.captInfo" :upload="isload" :infoType="type.captType" @value="getValue"></xd-captcha>
-    </li>
-    <li class="forget">
-      <a href="#/m/my/forget">忘记密码?</a>
-    </li>
-    <li><input @click.13="login" type="button" value="立即登录"></li>
-    <v-alert :type="alert_options.type" :info="alert_options.info" ref="alert"></v-alert>
-  </ul>
+  <div class="mmain">
+    <ul class="form" id="form">
+      <li>
+        <xd-input @enter="login" :value="phoneVal" @getValue="getPhone" @blur="isPhone" @focus="isPhone(1)" :info="info.phoneInfo" :infoType="type.phoneType" placeholder="请输入手机号"></xd-input>
+      </li>
+      <li>
+        <xd-input @enter="login" @getValue="getPassword" @blur="isPassword" @focus="isPassword(1)" type="password" :info="info.pwdInfo" :infoType="type.pwdType" placeholder="请输入新密码(8-16位数字和字母)"></xd-input>
+      </li>
+      <li class="message">
+        <xd-captcha @enter="login" :info="info.captInfo" :upload="isload" :infoType="type.captType" @value="getValue"></xd-captcha>
+      </li>
+      <li class="forget">
+        <a href="#/m/my/forget">忘记密码?</a>
+      </li>
+      <li><input @click.13="login" type="button" value="立即登录"></li>
+      <v-alert :type="alert_options.type" :info="alert_options.info" ref="alert"></v-alert>
+    </ul>
+    <div class="dd">
+      <p>还没有薪客账号？</p>
+      <div @click="gozhuce()">立即注册</div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -169,36 +175,67 @@ export default {
         this.type.pwdType = '';
         this.clear = false;
       }
+    },
+    gozhuce(){ //跳转到注册界面
+      this.$router.push({
+        path:'/m/my/register'
+      })
     }
   },
 }
 </script>
 
 <style lang="less">
-#form{
+.mmain{
+  width: 3.75rem;
+  margin-top: .55rem;
+  .dd{
+    width: 3.75rem;
+    height: .3rem;
+    background-color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    position:fixed;
+    bottom: 0.55rem;
+    left: 0;
+    color: white;
+    line-height: .2rem;
+    div{
+      background-color: #2693d4;
+      border-radius: 0.025rem;
+      padding: 0 0.1rem;
+    }
+  }
+}
+#form {
+  width: 2.75rem;
+  margin: 0 auto;
+  // margin-top: .55rem;
+  li {
+    margin-top: .1rem;
+  }
+  .message {
+    .inp {
+      width: 1.37rem;
+    }
+    input[type="text"] {
+      width: 1.37rem;
+      margin-right: 0.15rem;
+    }
+  }
+  .forget {
+    text-align: right;
+  }
+  input[type="button"] {
     width: 2.75rem;
-    margin: 0 auto;
-    margin-top: .55rem;
-    li{
-        margin-top: .1rem;
-    }
-    .message{
-        input[type="text"]{
-            width: 1.37rem;
-        }
-    }
-    .forget{
-        text-align: right;
-    }
-    input[type="button"]{
-        width: 2.75rem;
-        height: .35rem;
-        border: 0;
-        border-radius: .03rem;
-        background-color: #2693d4;
-        color: #fff;
-        outline: none;
-    }
+    height: .35rem;
+    border: 0;
+    border-radius: .03rem;
+    background-color: #2693d4;
+    color: #fff;
+    outline: none;
+  }
 }
 </style>
 
