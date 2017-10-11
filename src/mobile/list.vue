@@ -4,7 +4,6 @@
             <p @click="changecolor('')" :class="{colorchange: change ==''}">默认排序</p>
             <p @click="changecolor(2)" :class="{colorchange: change == 2}">价格</p>
         </div>
-
         <div class="main">
             <div class="store"  v-for="item of mess" @click="gotoxiangqing(item.id)">
                 <div class="img"><img v-bind:src="item.productImg"></div>
@@ -21,12 +20,14 @@
                 </div>
             </div>
         </div>
-           
-    </div>
 
+        <span class='xd xd-no' v-show="kong"></span>                 
+                  
+    </div>
 </template>
 <script>
 import { InfiniteScroll } from 'mint-ui';
+import { Indicator } from 'mint-ui';
 export default {
     name: 'storelist',
     data() {
@@ -37,12 +38,13 @@ export default {
                 productTypeCode: this.$route.query.code,//产品分类编码            
                 productId: this.$route.query.id,//产品id
                 sort: '',//排序方式，空：默认排序
-            },          
+            },   
+            kong: false,       
         }
     },
     created() {
         this.getList();
-        
+        Indicator.open('加载中...'); // 页面初始加载提示
     },
     methods: {
         changecolor(n){
@@ -52,19 +54,28 @@ export default {
         },
         //列表数据获取
         getList() {
-        this.$http({
-            method: 'post',
-            url: '/product/package/grid',
-            data: this.members,
-        }).then((result) => {
-            let data = result.data;
-            let len = data.length;
-            for (var i = 0; i < len; i++) {
-            data[i].productImg.substring(0, 3) == 'http' ? data[i].productImg = data[i].productImg : data[i].productImg = "http://115.182.107.203:8088/xinda/pic" + data[i].productImg;//图片数据处理，加上前缀
-            data[i].price = this.fmtPrice(data[i].price);//处理销售价格余两位数
-            };
-            this.mess=data;         
-        })
+            this.$http({
+                method: 'post',
+                url: '/product/package/grid',
+                data: this.members,
+            }).then((result) => {
+                let data = result.data;
+                let len = data.length;
+                for (var i = 0; i < len; i++) {
+                data[i].productImg.substring(0, 3) == 'http' ? data[i].productImg = data[i].productImg : data[i].productImg = "http://115.182.107.203:8088/xinda/pic" + data[i].productImg;//图片数据处理，加上前缀
+                data[i].price = this.fmtPrice(data[i].price);//处理销售价格余两位数
+                };
+                this.mess=data;
+                
+                console.log('this.mess',this.mess);
+                if(this.mess==''){
+                    Indicator.close(); // 加载提示关闭 
+                    this.kong=true;
+                }else{
+                   Indicator.close(); // 加载提示关闭    
+                   this.kong=false;            
+                }      
+            })
         },
         //函数处理价格，小数点后余两位数
         fmtPrice(p) {
@@ -80,6 +91,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
+#list > span{      
+    margin:0 23%;
+    font-size:2rem;        
+}
     .change{
         display:flex;
         margin:0.22rem  auto;

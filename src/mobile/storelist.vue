@@ -27,7 +27,7 @@
 
 </template>
 <script>
-
+import { Indicator } from 'mint-ui';
 export default {
     name: 'storelist',
     data() {
@@ -42,8 +42,9 @@ export default {
     },
     created() {
         this.getStoreList();
-        
+        Indicator.open('加载中...'); // 页面初始加载提示
     },
+
     methods: {
         changecolor(n){
             this.change=n;
@@ -52,26 +53,28 @@ export default {
         },
         //店铺列表后台数据获取
         getStoreList() {
-        this.$http({
-            method: 'post',
-            url: '/provider/grid',
-            data: this.members,
-        }).then((result) => {
-            let data = result.data;
-            let len = data.length;
-            for (var i = 0; i < len; i++) {
-            data[i].totalJudge == 0 ? data[i].totalJudge = 1 : ""; //好评率数据处理
-            data[i].providerImg.substring(0, 3) == 'http' ? data[i].providerImg = data[i].providerImg : data[i].providerImg = "http://115.182.107.203:8088/xinda/pic" + data[i].providerImg;//图片数据处理，加上前缀
-            };
-            this.arr = data;
-        })
+            this.$http({
+                method: 'post',
+                url: '/provider/grid',
+                data: this.members,
+            }).then((result) => {
+                let data = result.data;
+                let len = data.length;
+                for (var i = 0; i < len; i++) {
+                data[i].totalJudge == 0 ? data[i].totalJudge = 1 : ""; //好评率数据处理
+                data[i].providerImg.substring(0, 3) == 'http' ? data[i].providerImg = data[i].providerImg : data[i].providerImg = "http://115.182.107.203:8088/xinda/pic" + data[i].providerImg;//图片数据处理，加上前缀
+                };
+                this.arr = data;
+                if(this.arr!==''){
+                    Indicator.close(); // 加载提示关闭 
+                }
+            });
+            
         },
         //跳转页面到店铺首页，传一个id
         gotoStore(id) {
         this.$router.push({ path: '/m/storeindex', query: { id } });
-        },
-
-        
+        },       
     }
 }
 </script>
