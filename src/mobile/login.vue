@@ -176,9 +176,9 @@ export default {
         this.clear = false;
       }
     },
-    gozhuce(){ //跳转到注册界面
+    gozhuce() { //跳转到注册界面
       this.$router.push({
-        path:'/m/my/register'
+        path: '/m/my/register'
       })
     }
   },
@@ -186,32 +186,32 @@ export default {
 </script>
 
 <style lang="less">
-.mmain{
+.mmain {
   width: 3.75rem;
   margin-top: .55rem;
-  .dd{
+  .dd {
     width: 3.75rem;
     height: .3rem;
     background-color: #333;
     display: flex;
     align-items: center;
     justify-content: space-around;
-    position:fixed;
+    position: fixed;
     bottom: 0.55rem;
     left: 0;
     color: white;
     line-height: .2rem;
-    div{
+    div {
       background-color: #2693d4;
       border-radius: 0.025rem;
       padding: 0 0.1rem;
     }
   }
 }
+
 #form {
   width: 2.75rem;
-  margin: 0 auto;
-  // margin-top: .55rem;
+  margin: 0 auto; // margin-top: .55rem;
   li {
     margin-top: .1rem;
   }

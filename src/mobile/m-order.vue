@@ -24,7 +24,8 @@
                     </p>
                     <div v-if="item.status == 1">
                         <button @click="delOrder(item)" class="del">删除订单</button>
-                        <button @click="goto(item.businessNo)" class="pay">付款</button>
+                        <!-- <button @click="goto(item.businessNo)" class="pay">付款</button> -->
+                        <button @click="gopay" class="pay">付款</button>
                     </div>
                     <div v-if="item.status == 2">交易关闭</div>
                     <div v-if="item.status == 3">交易完成</div>
@@ -34,21 +35,29 @@
         <div v-if="loadingShow" class="loading">
             <mt-spinner type="fading-circle" color="#26a2ff"></mt-spinner>
         </div>
+        <modal ref="modal" class="order-modal" :options="options">
+            <div slot="header" class="header">
+                扫码支付
+            </div>
+            <div slot="body" class="imgbox">
+                <img src="../common/images/pay.jpg" alt="">
+            </div>
+        </modal>
     </div>
 </template>
 
 <script>
-import { InfiniteScroll } from 'mint-ui';
 import { Indicator } from 'mint-ui';
 import { MessageBox } from 'mint-ui';
 import { Toast } from 'mint-ui';
+// modal框
+import modal from '@/components/global/modal.vue';
 // 时间戳处理函数
 import util from '@/common/js/utils';
 export default {
     name: 'order',
-    beforeRouteUpdate(to,from,next){
-        console.log('order',to,from);
-        // next();
+    components: {
+        modal,
     },
     data() {
         return {
@@ -59,6 +68,10 @@ export default {
             business: '', // 业务订单数据
             loading: true, // 无线滚动加载是否触发
             loadingShow: false, // 加载动画显示隐藏
+            options: { // modal配置
+                cancelButtonText: '取消支付',
+                confirmButtonText: '已完成支付',
+            }
         }
     },
     computed: {
@@ -86,6 +99,11 @@ export default {
     created() {
         this.getOrder();
         Indicator.open('加载中...'); // 页面初始加载提示
+        this.$root.eventHub.$on('closeLoading', (path) => {
+            if (!/order/.test(path)) {
+                Indicator.close();
+            }
+        })
     },
     methods: {
         loadMore() { // 滚动加载
@@ -139,7 +157,7 @@ export default {
                         return i;
                     })
 
-                },()=>{
+                }, () => {
                     Indicator.close(); // 加载提示关闭
                 })
         },
@@ -162,11 +180,16 @@ export default {
         goServer(id) { // 查看商品详情
             this.$router.push({ path: '', query: { id } });
         },
+        gopay() { // 去支付
+            this.$refs.modal.confirm().then(() => {
+                this.$refs.modal.show = false;
+            });
+        }
     }
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 #order {
     margin-top: .38rem;
     background-color: #f8f8f8;
@@ -238,32 +261,34 @@ export default {
             }
         }
     }
-    .loading{
+    .loading {
         display: flex;
         justify-content: center;
         align-items: center;
     }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-/* 过渡动画 */
-
-.list-enter-active,
-.list-leave-active {
-    transition: .2s ease;
-}
-
-.list-enter-to {
-    opacity: 0;
+    .order-modal {
+        .modal-dialog {
+            width: 3rem;
+        }
+        .modal-content {
+            >div {
+                padding: 15px;
+            }
+        }
+        .header {
+            width: 100%;
+            text-align: center;
+            font-weight: 600;
+        }
+        .imgbox {
+            img {
+                width: 100%;
+            }
+        }
+        .modal-footer {
+            display: flex;
+            justify-content: space-between;
+        }
+    }
 }
 </style>

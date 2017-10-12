@@ -17,6 +17,7 @@ module.exports = {
     publicPath: process.env.NODE_ENV === 'production'
       ? config.build.assetsPublicPath
       : config.dev.assetsPublicPath
+    // publicPath: './' // 打包编译时用
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],

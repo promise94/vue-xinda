@@ -1,9 +1,8 @@
-
-19:41:39
-李孝威 15315659197 2017/10/10 19:41:39
 <template>
   <div id="m_main">
-    <router-view></router-view>
+    <transition :name="transitionName" mode="out-in">
+      <router-view class="child-view"></router-view>
+    </transition>
     <ul class="tab" v-show="menuShow">
       <li @click="goto('/m')" :class="{active:selected == '/m'}">
         <span slot="icon" class="icon xd xd-shouye"></span>
@@ -32,6 +31,7 @@ export default {
   data() {
     return {
       menuShow: true, // 是否显示菜单
+      transitionName: '',
     }
   },
   beforeRouteEnter(to, from, next) {
@@ -49,6 +49,11 @@ export default {
     });
   },
   created() {
+    if (/Mobile/i.test(navigator.userAgent)) {
+      window.onresize = () => {
+        document.querySelector('html').style.fontSize = screen.width / 3.75 / 16 * 100 + '%';
+      }
+    }
     this.$http.post('/sso/login-info').then((res) => {
       if (res.status === 1) {
         let user = {
@@ -66,6 +71,10 @@ export default {
   },
   watch: {
     '$route'(to, from) {
+      const toDepth = to.path.length;
+      const fromDepth = from.path.length;
+      this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left';
+      this.$root.eventHub.$emit('closeLoading', to.path);
       if (to.meta.MobileRequireAuth) {
         if (!this.$store.state.user.status) {
           this.$router.push({ path: '/m/my/login', query: { redirect: to.fullPath } });
@@ -90,11 +99,13 @@ export default {
 <style lang="less" scoped>
 #m_main {
   width: 3.75rem;
+  margin: 0 auto;
   padding-bottom: .65rem;
   .tab {
     box-sizing: border-box;
     position: fixed;
     bottom: 0;
+    left: 0;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -102,6 +113,7 @@ export default {
     height: .55rem;
     background: #f8f8f8;
     color: #999;
+    z-index: 99999;
     >li {
       flex-grow: 1;
       display: flex;
@@ -119,5 +131,22 @@ export default {
     font-weight: 700;
   }
 }
+
+.child-view {
+  transition: all .25s cubic-bezier(.55, 0, .1, 1);
+}
+
+.slide-left-enter,
+.slide-right-leave-active {
+  opacity: 0;
+  transform: translate(.6rem, 0);
+}
+
+.slide-left-leave-active,
+.slide-right-enter {
+  opacity: 0;
+  transform: translate(-.6rem, 0);
+}
+</style>
 </style>
 

@@ -24,7 +24,7 @@
                             <p>购买数量：</p>
                             <div>
                                 <span @click="less(item)">-</span>
-                                <input type="number" @blur="onblur($event ,item)"  :value="item.buyNum">
+                                <input type="number" @blur="onblur($event ,item)" :value="item.buyNum">
                                 <span @click="add(item)">+</span>
                             </div>
                         </div>
@@ -66,8 +66,8 @@
 </template>
 
 <script>
-import { Toast } from 'mint-ui'; 
-import { MessageBox } from 'mint-ui'; 
+import { Toast } from 'mint-ui';
+import { MessageBox } from 'mint-ui';
 import { Indicator } from 'mint-ui'; //引入“加载中。。。”
 export default {
     data() {
@@ -84,6 +84,11 @@ export default {
     },
     created() {
         this.getCartlsit();
+        this.$root.eventHub.$on('closeLoading', (path) => {
+            if (!/cart/.test(path)) {
+                Indicator.close();
+            }
+        })
     },
     methods: {
         // 商品获取
@@ -161,7 +166,7 @@ export default {
                         Toast({
                             message: '删除成功',
                             duration: 1000
-                        })      
+                        })
                         //删除结果提示 
                         this.getCartlsit();
                         this.msg--;
@@ -172,7 +177,7 @@ export default {
                 })
             })
         },
-         // 失焦事件
+        // 失焦事件
         onblur(ev, item) {
             let vall = ev.target.value;
             if (vall > 0) {
@@ -192,7 +197,7 @@ export default {
         goShop() {
             this.$router.push({
                 path: '/m'
-            })   
+            })
         },
         // 去结算
         getSubmit() {
@@ -201,9 +206,9 @@ export default {
             //     duration: 1000
             // })
             this.$http({
-                method:'post',
-                url:'/cart/submit',
-            }).then((res)=>{
+                method: 'post',
+                url: '/cart/submit',
+            }).then((res) => {
                 // console.log(res);
                 if (res.status == 1) {
                     let dingdan = res.data;
@@ -236,10 +241,9 @@ export default {
 <style lang="less" scoped>
 .m_cart {
     box-sizing: border-box;
-    width: 3.75rem;
-    // diceng
-    .diceng{
-        position:fixed;
+    width: 3.75rem; // diceng
+    .diceng {
+        position: fixed;
         bottom: 0.55rem;
         left: 0;
     }
@@ -272,8 +276,7 @@ export default {
                 width: 3.5rem; // height: 0.96rem;
                 padding: 0.03rem 0 0.165rem 0;
                 display: flex;
-                border-bottom: 0.01rem solid #e3e3e3; 
-                // 获取到的图片
+                border-bottom: 0.01rem solid #e3e3e3; // 获取到的图片
                 .pth {
                     margin-right: 0.1rem;
                     img {
@@ -281,8 +284,7 @@ export default {
                         height: 0.4rem;
                         margin-top: 0.2rem;
                     }
-                } 
-                // 获取到的信息及操作
+                } // 获取到的信息及操作
                 .operation {
                     width: 2.56rem; // height: 0.85rem;
                     .o_title {
@@ -385,7 +387,7 @@ export default {
     .s_submit {
         width: 3.75rem;
         height: 0.55rem;
-        font-size:0.2rem;
+        font-size: 0.2rem;
         line-height: 0.55rem;
         background-color: #e5e5e5;
         display: flex; // float: left;

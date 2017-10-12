@@ -89,7 +89,7 @@
                 <h3>免费电话咨询</h3>
             </div>
             <div slot="body" class="body">
-                <div  v-show="a === 1">
+                <div v-show="a === 1">
                     <p>本次电话咨询完全免费，我们将对你的号码完全保密，请放心使用。</p>
                 </div>
                 <div>
@@ -202,12 +202,11 @@ export default {
         this.getninumShuliang();
         this.getStoreList();
         Indicator.open('加载中...'); // 页面初始加载提示
-        watch: {
-            // console.log(this.$route.path);
-            if (this.$route.path === '/mGoods') {
-                // console.log(1);
+        this.$root.eventHub.$on('closeLoading', (path) => {
+            if (!/good/.test(path)) {
+                Indicator.close();
             }
-        }
+        })
     },
     computed: {
         ...mapGetters(['getUser']),
@@ -447,7 +446,7 @@ export default {
                 }, this);
                 // this.arr = data;
                 // console.log(data);
-                if(this.shangpinxiangqing && this.arr){
+                if (this.shangpinxiangqing && this.arr) {
                     Indicator.close(); // 加载提示关闭 
                 }
             })
@@ -458,14 +457,15 @@ export default {
 </script>
 
 <style lang="less">
-.body2{
-    >div{
-       >img{
+.body2 {
+    >div {
+        >img {
             width: 3rem;
-        height: 3rem;
-       }
+            height: 3rem;
+        }
     }
 }
+
 .dianhua {
     width: 80%;
     height: 80%;
@@ -490,12 +490,12 @@ export default {
                 }
                 >li:nth-child(2) {
                     >div {
-                       >div{
+                        >div {
                             margin-top: 0.1rem;
                             >input {
-                            width: 1.8rem;
+                                width: 1.8rem;
+                            }
                         }
-                       }
                     }
                 }
                 >div:nth-child(3) {

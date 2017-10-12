@@ -25,6 +25,11 @@ export default {
     created() {
         this.mm();
         Indicator.open('加载中...'); // 页面初始加载提示
+        this.$root.eventHub.$on('closeLoading', (path) => {
+            if (!/product/.test(path)) {
+                Indicator.close();
+            }
+        })
     },
     data() {
         return {
@@ -59,7 +64,7 @@ export default {
                     return a.code - b.code;
                 });
                 this.second = this.dataArr[0].itemList;
-                if(this.second){
+                if (this.second) {
                     Indicator.close(); // 加载提示关闭 
                 }
             })

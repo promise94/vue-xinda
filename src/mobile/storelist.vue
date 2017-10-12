@@ -43,6 +43,11 @@ export default {
     created() {
         this.getStoreList();
         Indicator.open('加载中...'); // 页面初始加载提示
+        this.$root.eventHub.$on('closeLoading', (path)=>{
+            if (!/storelist/.test(path)) {
+                Indicator.close();
+            }
+        })
     },
 
     methods: {

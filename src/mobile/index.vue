@@ -149,6 +149,11 @@ export default {
     this.getnicai();
     this.getAllCity();
     Indicator.open('加载中...'); // 页面初始加载提示
+    this.$root.eventHub.$on('closeLoading', (path) => {
+      if (!/\/m$/.test(path)) {
+        Indicator.close();
+      }
+    })
   },
   components: {
     swipe: Swipe,
@@ -225,7 +230,7 @@ export default {
           item.marketPrice = item.marketPrice + '.00'
         }, this);
         this.recommend = data;
-        if(this.recommend){
+        if (this.recommend) {
           Indicator.close(); // 加载提示关闭 
         }
       })
