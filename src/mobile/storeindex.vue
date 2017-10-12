@@ -138,7 +138,7 @@ export default {
     .company{
         margin-bottom: 0.1rem;
         padding: 0.1rem;
-        border-bottom: 0.01rem solid #e3e3e3;
+        border-bottom: 0.02rem solid #e3e3e3;
         background: #fff;
         .img{
             margin: 0.08rem auto;
@@ -163,18 +163,21 @@ export default {
         background:#fff;      
         .all{
             position:relative;
-            border-bottom:0.015rem solid #2594d4;
+            border-bottom:0.02rem solid #2594d4;
             font-weight:bold;
             font-size:15px;
-            line-height:0.3rem;
+            line-height:0.35rem;
             >p{
-                transform:rotate(45deg);
-                position:absolute;
-                left:0.25rem;
-                bottom:-0.01rem;
-                width:0.03rem;
-                height:0.03rem;    
-                background:#2594d4;
+                width: 0rem;
+                height: 0rem;
+                border-left: 0.02rem solid transparent;
+                border-right: 0.02rem solid transparent;
+                border-bottom: 0.1rem solid #2693d4;
+                font-size: 0;
+                line-height: 0;
+                position: absolute;
+                left: 0.3rem;
+                bottom: 0rem;   
             }
         }
         .messages{
@@ -182,7 +185,7 @@ export default {
             margin:0.1rem 0;
             width:100%;
             height:0.9rem;
-            border-bottom:0.01rem solid #cfcfcf;
+            border-bottom:0.02rem solid #cfcfcf;
             img{
                 margin-right:0.1rem;
                 width:0.95rem;
