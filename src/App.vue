@@ -3,7 +3,7 @@
     <transition name="fade">
       <router-view></router-view>
     </transition>
-    <backtop transitionName="easeInQuad"></backtop>
+    <backtop v-if="showback" transitionName="easeInQuad"></backtop>
   </div>
 </template>
 
@@ -14,6 +14,11 @@ export default {
   components: {
     backtop,
   },
+  computed: {
+    showback(){
+      return !/Mobile/i.test(navigator.userAgent);
+    }
+  }
 }
 </script>
 
