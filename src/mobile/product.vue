@@ -78,7 +78,6 @@ export default {
     background-color: #f6f6f6;
     .margin-left {
         width: 0.85rem;
-        height: 5.9rem;
         background-color: white;
         >ul>li {
             color: #282828;
