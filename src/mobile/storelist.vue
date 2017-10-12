@@ -41,12 +41,14 @@ export default {
         }
     },
     created() {
+        Indicator.close();
         this.getStoreList();
         Indicator.open('加载中...'); // 页面初始加载提示
     },
 
     methods: {
         changecolor(n){
+            
             this.change=n;
             this.members.sort=n;
             this.getStoreList();

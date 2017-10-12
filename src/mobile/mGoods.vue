@@ -2,7 +2,7 @@
     <div id="asd">
         <div class="img">
             <div>
-                <img :src="img" alt="">
+                <img :src="img" alt="" @error="imgerror()">
                 <div>
                     <p>{{serviceName}}</p>
                     <p>{{serviceInfo}}</p>
@@ -33,7 +33,7 @@
         <div class="shop">
             <div>
                 <div>
-                    <img :src="shopimg" alt="">
+                    <img :src="shopimg" alt="" @error="imgerror()">
                 </div>
                 <div>
                     <span>金牌服务商</span>
@@ -64,7 +64,7 @@
             无服务内容
         </div>
         <div class="serve">
-            <div v-html="htmle">
+            <div v-html="htmle" @error="imgerror()">
                 {{htmle}}
             </div>
         </div>
@@ -146,22 +146,22 @@ export default {
         }
     },
     created() {
+        Indicator.close();
         this.sId = this.$route.query.id;
         this.Id = this.$route.query.Id;
         this.getninumShuliang();
         this.getStoreList();
-        Indicator.open('加载中...'); // 页面初始加载提示
-        watch: {
-            // console.log(this.$route.path);
-            if (this.$route.path === '/mGoods') {
-                // console.log(1);
-            }
-        }
+        Indicator.open('加载中...'); // 页面初始加载提示       
     },
     computed: {
         ...mapGetters(['getUser']),
     },
     methods: {
+        imgerror(e){//图片加载错误时显示
+            let ev = e || window.event;
+            // console.log('imgerror-',ev);
+            ev.target.src = '/static/images/order.png';        
+        },
         fmtPrice(p) {
             return (parseFloat(p) * 0.01).toFixed(2);
         },
@@ -228,7 +228,7 @@ export default {
                 // console.log(this.htmle);
                 if (this.htmle === '') {
                     this.show = true;
-                    console.log('1');
+                    // console.log('1');
                 }
                 // this.shopTypeId = 
                 // console.log(result);

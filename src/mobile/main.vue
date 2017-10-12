@@ -91,7 +91,9 @@ export default {
 #m_main {
   width: 3.75rem;
   padding-bottom: .65rem;
+  
   .tab {
+    z-index:500;
     box-sizing: border-box;
     position: fixed;
     bottom: 0;

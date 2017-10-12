@@ -391,6 +391,13 @@ export default {
     p {
       width: 2.615rem;
     }
+    // >p:nth-of-type(2){
+    //   width: 2.615rem;
+    //   overflow:hidden;
+    //   text-overflow:ellipsis;
+    //   display:-webkit-box;
+    //   -webkit-line-clamp:2;
+    // }
     >p:nth-of-type(3) {
       margin-bottom: 0.1rem;
       >span {
