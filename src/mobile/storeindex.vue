@@ -12,7 +12,7 @@
         <div class="service" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="5">
             <div class="all">所有服务<p></p></div> 
             <div class="messages" v-for="item of arr" @click="gotoxiangqing(item.id, Id)">
-                <div class="img"><img src='../common/images/order.png' :src="item.productImg"></div>
+                <div class="img"><img @error="imgerror()" :src="item.productImg"></div>
                 <div>
                     <h4>{{item.serviceName}}</h4>
                     <p>{{item.serviceInfo}}</p>
@@ -61,6 +61,10 @@ export default {
         Indicator.open('加载中...'); // 页面初始加载提示
     },
     methods: {
+        imgerror(e){
+            let ev = e || window.event;
+            ev.target.src = '/static/images/order.png';          
+        },
         getStore() {  
             this.$http({      //店铺首页后台数据获取
                 method: 'post',
@@ -81,7 +85,7 @@ export default {
                 url: '/product/package/grid',
                 data: this.members,
             }).then((res) => {
-                console.log('222',res);
+                // console.log('222',res);
                 let date = res.data;
                 let len = date.length;
                 for (var i = 0; i < len; i++) {               
@@ -114,7 +118,7 @@ export default {
                     this.arr=this.mess.slice(0,this.i);
                     this.loading = false;
                     this.loadingShow = false;                   
-                }, 2500);
+                }, 500);
             }else{
                 this.loadingShow = false;
                 this.loadShow = true;
@@ -134,7 +138,7 @@ export default {
     .company{
         margin-bottom: 0.1rem;
         padding: 0.1rem;
-        border-bottom: 0.01rem solid #e3e3e3;
+        border-bottom: 0.02rem solid #e3e3e3;
         background: #fff;
         .img{
             margin: 0.08rem auto;
@@ -159,18 +163,21 @@ export default {
         background:#fff;      
         .all{
             position:relative;
-            border-bottom:0.015rem solid #2594d4;
+            border-bottom:0.02rem solid #2594d4;
             font-weight:bold;
             font-size:15px;
-            line-height:0.3rem;
+            line-height:0.35rem;
             >p{
-                transform:rotate(45deg);
-                position:absolute;
-                left:0.25rem;
-                bottom:-0.01rem;
-                width:0.03rem;
-                height:0.03rem;    
-                background:#2594d4;
+                width: 0rem;
+                height: 0rem;
+                border-left: 0.02rem solid transparent;
+                border-right: 0.02rem solid transparent;
+                border-bottom: 0.1rem solid #2693d4;
+                font-size: 0;
+                line-height: 0;
+                position: absolute;
+                left: 0.3rem;
+                bottom: 0rem;   
             }
         }
         .messages{
@@ -178,7 +185,7 @@ export default {
             margin:0.1rem 0;
             width:100%;
             height:0.9rem;
-            border-bottom:0.01rem solid #cfcfcf;
+            border-bottom:0.02rem solid #cfcfcf;
             img{
                 margin-right:0.1rem;
                 width:0.95rem;

@@ -1,10 +1,8 @@
 
-19:41:39
-李孝威 15315659197 2017/10/10 19:41:39
 <template>
   <div id="m_main">
     <router-view></router-view>
-    <ul class="tab" v-show="menuShow">
+    <ul class="tab" >
       <li @click="goto('/m')" :class="{active:selected == '/m'}">
         <span slot="icon" class="icon xd xd-shouye"></span>
         首页
@@ -41,11 +39,7 @@ export default {
           vm.$router.push({ path: '/m/my/login', query: { redirect: to.fullPath } });
         }
       }
-      if (/good/i.test(to.path)) {
-        vm.menuShow = false;
-      } else if (!vm.menuShow) {
-        vm.menuShow = true;
-      }
+      
     });
   },
   created() {
@@ -71,11 +65,7 @@ export default {
           this.$router.push({ path: '/m/my/login', query: { redirect: to.fullPath } });
         }
       }
-      if (/good/i.test(to.path)) {
-        this.menuShow = false;
-      } else if (!this.menuShow) {
-        this.menuShow = true;
-      }
+     
     }
   },
   methods: {
@@ -91,7 +81,9 @@ export default {
 #m_main {
   width: 3.75rem;
   padding-bottom: .65rem;
+  
   .tab {
+    z-index:500;
     box-sizing: border-box;
     position: fixed;
     bottom: 0;
