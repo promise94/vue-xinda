@@ -186,7 +186,7 @@
         </div>
         <v-alert :type="alert_options.type" :info="alert_options.info" ref="alert"></v-alert>
 
-        <modal ref="name" class="dianhua">
+        <modal ref="name" id="dianhua">
             <div slot="header" class="header">
                 <h3>免费电话咨询</h3>
             </div>

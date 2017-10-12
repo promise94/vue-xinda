@@ -21,7 +21,7 @@
                                 <p>类型</p>
                             </div>
                             <div class="search-b">
-                                <span @click="love(n,item.id)" :class="{all:oyou==n}" v-for="(item,k,n) of itemList">{{item.name}}</span>
+                                <p @click="love(n,item.id)" :class="{all:oyou==n}" v-for="(item,k,n) of itemList">{{item.name}}</p>
                             </div>
                         </div>
                         <div class="search-three">
@@ -281,8 +281,8 @@ export default {
 }
 </script>
 
-<style lang="less">
-@import './../../common/less/store/services.less';
+<style lang="less" scoped>
+@import './../../common/less/list/services.less';
 div {
     >p {
         color: black;

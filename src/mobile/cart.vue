@@ -84,6 +84,11 @@ export default {
     },
     created() {
         this.getCartlsit();
+        this.$root.eventHub.$on('closeLoading', (path) => {
+            if (!/cart/.test(path)) {
+                Indicator.close();
+            }
+        })
     },
     methods: {
         // 商品获取
@@ -271,7 +276,7 @@ export default {
                 width: 3.5rem; // height: 0.96rem;
                 padding: 0.03rem 0 0.165rem 0;
                 display: flex;
-                border-bottom: 0.015rem solid #e3e3e3; 
+                border-bottom: 0.02rem solid #e3e3e3; 
                 // 获取到的图片
                 .pth {
                     margin-right: 0.1rem;

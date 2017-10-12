@@ -5,7 +5,9 @@
                 <span class="back xd xd-fanhui"></span>
             </div>
         </mt-header>
-        <router-view></router-view>
+        <transition :name="transitionName" mode="out-in">
+            <router-view class="child-view"></router-view>
+        </transition>
     </div>
 </template>
 
@@ -16,10 +18,11 @@ export default {
         return {
             title: '', // header文字信息
             show: false, // header是否显示
+            transitionName: '',
         }
     },
     beforeRouteEnter(to, from, next) {
-        // console.log('to');
+        // console.log('to',from);
         next(vm => {
             if (/my$/.test(to.path)) {
                 vm.show = false;
@@ -53,6 +56,9 @@ export default {
     },
     watch: {
         '$route'(to, from) {
+            const toDepth = to.path.length;
+            const fromDepth = from.path.length;
+            this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left';
             if (/my$/.test(to.path)) {
                 this.show = false;
             } else {
@@ -84,8 +90,9 @@ export default {
         }
     },
     methods: {
-        go(n){
-            history.go(n);
+        go(n) {
+            // history.go(-2);
+            this.$router.push({ path: '/m/my' });
         }
     }
 }
@@ -99,5 +106,21 @@ export default {
     .back {
         color: #676767;
     }
+}
+
+.child-view {
+    transition: all .25s cubic-bezier(.55, 0, .1, 1);
+}
+
+.slide-left-enter,
+.slide-right-leave-active {
+    opacity: 0;
+    transform: translate(.6rem, 0);
+}
+
+.slide-left-leave-active,
+.slide-right-enter {
+    opacity: 0;
+    transform: translate(-.6rem, 0);
 }
 </style>
