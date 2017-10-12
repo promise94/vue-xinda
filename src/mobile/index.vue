@@ -246,21 +246,21 @@ export default {
 .arrows {
   width: 0rem;
   height: 0rem;
-  border-left: 0.01rem solid transparent;
-  border-right: 0.01rem solid transparent;
-  border-bottom: 0.03rem solid #2693d4;
-  font-size: 0px;
-  line-height: 0px;
+  border-left: 0.03rem solid transparent;
+  border-right: 0.03rem solid transparent;
+  border-bottom: 0.1rem solid #2693d4;
+  font-size: 0;
+  line-height: 0;
   position: absolute;
   left: 0.45rem;
-  top: 0.32rem;
+  top: 0.26rem;
 }
 
 .my-swipe {
   width: 3.75rem;
   height: 1.27rem;
   color: #fff;
-  font-size: 30px;
+  font-size: 0.015rem;
   text-align: center;
 }
 
@@ -312,9 +312,9 @@ export default {
       height: 0.55rem;
       text-align: center;
       >span {
-        font-size: 30px;
+        font-size: 0.3rem;
         color: #fff;
-        line-height: 55px;
+        line-height: 0.55rem;
         text-align: center;
       }
     }
@@ -353,7 +353,7 @@ export default {
   height: 0.35rem;
   width: 100%;
   position: relative;
-  border-bottom: 2px solid #2693d4;
+  border-bottom: 0.02rem solid #2693d4;
   span {
     line-height: 0.35rem;
     margin-left: 0.2rem
@@ -386,7 +386,7 @@ export default {
   margin: 0 auto;
   display: flex;
   margin-top: 0.15rem;
-  border-bottom: 0.005rem solid #cfcfcf;
+  border-bottom: 0.02rem solid #cfcfcf;
   div:nth-child(1) {
     width: 0.83rem;
     height: 0.83rem;
@@ -401,6 +401,13 @@ export default {
     p {
       width: 2.615rem;
     }
+    // >p:nth-of-type(2){
+    //   width: 2.615rem;
+    //   overflow:hidden;
+    //   text-overflow:ellipsis;
+    //   display:-webkit-box;
+    //   -webkit-line-clamp:2;
+    // }
     >p:nth-of-type(3) {
       margin-bottom: 0.1rem;
       >span {

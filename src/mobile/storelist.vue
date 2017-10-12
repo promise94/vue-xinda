@@ -41,6 +41,7 @@ export default {
         }
     },
     created() {
+        Indicator.close();
         this.getStoreList();
         Indicator.open('加载中...'); // 页面初始加载提示
         this.$root.eventHub.$on('closeLoading', (path)=>{
@@ -90,10 +91,11 @@ export default {
         margin:0.22rem  auto;
         width:1.8rem;
         height:0.32rem;
-        border:0.01rem solid #2594d4;
+        border:0.02rem solid #2594d4;
         border-radius:0.05rem;
         font-size:0.14rem;
         text-align:center;
+        
         >p{
             width:0.9rem;
             line-height:0.32rem;
@@ -111,12 +113,12 @@ export default {
             margin-bottom:0.15rem;
             width:100%;
             height:1rem;
-            border-bottom:0.01rem solid #cfcfcf;
+            border-bottom:0.02rem solid #cfcfcf;
             .img{
                 margin-right:0.1rem;
                 width:0.85rem;
                 height:0.85rem;
-                border:0.01rem solid #e3e3e3;
+                border:0.02rem solid #e3e3e3;
                 img{
                     margin:0.25rem 0.08rem;
                     width:80%;

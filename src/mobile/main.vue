@@ -3,7 +3,7 @@
     <transition :name="transitionName" mode="out-in">
       <router-view class="child-view"></router-view>
     </transition>
-    <ul class="tab" v-show="menuShow">
+    <ul class="tab" >
       <li @click="goto('/m')" :class="{active:selected == '/m'}">
         <span slot="icon" class="icon xd xd-shouye"></span>
         首页
@@ -41,11 +41,7 @@ export default {
           vm.$router.push({ path: '/m/my/login', query: { redirect: to.fullPath } });
         }
       }
-      if (/good/i.test(to.path)) {
-        vm.menuShow = false;
-      } else if (!vm.menuShow) {
-        vm.menuShow = true;
-      }
+      
     });
   },
   created() {
@@ -80,11 +76,7 @@ export default {
           this.$router.push({ path: '/m/my/login', query: { redirect: to.fullPath } });
         }
       }
-      if (/good/i.test(to.path)) {
-        this.menuShow = false;
-      } else if (!this.menuShow) {
-        this.menuShow = true;
-      }
+     
     }
   },
   methods: {
@@ -101,7 +93,9 @@ export default {
   width: 3.75rem;
   margin: 0 auto;
   padding-bottom: .65rem;
+  
   .tab {
+    z-index:500;
     box-sizing: border-box;
     position: fixed;
     bottom: 0;

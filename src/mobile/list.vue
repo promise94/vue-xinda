@@ -5,7 +5,7 @@
             <p @click="changecolor(2)" :class="{colorchange: change == 2}">价格</p>
         </div>
         <div class="main">
-            <div class="store"  v-for="item of mess" @click="gotoxiangqing(item.id)">
+            <div class="store"  v-for="item of mess" @click="gotoxiangqing(item.id,Id)">
                 <div class="img"><img v-bind:src="item.productImg"></div>
                 <div>
                     <h3>{{item.serviceName}}</h3>
@@ -39,7 +39,8 @@ export default {
                 productId: this.$route.query.id,//产品id
                 sort: '',//排序方式，空：默认排序
             },   
-            kong: false,       
+            kong: false,
+            Id: '',       
         }
     },
     created() {
@@ -69,10 +70,11 @@ export default {
                 for (var i = 0; i < len; i++) {
                 data[i].productImg.substring(0, 3) == 'http' ? data[i].productImg = data[i].productImg : data[i].productImg = "http://115.182.107.203:8088/xinda/pic" + data[i].productImg;//图片数据处理，加上前缀
                 data[i].price = this.fmtPrice(data[i].price);//处理销售价格余两位数
+                this.Id=data[i].providerId;
+                // console.log(data[i].providerId);
                 };
-                this.mess=data;
-                
-                console.log('this.mess',this.mess);
+                this.mess=data;                
+                // console.log('this.mess',this.mess);
                 if(this.mess==''){
                     Indicator.close(); // 加载提示关闭 
                     this.kong=true;
@@ -87,8 +89,9 @@ export default {
             return (parseFloat(p) * 0.01).toFixed(2);
         },
         //跳转页面到商品详情页，传一个id
-        gotoxiangqing(id) {
-        this.$router.push({ path: '/m/goods', query: { id } });
+        gotoxiangqing(id,Id) {
+        this.$router.push({ path: '/m/goods', query: { id,Id } });
+        // console.log('id',id)
         },
         
     }
@@ -105,13 +108,13 @@ export default {
         margin:0.22rem  auto;
         width:1.8rem;
         height:0.32rem;
-        border:0.01rem solid #2594d4;
+        border:0.02rem solid #2594d4;
         border-radius:0.05rem;
         font-size:0.14rem;
         text-align:center;
         >p{
             width:0.9rem;
-            line-height:0.32rem;
+            line-height:0.38rem;
         }
         .colorchange{
             color:#fff;
@@ -126,12 +129,12 @@ export default {
             margin-bottom:0.15rem;
             width:100%;
             height:1rem;
-            border-bottom:0.01rem solid #cfcfcf;
+            border-bottom:0.02rem solid #cfcfcf;
             .img{
                 margin-right:0.1rem;
                 width:0.95rem;
                 height:0.85rem;
-                border:0.01rem solid #e3e3e3;
+                border:0.02rem solid #e3e3e3;
                 img{                
                     width:100%;
                     height:100%;
