@@ -9,10 +9,10 @@
             <div class="store"  v-for="item of arr" @click="gotoStore(item.id)">
                 <div class="img"><img v-bind:src="item.providerImg"></div>
                 <div>
-                    <h3>商标快速注册通道</h3>
-                    <p>北京市朝阳区</p>
+                    <h3>{{item.providerName}}</h3>
+                    <p>{{item.regionName}}</p>
                     <div>
-                        <p>累计服务客户数量:
+                        <p>累计客户数量:
                             <span>{{item.orderNum}}</span>
                         </p>
                         <p>好评率:
@@ -27,7 +27,7 @@
 
 </template>
 <script>
-
+import { Indicator } from 'mint-ui';
 export default {
     name: 'storelist',
     data() {
@@ -36,42 +36,45 @@ export default {
             arr: '', //总数据获取
             members: {
                 start: 0, //分页起始数
-                limit: 2, //每页数量
                 sort: 1,//默认排列
             },
         }
     },
     created() {
         this.getStoreList();
-        
+        Indicator.open('加载中...'); // 页面初始加载提示
     },
+
     methods: {
         changecolor(n){
             this.change=n;
-            this.members.sort=3;
+            this.members.sort=n;
+            this.getStoreList();
         },
         //店铺列表后台数据获取
         getStoreList() {
-        this.$http({
-            method: 'post',
-            url: '/provider/grid',
-            data: this.members,
-        }).then((result) => {
-            let data = result.data;
-            let len = data.length;
-            for (var i = 0; i < len; i++) {
-            data[i].totalJudge == 0 ? data[i].totalJudge = 1 : ""; //好评率数据处理
-            data[i].providerImg.substring(0, 3) == 'http' ? data[i].providerImg = data[i].providerImg : data[i].providerImg = "http://115.182.107.203:8088/xinda/pic" + data[i].providerImg;//图片数据处理，加上前缀
-            };
-            this.arr = data;
-        })
+            this.$http({
+                method: 'post',
+                url: '/provider/grid',
+                data: this.members,
+            }).then((result) => {
+                let data = result.data;
+                let len = data.length;
+                for (var i = 0; i < len; i++) {
+                data[i].totalJudge == 0 ? data[i].totalJudge = 1 : ""; //好评率数据处理
+                data[i].providerImg.substring(0, 3) == 'http' ? data[i].providerImg = data[i].providerImg : data[i].providerImg = "http://115.182.107.203:8088/xinda/pic" + data[i].providerImg;//图片数据处理，加上前缀
+                };
+                this.arr = data;
+                if(this.arr){
+                    Indicator.close(); // 加载提示关闭 
+                }
+            });
+            
         },
         //跳转页面到店铺首页，传一个id
         gotoStore(id) {
         this.$router.push({ path: '/m/storeindex', query: { id } });
-        },
-
-        
+        },       
     }
 }
 </script>
@@ -82,7 +85,7 @@ export default {
         margin:0.22rem  auto;
         width:1.8rem;
         height:0.32rem;
-        border:0.005rem solid #2594d4;
+        border:0.01rem solid #2594d4;
         border-radius:0.05rem;
         font-size:0.14rem;
         text-align:center;
@@ -103,12 +106,12 @@ export default {
             margin-bottom:0.15rem;
             width:100%;
             height:1rem;
-            border-bottom:0.005rem solid #cfcfcf;
+            border-bottom:0.01rem solid #cfcfcf;
             .img{
                 margin-right:0.1rem;
                 width:0.85rem;
                 height:0.85rem;
-                border:0.005rem solid #e3e3e3;
+                border:0.01rem solid #e3e3e3;
                 img{
                     margin:0.25rem 0.08rem;
                     width:80%;

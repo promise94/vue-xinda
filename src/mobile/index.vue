@@ -3,10 +3,7 @@
     <div class="top">
       <div>
         <select name="cars">
-          <option value="volvo">1</option>
-          <option value="saab">2</option>
-          <option value="fiat">3</option>
-          <option value="audi">4</option>
+          <option value="volvo" v-for="item of allCity" @click="setCity(item)"> {{item.name}}</option>
         </select>
       </div>
       <div>
@@ -36,25 +33,25 @@
       </swipe-item>
     </swipe>
     <div class="service">
-      <div>
+      <div @click="tiaozhuan(1)">
         <div class="a">
           <span class="xd xd-qianbao"></span>
         </div>
         <span>财税服务</span>
       </div>
-      <div>
+      <div @click="tiaozhuan(2)">
         <div class="b">
           <span class="xd xd-gongsi"></span>
         </div>
         <span>开公司</span>
       </div>
-      <div>
+      <div @click="tiaozhuan(3)">
         <div class="c">
           <span class="xd xd-to-bind"></span>
         </div>
         <span>公司变更</span>
       </div>
-      <div>
+      <div @click="tiaozhuan(4)">
         <div class="d">
           <span class="xd xd-shebao"></span>
         </div>
@@ -62,19 +59,19 @@
       </div>
     </div>
     <div class="service">
-      <div>
+      <div @click="tiaozhuan(5)">
         <div class="e">
           <span class="xd xd-trade"></span>
         </div>
         <span>公司社保</span>
       </div>
-      <div>
+      <div @click="tiaozhuan(6)">
         <div class="f">
           <span class="xd xd-zhishichanquan-copy"></span>
         </div>
         <span>知识产权</span>
       </div>
-      <div>
+      <div @click="tiaozhuan(7)">
         <div class="g">
           <span class="xd xd-gengduo"></span>
         </div>
@@ -131,10 +128,12 @@
       </div>
       <p>一站式企业交易中心</p>
     </div>
+
   </div>
 </template>
 
 <script>
+import { Indicator } from 'mint-ui';
 import {
   Swipe,
   SwipeItem
@@ -143,18 +142,64 @@ export default {
   data() {
     return {
       recommend: '',
+      allCity: '', // 所有城市
     }
   },
   created() {
     this.getnicai();
+    this.getAllCity();
+    Indicator.open('加载中...'); // 页面初始加载提示
   },
   components: {
     swipe: Swipe,
     swipeItem: SwipeItem
   },
   methods: {
+    getAllCity() {  // 获取城市列表
+      this.$http.post('/common/open-region').then((res) => {
+        this.allCity = res.data;
+      })
+    },
     fmtPrice(p) {
       return (parseFloat(p) * 0.01).toFixed(2);
+    },
+    tiaozhuan(a) {
+      if (a === 1) {
+        this.$router.push({
+          path: '/m/product',
+          query: {}
+        });
+      } else if (a === 2) {
+        this.$router.push({
+          path: '/m/storelist',
+          query: {}
+        });
+      } else if (a === 3) {
+        this.$router.push({
+          path: '/m/storelist',
+          query: {}
+        });
+      } else if (a === 4) {
+        this.$router.push({
+          path: '/m/storelist',
+          query: {}
+        });
+      } else if (a === 5) {
+        this.$router.push({
+          path: '/m/storelist',
+          query: {}
+        });
+      } else if (a === 6) {
+        this.$router.push({
+          path: '/m/product',
+          query: {}
+        });
+      } else if (a === 7) {
+        this.$router.push({
+          path: '/m/product',
+          query: {}
+        });
+      }
     },
     dianpu(id, Id) {
       this.$router.afterEach((to, from, next) => {
@@ -180,6 +225,9 @@ export default {
           item.marketPrice = item.marketPrice + '.00'
         }, this);
         this.recommend = data;
+        if(this.recommend){
+          Indicator.close(); // 加载提示关闭 
+        }
       })
     },
     changeSwipe(newIndex, oldIndex) {
