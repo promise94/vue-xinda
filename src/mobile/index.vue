@@ -3,10 +3,7 @@
     <div class="top">
       <div>
         <select name="cars">
-          <option value="volvo">1</option>
-          <option value="saab">2</option>
-          <option value="fiat">3</option>
-          <option value="audi">4</option>
+          <option value="volvo" v-for="item of allCity" @click="setCity(item)"> {{item.name}}</option>
         </select>
       </div>
       <div>
@@ -131,6 +128,7 @@
       </div>
       <p>一站式企业交易中心</p>
     </div>
+
   </div>
 </template>
 
@@ -144,10 +142,12 @@ export default {
   data() {
     return {
       recommend: '',
+      allCity: '', // 所有城市
     }
   },
   created() {
     this.getnicai();
+    this.getAllCity();
     Indicator.open('加载中...'); // 页面初始加载提示
   },
   components: {
@@ -155,6 +155,11 @@ export default {
     swipeItem: SwipeItem
   },
   methods: {
+    getAllCity() {  // 获取城市列表
+      this.$http.post('/common/open-region').then((res) => {
+        this.allCity = res.data;
+      })
+    },
     fmtPrice(p) {
       return (parseFloat(p) * 0.01).toFixed(2);
     },
@@ -189,7 +194,7 @@ export default {
           path: '/m/product',
           query: {}
         });
-      }else if (a === 7) {
+      } else if (a === 7) {
         this.$router.push({
           path: '/m/product',
           query: {}
@@ -236,21 +241,21 @@ export default {
 .arrows {
   width: 0rem;
   height: 0rem;
-  border-left: 0.01rem solid transparent;
-  border-right: 0.01rem solid transparent;
-  border-bottom: 0.03rem solid #2693d4;
-  font-size: 0px;
-  line-height: 0px;
+  border-left: 0.03rem solid transparent;
+  border-right: 0.03rem solid transparent;
+  border-bottom: 0.1rem solid #2693d4;
+  font-size: 0;
+  line-height: 0;
   position: absolute;
   left: 0.45rem;
-  top: 0.32rem;
+  top: 0.26rem;
 }
 
 .my-swipe {
   width: 3.75rem;
   height: 1.27rem;
   color: #fff;
-  font-size: 30px;
+  font-size: 0.015rem;
   text-align: center;
 }
 
@@ -302,9 +307,9 @@ export default {
       height: 0.55rem;
       text-align: center;
       >span {
-        font-size: 30px;
+        font-size: 0.3rem;
         color: #fff;
-        line-height: 55px;
+        line-height: 0.55rem;
         text-align: center;
       }
     }
@@ -343,7 +348,7 @@ export default {
   height: 0.35rem;
   width: 100%;
   position: relative;
-  border-bottom: 2px solid #2693d4;
+  border-bottom: 0.02rem solid #2693d4;
   span {
     line-height: 0.35rem;
     margin-left: 0.2rem
@@ -376,7 +381,7 @@ export default {
   margin: 0 auto;
   display: flex;
   margin-top: 0.15rem;
-  border-bottom: 0.005rem solid #cfcfcf;
+  border-bottom: 0.02rem solid #cfcfcf;
   div:nth-child(1) {
     width: 0.83rem;
     height: 0.83rem;
