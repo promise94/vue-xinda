@@ -20,7 +20,7 @@
                             <div>
                                 <p>类型</p>
                             </div>
-                            <div class="search-b">
+                            <div class="second">
                                 <span @click="love(n,item.id)" :class="{all:oyou==n}" v-for="(item,k,n) of itemList">{{item.name}}</span>
                             </div>
                         </div>
@@ -283,6 +283,6 @@ export default {
 }
 </script>
 
-<style lang="less">
-@import './../../common/less/store/sifco.less';
+<style lang="less" scoped>
+@import './../../common/less/list/sifco.less';
 </style>

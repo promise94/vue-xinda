@@ -1,5 +1,5 @@
 <template>
-    <div class="wrap" id="parw">
+    <div class="wrap" id="parw" >
         <div class="margin-left">
             <ul>
                 <li v-for="item of dataArr" :key="item.id" @click="dianji(item.code,item.itemList)" :class="{all: oyo ===item.code}"> {{item.name}}</li>
@@ -50,6 +50,7 @@ export default {
         },
         //三级动态获取
         mm() {
+            Indicator.open();
             this.$http({
                 method: 'post',
                 url: '/product/style/list',
@@ -64,9 +65,7 @@ export default {
                     return a.code - b.code;
                 });
                 this.second = this.dataArr[0].itemList;
-                if (this.second) {
-                    Indicator.close(); // 加载提示关闭 
-                }
+                Indicator.close();// 加载提示关闭 
             })
         },
 
@@ -77,21 +76,19 @@ export default {
 <style lang="less">
 .wrap {
     min-height: 100%;
-    position: absolute;
+    position: relative;
     width: 99.99%;
     display: flex;
-    margin-bottom: 0.53rem;
     justify-content: space-between;
     background-color: #f6f6f6;
     .margin-left {
         width: 0.85rem;
-        height: 5.9rem;
         background-color: white;
         >ul>li {
             color: #282828;
             width: 1.075rem;
             height: 0.47rem;
-            font-size: 0.135rem;
+            font-size: 0.14rem;
             padding-left: 0.162rem;
             line-height: 0.46rem;
             border-bottom: 0.01rem solid #f4f4f4;
@@ -102,7 +99,7 @@ export default {
         color: #666;
         .account {
             >p {
-                font-size: 0.135rem;
+                font-size: 0.14rem;
                 line-height: 0.46rem;
                 border-bottom: 0.01rem solid #cbcbcd;
             }
@@ -110,7 +107,7 @@ export default {
                 margin-left: 0.255rem;
                 >li {
                     color: #666;
-                    font-size: 0.135rem;
+                    font-size: 0.14rem;
                     line-height: 0.46rem;
                     border-bottom: 0.01rem solid #cbcbcd;
                     >i {
