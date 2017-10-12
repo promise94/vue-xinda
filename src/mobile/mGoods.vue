@@ -227,7 +227,8 @@ export default {
         imgerror(e){//图片加载错误时显示
             let ev = e || window.event;
             // console.log('imgerror-',ev);
-            ev.target.src = '/static/images/order.png';        
+            ev.target.src = '/static/images/order.png';  
+        },    
         go(n) {
             history.go(n);
         },
