@@ -1,5 +1,5 @@
 <template>
-    <div class="cart_conter" id="div_cart">
+    <div class="cart_conter" id="div_cart"  v-loading.body="loading" element-loading-text="拼命加载中">
         <!-- 展示项 -->
         <div class="header">
             <p>首页/购物车</p>
@@ -78,6 +78,7 @@
 </template>
 
 <script>
+
 //引入modal
 import modal from '@/components/global/modal'; //弹出框引入
 import { mapActions } from 'vuex' //vuex的引入
@@ -108,6 +109,7 @@ export default {
             caozuo: '', //成功、失败
             show: 1, //遮罩层
             alert_options: { type: 'error', info: '' }, // 提示框设置
+            loading:true,
         }
     },
     methods: {
@@ -126,6 +128,7 @@ export default {
                     
                 }
             }).then((res) => {
+                this.loading=false;
                 if (res.data.length > 0) {
                     this.willshow = 1;
                     this.msg = res.data.length;//全部商品
@@ -152,6 +155,7 @@ export default {
         //数量操作
         // 加
         add(item1) {
+            this.loading=true;
             item1.buyNum++;
             this.getZhezhao(0); //遮罩层打开
             this.getxiugai(item1);
@@ -159,6 +163,7 @@ export default {
         // 减
         less(item1) {
             if (item1.buyNum > 1) {
+                this.loading=true;
                 this.getZhezhao(0); //遮罩层打开
                 item1.buyNum--;
                 this.getxiugai(item1);
@@ -177,7 +182,6 @@ export default {
                     num: item1.buyNum
                 }
             ).then((res) => {
-
                 let status = res.status;
                 if (status == 1) {
                     this.getCartlsit();
@@ -190,20 +194,21 @@ export default {
         del(item1) {
             this.modal_info = '是否删除订单 ？';
             this.$refs.name1.confirm().then(() => {
+                this.loading=true;
                 // 点击确定按钮的回调处理
                 this.$refs.name1.show = false;//自己手动关闭
                 this.$http.post('/cart/del', { id: item1.serviceId }).then((res) => {
                     if (res.status == 1) {  //删除成功的操作                 
                         //删除结果提示 
-                        this.alert_options.type = 'success';
-                        this.alert_options.info = res.msg;
-                        this.$refs.alert1.alert().then(() => {
+                        // this.alert_options.type = 'success';
+                        // this.alert_options.info = res.msg;
+                        // this.$refs.alert1.alert().then(() => {
                             this.getCartlsit();
                             this.msg--;
                             if (this.msg == 0) {
                                 this.cartAction(0);
                             }
-                        });
+                        // });
                     } else {
                         this.modal_info = res.msg;
                         this.$refs.name1.confirm().then(() => {
@@ -253,7 +258,7 @@ export default {
                 data: {
                 }
             }).then((res) => {
-                console.log(res);
+                // console.log(res);
                 if (res.status == 1) {
                     let dingdan = res.data;
                     this.$router.push({

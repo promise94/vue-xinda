@@ -1,5 +1,5 @@
 <template>
-  <div id="storeIndex" class="container">
+  <div id="storeIndex" class="container" v-loading.body="loading" element-loading-text="拼命加载中...">
     <div class="logosay">
       <img v-bind:src="date.providerImg">
       <div>
@@ -100,6 +100,7 @@ export default {
   },
   data() {
     return {
+      loading:true,
       check: 1, //颜色改变，服务内容改变
       mess: '', // 服务内容展示数据
       date: '', //店铺首页总数据
@@ -142,7 +143,7 @@ export default {
         this.date.providerImg.substring(0, 3) == 'http' ? this.date.providerImg = this.date.providerImg : this.date.providerImg = "http://115.182.107.203:8088/xinda/pic" + this.date.providerImg;
         //营业执照图片数据处理，加上前缀
         this.date.businessCertPath.substring(0, 3) == 'http' ? this.date.businessCertPath = this.date.businessCertPath : this.date.businessCertPath = "http://115.182.107.203:8088/xinda/pic" + this.date.businessCertPath;
-        
+        this.loading = false;
       });   
            
            
@@ -155,7 +156,6 @@ export default {
         this.mess = res.data;
         this.mess.marketPrice = this.fmtPrice(this.mess.marketPrice);//处理市场价格余两位数
         this.mess.price = this.fmtPrice(this.mess.price);//处理销售价格余两位数
-        
       });
       
     },

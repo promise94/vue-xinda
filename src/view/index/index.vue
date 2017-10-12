@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-loading.body="loading" element-loading-text="拼命加载中">
         <div id="lunbo">
             <swiper :options="swiperOption" ref="mySwiper">
                 <!-- 这部分放你要渲染的那些内容 -->
@@ -14,7 +14,7 @@
             <p>明星产品推荐</p>
             <div class="arrows"></div>
         </div>
-        <div class="mingxing">
+        <div class="mingxing" v-loading.body="loading1" element-loading-text="拼命加载中">
             <a href="#/services" v-for="(i,k) of hehe" :key="k">
                 <div>
                     <div>
@@ -34,7 +34,7 @@
             <div class="arrows"></div>
         </div>
         <div class="chuchuang">
-            <div v-for="(item,k) of recommend" :key="k">
+            <div v-for="(item,k) of recommend" :key="k" v-loading.body="loading2" element-loading-text="拼命加载中">
                 <div>
                     <img :src="item.providerImg" alt="">
                 </div>
@@ -73,7 +73,7 @@
             <div class="arrows"></div>
         </div>
         <div class="fuwu">
-            <div v-for="(item,k) of haha" :key="k">
+            <div v-for="(item,k) of haha" :key="k" v-loading.body="loading3" element-loading-text="拼命加载中">
                 <div>
                     <img :src="item.providerImg" alt="">
                 </div>
@@ -129,7 +129,10 @@ export default {
     },
     data() {
         return {
-            index: 0,
+            loading:true,
+            loading1:true,
+            loading2:true,
+            loading3:true,
             recommend: '',
             haha: '',
             hehe: '',
@@ -176,6 +179,8 @@ export default {
                 data: {
                 }
             }).then((result) => {
+                this.loading =false;
+                this.loading2 = false;
                 let data = result.data.hq;
                 data.forEach(function(item) {
                     item.providerImg = 'http://115.182.107.203:8088/xinda/pic/' + item.providerImg;
@@ -192,6 +197,8 @@ export default {
                 data: {
                 }
             }).then((shenme) => {
+                this.loading = false;
+                this.loading3 = false;
                 let data = shenme.data.provider;
                 // console.log(shenme);
                 data.forEach(function(item) {
@@ -208,6 +215,8 @@ export default {
                 data: {
                 }
             }).then((shenme) => {
+                this.loading = false;
+                this.loading1 = false;
                 let data = shenme.data.product;
                 // console.log(data);
                 data.forEach(function(i) {

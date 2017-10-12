@@ -1,5 +1,5 @@
 <template>
-    <div class="middle" id="services">
+    <div class="middle" id="services" v-loading.body="loading" element-loading-text="拼命加载中">
         <div class="middle-two">
             <div class="content">
                 <div class="content-top">
@@ -98,6 +98,7 @@ export default {
     },
     data() {
         return {
+            loading:true,
             recommend: '',
             oyoun: 3,
             oyou: -1,
@@ -164,6 +165,7 @@ export default {
 
         //加入购物车
         edward(addCarId, goumai) {
+            this.loading = true;
             if(!this.getUser.status){
                 this.$router.push('/user/login');
                 return false;
@@ -187,6 +189,7 @@ export default {
                         num: 1,
                     }
                 }).then((ward) => {
+                    this.loading = false;
                     // 操作成功弹出框
                     this.alert_options.info = ward.msg;
                     this.alert_options.type = 'success';
@@ -245,6 +248,7 @@ export default {
                     sort: this.sort,
                 }
             }).then((you) => {
+                this.loading = false;
                 let data = you.data;
                 this.count = you.totalCount;
                 data.forEach(function(item) {
@@ -259,6 +263,7 @@ export default {
 
         //服务分类，类型
         mm() {
+            this.loading = true;
             this.$http({
                 method: 'post',
                 url: '/product/style/list',
@@ -266,6 +271,7 @@ export default {
 
                 }
             }).then((you) => {
+                this.loading = false;
                 this.fuwu = Object.values(you.data)[1];
                 this.itemList = Object.values(this.fuwu.itemList)[0].itemList;
                

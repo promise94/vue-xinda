@@ -1,5 +1,5 @@
 <template>
-    <div class="searchResult container">
+    <div class="searchResult container" v-loading.body="loading" element-loading-text="拼命搜索中...">
         <p>首页&nbsp;/&nbsp;搜索结果</p>
         <div class="">
             <div class="mainBox" v-if="searchOut.length != 0">
@@ -63,6 +63,7 @@ export default {
         },
     data() {
         return {
+            loading:true,
             checked: 1,
             change: 1,
             colors: 0,
@@ -101,18 +102,22 @@ export default {
         },
         blue(m) {
             this.change = m;
+            this.loading = true;
             if(m==2){      //判断点击次数作价格升序降序     
                 this.i++;
                 if(this.i%2==1){
                     this.sort=3; //价格降序
                     this.colors=0; 
+                    this.loading = false;
                 }else{
                     this.sort=2; //价格升序
                     this.colors=1;
+                    this.loading = false;
                 }
             }else{
                 this.sort= ''; //默认排序
                 this.colors=0; 
+                this.loading = false;
             }
             this.search();
         },
@@ -128,6 +133,7 @@ export default {
                         sort: this.sort, //价格排列,
                     }
                 }).then((res) => {
+                    this.loading = false;
                     res.data.forEach((item) => {//处理图片加上前缀
                         item.providerImg = item.providerImg.indexOf('http') > -1 ? item.providerImg : 'http://115.182.107.203:8088/xinda/pic' + item.providerImg;
                     });
@@ -149,6 +155,7 @@ export default {
                         sort: 1,
                     }
                 }).then((res) => {
+                    this.loading = false;
                     res.data.forEach((item) => {//处理图片加上前缀
                         item.providerImg = item.providerImg.indexOf('http') > -1 ? item.providerImg : 'http://115.182.107.203:8088/xinda/pic' + item.providerImg;
                     });

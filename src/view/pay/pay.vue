@@ -1,5 +1,5 @@
 <template>
-    <div class="container contan" id="div_pay">
+    <div class="container contan" id="div_pay" v-loading.body="loading" element-loading-text="拼命加载中">
         <!-- 首页/支付 -->
         <div class="con-header">
             <span>首页/</span>
@@ -52,26 +52,26 @@
                     <!-- 方式 -->
                     <div>
                         <p>非网银支付</p>
-                        <div>
-                            <input type="radio" name="a" @click="fangshi='1'">
+                        <div @click="fangshi='1'">
+                            <input type="radio" name="a" :checked="fangshi=='1'" >
                             <img src="../../common/images/yinlian.jpg" alt="">
                         </div>
                         <p>平台支付</p>
                         <div>
-                            <div>
-                                <input type="radio" name="a" @click="fangshi='2'">
+                            <div @click="fangshi='2'">
+                                <input type="radio" name="a" :checked="fangshi=='2'">
                                 <span class="xd xd-weixin">
                                     <a>微信支付</a>
                                 </span>
                             </div>
-                            <div>
-                                <input type="radio" name="a" @click="fangshi='3'">
+                            <div @click="fangshi='3'">
+                                <input type="radio" name="a" :checked="fangshi=='3'">
                                 <img src="../../common/images/zhifubao.jpg" alt="">
                             </div>
                         </div>
                         <p>自助转账</p>
-                        <div>
-                            <input type="radio" name="a" @click="fangshi='4'">&nbsp;&nbsp;&nbsp;
+                        <div @click="fangshi='4'">
+                            <input type="radio" name="a" :checked="fangshi=='4'">&nbsp;&nbsp;&nbsp;
                             <img src="../../common/images/zizhu.png" alt="">
                             <div class="kaihuhang">
                                 <p>开户账号：
@@ -171,7 +171,8 @@ export default {
             money: 0,
             unionPay: '',
             modal_info:'',
-            options:{confirmButtonText:'支付成功',cancelButtonText:'支付失败'}
+            options:{confirmButtonText:'支付成功',cancelButtonText:'支付失败'},
+            loading:true,
         }
     },
     methods: {
@@ -183,6 +184,7 @@ export default {
                     businessNo: this.$route.query.val
                 }
             ).then((res) => {
+                this.loading = false;
                 let data = res.data;
                 data.price = this.fmtPrice(data.price);
                 let d=new Date(data.createTime);
@@ -192,6 +194,7 @@ export default {
         },
         //订单明细
         getMingxi() {
+            this.loading = true;
             this.$http.post(
                 '/business-order/detail',
                 {
@@ -199,6 +202,7 @@ export default {
                 }
             ).then((res) => {
                 if (res.status == 1) {
+                    this.loading = false;
                     let data = res.data.serviceOrderList;
                     data.forEach(function(item) {
                         let unitPrice = item.unitPrice;
@@ -211,14 +215,6 @@ export default {
             })
             this.willShow=!this.willShow;
         },
-        // 订单详情的显示、隐藏
-        // fn() {
-        //     if (this.willShow == false) {
-        //         this.willShow == true
-        //     } else {
-        //         this.willShow == false
-        //     }
-        // },
         //价格转化
         fmtPrice(p) {
             return (parseFloat(p) * 0.01).toFixed(2);
@@ -255,7 +251,7 @@ export default {
                     businessNo:this.recommend.businessNo
                 }
             ).then((res) => {
-                console.log(res);
+                // console.log(res);
                 sessionStorage.setItem("payment", res);//暂存数据
                 window.open('/#/yinlian');//跳转页面
                 this.getFanKui();
@@ -268,14 +264,6 @@ export default {
             this.itms = z;
             this.index = 4;
         },
-        //支付明细
-        // fn() {
-        //     if (this.willShow == true) {
-        //         this.willShow = false;
-        //     } else {
-        //         this.willShow = true
-        //     }
-        // },
         //弹出框
         getTanChuKuang(){
             this.modal_info = '请选择其他支付方式！';

@@ -2,12 +2,12 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 if (/Mobile/i.test(navigator.userAgent)) {
   //移动端浏览器  
-  if(!/\/m\//.test(window.location.hash) && !/\/m$/.test(window.location.hash)){
+  if (!/\/m\//.test(window.location.hash) && !/\/m$/.test(window.location.hash)) {
     window.location.href = '#/m';
   }
 } else {
   //PC浏览器
-  if(/\/m\//.test(window.location.hash) || /\/m$/.test(window.location.hash)){
+  if (/\/m\//.test(window.location.hash) || /\/m$/.test(window.location.hash)) {
     window.location.href = '#/';
   }
 }
@@ -19,7 +19,10 @@ import 'mint-ui/lib/style.css';
 import App from './App';
 import router from './router';
 import store from './store';
+import { Loading } from 'element-ui';
 
+Vue.use(Loading.directive);
+Vue.prototype.$loading = Loading.service;
 Vue.use(MintUI);
 
 Vue.config.productionTip = false;
