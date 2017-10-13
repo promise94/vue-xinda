@@ -18,23 +18,24 @@
         </div>
       </div>
     </div>
-    <swipe class="my-swipe" :show-indicators="false" @change="changeSwipe">
-      <swipe-item class="slide1">
+    <mt-swipe :show-indicators="false" class="my-swipe">
+      <mt-swipe-item class="slide1">
         <img src="./../../static/images/1.jpg">
-      </swipe-item>
-      <swipe-item class="slide2">
+      </mt-swipe-item>
+      <mt-swipe-item class="slide2">
         <img src="./../../static/images/2.jpg">
-      </swipe-item>
-      <swipe-item class="slide3">
+      </mt-swipe-item>
+      <!-- <img src="./../../static/images/2.jpg"> -->
+      <mt-swipe-item class="slide3">
         <img src="./../../static/images/3.jpg">
-      </swipe-item>
-      <swipe-item class="slide4">
+      </mt-swipe-item>
+      <mt-swipe-item class="slide4">
         <img src="./../../static/images/4.jpg">
-      </swipe-item>
-      <swipe-item class="slide5">
+      </mt-swipe-item>
+      <mt-swipe-item class="slide5">
         <img src="./../../static/images/5.jpg">
-      </swipe-item>
-    </swipe>
+      </mt-swipe-item>
+    </mt-swipe>
     <div class="service">
       <div @click="tiaozhuan(1)">
         <div class="a">
@@ -148,11 +149,14 @@
 import { Popup } from 'mint-ui';
 import { DatetimePicker } from 'mint-ui';
 import { Indicator } from 'mint-ui';
-import {
-  Swipe,
-  SwipeItem
-} from 'mint-ui';
+import { Swipe, SwipeItem } from 'mint-ui';
+
 export default {
+  components: {
+    [Swipe.name]: Swipe,
+    [SwipeItem.name]: SwipeItem,
+    [Popup.name]: Popup,
+  },
   data() {
     return {
       popupVisible: false,
@@ -170,11 +174,6 @@ export default {
         Indicator.close();
       }
     })
-  },
-  components: {
-    swipe: Swipe,
-    swipeItem: SwipeItem,
-
   },
   methods: {
     onDateChange(picker, values) {
@@ -480,7 +479,7 @@ export default {
     width: 0.6rem;
     position: absolute;
     left: 50%;
-    margin-left: -0.3rem; 
+    margin-left: -0.3rem;
     display: flex;
     >div:nth-child(1) {
       >img {
@@ -490,7 +489,7 @@ export default {
     }
     >div:nth-child(2) {
       >span {
-        line-height: 0.3rem; 
+        line-height: 0.3rem;
       }
     }
   }
@@ -499,16 +498,16 @@ export default {
 .hide {
   width: 100%;
   >div:nth-child(1) {
-    margin-bottom:0.5rem;
+    margin-bottom: 0.5rem;
     display: flex;
     >div {
       width: 50%;
       height: 0.4rem;
       line-height: 0.5rem;
-      text-align: center; 
+      text-align: center;
       border-bottom: 0.02rem solid #eaeaea;
       color: #26a2ff;
-      
+
       span {
         width: 100%;
       }
@@ -516,7 +515,7 @@ export default {
   }
   >div:nth-child(2) {
     text-align: center;
-    margin-bottom:1.2rem;
+    margin-bottom: 1.2rem;
     height: 0.4rem;
     line-height: 0.4rem;
     border-top: 0.02rem solid #eaeaea;
