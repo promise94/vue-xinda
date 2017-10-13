@@ -46,6 +46,7 @@ export default {
     },
     created() {
         Indicator.open('加载中...');// 页面初始加载提示
+        this.getList();
         this.$root.eventHub.$on('closeLoading', (path)=>{
             if (!/list/.test(path)) {
                 Indicator.close();

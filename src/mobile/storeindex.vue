@@ -65,7 +65,12 @@ export default {
     },
     created() {
         Indicator.open('加载中...'); // 页面初始加载提示
-        this.getStore();     //数据获取      
+        this.getStore();     //数据获取  
+        this.$root.eventHub.$on('closeLoading', (path) => {
+            if (!/storeindex/.test(path)) {
+                Indicator.close();
+            }
+        });    
     },
     computed: {
         state(){
