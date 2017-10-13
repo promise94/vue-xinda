@@ -7,10 +7,13 @@ import { Spinner, Header, InfiniteScroll } from 'mint-ui';
 import App from './App';
 import router from './router';
 import store from './store';
+import { Loading } from 'element-ui';
 
 Vue.component(Spinner.name, Spinner);
 Vue.component(Header.name, Header);
 Vue.use(InfiniteScroll);
+Vue.use(Loading.directive);
+Vue.prototype.$loading = Loading.service;
 
 Vue.config.productionTip = false;
 /* axios 全局配置 */

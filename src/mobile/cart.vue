@@ -74,7 +74,7 @@ export default {
         return {
             msg: 0,
             mm: 1,
-            willshow: 0,
+            willshow: 1,
             counter: 0,      //个数
             items: [],       //商品数组
             monytotal: 0,    //去结算总金额
@@ -95,7 +95,8 @@ export default {
         getCartlsit() {
             Indicator.open({
                 text: '加载中...',
-                spinnerType: 'fading-circle'
+                spinnerType: 'fading-circle',
+                spinnerType: 'width:3rem'
             });
             this.$http.post('/cart/list',
                 {
@@ -201,27 +202,26 @@ export default {
         },
         // 去结算
         getSubmit() {
-            // Toast({
-            //     message: '目前仅支持微信支付，请在微信浏览器中打开',
-            //     duration: 1000
-            // })
-            this.$http({
-                method: 'post',
-                url: '/cart/submit',
-            }).then((res) => {
-                // console.log(res);
-                if (res.status == 1) {
-                    let dingdan = res.data;
-                    this.$router.push({
-                        path: '/m/my/order',
-                        query: { val: dingdan }
-                    });
-                    this.getCartlsit();
-                    // this.cartAction(0);
-                } else {
-                    // this.modal_info = ""
-                }
-            })
+            let instance = Toast('已为您生成订单，请在我的订单中完成支付');
+            setTimeout(() => {
+                instance.close();
+                this.$http({
+                    method: 'post',
+                    url: '/cart/submit',
+                }).then((res) => {
+                    if (res.status == 1) {
+                        let dingdan = res.data;
+                        this.$router.push({
+                            path: '/m/my/order',
+                            // query: { val: dingdan }
+                        });
+                        this.getCartlsit();
+                        // this.cartAction(0);
+                    } else {
+                        // this.modal_info = ""
+                    }
+                })
+            }, 1500);
         },
         //价格转化
         fmtPrice(p) {
@@ -276,7 +276,8 @@ export default {
                 width: 3.5rem; // height: 0.96rem;
                 padding: 0.03rem 0 0.165rem 0;
                 display: flex;
-                border-bottom: 0.01rem solid #e3e3e3; // 获取到的图片
+                border-bottom: 0.02rem solid #e3e3e3; 
+                // 获取到的图片
                 .pth {
                     margin-right: 0.1rem;
                     img {
@@ -292,12 +293,12 @@ export default {
                         justify-content: space-between;
                         line-height: 0.19rem;
                         >p:nth-child(1) {
-                            width: 2.04rem;
+                            width: 2rem;
                             overflow: hidden;
                             font-size: 0.14rem;
                         }
                         >p:nth-child(2) {
-                            width: 0.48rem;
+                            width: 0.5rem;
                             font-size: 0.12rem;
                             color: red;
                         }
@@ -410,6 +411,10 @@ export default {
             background: red;
             color: white;
         }
+    }
+    .mint-indicator {
+        width: 3rem;
+        height: 100%;
     }
 }
 </style>
