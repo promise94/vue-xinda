@@ -17,8 +17,7 @@
   ],
   "plugins": [
     "transform-runtime",
-    ["component", [{"libraryName": "mint-ui","style": true}]],
-    ["component",[{"libraryName": "element-ui", "styleLibraryName": "theme-default"}]]
+    ["component", [{"libraryName": "mint-ui","style": true},{"libraryName": "element-ui", "styleLibraryName": "theme-default"}]]
   ],
   "env": {
     "test": {

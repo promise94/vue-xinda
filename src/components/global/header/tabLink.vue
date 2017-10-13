@@ -45,7 +45,7 @@
                         <div>
                             <div v-for="shenme in item.itemList" :key="shenme.id">
                                 <p>{{shenme.name}}</p>
-                                <a href="#/services" v-for="e in shenme.itemList" :key="e.id">&nbsp;
+                                <a href="#/services" v-for="e in shenme.itemList" :key="e.id" class="Acolor">&nbsp;
                                     <span>{{e.name}}</span>&nbsp;</a>
                             </div>
                         </div>
@@ -282,8 +282,7 @@ export default {
     right: -1000px;
     height: 100%;
     width: 1000px;
-    display: none;
-     // background: #fff;
+    display: none; // background: #fff;
     background-color: rgba(0, 0, 0, 0.5);
     align-items: center;
     >div {
@@ -317,7 +316,12 @@ export default {
     }
 }
 
+.Acolor {
+    &:hover {
 
+        color: @color;
+    }
+}
 
 .text {
     float: left;

@@ -497,7 +497,6 @@ export default {
 }
 
 .hide {
-
   width: 100%;
   >div:nth-child(1) {
     margin-bottom:0.5rem;
@@ -517,7 +516,7 @@ export default {
   }
   >div:nth-child(2) {
     text-align: center;
-    margin-bottom:0.5rem;
+    margin-bottom:1.2rem;
     height: 0.4rem;
     line-height: 0.4rem;
     border-top: 0.02rem solid #eaeaea;

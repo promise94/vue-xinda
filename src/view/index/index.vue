@@ -1,23 +1,15 @@
 <template>
     <div v-loading.body="loading" element-loading-text="拼命加载中">
         <div id="lunbo">
-            <swipe class="my-swipe" :auto="4000">
-                <swipe-item class="slide1">
-                    <img src="./../../../static/images/1.jpg">
-                </swipe-item>
-                <swipe-item class="slide2">
-                    <img src="./../../../static/images/2.jpg">
-                </swipe-item>
-                <swipe-item class="slide3">
-                    <img src="./../../../static/images/3.jpg">
-                </swipe-item>
-                <swipe-item class="slide4">
-                    <img src="./../../../static/images/4.jpg">
-                </swipe-item>
-                <swipe-item class="slide5">
-                    <img src="./../../../static/images/5.jpg">
-                </swipe-item>
-            </swipe>
+            <div class="block" height="402px">
+                <!-- <span class="demonstration">默认 Hover 指示器触发</span> -->
+                <el-carousel height="402px">
+                    <el-carousel-item v-for="item in it" :key="item"  height="402px"> 
+                        <!-- <img src="./../../../static/images/1.jpg" alt=""> -->
+                        <img :src="item" alt="" class="imga">
+                    </el-carousel-item>
+                </el-carousel>
+            </div>
         </div>
         <div class="biaoti">
             <p>明星产品推荐</p>
@@ -125,32 +117,33 @@
 </template>
 
 <script>
-import {Swipe,SwipeItem} from 'mint-ui';
+import Vue from 'vue'
+import { Carousel, CarouselItem } from 'element-ui';
+// import { Swipe, SwipeItem } from 'mint-ui';
+Vue.use(Carousel)
+Vue.use(CarouselItem)
 export default {
     created() {
         this.getnicai();
         this.getbucai();
         this.mingxing();
     },
-    components: {
-    swipe: Swipe,
-    swipeItem: SwipeItem
-  },
     data() {
         return {
-            loading:true,
-            loading1:true,
-            loading2:true,
-            loading3:true,
+            loading: true,
+            loading1: true,
+            loading2: true,
+            loading3: true,
             recommend: '',
             haha: '',
             hehe: '',
+            it: ['./../../../static/images/1.jpg', './../../../static/images/2.jpg', './../../../static/images/3.jpg', './../../../static/images/4.jpg', './../../../static/images/5.jpg']
         }
     },
 
     methods: {
-        
-        
+
+
         fmtPrice(p) {
             return (parseFloat(p) * 0.01).toFixed(2);
         },
@@ -164,7 +157,7 @@ export default {
                 data: {
                 }
             }).then((result) => {
-                this.loading =false;
+                this.loading = false;
                 this.loading2 = false;
                 let data = result.data.hq;
                 data.forEach(function(item) {
@@ -236,12 +229,29 @@ export default {
 @import '../../common/less/index/index.less';
 @import '../../common/less/global/cssreset.less';
 
-.my-swipe {
+.block {
     width: 1200px;
     height: 402px;
-    img {
-        width: 100%;
+    el-carousel {
+        height: 100%;
         height: 100%;
     }
 }
+
+.imga {
+    width: 100%;
+    height: 402px;
+}
+
+.el-carousel__item {
+    height: 100%;
+    height: 100%;
+}
+
+// .el-carousel__item:nth-child(2n) {
+//     background-color: #99a9bf;
+// }
+// .el-carousel__item:nth-child(2n+1) {
+//     background-color: #d3dce6;
+// }
 </style>
