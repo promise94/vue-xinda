@@ -274,16 +274,16 @@ export default {
 
 <style scoped lang="less">
 .arrows {
-  width: 0rem;
-  height: 0rem;
-  border-left: 0.03rem solid transparent;
-  border-right: 0.03rem solid transparent;
-  border-bottom: 0.1rem solid #2693d4;
-  font-size: 0;
-  line-height: 0;
-  position: absolute;
-  left: 0.45rem;
-  top: 0.26rem;
+ content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    position: absolute;
+    bottom: 0;
+    left: .5rem;
+    border-bottom: .05rem solid #2693d4;
+    border-right: .03rem solid transparent;
+    border-left: .03rem solid transparent;
 }
 
 .my-swipe {
