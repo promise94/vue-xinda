@@ -2,9 +2,12 @@
   <div id="asd">
     <div class="top">
       <div>
-        <select name="cars">
-          <option value="volvo" v-for="item of allCity" @click="setCity(item)"> {{item.name}}</option>
-        </select>
+        <div class="beijing">
+          <div @click="popupVisible= true" size="large">
+            <span class="xd xd-icon-up"></span>
+            <span>北京市</span>
+          </div>
+        </div>
       </div>
       <div>
         <div>
@@ -15,23 +18,24 @@
         </div>
       </div>
     </div>
-    <swipe class="my-swipe" :show-indicators="false" @change="changeSwipe">
-      <swipe-item class="slide1">
+    <mt-swipe :show-indicators="false" class="my-swipe">
+      <mt-swipe-item class="slide1">
         <img src="./../../static/images/1.jpg">
-      </swipe-item>
-      <swipe-item class="slide2">
+      </mt-swipe-item>
+      <mt-swipe-item class="slide2">
         <img src="./../../static/images/2.jpg">
-      </swipe-item>
-      <swipe-item class="slide3">
+      </mt-swipe-item>
+      <!-- <img src="./../../static/images/2.jpg"> -->
+      <mt-swipe-item class="slide3">
         <img src="./../../static/images/3.jpg">
-      </swipe-item>
-      <swipe-item class="slide4">
+      </mt-swipe-item>
+      <mt-swipe-item class="slide4">
         <img src="./../../static/images/4.jpg">
-      </swipe-item>
-      <swipe-item class="slide5">
+      </mt-swipe-item>
+      <mt-swipe-item class="slide5">
         <img src="./../../static/images/5.jpg">
-      </swipe-item>
-    </swipe>
+      </mt-swipe-item>
+    </mt-swipe>
     <div class="service">
       <div @click="tiaozhuan(1)">
         <div class="a">
@@ -90,14 +94,14 @@
     <div class="drawing">
       <div>
         <div>
-          <img src="../../static/images/u84.png" alt="">
+          <img src="../../static/images/regist.jpg" @click="img(0)">
         </div>
         <div>
-          <img src="../../static/images/u86.png" alt="">
+          <img src="../../static/images/copyright.jpg" @click="img(1)">
         </div>
       </div>
       <div>
-        <img src="../../static/images/u88.png" alt="">
+        <img src="../../static/images/writer.jpg" @click="img(2)">
       </div>
     </div>
     <div class="headline">
@@ -122,26 +126,42 @@
       <div>
         <div>
           <img src="./../common/images/logo.png" alt="">
-        </div>
-        <div>
           <span>信达</span>
         </div>
+
       </div>
       <p>一站式企业交易中心</p>
     </div>
-
+    <mt-popup v-model="popupVisible" popup-transition="popup-fade" position="bottom" class="hide">
+      <div>
+        <div @click="popupVisible= false">
+          <span>取消</span>
+        </div>
+        <div @click="popupVisible= false">
+          <span>确定</span>
+        </div>
+      </div>
+      <div v-for="item of allCity" @click="popupVisible= false">{{item.name}}</div>
+    </mt-popup>
   </div>
 </template>
 
 <script>
+import { Popup } from 'mint-ui';
+import { DatetimePicker } from 'mint-ui';
 import { Indicator } from 'mint-ui';
-import {
-  Swipe,
-  SwipeItem
-} from 'mint-ui';
+import { Swipe, SwipeItem } from 'mint-ui';
+
 export default {
+  components: {
+    [Swipe.name]: Swipe,
+    [SwipeItem.name]: SwipeItem,
+    [Popup.name]: Popup,
+  },
   data() {
     return {
+      popupVisible: false,
+      show: false,
       recommend: '',
       allCity: '', // 所有城市
       store:false,
@@ -150,13 +170,21 @@ export default {
   created() {
     Indicator.open('加载中...'); // 页面初始加载提示
     this.getnicai();
-    this.getAllCity();   
-  },
-  components: {
-    swipe: Swipe,
-    swipeItem: SwipeItem
+    this.getAllCity();
+    this.$root.eventHub.$on('closeLoading', (path) => {
+      if (!/\/m$/.test(path)) {
+        Indicator.close();
+      }
+    });
   },
   methods: {
+    onDateChange(picker, values) {
+      if (values[0] > values[1]) {
+        picker.setSlotValue(1, values[0]);
+      }
+      this.dateStart = values[0];
+      this.dateEnd = values[1];
+    },
     getAllCity() {  // 获取城市列表
       this.$http.post('/common/open-region').then((res) => {
         this.allCity = res.data;
@@ -165,41 +193,50 @@ export default {
     fmtPrice(p) {
       return (parseFloat(p) * 0.01).toFixed(2);
     },
+    // 图片跳转
+    img(n) {
+      if (n === 0) {
+        this.$router.push({
+          path: '/m/storelist',
+        });
+      } else if (n === 1) {
+        this.$router.push({
+          path: '/m/storelist',
+        });
+      } else if (n === 2) {
+        this.$router.push({
+          path: '/m/storelist',
+        });
+      }
+    },
     tiaozhuan(a) {
       if (a === 1) {
         this.$router.push({
           path: '/m/product',
-          query: {}
         });
       } else if (a === 2) {
         this.$router.push({
           path: '/m/storelist',
-          query: {}
         });
       } else if (a === 3) {
         this.$router.push({
           path: '/m/storelist',
-          query: {}
         });
       } else if (a === 4) {
         this.$router.push({
           path: '/m/storelist',
-          query: {}
         });
       } else if (a === 5) {
         this.$router.push({
           path: '/m/storelist',
-          query: {}
         });
       } else if (a === 6) {
         this.$router.push({
           path: '/m/product',
-          query: {}
         });
       } else if (a === 7) {
         this.$router.push({
           path: '/m/product',
-          query: {}
         });
       }
     },
@@ -223,7 +260,6 @@ export default {
         let data = result.data.hq;
         data.forEach(function(item) {
           item.providerImg = 'http://115.182.107.203:8088/xinda/pic/' + item.providerImg;
-          // console.log(item);
           item.marketPrice = item.marketPrice + '.00'
         }, this);
         this.recommend = data;
@@ -240,7 +276,6 @@ export default {
       });
     },
     changeSwipe(newIndex, oldIndex) {
-      // console.log(`swipe from ${newIndex} to ${oldIndex}`);
     }
   }
 };
@@ -248,16 +283,16 @@ export default {
 
 <style scoped lang="less">
 .arrows {
-  width: 0rem;
-  height: 0rem;
-  border-left: 0.03rem solid transparent;
-  border-right: 0.03rem solid transparent;
-  border-bottom: 0.1rem solid #2693d4;
-  font-size: 0;
-  line-height: 0;
-  position: absolute;
-  left: 0.45rem;
-  top: 0.26rem;
+ content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    position: absolute;
+    bottom: 0;
+    left: .5rem;
+    border-bottom: .05rem solid #2693d4;
+    border-right: .03rem solid transparent;
+    border-left: .03rem solid transparent;
 }
 
 .my-swipe {
@@ -379,8 +414,10 @@ export default {
   >div:nth-child(2) {
     margin-top: 0.075rem;
     img {
+      display: block;
       width: 3.58rem;
       height: 0.8rem;
+      margin: 0 auto;
     }
   }
 }
@@ -405,13 +442,6 @@ export default {
     p {
       width: 2.615rem;
     }
-    // >p:nth-of-type(2){
-    //   width: 2.615rem;
-    //   overflow:hidden;
-    //   text-overflow:ellipsis;
-    //   display:-webkit-box;
-    //   -webkit-line-clamp:2;
-    // }
     >p:nth-of-type(3) {
       margin-bottom: 0.1rem;
       >span {
@@ -423,15 +453,12 @@ export default {
 
 
 .bottom {
-  width: 1.08rem;
   height: 0.66rem;
   margin: 0.13rem auto;
   div {
     display: flex;
-    div:nth-child(1) {
-      img {}
-    }
-    div:nth-child(2) {
+    >div:nth-child(1) {
+      margin: 0 auto;
       span {
         line-height: 0.6rem;
         font-weight: bold;
@@ -439,29 +466,69 @@ export default {
     }
   }
   >p {
+    text-align: center;
     font-size: 0.12rem;
     color: #8d8d8d;
   }
 }
 
 .top {
+  position: relative;
   display: flex;
-  div:nth-child(1) {}
-  div:nth-child(2) {
-    margin: 0 auto;
-
+  height: 0.3rem;
+  >div:nth-child(1) {
+    width: 0.7rem;
+    .beijing {
+      height: 0.3rem;
+      text-align: center;
+      line-height: 0.3rem;
+    }
+  }
+  >div:nth-child(2) {
+    width: 0.6rem;
+    position: absolute;
+    left: 50%;
+    margin-left: -0.3rem;
     display: flex;
-    div:nth-child(1) {
-      img {
+    >div:nth-child(1) {
+      >img {
         width: 0.3rem;
         height: 0.3rem;
       }
     }
-    div:nth-child(2) {
-      span {
-        line-height: 0.3rem; // font-weight: bold;
+    >div:nth-child(2) {
+      >span {
+        line-height: 0.3rem;
       }
     }
+  }
+}
+
+.hide {
+  width: 100%;
+  >div:nth-child(1) {
+    margin-bottom: 0.5rem;
+    display: flex;
+    >div {
+      width: 50%;
+      height: 0.4rem;
+      line-height: 0.5rem;
+      text-align: center;
+      border-bottom: 0.02rem solid #eaeaea;
+      color: #26a2ff;
+
+      span {
+        width: 100%;
+      }
+    }
+  }
+  >div:nth-child(2) {
+    text-align: center;
+    margin-bottom: 1.2rem;
+    height: 0.4rem;
+    line-height: 0.4rem;
+    border-top: 0.02rem solid #eaeaea;
+    border-bottom: 0.02rem solid #eaeaea;
   }
 }
 #store{

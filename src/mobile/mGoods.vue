@@ -76,7 +76,7 @@
             </span>
         </div>
         <div class="serve">
-            <div v-html="htmle" @error="imgerror()">
+            <div v-html="htmle">
                 {{htmle}}
             </div>
         </div>
@@ -84,11 +84,10 @@
             <span>用户评价</span>
             <div class="arrows"></div>
         </div>
-        <div>
+        <div class="shuju">
             <span class="xd xd-weizhaodaoshuju " id="noe"> <br>
                 <span id="noer">未找到数据</span>
             </span>
-
         </div>
         <div class="caidan">
             <div @click="tanchukuang()">
@@ -218,6 +217,12 @@ export default {
         this.Id = this.$route.query.Id;
         this.getninumShuliang();
         this.getStoreList();
+        Indicator.open('加载中...'); // 页面初始加载提示
+        this.$root.eventHub.$on('closeLoading', (path) => {
+            if (!/good/.test(path)) {
+                Indicator.close();
+            }
+        })
     },
     computed: {
         ...mapGetters(['getUser']),
@@ -350,7 +355,6 @@ export default {
                 this.a = n;
             }
         },
-
         tanchukuang() {
             this.$refs.name.confirm().then(() => {
                 this.$refs.name.show = false;
@@ -413,9 +417,7 @@ export default {
                 this.datas = result.data;
                 // 图片
                 this.img = 'http://115.182.107.203:8088/xinda/pic' + result.data.product.img;
-                // console.log(result);
                 this.htmle = result.data.providerProduct.serviceContent;
-                // console.log(this.htmle);
                 if (this.htmle === '') {
                     this.show = true;
                 }
@@ -427,8 +429,6 @@ export default {
                 this.serviceName = result.data.providerProduct.serviceName;
                 // 商品介绍
                 this.serviceInfo = result.data.providerProduct.serviceInfo;
-                // this.leixing = result.data.product.name;
-                // this.id = this.datas.providerProduct.providerId;
                 data.forEach(function(item, index) {
 
                 }, this);
@@ -771,13 +771,18 @@ export default {
     }
     table {
         width: 96% !important;
-        img {
-            width: 100% !important;
-        }
+        
     }
     blockquote {
         width: 100% !important;
     }
+    img {
+            width: 80% !important;
+            height : 100% !important;
+        }
+}
+.shuju{
+    padding-bottom: 1.15rem;
 }
 //
 #shopInfo,#store{

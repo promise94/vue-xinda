@@ -20,7 +20,6 @@
                 </div>
             </div>
         </div>
-
         <span class='xd xd-no' v-show="kong"></span>   
         <p class='xd xd-no' v-show="kongload"><span>加载失败！</span></p>                
                   
@@ -46,8 +45,12 @@ export default {
         }
     },
     created() {
-        Indicator.open('加载中...'); // 页面初始加载提示
-        this.getList();       
+        Indicator.open('加载中...');// 页面初始加载提示
+        this.$root.eventHub.$on('closeLoading', (path)=>{
+            if (!/list/.test(path)) {
+                Indicator.close();
+            }
+        });
     },
     methods: {
         changecolor(n){
@@ -73,13 +76,16 @@ export default {
                 if(this.mess==''){
                     Indicator.close(); // 加载提示关闭 
                     this.kong=true;
-                }else{
+                }else if(this.mess!==''){
                    Indicator.close(); // 加载提示关闭    
-                   this.kong=false;            
-                }      
+                   this.kongload=false;            
+                }else if(result.status==-1){
+                   Indicator.close(); // 加载提示关闭    
+                   this.kongload=true;            
+                }       
             },(err)=>{
                 Indicator.close(); // 加载提示关闭 
-                this.kong=true;
+                this.kongload=true;
             });
         },
         //函数处理价格，小数点后余两位数
@@ -103,7 +109,7 @@ export default {
         font-size:2rem;       
     }
     >p{
-        margin:0 10%;
+        margin:0 5%;
         font-size:2rem; 
         span{
             font-size:0.2rem; 

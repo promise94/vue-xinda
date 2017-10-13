@@ -1,6 +1,6 @@
 <template>
     <div class="center">
-        <img src="../../common/images/u3629.png" alt="">
+        <img src="../../common/images/u3629.jpg" alt="">
         <router-view></router-view>
         <div class="bk">
             <div class="bk_1">

@@ -1,20 +1,21 @@
 <template>
-    <div>
+    <div v-loading.body="loading" element-loading-text="拼命加载中">
         <div id="lunbo">
-            <swiper :options="swiperOption" ref="mySwiper">
-                <!-- 这部分放你要渲染的那些内容 -->
-                <swiper-slide v-for="(imgs,imgval) in imgChange" :key="imgval">
-                    <img :src="imgs" alt="">
-                </swiper-slide>
-                <!-- 这是轮播的小圆点 -->
-                <div class="swiper-pagination" slot="pagination"></div>
-            </swiper>
+            <div class="block" height="402px">
+                <!-- <span class="demonstration">默认 Hover 指示器触发</span> -->
+                <el-carousel height="402px">
+                    <el-carousel-item v-for="item in it" :key="item"  height="402px"> 
+                        <!-- <img src="./../../../static/images/1.jpg" alt=""> -->
+                        <img :src="item" alt="" class="imga">
+                    </el-carousel-item>
+                </el-carousel>
+            </div>
         </div>
         <div class="biaoti">
             <p>明星产品推荐</p>
             <div class="arrows"></div>
         </div>
-        <div class="mingxing">
+        <div class="mingxing" v-loading.body="loading1" element-loading-text="拼命加载中">
             <a href="#/services" v-for="(i,k) of hehe" :key="k">
                 <div>
                     <div>
@@ -34,7 +35,7 @@
             <div class="arrows"></div>
         </div>
         <div class="chuchuang">
-            <div v-for="(item,k) of recommend" :key="k">
+            <div v-for="(item,k) of recommend" :key="k" v-loading.body="loading2" element-loading-text="拼命加载中">
                 <div>
                     <img :src="item.providerImg" alt="">
                 </div>
@@ -73,7 +74,7 @@
             <div class="arrows"></div>
         </div>
         <div class="fuwu">
-            <div v-for="(item,k) of haha" :key="k">
+            <div v-for="(item,k) of haha" :key="k" v-loading.body="loading3" element-loading-text="拼命加载中">
                 <div>
                     <img :src="item.providerImg" alt="">
                 </div>
@@ -116,53 +117,33 @@
 </template>
 
 <script>
-import { swiper, swiperSlide } from 'vue-awesome-swiper';
+import Vue from 'vue'
+import { Carousel, CarouselItem } from 'element-ui';
+// import { Swipe, SwipeItem } from 'mint-ui';
+Vue.use(Carousel)
+Vue.use(CarouselItem)
 export default {
     created() {
         this.getnicai();
         this.getbucai();
         this.mingxing();
     },
-    components: {
-        swiper,
-        swiperSlide
-    },
     data() {
         return {
-            index: 0,
+            loading: true,
+            loading1: true,
+            loading2: true,
+            loading3: true,
             recommend: '',
             haha: '',
             hehe: '',
-            // providerImg:'',
-            // marketPrice: '',
-
-            imgChange: [
-                '../../../static/images/1.jpg',
-                '../../../static/images/3.jpg',
-                '../../../static/images/2.jpg',
-                '../../../static/images/4.jpg',
-                '../../../static/images/5.jpg'
-            ],
-            swiperSlide: [1, 2, 3, 4, 5],
-            swiperOption: {
-                pagination: '.swiper-pagination',
-                slidesPerView: 'auto',
-                paginationClickable: true,
-                autoplay: 3000,
-                loop: true,
-            },
-
+            it: ['./../../../static/images/1.jpg', './../../../static/images/2.jpg', './../../../static/images/3.jpg', './../../../static/images/4.jpg', './../../../static/images/5.jpg']
         }
     },
-    computed: {
-        swiper() {
-            return this.$refs.mySwiper.swiper;
-        }
-    },
-    mounted() {
-        //这边就可以使用swiper这个对象去使用swiper官网中的那些方法  
-    },
+
     methods: {
+
+
         fmtPrice(p) {
             return (parseFloat(p) * 0.01).toFixed(2);
         },
@@ -176,10 +157,11 @@ export default {
                 data: {
                 }
             }).then((result) => {
+                this.loading = false;
+                this.loading2 = false;
                 let data = result.data.hq;
                 data.forEach(function(item) {
                     item.providerImg = 'http://115.182.107.203:8088/xinda/pic/' + item.providerImg;
-                    // console.log(item.providerImg);
                     item.marketPrice = item.marketPrice + '.00'
                 }, this);
                 this.recommend = data;
@@ -192,8 +174,9 @@ export default {
                 data: {
                 }
             }).then((shenme) => {
+                this.loading = false;
+                this.loading3 = false;
                 let data = shenme.data.provider;
-                // console.log(shenme);
                 data.forEach(function(item) {
                     item.providerImg = 'http://115.182.107.203:8088/xinda/pic/' + item.providerImg;
                     item.marketPrice = item.marketPrice + '.00'
@@ -208,12 +191,12 @@ export default {
                 data: {
                 }
             }).then((shenme) => {
+                this.loading = false;
+                this.loading1 = false;
                 let data = shenme.data.product;
-                // console.log(data);
                 data.forEach(function(i) {
                     i.providerImg = 'http://115.182.107.203:8088/xinda/pic/' + i.providerImg;
                     i.marketPrice = i.marketPrice + '.00'
-                    // console.log(providerImg);
                 }, this);
                 this.hehe = data;
             })
@@ -246,12 +229,29 @@ export default {
 @import '../../common/less/index/index.less';
 @import '../../common/less/global/cssreset.less';
 
-#lunbo {
+.block {
     width: 1200px;
     height: 402px;
-    img {
-        width: 100%;
+    el-carousel {
+        height: 100%;
         height: 100%;
     }
 }
+
+.imga {
+    width: 100%;
+    height: 402px;
+}
+
+.el-carousel__item {
+    height: 100%;
+    height: 100%;
+}
+
+// .el-carousel__item:nth-child(2n) {
+//     background-color: #99a9bf;
+// }
+// .el-carousel__item:nth-child(2n+1) {
+//     background-color: #d3dce6;
+// }
 </style>

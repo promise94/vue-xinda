@@ -82,6 +82,7 @@ export default {
     box-shadow: 0 0 10px rgba(0, 0, 0, .8);
     font-size: 16px;
     color: #fefefe;
+    z-index: 999999;
     p {
         padding-left: 10px;
         color: #fefefe;

@@ -63,6 +63,7 @@ import md5 from 'md5';
 // vuex
 import { mapActions } from 'vuex';
 import { mapGetters } from 'vuex';
+import { Radio } from 'mint-ui';
 
 export default {
     name: 'setting',
@@ -70,6 +71,7 @@ export default {
         province,
         vInput,
         vAlert,
+        [Radio.name]: Radio,
     },
     data() {
         return {
@@ -85,7 +87,7 @@ export default {
             type: { oldType: '', pwdType: '', SecondType: '', emailType: '' }, // 提示类型
             alert_options: { type: 'success', info: '' }, // 提示框设置
             sex: '',
-            radioOption: [{ label: '男', value: 1 }, { label: '女', value: 2 }]
+            radioOption: [{ label: '男', value: '1' }, { label: '女', value: '2' }]
         }
     },
     created() {
@@ -251,6 +253,9 @@ export default {
     input {
         text-indent: .05rem !important;
     }
+    div {
+        margin-bottom: 0.03rem;
+    }
     h4 {
         position: relative;
         margin-bottom: .15rem;
@@ -265,6 +270,7 @@ export default {
             width: 0;
             height: 0;
             position: absolute;
+            bottom: 0;
             left: .5rem;
             border-bottom: .05rem solid #2693d4;
             border-right: .03rem solid transparent;

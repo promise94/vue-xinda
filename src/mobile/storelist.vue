@@ -39,12 +39,17 @@ export default {
                 start: 0, //分页起始数
                 sort: 1,//默认排列
             },
-            kong: false,
+            store: false,
         }
     },
     created() {
         this.getStoreList();
         Indicator.open('加载中...'); // 页面初始加载提示
+        this.$root.eventHub.$on('closeLoading', (path)=>{
+            if (!/storelist/.test(path)) {
+                Indicator.close();
+            }
+        });
     },
 
     methods: {
@@ -60,7 +65,7 @@ export default {
                 url: '/provider/grid',
                 data: this.members,
             }).then((result) => {
-                console.log(result);
+                // console.log(result);
                 let data = result.data;
                 let len = data.length;
                 for (var i = 0; i < len; i++) {
@@ -73,11 +78,11 @@ export default {
                     Indicator.close(); // 加载提示关闭 
                 }else if(result.status==-1){
                     Indicator.close(); // 加载提示关闭 
-                    this.kong=true;
+                    this.store=true;
                 }
             },(err)=>{
                 Indicator.close(); // 加载提示关闭 
-                this.kong=true;
+                this.store=true;
             });
             
         },
@@ -101,7 +106,7 @@ export default {
         text-align:center;       
         >p{
             width:0.9rem;
-            line-height:0.38rem;
+            line-height:0.32rem;
         }
         .colorchange{
             color:#fff;

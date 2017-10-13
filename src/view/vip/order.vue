@@ -19,7 +19,7 @@
                 <span @click="clear(2)" class="close_2 xd xd-close"></span>
             </div>
         </div>
-        <div class="orderCenter">
+        <div class="orderCenter" >
             <ul>
                 <li>商品名称</li>
                 <li>单价</li>
@@ -29,7 +29,7 @@
                 <li>订单操作</li>
             </ul>
         </div>
-        <div v-show="list.length" class="orderBottom">
+        <div  v-loading.body="loading" element-loading-text="拼命加载中..." v-show="listdata" class="orderBottom" >
             <transition-group name="list" tag="div">
                 <div v-for="(item, k) of ordersList" :key="k" class="list">
                     <numberTime :orderID="item.businessNo" :time="item.createTime"></numberTime>
@@ -60,7 +60,7 @@
             </transition-group>
             <v-page @page="showOrder" :amount="list.length" :limit="limit"></v-page>
         </div>
-        <v-nothing v-show="!list.length" title="无结果"></v-nothing>
+        <v-nothing v-show="!listdata" title="无结果"></v-nothing>
         <modal ref="dialog" width="800">
             <div slot="body">
                 <h1>{{modal_info}}</h1>
@@ -96,6 +96,7 @@ export default {
     },
     data() {
         return {
+            loading:true,
             time: (new Date()).toJSON().substr(0, (new Date()).toJSON().indexOf('T')), // 当前时间
             limit: 4, // 显示数目
             n: 0,
@@ -105,6 +106,7 @@ export default {
             calendarNum: '',
             number: '',
             modal_info: '',
+            listdata: true, // 无数据提示显示隐藏
             serverOrder: '', // 服务订单数据
             business: '', // 业务订单数据
             tempData: '', // 存储初始业务订单数据
@@ -124,6 +126,7 @@ export default {
         list() {
             if (this.business && this.serverOrder) {
                 this.business.map((val) => {
+                    val.loading = false;
                     val.data = [];
                     this.serverOrder.forEach((k) => {
                         if (val.businessNo == k.businessNo) {
@@ -161,6 +164,7 @@ export default {
     },
     methods: {
         getOrder({ business = '', start = '1900-01-01', end = this.time } = {}) { // 获取订单数据
+            // this.loading = false;
             let data = {
                 businessNo: business,
                 startTime: start,
@@ -190,6 +194,7 @@ export default {
                         }
                         return i;
                     })
+                    this.loading = false;
                 })
         },
         delOrder(item) { // 删除订单

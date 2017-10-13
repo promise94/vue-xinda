@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import { Toast } from 'mint-ui';
 import { mapGetters } from 'vuex';
 import { mapActions } from 'vuex';
 export default {
@@ -45,6 +46,10 @@ export default {
         logout() { // 退出登录
             this.$http.post('/sso/ logout').then((res) => {
                 if (res.status === 1) {
+                    Toast({
+                        message: res.msg,
+                        duration: 2000
+                    })
                     this.status = false;
                     let user = {
                         status: false,
@@ -60,13 +65,12 @@ export default {
 
 <style lang="less" scoped>
 #center {
-    position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 100%;
     width: 100%;
+    min-height: 6rem;
     background-color: #f8f8f8;
     .headImg {
         margin-top: -.5rem;

@@ -18,9 +18,11 @@
                     </div>
                     <!--尾部,操作按钮-->
                     <div class="modal-footer">
-                        <slot name="button">
-                            <a v-if="modal.showCancelButton" href="javascript:void(0)" class="button" :class="modal.cancelButtonClass" @click="close(1)">{{modal.cancelButtonText}}</a>
-                            <a v-if="modal.showConfirmButton" href="javascript:void(0)" class="button" :class="modal.confirmButtonClass" @click="submit">{{modal.confirmButtonText}}</a>
+                        <slot name="footer">
+                            <slot name="button">
+                                <a v-if="modal.showCancelButton" href="javascript:void(0)" class="button" :class="modal.cancelButtonClass" @click="close(1)">{{modal.cancelButtonText}}</a>
+                                <a v-if="modal.showConfirmButton" href="javascript:void(0)" class="button" :class="modal.confirmButtonClass" @click="submit">{{modal.confirmButtonText}}</a>
+                            </slot>
                         </slot>
                     </div>
                 </div>
@@ -165,7 +167,7 @@ export default {
     top: 50%;
     transform: translate(-50%, -50%);
     width: auto;
-    min-width: 480px;
+    width: 480px;
     background: #fff;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);

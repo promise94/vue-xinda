@@ -77,7 +77,7 @@ export default {
             if (k == 2) {
                 Indicator.close();
             }
-        }
+        },
     },
     methods: {
         imgerror(e){
