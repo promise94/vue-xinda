@@ -13,6 +13,7 @@
                     <p>{{serviceInfo}}</p>
                 </div>
             </div>
+            <p class='xd xd-no' id="shopInfo" v-show="shopInfo"><span>加载失败！</span></p> 
         </div>
         <div class="price">
             <div>
@@ -63,6 +64,7 @@
                 <div @click="dianpu(Id)">进入店铺</div>
             </div>
         </div>
+        <p class='xd xd-no' id="store" v-show="store"><span>加载失败！</span></p> 
         <div class="headline">
             <span>服务介绍</span>
             <div class="arrows"></div>
@@ -88,7 +90,6 @@
             </span>
 
         </div>
-        <!-- <v-alert :type="alert_options.type" :info="alert_options.info" ref="alert"></v-alert> -->
         <div class="caidan">
             <div @click="tanchukuang()">
                 <span class="xd xd-kefu"></span>
@@ -153,13 +154,9 @@ export default {
     data() {
         return {
             title: '商品详情', // header文字信息
-            // show: false, // header是否显示
             a: 1,
             modal_info: '',
-            // info: { phoneInfo: '', captInfo: '', msgInfo: '', pwdInfo: '', SecondInfo: '' }, // 提示信息
-            // type: { phoneType: '', captType: '', msgType: '', pwdType: '', SecondType: '' }, // 提示类型
             num: 1,
-            // shopTypeId:'',
             // 没获取到 默认不显示
             show: false,
             // 商家logo
@@ -192,11 +189,8 @@ export default {
                 productTypeCode: '', //产品类型
                 regionId: '', //省市区地址区号
                 sort: 1,//价格升序排列,
-                // id: this.Id,
             },
             arr: '',
-
-
             info: { phoneInfo: '', captInfo: '', msgInfo: '', pwdInfo: '', SecondInfo: '' }, // 提示信息
             type: { phoneType: '', captType: '', msgType: '', pwdType: '', SecondType: '' }, // 提示类型
             code: '', // 图片验证码
@@ -210,23 +204,37 @@ export default {
             isload: '', // 是否重新加载图片验证码
             alert_options: { type: 'success', info: '' }, // 提示框设置
             fall: 0,
+            status: 0,//列表状态
+            product_status: 0,//产品状态
+            store: false,
+            shopInfo: false,
+            state_1: 0, // 加载动画是否关闭
+            state_2: 0, // 加载动画是否关闭
         }
     },
     created() {
-        Indicator.close();
+        Indicator.open('加载中...'); // 页面初始加载提示       
         this.sId = this.$route.query.id;
         this.Id = this.$route.query.Id;
         this.getninumShuliang();
         this.getStoreList();
-        Indicator.open('加载中...'); // 页面初始加载提示       
     },
     computed: {
         ...mapGetters(['getUser']),
+        state(){
+            return this.state_1 + this.state_2;
+        }
+    },
+    watch: {
+        state(k){
+            if (k == 2) {
+                Indicator.close();
+            }
+        }
     },
     methods: {
         imgerror(e){//图片加载错误时显示
             let ev = e || window.event;
-            // console.log('imgerror-',ev);
             ev.target.src = '/static/images/order.png';  
         },    
         go(n) {
@@ -343,8 +351,6 @@ export default {
             }
         },
 
-
-
         tanchukuang() {
             this.$refs.name.confirm().then(() => {
                 this.$refs.name.show = false;
@@ -357,7 +363,6 @@ export default {
         },
         jiarugouwuche(ev) {
             if (ev === 0) {
-
                 this.$http({
                     method: 'post',
                     url: '/cart/add',
@@ -366,7 +371,6 @@ export default {
                         num: this.num,
                     }
                 }).then((res) => {
-                    // this.$store.dispatch('cartAction');
                     this.$router.push({ path: '/m/cart', });
                 })
             } else {
@@ -385,13 +389,8 @@ export default {
                     // 弹出框提醒
                     Toast({
                         message: '操作成功',
-                        // position: 'bottom',
                         duration: 1000,
                     });
-                    // this.alert_options.info = res.msg;
-                    // this.alert_options.type = 'success';
-                    // this.$refs.alert.alert();
-                    // this.$store.dispatch('cartAction');
                 })
             }
         },
@@ -409,6 +408,7 @@ export default {
                     sId: this.sId,
                 }
             }).then((result) => {
+                this.status=result.status;
                 let data = result.data.serviceList;
                 this.datas = result.data;
                 // 图片
@@ -418,10 +418,7 @@ export default {
                 // console.log(this.htmle);
                 if (this.htmle === '') {
                     this.show = true;
-                    // console.log('1');
                 }
-                // this.shopTypeId = 
-                // console.log(result);
                 // 市场价
                 this.shichang = result.data.product.marketPrice;
                 // 现价
@@ -436,7 +433,16 @@ export default {
 
                 }, this);
                 this.shangpinxiangqing = data;
-            })
+                this.state_2 = 1;
+                if(this.shangpinxiangqing!==''){
+                    this.shopInfo=false;
+                }else if(this.status==-1){
+                    this.shopInfo=true;
+                }
+            },(err)=>{
+                this.state_2 = 1;
+                this.shopInfo=true;
+            });
         },
         //店铺列表后台数据获取
         getStoreList() {
@@ -445,9 +451,8 @@ export default {
                 url: '/provider/grid',
                 data: this.conf,
             }).then((result) => {
+                this.product_status=result.status;
                 let data = result.data;
-                // console.log(data);
-                this.arr = data;
                 data.forEach(function(item) {
                     if (this.Id === item.id) {
                         this.Arre = item.id;
@@ -463,12 +468,17 @@ export default {
                         return;
                     }
                 }, this);
-                // this.arr = data;
-                // console.log(data);
-                if (this.shangpinxiangqing && this.arr) {
-                    Indicator.close(); // 加载提示关闭 
+                this.arr = data;
+                this.state_1 = 1;
+                if(this.arr==''){
+                    this.store=true;
+                }else if(result.status==-1){
+                    this.store=true;
                 }
-            })
+            },(err)=>{
+                this.state_1 = 1;
+                this.store=true;
+            });
         },
 
     }
@@ -767,6 +777,14 @@ export default {
     }
     blockquote {
         width: 100% !important;
+    }
+}
+//
+#shopInfo,#store{
+    margin:0 5%;
+    font-size:2rem; 
+    span{
+        font-size:0.2rem; 
     }
 }
 </style>

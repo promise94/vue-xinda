@@ -22,6 +22,7 @@
                 </div>
             </div>
         </div>
+        <p class='xd xd-no' id="store" v-show="store"><span>加载失败！</span></p>    
 
     </div>
 
@@ -38,17 +39,16 @@ export default {
                 start: 0, //分页起始数
                 sort: 1,//默认排列
             },
+            kong: false,
         }
     },
     created() {
-        Indicator.close();
         this.getStoreList();
         Indicator.open('加载中...'); // 页面初始加载提示
     },
 
     methods: {
-        changecolor(n){
-            
+        changecolor(n){          
             this.change=n;
             this.members.sort=n;
             this.getStoreList();
@@ -60,6 +60,7 @@ export default {
                 url: '/provider/grid',
                 data: this.members,
             }).then((result) => {
+                console.log(result);
                 let data = result.data;
                 let len = data.length;
                 for (var i = 0; i < len; i++) {
@@ -67,9 +68,16 @@ export default {
                 data[i].providerImg.substring(0, 3) == 'http' ? data[i].providerImg = data[i].providerImg : data[i].providerImg = "http://115.182.107.203:8088/xinda/pic" + data[i].providerImg;//图片数据处理，加上前缀
                 };
                 this.arr = data;
+                
                 if(this.arr){
                     Indicator.close(); // 加载提示关闭 
+                }else if(result.status==-1){
+                    Indicator.close(); // 加载提示关闭 
+                    this.kong=true;
                 }
+            },(err)=>{
+                Indicator.close(); // 加载提示关闭 
+                this.kong=true;
             });
             
         },
@@ -90,8 +98,7 @@ export default {
         border:0.02rem solid #2594d4;
         border-radius:0.05rem;
         font-size:0.14rem;
-        text-align:center;
-        
+        text-align:center;       
         >p{
             width:0.9rem;
             line-height:0.38rem;
@@ -136,6 +143,13 @@ export default {
                 } 
             }
             
+        }
+    }
+    #store{
+        margin:0 10%;
+        font-size:2rem; 
+        span{
+            font-size:0.2rem; 
         }
     }
 </style>

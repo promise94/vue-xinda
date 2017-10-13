@@ -8,6 +8,7 @@
                 <p>{{date.providerInfo}}</p>
                 <p>{{date.regionName}}</p>
             </div>
+            <p class='xd xd-no' id="shopInfo" v-show="shopInfo"><span>加载失败！</span></p> 
         </div>
         <div class="service" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="5">
             <div class="all">所有服务<p></p></div> 
@@ -21,7 +22,8 @@
                         <span>￥{{fmtPrice(item.price)}}</span>             
                     </div>
                 </div>
-            </div>           
+            </div>
+            <p class='xd xd-no' id="store" v-show="store"><span>加载失败！</span></p>           
         </div>
         <p v-show="loadingShow">
             <mt-spinner type="fading-circle" color="#26a2ff"></mt-spinner>
@@ -47,18 +49,35 @@ export default {
                 sort: 2, //价格升序排列,
                 providerId: this.$route.query.id,//产品id
             },
-            status: 0,//状态
+            status: 0,//列表状态
+            product_status: 0,//产品状态
             loading: true,
             arr: '',//中间变量数组
             i: 0,
             loadingShow: false, // 加载动画是否显示
             loadShow: false,
             Id: '',
+            shopInfo: false,
+            store: false,
+            state_1: 0, // 加载动画是否关闭
+            state_2: 0, // 加载动画是否关闭
         }
     },
     created() {
-        this.getStore();     //数据获取
         Indicator.open('加载中...'); // 页面初始加载提示
+        this.getStore();     //数据获取      
+    },
+    computed: {
+        state(){
+            return this.state_1 + this.state_2;
+        }
+    },
+    watch: {
+        state(k){
+            if (k == 2) {
+                Indicator.close();
+            }
+        }
     },
     methods: {
         imgerror(e){
@@ -78,14 +97,22 @@ export default {
                 this.Id=this.date.id;
                 // 服务商头像图片数据处理，加上前缀
                 this.date.providerImg.substring(0, 3) == 'http' ? this.date.providerImg = this.date.providerImg : this.date.providerImg = "http://115.182.107.203:8088/xinda/pic" + this.date.providerImg;
-                
+                this.state_1 = 1;
+                if(this.date!==''){
+                    this.shopInfo=false;
+                }else if(this.status==-1){
+                    this.shopInfo=true;
+                }
+            },(err)=>{
+                this.state_2 = 1;
+                this.shopInfo=true;
             });
             this.$http({//服务产品数据获取
                 method: 'post',
                 url: '/product/package/grid',
                 data: this.members,
             }).then((res) => {
-                // console.log('222',res);
+                this.product_status=res.status;
                 let date = res.data;
                 let len = date.length;
                 for (var i = 0; i < len; i++) {               
@@ -96,11 +123,15 @@ export default {
                 this.mess.price = this.fmtPrice(this.mess.price);//处理销售价格余两位数
                 this.arr=this.mess.slice(0,5);//初始显示的数据
                 this.loading = false;
-
-                if(this.arr.length && this.status){
-                    Indicator.close(); // 加载提示关闭 
-                }
-                
+                this.state_2 = 1;
+                if(this.arr!==''){
+                    this.store=false;
+                }else if(this.product_status==-1){
+                    this.store=true;
+                }        
+            },(err)=>{
+                this.state_2 = 1;
+                this.store=true;
             });
             
         },
@@ -140,6 +171,13 @@ export default {
         padding: 0.1rem;
         border-bottom: 0.02rem solid #e3e3e3;
         background: #fff;
+        >p{
+            margin:0 5%;
+            font-size:2rem; 
+            span{
+                font-size:0.2rem; 
+            }
+        }
         .img{
             margin: 0.08rem auto;
             width: 1rem;
@@ -157,6 +195,7 @@ export default {
                 font-size:0.07rem;
             }
         }
+
     }
     .service{
         padding:0.1rem;
@@ -221,6 +260,13 @@ export default {
             }
             
         }
+        >p{
+            margin:0 5%;
+            font-size:2rem; 
+            span{
+                font-size:0.2rem; 
+            }
+        } 
     }
     >p{
         display:flex;

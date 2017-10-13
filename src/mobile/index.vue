@@ -117,6 +117,7 @@
         </div>
       </div>
     </div>
+    <p class='xd xd-no' id="store" v-show="store"><span>加载失败！</span></p> 
     <div class="bottom">
       <div>
         <div>
@@ -143,12 +144,13 @@ export default {
     return {
       recommend: '',
       allCity: '', // 所有城市
+      store:false,
     }
   },
   created() {
-    this.getnicai();
-    this.getAllCity();
     Indicator.open('加载中...'); // 页面初始加载提示
+    this.getnicai();
+    this.getAllCity();   
   },
   components: {
     swipe: Swipe,
@@ -225,10 +227,17 @@ export default {
           item.marketPrice = item.marketPrice + '.00'
         }, this);
         this.recommend = data;
-        if(this.recommend){
+        if(this.recommend!==''){
           Indicator.close(); // 加载提示关闭 
-        }
-      })
+          this.store=false;
+        }else if(result.status==-1){
+            Indicator.close(); // 加载提示关闭 
+            this.store=true;
+          }
+      },(err)=>{
+        Indicator.close(); // 加载提示关闭 
+        this.store=true;
+      });
     },
     changeSwipe(newIndex, oldIndex) {
       // console.log(`swipe from ${newIndex} to ${oldIndex}`);
@@ -455,4 +464,11 @@ export default {
     }
   }
 }
+#store{
+        margin:0 10%;
+        font-size:2rem; 
+        span{
+            font-size:0.2rem; 
+        }
+    }
 </style>

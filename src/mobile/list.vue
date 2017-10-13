@@ -21,7 +21,8 @@
             </div>
         </div>
 
-        <span class='xd xd-no' v-show="kong"></span>                 
+        <span class='xd xd-no' v-show="kong"></span>   
+        <p class='xd xd-no' v-show="kongload"><span>加载失败！</span></p>                
                   
     </div>
 </template>
@@ -40,12 +41,13 @@ export default {
                 sort: '',//排序方式，空：默认排序
             },   
             kong: false,
+            kongload: false,
             Id: '',       
         }
     },
     created() {
-        this.getList();
         Indicator.open('加载中...'); // 页面初始加载提示
+        this.getList();       
     },
     methods: {
         changecolor(n){
@@ -66,10 +68,8 @@ export default {
                 data[i].productImg.substring(0, 3) == 'http' ? data[i].productImg = data[i].productImg : data[i].productImg = "http://115.182.107.203:8088/xinda/pic" + data[i].productImg;//图片数据处理，加上前缀
                 data[i].price = this.fmtPrice(data[i].price);//处理销售价格余两位数
                 this.Id=data[i].providerId;
-                // console.log(data[i].providerId);
                 };
                 this.mess=data;                
-                // console.log('this.mess',this.mess);
                 if(this.mess==''){
                     Indicator.close(); // 加载提示关闭 
                     this.kong=true;
@@ -77,7 +77,10 @@ export default {
                    Indicator.close(); // 加载提示关闭    
                    this.kong=false;            
                 }      
-            })
+            },(err)=>{
+                Indicator.close(); // 加载提示关闭 
+                this.kong=true;
+            });
         },
         //函数处理价格，小数点后余两位数
         fmtPrice(p) {
@@ -94,9 +97,19 @@ export default {
 </script>
 
 <style lang="less" scoped>
-#list > span{      
-    margin:0 23%;
-    font-size:2rem;        
+#list{
+    >span{
+        margin:0 23%;
+        font-size:2rem;       
+    }
+    >p{
+        margin:0 10%;
+        font-size:2rem; 
+        span{
+            font-size:0.2rem; 
+        }
+    }      
+           
 }
     .change{
         display:flex;
