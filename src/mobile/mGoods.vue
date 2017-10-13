@@ -217,7 +217,12 @@ export default {
         this.Id = this.$route.query.Id;
         this.getninumShuliang();
         this.getStoreList();
-        Indicator.open('加载中...'); // 页面初始加载提示       
+        Indicator.open('加载中...'); // 页面初始加载提示
+        this.$root.eventHub.$on('closeLoading', (path) => {
+            if (!/good/.test(path)) {
+                Indicator.close();
+            }
+        })
     },
     computed: {
         ...mapGetters(['getUser']),

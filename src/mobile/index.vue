@@ -165,6 +165,11 @@ export default {
     this.getnicai();
     this.getAllCity();
     Indicator.open('加载中...'); // 页面初始加载提示
+    this.$root.eventHub.$on('closeLoading', (path) => {
+      if (!/\/m$/.test(path)) {
+        Indicator.close();
+      }
+    })
   },
   components: {
     swipe: Swipe,

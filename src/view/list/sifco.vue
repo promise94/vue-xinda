@@ -1,11 +1,11 @@
 <template>
-    <div class="middle" id="sifco">
+    <div class="middle" id="sifco" v-loading.body="loading1" element-loading-text="拼命加载中">
         <div class="middle-two">
             <div class="content">
                 <div class="content-top">
                     <p>首页&nbsp;/&nbsp;公司工商</p>
                 </div>
-                <div class="content-center">
+                <div class="content-center" >
                     <div class="search">
                         <div class="search-one">
                             <div>
@@ -50,7 +50,7 @@
                                 <li>价格</li>
                             </ul>
                         </div>
-                        <div class="ball-two" v-for="(item,k) of list" :key="k">
+                        <div class="ball-two" v-for="(item,k) of list" :key="k" v-loading.body="loading" element-loading-text="拼命加载中">
                             <img :src="item.providerImg" @click="shoid(item.id)" alt="">
                             <div class="ball-left">
                                 <a @click="shoid(item.id)" href="javascript:viod:(0)">{{item.serviceName}}</a>
@@ -99,6 +99,8 @@ export default {
     },
     data() {
         return {
+            loading:true,
+            loading1:true,
             recommend: '',
             oyoun: 4,
             oyou: -1,
@@ -208,6 +210,7 @@ export default {
                     sort: this.sort,
                 }
             }).then((you) => {
+                this.loading = false;
                 let data = you.data;
                 this.count = you.totalCount;
                 data.forEach(function(item) {
@@ -230,6 +233,7 @@ export default {
 
                 }
             }).then((you) => {
+                this.loading1 = false;
                 this.fuwu = Object.values(you.data)[2];
                 this.itemList = Object.values(this.fuwu.itemList)[0].itemList;
             })

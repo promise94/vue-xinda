@@ -60,13 +60,12 @@ export default {
 
 <style lang="less" scoped>
 #center {
-    position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 100%;
     width: 100%;
+    min-height: 6rem;
     background-color: #f8f8f8;
     .headImg {
         margin-top: -.5rem;

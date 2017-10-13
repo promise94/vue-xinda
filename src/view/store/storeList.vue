@@ -1,5 +1,5 @@
 <template>
-  <div id="storeList">
+  <div id="storeList" v-loading.body="loading" element-loading-text="拼命加载中...">
     <div class="chance">
       <a href="#/storeList">首页</a>&nbsp;/&nbsp;
       <a href="#/storeIndex">店铺列表</a>
@@ -51,7 +51,7 @@
       </div>
 
       <div class="main">
-        <div class="store"  v-for="item of arr">
+        <div class="store" v-for="item of arr">
           <div class="imgs">
             <div>
               <img v-bind:src="item.providerImg">
@@ -91,10 +91,10 @@
         </div>
       </div>
     </div>
-    <nothing title="未搜索到结果" v-if="arr.length == 0"></nothing>
+    <nothing title="未搜索到结果" v-if="showNothing"></nothing>
 
     <div class="page-changes" v-if="arr.length != 0">
-         <v-page @page="titles" :amount="count" :limit="conf.limit"></v-page> 
+      <v-page @page="titles" :amount="count" :limit="conf.limit"></v-page>
     </div>
 
   </div>
@@ -113,6 +113,8 @@ export default {
   },
   data() {
     return {
+      loading: true,
+      showNothing: false, // 无数据显示隐藏
       checked: '', //产品类型颜色改变
       change: 1, //排序颜色改变
       arr: '', //总数据获取
@@ -135,6 +137,7 @@ export default {
   methods: {
     //店铺列表后台数据获取
     getStoreList() {
+      this.loading = true;
       this.$http({
         method: 'post',
         url: '/provider/grid',
@@ -148,6 +151,12 @@ export default {
           data[i].providerImg.substring(0, 3) == 'http' ? data[i].providerImg = data[i].providerImg : data[i].providerImg = "http://115.182.107.203:8088/xinda/pic" + data[i].providerImg;//图片数据处理，加上前缀
         };
         this.arr = data;
+        this.loading = false;
+        if (data.length == 0) {
+          this.showNothing = true;
+        }
+      }, (err) => {
+        this.showNothing = true;
       })
     },
     //产品类型选择筛选店铺
@@ -168,11 +177,6 @@ export default {
     },
     //省市区选择筛选店铺
     getProv(pro) {
-      // if(this.i){//如果省市区有默认的code值
-      // this.conf.regionId = pro[2].code;
-      // this.getStoreList();
-      // }
-      // this.i++;
       if (pro !== "") {
         this.conf.regionId = pro[2].code;
         this.getStoreList();

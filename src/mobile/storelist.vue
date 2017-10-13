@@ -44,11 +44,15 @@ export default {
         Indicator.close();
         this.getStoreList();
         Indicator.open('加载中...'); // 页面初始加载提示
+        this.$root.eventHub.$on('closeLoading', (path)=>{
+            if (!/storelist/.test(path)) {
+                Indicator.close();
+            }
+        })
     },
 
     methods: {
         changecolor(n){
-            
             this.change=n;
             this.members.sort=n;
             this.getStoreList();
@@ -94,7 +98,7 @@ export default {
         
         >p{
             width:0.9rem;
-            line-height:0.38rem;
+            line-height:0.32rem;
         }
         .colorchange{
             color:#fff;

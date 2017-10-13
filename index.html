@@ -5,18 +5,29 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="screen-orientation" content="portrait">
+  <meta name="x5-orientation" content="portrait">
+  <meta name="full-screen" content="yes">
+  <meta name="x5-fullscreen" content="true">
   <title>信达</title>
   <link rel="stylesheet" href="//at.alicdn.com/t/font_414016_t4kbompdf6dh1tt9.css">
   <script>
     if (/Mobile/i.test(navigator.userAgent)) {
-      document.querySelector('html').style.fontSize = window.innerWidth / 3.75 / 16 * 100 + '%';
+      document.querySelector('html').style.fontSize = screen.width / 3.75 / 16 * 100 + '%';
+      if (!/\/m\//.test(window.location.hash) && !/\/m$/.test(window.location.hash)) {
+        window.location.href = '#/m';
+      }
+    } else {
+      if (/\/m\//.test(window.location.hash) || /\/m$/.test(window.location.hash)) {
+        window.location.href = '#/';
+      }
     }
   </script>
 </head>
 
 <body>
-  <div id="app"></div>
   <!-- built files will be auto injected -->
+  <div id="app"></div>
 </body>
 
 </html>

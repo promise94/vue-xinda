@@ -1,10 +1,10 @@
 <template>
-    <div id="div_goods">
+    <div id="div_goods" v-loading.body="loading">
         <div class="container">
             <div class="biaoti">
                 <p>首页/公司注册</p>
             </div>
-            <div class="xiangqing">
+            <div class="xiangqing" v-loading.body="loading1">
                 <img :src="img" alt="">
                 <div>
                     <p>{{serviceName}}</p>
@@ -248,6 +248,8 @@ export default {
     },
     data() {
         return {
+            loading:true,
+            // loading1:true,
             shopTypeId: '',
             show: 1,
             modal_info: '',
@@ -278,6 +280,7 @@ export default {
             isload: '', // 是否重新加载图片验证码
             alert_options: { type: 'success', info: '' }, // 提示框设置
             fall: 0,
+            // loading:true,
         }
     },
     watch: {
@@ -439,6 +442,7 @@ export default {
         // 加入购物车
         jiarugouwuche(ev) {
             if (ev === 0) {
+                this.loading = true;
                 this.$http({
                     method: 'post',
                     url: '/cart/add',
@@ -447,12 +451,11 @@ export default {
                         num: this.num,
                     }
                 }).then((res) => {
+                    this.loading = false;
                     this.$store.dispatch('cartAction');
                 })
             } else {
-
                 if (!this.getUser.status) {
-
                     this.$router.push('/user/login');
                     return false;
                 }
@@ -492,6 +495,8 @@ export default {
         },
         // 商品详情获取
         getninumShuliang() {
+            this.loading = false;
+            this.loading1 = true;
             this.$http({
                 method: 'post',
                 url: '/product/package/detail',
@@ -514,6 +519,7 @@ export default {
                 data.forEach(function(item, index) {
                 }, this);
                 this.shangpinxiangqing = data;
+                this.loading1 = false;
             })
         },
         dianpu(id) {
