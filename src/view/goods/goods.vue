@@ -468,11 +468,13 @@ export default {
                     }
                 }).then((res) => {
                     // 弹出框提醒
+                    this.num = 1 ;
                     this.alert_options.info = res.msg;
                     this.alert_options.type = 'success';
                     this.$refs.alert.alert();
 
                     this.$store.dispatch('cartAction');
+                    
                 })
             }
         },
