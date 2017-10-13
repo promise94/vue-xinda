@@ -66,10 +66,8 @@ export default {
                 data[i].productImg.substring(0, 3) == 'http' ? data[i].productImg = data[i].productImg : data[i].productImg = "http://115.182.107.203:8088/xinda/pic" + data[i].productImg;//图片数据处理，加上前缀
                 data[i].price = this.fmtPrice(data[i].price);//处理销售价格余两位数
                 this.Id=data[i].providerId;
-                // console.log(data[i].providerId);
                 };
                 this.mess=data;                
-                // console.log('this.mess',this.mess);
                 if(this.mess==''){
                     Indicator.close(); // 加载提示关闭 
                     this.kong=true;

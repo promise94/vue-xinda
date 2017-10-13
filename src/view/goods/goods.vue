@@ -245,7 +245,6 @@ export default {
         if (user && user.tempPhone) {
             this.phone = user.tempPhone;
         }
-        // this.huoquid(id, indexe);
     },
     data() {
         return {
@@ -293,7 +292,6 @@ export default {
     },
     methods: {
         ...mapActions(['cartAction']),
-        // ...mapGetters(['getUser']),
 
         // 获取用户输入图片验证码
         getValue(v) {
@@ -452,9 +450,9 @@ export default {
                     this.$store.dispatch('cartAction');
                 })
             } else {
-                
-                if(!this.getUser.status){
-                    
+
+                if (!this.getUser.status) {
+
                     this.$router.push('/user/login');
                     return false;
                 }
@@ -479,15 +477,11 @@ export default {
         onblur(eiv) {
             let infor = eiv.target.value;
             if (infor > 0) {
-                // console.log(2);
                 this.num = infor;
             } else {
-                // console.log(1);
                 infor = 1;
                 this.num = infor;
             }
-            // console.log(eiv);
-            // console.log(this.num);
         },
         // 获取id
         huoquid(id, indexe) {
@@ -522,17 +516,6 @@ export default {
                 this.shangpinxiangqing = data;
             })
         },
-
-
-
-
-
-
-
-
-
-
-
         dianpu(id) {
             this.$router.afterEach((to, from, next) => {
                 window.scrollTo(0, 0);
@@ -540,16 +523,14 @@ export default {
                 this.$router.push({
                     path: '/storeIndex',
                     query: { id }
-                }),
-                console.log(id);
+                });
+
         },
         // 弹出框
         tanchukuang() {
             this.$refs.name.confirm().then(() => {
                 this.$refs.name.show = false;
-            }).catch(() => {
-
-            })
+            }).catch(() => {})
         },
     }
 }

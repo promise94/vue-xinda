@@ -237,25 +237,11 @@ export default {
         align-items: center;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
 /* 过渡动画 */
-
 .list-enter-active,
 .list-leave-active {
     transition: .2s ease;
 }
-
 .list-enter-to {
     opacity: 0;
 }

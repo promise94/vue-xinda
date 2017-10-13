@@ -1,14 +1,23 @@
 <template>
     <div>
         <div id="lunbo">
-            <swiper :options="swiperOption" ref="mySwiper">
-                <!-- 这部分放你要渲染的那些内容 -->
-                <swiper-slide v-for="(imgs,imgval) in imgChange" :key="imgval">
-                    <img :src="imgs" alt="">
-                </swiper-slide>
-                <!-- 这是轮播的小圆点 -->
-                <div class="swiper-pagination" slot="pagination"></div>
-            </swiper>
+            <swipe class="my-swipe" :auto="4000">
+                <swipe-item class="slide1">
+                    <img src="./../../../static/images/1.jpg">
+                </swipe-item>
+                <swipe-item class="slide2">
+                    <img src="./../../../static/images/2.jpg">
+                </swipe-item>
+                <swipe-item class="slide3">
+                    <img src="./../../../static/images/3.jpg">
+                </swipe-item>
+                <swipe-item class="slide4">
+                    <img src="./../../../static/images/4.jpg">
+                </swipe-item>
+                <swipe-item class="slide5">
+                    <img src="./../../../static/images/5.jpg">
+                </swipe-item>
+            </swipe>
         </div>
         <div class="biaoti">
             <p>明星产品推荐</p>
@@ -116,7 +125,7 @@
 </template>
 
 <script>
-import { swiper, swiperSlide } from 'vue-awesome-swiper';
+import {Swipe,SwipeItem} from 'mint-ui';
 export default {
     created() {
         this.getnicai();
@@ -124,45 +133,21 @@ export default {
         this.mingxing();
     },
     components: {
-        swiper,
-        swiperSlide
-    },
+    swipe: Swipe,
+    swipeItem: SwipeItem
+  },
     data() {
         return {
             index: 0,
             recommend: '',
             haha: '',
             hehe: '',
-            // providerImg:'',
-            // marketPrice: '',
-
-            imgChange: [
-                '../../../static/images/1.jpg',
-                '../../../static/images/3.jpg',
-                '../../../static/images/2.jpg',
-                '../../../static/images/4.jpg',
-                '../../../static/images/5.jpg'
-            ],
-            swiperSlide: [1, 2, 3, 4, 5],
-            swiperOption: {
-                pagination: '.swiper-pagination',
-                slidesPerView: 'auto',
-                paginationClickable: true,
-                autoplay: 3000,
-                loop: true,
-            },
-
         }
     },
-    computed: {
-        swiper() {
-            return this.$refs.mySwiper.swiper;
-        }
-    },
-    mounted() {
-        //这边就可以使用swiper这个对象去使用swiper官网中的那些方法  
-    },
+
     methods: {
+        
+        
         fmtPrice(p) {
             return (parseFloat(p) * 0.01).toFixed(2);
         },
@@ -179,7 +164,6 @@ export default {
                 let data = result.data.hq;
                 data.forEach(function(item) {
                     item.providerImg = 'http://115.182.107.203:8088/xinda/pic/' + item.providerImg;
-                    // console.log(item.providerImg);
                     item.marketPrice = item.marketPrice + '.00'
                 }, this);
                 this.recommend = data;
@@ -193,7 +177,6 @@ export default {
                 }
             }).then((shenme) => {
                 let data = shenme.data.provider;
-                // console.log(shenme);
                 data.forEach(function(item) {
                     item.providerImg = 'http://115.182.107.203:8088/xinda/pic/' + item.providerImg;
                     item.marketPrice = item.marketPrice + '.00'
@@ -209,11 +192,9 @@ export default {
                 }
             }).then((shenme) => {
                 let data = shenme.data.product;
-                // console.log(data);
                 data.forEach(function(i) {
                     i.providerImg = 'http://115.182.107.203:8088/xinda/pic/' + i.providerImg;
                     i.marketPrice = i.marketPrice + '.00'
-                    // console.log(providerImg);
                 }, this);
                 this.hehe = data;
             })
@@ -246,7 +227,7 @@ export default {
 @import '../../common/less/index/index.less';
 @import '../../common/less/global/cssreset.less';
 
-#lunbo {
+.my-swipe {
     width: 1200px;
     height: 402px;
     img {
