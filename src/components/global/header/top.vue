@@ -58,10 +58,11 @@ export default {
     ...mapActions(['loginAction', 'cartAction']),
     logout() { // 退出登录
       this.$http.post('/sso/ logout').then((res) => {
-        if (res.status === 1) {
+        if (res.status == 1) {
           this.options.info = res.msg;
           this.options.type = 'success';
           this.$refs.alert.alert().then(() => {
+            console.log('res', res);
             this.status = false;
             let user = {
               status: false,

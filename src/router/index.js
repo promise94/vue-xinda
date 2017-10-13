@@ -2,11 +2,11 @@ import Vue from 'vue';
 import Router from 'vue-router';
 
 // 商品展示、会员中心展示页
-const main = resolve => require.ensure([], () => resolve(require('@/view/main.vue')), 'pc');
+const main = resolve => require.ensure([], () => resolve(require('@/view/main.vue')), 'main');
 // 登录、注册、忘记密码展示页
 const user = resolve => require.ensure([], () => resolve(require('@/view/user.vue')), 'pc');
 // 首页
-const index = resolve => require.ensure([], () => resolve(require('@/view/index/index')), 'pc');
+const index = resolve => require.ensure([], () => resolve(require('@/view/index/index')), 'main');
 // 商品详情页
 const goods = resolve => require.ensure([], () => resolve(require('@/view/goods/goods')), 'pc');
 // 搜索结果页
@@ -52,10 +52,10 @@ const forget = resolve => require.ensure([], () => resolve(require('@/view/user/
  * M 版页面引入
  */
 // 手机端展示页
-const mMain = resolve => require.ensure([], () => resolve(require('@/mobile/main.vue')), 'mobile'); //手机端展示页
+const mMain = resolve => require.ensure([], () => resolve(require('@/mobile/main.vue')), 'mMain'); //手机端展示页
 
 //手机首页
-const mIndex = resolve => require.ensure([], () => resolve(require('@/mobile/index.vue')), 'mobile'); //手机首页
+const mIndex = resolve => require.ensure([], () => resolve(require('@/mobile/index.vue')), 'mMain'); //手机首页
 
 //手机商品详情
 const mGoods = resolve => require.ensure([], () => resolve(require('@/mobile/mGoods.vue')), 'mobile'); //手机商品详情

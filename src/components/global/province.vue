@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import data from '@/common/js/prov';
+const data =  resolve => require.ensure([], () => resolve(require('@/common/js/prov')), 'prov');
 export default {
 	name: 'Prov',
 	props: {
@@ -34,40 +34,7 @@ export default {
 			area: '', // 区级
 		}
 	},
-	created() {
-
-		// this.upCity();
-		// this.defaultProv();
-	},
 	methods: {
-		// defaultProv() {
-		// 	if (this.regionId) {
-		// 		let p = this.regionId.toString().substr(0, 2);
-		// 		let c = this.regionId.toString().substr(2, 2);
-		// 		let a = this.regionId.toString().substr(4, 2)
-		// 		data.forEach((item) => {
-		// 			if (item.code.toString().substr(0, 2) == p) {
-		// 				if (item.regionEntitys) {
-		// 					item.regionEntitys.forEach((s) => {
-		// 						if (s.code.toString().substr(2, 2) == c) {
-		// 							if (s.regionEntitys) {
-		// 								s.regionEntitys.forEach((k) => {
-		// 									if (k.code.toString().substr(4, 2) == a) {
-		// 										this.prov = item;
-		// 										if (this.flag1) {
-		// 											this.city = s;
-		// 										}
-		// 										this.area = k;
-		// 									}
-		// 								})
-		// 							}
-		// 						}
-		// 					});
-		// 				}
-		// 			}
-		// 		})
-		// 	}
-		// },
 		upCity(p, c) { // 更新市
 			let temp = this.prov;
 			if (temp.regionEntitys) {

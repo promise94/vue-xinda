@@ -3,13 +3,14 @@
 import Vue from 'vue';
 import axios from 'axios';
 import Qs from 'qs';
-import MintUI from 'mint-ui';
-import 'mint-ui/lib/style.css';
+import { Spinner, Header, InfiniteScroll } from 'mint-ui';
 import App from './App';
 import router from './router';
 import store from './store';
 
-Vue.use(MintUI);
+Vue.component(Spinner.name, Spinner);
+Vue.component(Header.name, Header);
+Vue.use(InfiniteScroll);
 
 Vue.config.productionTip = false;
 /* axios 全局配置 */
