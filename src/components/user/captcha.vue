@@ -42,9 +42,9 @@ export default {
 <style lang="less" scoped>
 .captcha {
   img {
-    width: 85px;
-    height: 35px;
-    margin-left: 10px;
+    width: .85rem;
+    height: .35rem;
+    margin-left: .1rem;
     vertical-align: middle;
   }
 }

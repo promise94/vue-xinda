@@ -64,21 +64,21 @@ export default {
   position: relative;
   display: inline-block;
   input {
-    width: 280px;
-    height: 34px;
-    margin-bottom: 20px;
+    width: 2.8rem;
+    height: .34rem;
+    margin-bottom: .2rem;
     border: 1px solid #cbcbcb;
     border-radius: 5px;
-    text-indent: 20px;
+    text-indent: .2rem;
     outline: none;
     &:focus {
-      box-shadow: 0 0 5px #2693d4;
+      box-shadow: 0 0 .05rem #2693d4;
     }
   }
   .info {
     position: absolute;
     top: 70%;
-    font-size: 12px;
+    font-size: .12rem;
     text-indent: 5px;
     i {
       margin-right: 3px;

@@ -92,7 +92,11 @@ export default {
     methods: {
         go(n) {
             // history.go(-2);
-            this.$router.push({ path: '/m/my' });
+            if (this.$route.query.redirect) {
+                this.$router.go(-2);
+            }else {
+                this.$router.go(-1);                
+            }
         }
     }
 }
@@ -101,6 +105,7 @@ export default {
 <style lang="less" scoped>
 .header {
     height: .38rem;
+    font-size: .14rem;
     background-color: #e5e5e5;
     color: #000;
     .back {

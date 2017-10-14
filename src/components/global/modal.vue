@@ -167,14 +167,14 @@ export default {
     top: 50%;
     transform: translate(-50%, -50%);
     width: auto;
-    width: 480px;
+    width: 4.8rem;
     background: #fff;
-    border-radius: 10px;
+    border-radius: .1rem;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     z-index: 1002;
     .modal-content {
         >div {
-            padding: 15px 40px;
+            padding: .15rem .4rem;
         }
         .modal-header {
             display: flex;

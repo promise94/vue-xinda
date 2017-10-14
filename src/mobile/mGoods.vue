@@ -487,6 +487,7 @@ export default {
 <style lang="less">
 .headera {
     height: .38rem;
+    font-size: .14rem;
     background-color: #e5e5e5;
     color: #000;
     .back {

@@ -187,8 +187,10 @@ export default {
 
 <style lang="less">
 .mmain {
+  box-sizing: border-box;
   width: 3.75rem;
-  margin-top: .55rem;
+  min-height: 6rem;
+  padding-top: .55rem;
   .dd {
     width: 3.75rem;
     height: .3rem;

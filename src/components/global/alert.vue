@@ -75,16 +75,16 @@ export default {
     position: fixed;
     top: 50%;
     left: 50%;
-    padding: 2px 15px 2px 10px;
+    padding: .02rem .15rem .02rem .1rem;
     box-sizing: border-box;
     transform: translate(-50%, -50%);
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, .8);
-    font-size: 16px;
+    font-size: .16rem;
     color: #fefefe;
     z-index: 999999;
     p {
-        padding-left: 10px;
+        padding-left: .1rem;
         color: #fefefe;
     }
 }

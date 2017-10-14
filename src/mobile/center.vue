@@ -65,15 +65,16 @@ export default {
 
 <style lang="less" scoped>
 #center {
+    box-sizing: border-box;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    padding-top: .55rem;
     width: 100%;
     min-height: 6rem;
     background-color: #f8f8f8;
     .headImg {
-        margin-top: -.5rem;
         margin-bottom: .24rem;
         display: flex;
         justify-content: center;
