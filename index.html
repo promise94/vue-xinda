@@ -10,7 +10,7 @@
   <meta name="full-screen" content="yes">
   <meta name="x5-fullscreen" content="true">
   <title>信达</title>
-  <style>
+  <style lang="css">
     .loading {
       display: flex;
       align-items: center;
@@ -86,7 +86,7 @@
         window.location.href = '#/';
       }
     }
-    window.onload = () => {
+    document.onreadystatechange = () => {
       let loading = document.querySelector('#loading');
       loading.style.display = 'none';
     }
