@@ -14,10 +14,10 @@ module.exports = {
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
-    // publicPath: process.env.NODE_ENV === 'production'
-    //   ? config.build.assetsPublicPath
-    //   : config.dev.assetsPublicPath
-    publicPath: './' // 打包编译时用
+    publicPath: process.env.NODE_ENV === 'production'
+      ? config.build.assetsPublicPath
+      : config.dev.assetsPublicPath
+    // publicPath: './' // 打包编译时用
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
