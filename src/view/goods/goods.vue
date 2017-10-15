@@ -571,4 +571,17 @@ export default {
         }
     }
 }
+#dianhua{
+    .modal-dialog{
+        width: 800px;
+    }
+    .modal-body{
+        width: 700px;
+        .body2{
+            
+            display: block;
+            margin:0 auto;
+        }
+    }
+}
 </style>
