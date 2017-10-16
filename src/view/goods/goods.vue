@@ -545,8 +545,6 @@ export default {
 </script>
 
 <style lang="less" >
-@import '../../common/less/global/cssreset.less';
-@import '../../common/less/global/cssreset.less';
 @import '../../common/less/goods/goods.less';
 .body2 {
     width: 500px;

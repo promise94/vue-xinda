@@ -53,7 +53,7 @@
                         <div class="ball-two" v-for="(item,k) of list" :key="k">
                             <img :src="item.providerImg" @click="shoid(item.id)" alt="">
                             <div class="ball-left">
-                                <a @click="shoid(item.id)" href="javascript:viod:(0)">{{item.serviceName}}</a>
+                                <a href="javascript:;" @click="shoid(item.id)">{{item.serviceName}}</a>
                                 <p>{{item.serviceInfo}}</p>
                                 <span>{{item.providerName}}</span>
                                 <span class="jianju">{{item.regionName}}</span>
@@ -62,7 +62,7 @@
                                 <p>￥&nbsp;{{item.price}}</p>
                                 <div>
                                     <a href="#/cart" @click="edward(item.id,0)">立即购买</a>
-                                    <a @click="edward(item.id,1)" href="javascript:viod:(0)">加入购物车</a>
+                                    <a href="javascript:;" @click="edward(item.id,1)">加入购物车</a>
                                 </div>
                             </div>
                         </div>
@@ -70,7 +70,7 @@
                     <div class="middle-three" v-if="list.length !=0">
                         <v-page @page="titles" :amount="count" :limit="limit"></v-page>
                     </div>
-                    <nothing title="未能搜索到该区域的商品" v-if="list.length == 0"></nothing>
+                        <nothing title="未能搜索到该区域的商品" v-if="list.length == 0"></nothing>
 
                 </div>
             </div>
@@ -91,14 +91,14 @@ import vPage from '@/components/global/page';//引用分页组件
 import vAlert from '@/components/global/alert';
 export default {
     name: 'services',
-    
+
     created() {
         this.fack('', 3);
         this.mm()
     },
     data() {
         return {
-            loading:true,
+            loading: true,
             recommend: '',
             oyoun: 3,
             oyou: -1,
@@ -166,7 +166,7 @@ export default {
         //加入购物车
         edward(addCarId, goumai) {
             this.loading = true;
-            if(!this.getUser.status){
+            if (!this.getUser.status) {
                 this.$router.push('/user/login');
                 return false;
             }
@@ -274,7 +274,7 @@ export default {
                 this.loading = false;
                 this.fuwu = Object.values(you.data)[1];
                 this.itemList = Object.values(this.fuwu.itemList)[0].itemList;
-               
+
             })
         },
     }

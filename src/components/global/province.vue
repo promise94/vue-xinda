@@ -16,7 +16,7 @@
 </template>
 
 <script>
-const data =  resolve => require.ensure([], () => resolve(require('@/common/js/prov')), 'prov');
+import data from '@/common/js/prov';
 export default {
 	name: 'Prov',
 	props: {

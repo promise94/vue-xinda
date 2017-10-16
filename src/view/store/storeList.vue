@@ -154,6 +154,8 @@ export default {
         this.loading = false;
         if (data.length == 0) {
           this.showNothing = true;
+        }else{
+          this.showNothing = false;
         }
       }, (err) => {
         this.showNothing = true;

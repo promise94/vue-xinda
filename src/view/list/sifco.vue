@@ -5,7 +5,7 @@
                 <div class="content-top">
                     <p>首页&nbsp;/&nbsp;公司工商</p>
                 </div>
-                <div class="content-center" >
+                <div class="content-center">
                     <div class="search">
                         <div class="search-one">
                             <div>
@@ -53,7 +53,7 @@
                         <div class="ball-two" v-for="(item,k) of list" :key="k" v-loading.body="loading" element-loading-text="拼命加载中">
                             <img :src="item.providerImg" @click="shoid(item.id)" alt="">
                             <div class="ball-left">
-                                <a @click="shoid(item.id)" href="javascript:viod:(0)">{{item.serviceName}}</a>
+                                <a @click="shoid(item.id)" href="javascript:;">{{item.serviceName}}</a>
                                 <p>{{item.serviceInfo}}</p>
                                 <span>{{item.providerName}}</span>
                                 <span class="jianju">{{item.regionName}}</span>
@@ -62,7 +62,7 @@
                                 <p>￥&nbsp;{{item.price}}</p>
                                 <div>
                                     <a href="#/cart" @click="edward(item.id,0)">立即购买</a>
-                                    <a @click="edward(item.id,1) ">加入购物车</a>
+                                    <a href="javascript:;" @click="edward(item.id,1) ">加入购物车</a>
                                 </div>
                             </div>
                         </div>
@@ -70,7 +70,7 @@
                     <div class="middle-three" v-if="list.length !=0">
                         <v-page @page="titles" :amount="count" :limit="limit"></v-page>
                     </div>
-                    <nothing title="未能搜索到该区域的商品" v-if="list.length ==0"></nothing>
+                        <nothing title="未能搜索到该区域的商品" v-if="list.length ==0"></nothing>
                 </div>
             </div>
             <div class="picture">
@@ -99,8 +99,8 @@ export default {
     },
     data() {
         return {
-            loading:true,
-            loading1:true,
+            loading: true,
+            loading1: true,
             recommend: '',
             oyoun: 4,
             oyou: -1,
