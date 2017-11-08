@@ -13,7 +13,6 @@
                     <!--内容区域-->
                     <div class="modal-body">
                         <slot name="body">
-                            <p>This is modal</p>
                         </slot>
                     </div>
                     <!--尾部,操作按钮-->

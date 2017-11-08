@@ -148,7 +148,7 @@ export default {
         let len = data.length;
         for (var i = 0; i < len; i++) {
           data[i].totalJudge == 0 ? data[i].totalJudge = 1 : ""; //好评率数据处理
-          data[i].providerImg.substring(0, 3) == 'http' ? data[i].providerImg = data[i].providerImg : data[i].providerImg = "http://115.182.107.203:8088/xinda/pic" + data[i].providerImg;//图片数据处理，加上前缀
+          data[i].providerImg = data[i].providerImg.substring(0, 3) == 'http' ? data[i].providerImg : "http://115.182.107.203:8088/xinda/pic" + data[i].providerImg;//图片数据处理，加上前缀
         };
         this.arr = data;
         this.loading = false;
